@@ -233,9 +233,8 @@ export function Search() {
               return (
                 <div
                   id={item.id}
-                  className={`search-menu-item ${
-                    typeVal === item.id ? 'search-menu-item-active' : ''
-                  }`}
+                  className={`search-menu-item ${typeVal === item.id ? 'search-menu-item-active' : ''
+                    }`}
                   key={`${index}`}
                   onClick={handleTabClick}
                 >
@@ -245,12 +244,12 @@ export function Search() {
             })}
           </div>
           <div className='search-field-box'>
-            {typeVal === 'transactions' && <MuiTabs tabs={transTabs} />}
+            {typeVal === 'transactions' && <MuiTabs contentClass='tab-content' tabs={transTabs} />}
             {typeVal === 'individual' && (
-              <MuiTabs ref={tabRef} selectedTab={formData.selectedSubTab} tabs={indTabs} />
+              <MuiTabs ref={tabRef} contentClass='tab-content' selectedTab={formData.selectedSubTab} tabs={indTabs} />
             )}
-            {typeVal === 'business' && <MuiTabs tabs={busTabs} />}
-            {typeVal === 'vehicle' && <MuiTabs tabs={vehTabs} />}
+            {typeVal === 'business' && <MuiTabs contentClass='tab-content' tabs={busTabs} />}
+            {typeVal === 'vehicle' && <MuiTabs contentClass='tab-content' tabs={vehTabs} />}
             {typeVal === 'employee' && (
               <Employee
                 ref={employeeRef}

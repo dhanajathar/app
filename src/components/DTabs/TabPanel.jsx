@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TabPanel = ({ children, value, index, ...other }) => {
+const TabPanel = ({ children, value, contentClass=null, index, ...other }) => {
   return (
     <div
       role='tabpanel'
@@ -8,8 +8,7 @@ const TabPanel = ({ children, value, index, ...other }) => {
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
-    >
-      <div className='tab-content'>{children}</div>
+    > {children} 
     </div>
   );
 };

@@ -57,29 +57,33 @@ export default function DCustomerProfile() {
     <React.Fragment>
       <div className='profile-page'>
         <div className='page-heading'> {USER_NAME} </div>
-
         <div className='tab-content'>
-          <MuiTabs className='search-results-tab' profileContent={<ProfileContent />} tabs={tabs} />
-
-          <div className='d-flex-between'>
-            <div> </div>
-            <div>
-              <Button variant='outlined' color='inherit' startIcon={<ArrowBackIosIcon />}>
-                {' '}
-                {BACK.toUpperCase()}{' '}
-              </Button>
-              <Button
-                className='select-button'
-                onClick={event => handleSelectClick(event)}
-                variant='contained'
-                color='primary'
-                endIcon={<ArrowForwardIosIcon />}
-              >
-                {' '}
-                {SELECT_TRANSACTION.toUpperCase()}{' '}
-              </Button>
+          <div className='user-profile'>
+            <div className='profile-content'> <ProfileContent /> </div>
+            <div className='tabs-wrapper'>
+              <MuiTabs contentClass='tab-content-scroll' tabs={tabs} />
+              <div className='d-flex-between'>
+                <div> </div>
+                <div>
+                  <Button variant='outlined' color='inherit' startIcon={<ArrowBackIosIcon />}>
+                    {' '}
+                    {BACK.toUpperCase()}{' '}
+                  </Button>
+                  <Button
+                    className='select-button'
+                    onClick={event => handleSelectClick(event)}
+                    variant='contained'
+                    color='primary'
+                    endIcon={<ArrowForwardIosIcon />}
+                  >
+                    {' '}
+                    {SELECT_TRANSACTION.toUpperCase()}{' '}
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </React.Fragment>

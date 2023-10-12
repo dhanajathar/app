@@ -4,7 +4,7 @@ import { Tab, Tabs } from '@mui/material';
 import TabPanel from './TabPanel';
 
 const MuiTabs = forwardRef((props, ref) => {
-  const { profileContent, tabs, selectedTab } = props;
+  const { tabs, selectedTab, contentClass } = props;
   const [value, setValue] = useState(selectedTab ? selectedTab : 0);
 
   const handleChange = (event, newValue) => setValue(newValue);
@@ -16,8 +16,7 @@ const MuiTabs = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className='search-box'>
-      {profileContent && <div className='search-box-tabs'>{profileContent}</div>}
+    <>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -32,18 +31,20 @@ const MuiTabs = forwardRef((props, ref) => {
           return <Tab key={`${idx}-tab`} label={tab.tabName} wrapped />;
         })}
       </Tabs>
-      {tabs.map((tab, idx) => {
-        return (
-          <span key={tab.tabName}>
-            {value === idx && (
-              <TabPanel index={idx} value={value}>
-                {tab.tabContent}
-              </TabPanel>
-            )}
-          </span>
-        );
-      })}
-    </div>
+      <div className={contentClass}>
+        {tabs.map((tab, idx) => {
+          return (
+            <div key={tab.tabName}>
+              {value === idx && (
+                <TabPanel index={idx} value={value}>
+                  {tab.tabContent}
+                </TabPanel>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 });
 
