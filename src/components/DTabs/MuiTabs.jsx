@@ -4,7 +4,7 @@ import { Tab, Tabs } from '@mui/material';
 import TabPanel from './TabPanel';
 
 const MuiTabs = forwardRef((props, ref) => {
-  const { tabs, selectedTab, contentClass } = props;
+  const { tabAction, tabs, selectedTab, contentClass } = props;
   const [value, setValue] = useState(selectedTab ? selectedTab : 0);
 
   const handleChange = (event, newValue) => setValue(newValue);
@@ -43,6 +43,7 @@ const MuiTabs = forwardRef((props, ref) => {
             </div>
           );
         })}
+        {tabAction && tabAction}
       </div>
     </>
   );

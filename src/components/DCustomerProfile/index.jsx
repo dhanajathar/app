@@ -16,6 +16,7 @@ import ProfileContent from './fragments/ProfileContent';
 import ProofOfIdentityFragment from './fragments/ProofOfIdentity';
 import Vehicles from './fragments/Vehicles';
 import Withdrawal from './fragments/Withdrawal';
+import VersionHistory from './components/VersionHistory/VersionHistory';
 
 const BACK = 'Back';
 const SELECT_TRANSACTION = 'Select Transaction';
@@ -61,10 +62,8 @@ export default function DCustomerProfile() {
           <div className='user-profile'>
             <div className='profile-content'> <ProfileContent /> </div>
             <div className='tabs-wrapper'>
-              <MuiTabs contentClass='tab-content-scroll' tabs={tabs} />
-              <div className='version-button'>
-                <Button variant="text">Show Version History</Button>
-              </div>
+              <MuiTabs tabAction={<VersionHistory/>}  contentClass='tab-content-scroll' tabs={tabs} />
+             
             </div>
           </div>
           <div className='d-flex-between'>
