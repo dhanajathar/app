@@ -1,0 +1,32 @@
+.address-duration-wrapper {
+  margin-left: auto;
+  display: flex;
+}
+
+.customer-address-duration {
+  background: var(--primary10) 0% 0% no-repeat padding-box;
+  border: 1px solid #242424;
+  border-radius: 16px;
+  margin-right: 5px;
+  padding: 3px 6px;
+  font: normal normal normal 14px/24px Open Sans;
+}
+
+.address-accordion {
+  margin: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border-bottom: 2px solid #ccc;
+}
+
+.address-accordion .MuiAccordionSummary-content {
+  margin: 1.2rem 0 !important;
+}
+
+.address-accordion .MuiAccordionDetails-root {
+  padding: 0 0 1.5rem 0 !important;
+}
+
+.address-accordion .MuiAccordionSummary-root {
+  padding: 0 !important;
+}

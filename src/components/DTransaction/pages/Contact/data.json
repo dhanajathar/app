@@ -1,0 +1,13 @@
+{
+    "mobilePhoneRegistration": "",
+    "emailSubscriber": "YES",
+    "emailAlert": "YES",
+    "activated": "Activated",
+    "mobile": "",
+    "altPhone": "",
+    "email": "",
+    "transactionId ": "2986d8f2-e42e-11ed-b5ea-0242ac120002",
+    "userId": "c1ad19e0-e431-11ed-b5ea-0242ac120002",
+    "optionList": ["SELECT","YES","NO"],
+    "activatedOptionList": ["SELECT","Activated","Pending", "Not Activated/Inactive"]
+}

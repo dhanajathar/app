@@ -1,0 +1,236 @@
+.date-picker {
+  display: flex;
+}
+
+.date-picker .MuiFormControl-root {
+  flex: 1;
+}
+
+.date-picker .MuiInputBase-adornedEnd {
+  padding-right: 14px !important;
+}
+
+.has-date .MuiOutlinedInput-root {
+  border-radius: 4px 0px 0px 4px;
+  border-right: none;
+}
+
+.date-helper-text {
+  background: var(--white70);
+  padding: 0px 10px;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-left: none;
+  font: normal normal 600 12px/17px Open Sans;
+  color: var(--black80);
+  display: flex;
+  align-items: center;
+}
+
+.address-details {
+  border: 1px solid #C6C6C6;
+  border-radius: 5px;
+  margin-top: 1.5rem;
+}
+
+.address-details legend {
+  font: normal normal bold 18px/16px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.address-status-wrapper {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.address-status {
+  background: var(--primary30) 0% 0% no-repeat padding-box;
+  border: 2px solid #167ABC;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.address-status input {
+  background: #fff;
+}
+
+.valid-address {
+  display: flex;
+  align-items: center;
+  font: normal normal 600 16px/22px Open Sans;
+  color: #000;
+}
+
+.invalid-address {
+  font: normal normal normal 16px/22px Open Sans;
+  letter-spacing: 0px;
+  color: #830909;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.address-line {
+  border-right: 1px solid #D0D0D0;
+  padding-right: 2rem;
+  margin-right: 2rem;
+
+
+}
+
+.address-status-text {
+  color: var(--green100);
+  display: flex;
+  margin-left: auto;
+}
+
+
+.address-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #707070;
+  min-height: 4rem;
+}
+
+.primary-address-header {
+  border-bottom: none;
+}
+
+.delete-address {
+  background: #EBEBEB 0% 0% no-repeat padding-box;
+  border-radius: 50%;
+  margin-left: 2rem;
+  padding: 0.2rem;
+  color: #9A0404;
+}
+
+.address-title {
+  font: normal normal bold 18px/16px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.accordian-right {
+  margin-left: auto;
+  display: flex;
+}
+
+.address-duration {
+  background: var(--primary10) 0% 0% no-repeat padding-box;
+  border: 1px solid #242424;
+  border-radius: 16px;
+  margin-right: 5px;
+  padding: 3px 6px;
+}
+
+.address-content {
+  height: auto;
+  transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.address-content.collapsed {
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.certifier-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.certifier-headr-text {
+  font: normal normal bold 18px/16px Open Sans;
+  color: #000000;
+}
+
+.certifications-wrapper,
+.certifications-status-wrapper,
+.add-address-btn {
+  margin-top: 1rem;
+}
+
+.street-list {
+  border-top: 1px solid #707070;
+  max-height: 320px;
+  overflow-y: auto;
+  border-bottom: 1px solid #707070;
+  margin-top: 1rem;
+}
+
+.street-list ul {
+  margin: 0;
+  padding: 0;
+}
+
+.street-list li {
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.street-list li:nth-child(odd) {
+  background: var(--white60) 0% 0% no-repeat padding-box;
+}
+
+.requester-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1rem;
+
+}
+
+.requester {
+  background: #404040 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  width: auto;
+  color: #FFFFFF;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.requester-title {
+  font: normal normal normal 12px/17px Open Sans;
+}
+
+.requester-user {
+  font: normal normal bold 14px/19px Open Sans;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+
+.override-text {
+  font: normal normal 600 14px/23px Open Sans;
+  margin-top: 1rem;
+  color: #1D4EC7;
+  display: flex;
+}
+
+.override-text svg {
+  margin-right: 5px;
+}
+
+.certifier-wrapper {
+  box-shadow: 1px 3px 6px #0000000D;
+  border: 1px solid #DEDEDE;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.certifier-title {
+  font: normal normal bold 18px/16px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  margin-bottom: 0.5rem;
+}
+
+.certifier-additonal-details {
+  margin-top: 1.5rem;
+}
+
+.certifier-actions-button {
+  justify-content: space-between !important;
+}
+ 

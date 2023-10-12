@@ -1,0 +1,44 @@
+ 
+.confirmation-dialog {
+  text-align: center;
+}
+
+.confirmation-dialog .MuiDialogActions-root {
+  justify-content: center;
+}
+
+.confirmation-dialog .MuiDialogTitle-root {
+  font: normal normal bold 20px/16px Open Sans;
+}
+
+.action-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  color: #9A0404;
+  background: #EBEBEB 0% 0% no-repeat padding-box;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.page-action {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.add-btn {
+  text-transform: capitalize !important;
+  margin-top: 1rem !important;
+}
+.divider {
+  border: 1px solid #ccc;
+  margin-top: 1.5rem;
+}

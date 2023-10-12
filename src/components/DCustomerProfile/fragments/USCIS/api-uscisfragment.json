@@ -1,0 +1,35 @@
+ {
+    "firstName": "micheal",
+    "middleName": "jhonson",
+    "lastName": "clarke",
+    "alienNo": "401-232-232",
+    "receiptNo": "12323233412",
+    "uscisStatus": "active",
+    "documentExpiryDate": "2030-12-24",
+    "birthDate": "1988-03-06",
+    "uscisDate": "12/24/2025",
+    "verificationStatus": "NOT VERFIED",
+    "verificationHistory": [
+      {
+        "alienNo": "401-232-232",
+        "receiptNo": "12323233412",
+        "documentExpiryDate": "12/24/2030",
+        "uscisDate": "12/24/2025",
+        "destinyDate": "12/24/2031" 
+      }
+    ],
+    "documentTypes": [
+      "OTHER",
+      "ASYLEE",
+      "INS NOTICE OF ACTION",
+      "I-327 (REENTRY PERMIT)",
+      "I-20 (F-1 STUDENTS STATUS)",
+      "I-571 (REFUGEE TRAVEL DOCUMENT)",
+      "I-551 (PERMANENT RESIDENT CARD)",
+      "DS2019 EXCHANGE VISITOR J-1 STATUS)",
+      "I-766 (EMPLOYMENT AUTHORIZATION CARD)",
+      "VISA W/I-94 (ARRIVAL/DEPARTURE RECORD)",
+      "TEMPORARY I-551 STAMP (ON PASSPORT OR I-94)"
+    ],
+    "visaTypes": ["INS NOTICE OF ACTION", "VISA W/I-94 (ARRIVAL/DEPARTURE", "OTHER"]
+  }

@@ -1,0 +1,78 @@
+{
+  "personalInformation": {
+    "lastName": {
+      "isTruncated": null,
+      "isTransliterated": null,
+      "value": ""
+    },
+    "firstName": {
+      "isTruncated": null,
+      "isTransliterated": null,
+      "value": ""
+    },
+    "middleName": {
+      "isTruncated": null,
+      "isTransliterated": null,
+      "value": ""
+    },
+
+    "suffix": "",
+    "socialSecurityNumber": "",
+    "birthDate": "",
+    "citizen": "",
+    "veteran": "",
+    "organDonor": "",
+    "language": ""
+  },
+  "physicalInformation": {
+    "gender": "",
+    "weight": "",
+    "height": {
+      "feet": "",
+      "inch": ""
+    },
+    "hairColor": "",
+    "eyeColor": ""
+  },
+  "languageList": [
+    "AMHARIC",
+    "ARMENIAN",
+    "ARABIC",
+    "CANTONESE",
+    "ENGLISH",
+    "FRENCH",
+    "GERMAN",
+    "HMONG",
+    "HINDI",
+    "ITALIAN",
+    "JAPANESE",
+    "CAMBODIAN",
+    "KOREAN",
+    "LAOTIAN",
+    "MANDARIN",
+    "POLISH",
+    "PORTUGUESE",
+    "RUSSIAN",
+    "SPANISH",
+    "TAGALOG",
+    "THAI",
+    "VIETNAMESE"
+  ],
+  "eyeColorList": [
+    "BLACK",
+    "BLUE",
+    "BROWN",
+    "DICHROMATIC",
+    "GREEN",
+    "GREY",
+    "HAZEL",
+    "MAROON",
+    "PINK",
+    "UNKNOWN"
+  ],
+  "hairColorList": ["BALD", "BLACK", "BLONDE", "BROWN", "GREY", "RED", "SANDY", "UNKNOWN", "WHITE"],
+  "suffixList": ["JR", "SR", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+  "optionList": ["YES", "NO"],
+  "optionListUnknown": ["YES", "UNKNOWN"],
+  "genderList": ["Male", "Female", "Gender Neutral"]
+}

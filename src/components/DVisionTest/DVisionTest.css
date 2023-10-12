@@ -1,0 +1,27 @@
+.sub_title {
+  font-size: 1.125em;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.input_adornment_text {
+  background: var(--white70);
+  padding: 1.0313em 0.875rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.MuiInputBase-adornedStart {
+  padding-left: 0 !important;
+}
+
+.highlight-row {
+  background: var(--primary30);
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 1rem 0;
+  margin-top: 1rem;
+}
+.MuiFormHelperText-sizeMedium {
+ font-size: 0.65rem; 
+ text-align: right;
+}
+ 

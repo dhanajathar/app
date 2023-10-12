@@ -1,0 +1,12 @@
+{
+    "mobilePhoneRegistration": "yes",
+    "emailSubscriber": "yes",
+    "emailAlert": "yes",
+    "activated": "yes",
+    "mobile": "12027272643",
+    "altPhone": "",
+    "email": "JONNY_DOE@GMAIL.COM",
+    "isEmailVerified": true,
+    "transactionId ": "2986d8f2-e42e-11ed-b5ea-0242ac120002",
+    "userId": "c1ad19e0-e431-11ed-b5ea-0242ac120002"
+}

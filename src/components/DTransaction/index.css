@@ -1,0 +1,89 @@
+.transaction-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.transaction-content-column {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  max-height: calc(100vh - 50px);
+  max-width: calc(100% - 12rem);
+}
+
+.transaction-content {
+  width: 100%;
+  max-height: 95%;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 1px 3px 6px #0000000d;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  overflow-y: auto;
+  /* padding-bottom: 30px;
+  padding-top: 15px; */
+}
+
+.transaction-head {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.transaction-nav {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.transaction-nav-divider {
+  color: #cccccc;
+}
+
+.transaction-head-left,
+.transaction-nav-left {
+  width: 50%;
+  padding-bottom: 0.6rem;
+}
+
+.transaction-head-right,
+.transaction-nav-right {
+  width: 50%;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.transaction-progress {
+  margin-top: 2.7rem;
+  margin-left: 1rem;
+}
+
+.customer-edit {
+  cursor: pointer;
+}
+
+.customer-title {
+  font-size: 0.8rem;
+  letter-spacing: 0px;
+  color: #333333;
+}
+
+.customer-name {
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #333333;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.customer-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dialog-form {
+  margin-top: 20px;
+}

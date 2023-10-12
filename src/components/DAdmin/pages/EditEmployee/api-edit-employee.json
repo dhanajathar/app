@@ -1,0 +1,38 @@
+{
+  "initial_values": {
+    "lastName": "JAVAYANT",
+    "middleName": "",
+    "firstName": "ASIYA",
+    "lastNameIsTransliterated": false,
+    "middleNameIsTransliterated": false,
+    "firstNameIsTransliterated": false,
+    "lastNameIsTruncated": false,
+    "middleNameIsTruncated": false,
+    "firstNameIsTruncated": false,
+    "loginId": "ASIYA.JAVAYANT@DC.GOV",
+    "employeeId": "111",
+    "department": "ADMINISTRATIVE SERVICES",
+    "jobTitle": "SERVICE CENTER MANAGER",
+    "location": "SOUTHWEST SERVICE CENTER",
+    "lockerBoxId": "12121",
+    "mobilePhone": "+1 (202) 727-2643",
+    "workPhone": "+1 (202) 727-3330",
+    "beginDate": "10/21/2023",
+    "endDate": "",
+    "userType": "NORMAL"
+  },
+  "dropDowns": {
+    "jobTitle": [
+      { "title": "DIRECTOR", "value": "DIRECTOR" },
+      { "title": "DMV", "value": "DMV" },
+      { "title": "SERVICE CENTER MANAGER", "value": "SERVICE CENTER MANAGER" }
+    ],
+    "location": [
+      { "title": "ALL LOCATIONS", "value": "ALL LOCATIONS" },
+      { "title": "C STREET SERVICE CENTER", "value": "C STREET SERVICE CENTER" },
+      { "title": "SOUTHWEST SERVICE CENTER", "value": "SOUTHWEST SERVICE CENTER" }
+    ],
+    "department": [{ "title": "ADMINISTRATIVE SERVICES", "value": "ADMINISTRATIVE SERVICES" }],
+    "userType": [{ "title": "NORMAL", "value": "NORMAL" }]
+  }
+}

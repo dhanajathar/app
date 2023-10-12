@@ -1,0 +1,60 @@
+{
+  "profileData": [
+    {
+      "profile": "VIN ASSIGNMENT",
+      "startDate": "04/22/2018",
+      "endDate": null,
+      "status": "active"
+    },
+    {
+      "profile": "ADD/EDIT VEHICLE DETAILS (2011)",
+      "startDate": "04/22/2019",
+      "endDate": "04/22/2024",
+      "status": "active"
+    },
+    {
+      "profile": "ADJ SERVICES HEARING EXAM (2009)",
+      "startDate": "04/22/2023",
+      "endDate": "04/22/2024",
+      "status": "active"
+    },
+    {
+      "profile": "CDL PROFILE",
+      "startDate": "04/22/2020",
+      "endDate": null,
+      "status": "active"
+    }
+  ],
+  "columns": [
+    {
+      "key": "srNo",
+      "label": "Sl No.",
+      "allowedToSort": false,
+      "dataType": "number"
+    },
+    {
+      "key": "profile",
+      "label": "Profile",
+      "allowedToSort": true,
+      "dataType": "string"
+    },
+    {
+      "key": "startDate",
+      "label": "Start Date",
+      "allowedToSort": true,
+      "dataType": "date"
+    },
+    {
+      "key": "endDate",
+      "label": "End Date",
+      "allowedToSort": true,
+      "dataType": "date"
+    },
+    {
+      "key": "status",
+      "label": "Status",
+      "allowedToSort": true,
+      "dataType": "boolean"
+    }
+  ]
+}

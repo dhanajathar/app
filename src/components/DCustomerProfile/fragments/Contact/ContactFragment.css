@@ -1,0 +1,13 @@
+.contactlabel {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 0.6rem 0;
+}
+
+.contactselect {
+    background: var(--white100);
+}
+
+.MuiInputBase-input {
+    background: var(--white100);
+}

@@ -1,0 +1,43 @@
+{
+  "personalInformation": {
+    "lastName": {
+      "isTruncated": true,
+      "isTransliterated": true,
+      "value": "Tyyler"
+    },
+    "firstName": {
+      "isTruncated": null,
+      "isTransliterated": true,
+      "value": "Dwayne"
+    },
+    "middleName": {
+      "isTruncated": true,
+      "isTransliterated": null,
+      "value": "Lemarr"
+    },
+    "suffix": "MR.",
+    "socialSecurityNumber": "3254245749",
+    "birthDate": "2000-05-24",
+    "citizen": "YES",
+    "veteran": "YES",
+    "organDonor": "NO",
+    "language": "English",
+    "military": "NO",
+    "vip": "YES"
+  },
+  "physicalInformation": {
+    "gender": "Male",
+    "weight": 125,
+    "height": {
+      "feet": 6,
+      "inch": 2
+    },
+    "hairColor": "Black",
+    "eyeColor": "Black"
+  },
+  "genderList": [
+    "Male",
+    "Female",
+    "Gender Neutral"
+  ]
+}

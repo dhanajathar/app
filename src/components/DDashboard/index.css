@@ -1,0 +1,84 @@
+.container {
+  font-size: 3rem;
+  margin: auto;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+button {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0;
+  border: none;
+  outline: none;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+}
+
+.dash-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+}
+
+.dash-head {
+  display: flex;
+}
+
+.headtext {
+  margin: 0;
+  margin-top: 3rem;
+  text-align: left;
+  color: #13126c;
+  font: normal normal bold 32px/20px Open Sans;
+  letter-spacing: 0;
+  line-height: 32px;
+}
+
+.sub-head {
+  margin: 0;
+  margin-top: 1rem;
+  text-align: left;
+  font: normal normal normal 16px/36px Open Sans;
+  letter-spacing: 0.32px;
+}
+
+.dash-menu-head {
+  text-align: left;
+  font: normal normal bold 24px/20px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  margin-top: 4rem;
+}
+
+.dash-cards-container {
+  display: flex;
+  gap: 4rem;
+  margin-top: 2rem;
+}
+
+.dash-card {
+  width: 264px;
+  height: 190px;
+  box-shadow: 1px 3px 6px #0000000d;
+  border: 1px solid #dedede;
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dash-card-content {
+  margin: 2rem;
+}
+
+.dash-card-text {
+  font: normal normal normal 16px/23px Open Sans;
+  color: #333333;
+}
+.todo-item {
+  color: #0060b5;
+}

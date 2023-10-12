@@ -1,0 +1,41 @@
+.contactlabel {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 0.6rem 0;
+}
+
+
+.contactinputreadonly {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 0.3rem;
+    border: 1px solid #EDEDED;
+}
+
+.contactselect {
+    background: white;
+}
+
+.MuiInputBase-input {
+    background-color: #FFFFFF;
+}
+
+.disabled-assistance-required {
+    padding: 0;
+    height: 15px;
+}
+
+.address-title {
+    color: #000000;
+    font-size: 1.125rem;
+}
+
+.fieldset {
+    border: 1px solid #C6C6C6;
+    border-radius: 5px;
+}
+
+.legend {
+    color: #000000;
+    font-size: 1rem;
+    font-weight: bold;
+}

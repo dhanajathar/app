@@ -1,0 +1,603 @@
+{
+    "transactionId": "95edbce7-cc3b-4c83-a589-cc23e042446a",
+    "customerId": "a41bf5f7-0785-45a3-b6a7-e33dc2aafb4f",
+    "userId": "da5fff3c-ae04-4409-b880-1685c5c91812",
+    "selecttransactiondetails": {
+      "name": "DWAYNE LEMARR TYYLER"
+    },
+    "cards": [
+      {
+        "title": "New Identification Card",
+        "ipath": "NewIdentificationCard"
+      },
+      {
+        "title": "New Driver License",
+        "ipath": "NewDriverLicense"
+      },
+      {
+        "title": "New Commercial Driver License",
+        "ipath": "NewCommercialDriverLicense"
+      },
+      {
+        "title": "New Vehicle New Title",
+        "ipath": "NewVehicleNewTitle"
+      },
+      {
+        "title": "New Vehicle New Title & Registration",
+        "ipath": "NewVehicleNewTitle&Registration"
+      },
+      {
+        "title": "New Residential Parking Permit",
+        "ipath": "NewResidentialParkingPermit"
+      },
+      {
+        "title": "Renew Driver License",
+        "ipath": "RenewDriverLicense"
+      },
+      {
+        "title": "Duplicate Driver License",
+        "ipath": "DuplicateDriverLicense"
+      },
+      {
+        "title": "Renew Registration",
+        "ipath": "RenewRegistration"
+      },
+      {
+        "title": "Duplicate Registration",
+        "ipath": "DuplicateRegistration"
+      }
+    ],
+    "tabs": {
+      "drivingLicense": {
+        "tabLabel": "DRIVER LICENSE",
+        "tabContent": [
+          {
+            "cardname": "Renew Driver License",
+            "ipath": "RenewDriverLicense"
+          },
+          {
+            "cardname": "Replacement Driver License",
+            "ipath": "ReplacementDriverLicense"
+          },
+          {
+            "cardname": "New Driver Instructor Card",
+            "ipath": "NewDriverInstructorCard"
+          },
+          {
+            "cardname": "45 Day Paper ID card",
+            "ipath": "45DayPaperIDcard"
+          },
+          {
+            "cardname": "Renew ID Card",
+            "ipath": "RenewIDCard"
+          },
+          {
+            "cardname": "Replacement ID Card",
+            "ipath": "ReplacementIDCard"
+          }
+        ]
+      },
+      "vehicleTitleRegistration": {
+        "tabLabel": "VEHICLE TITLING & REGISTRATION",
+        "tabContent": [
+          {
+            "cardname": "Renew Driver License",
+            "ipath": "RenewDriverLicense"
+          }
+        ]
+      },
+      "businessServices": {
+        "tabLabel": "BUSINESS SERVICES",
+        "tabContent": [
+          {
+            "cardname": "Renew Driver License",
+            "ipath": "RenewDriverLicense"
+          }
+        ]
+      },
+      "general": {
+        "tabLabel": "GENERAL",
+        "tabContent": [
+          {
+            "cardname": "Renew Driver License",
+            "ipath": "RenewDriverLicense"
+          }
+        ]
+      }
+    },
+    "tree": [
+      {
+        "name": "License & Identification Card",
+        "children": [
+          {
+            "name": "Driver License",
+            "children": [
+              {
+                "name": "Driver License",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "New Driver License",
+                    "visible": true,
+                    "children": []
+                  },
+                  {
+                    "name": "Renew Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Duplicate Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Replacement Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "45 Days Paper Credential",
+                    "children": []
+                  },
+                  {
+                    "name": "Medical 45 Day Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Issue Limited License",
+                    "children": []
+                  },
+                  {
+                    "name": "New Driver License Number",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Reinstate / Reissue",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Reinstate Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Reinstate OOS Driver",
+                    "children": []
+                  },
+                  {
+                    "name": "Reinstate Driving Privileges",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "IID",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Modify IID Enrollment",
+                    "children": []
+                  },
+                  {
+                    "name": "Reinstate IID Driver License and Vehicle",
+                    "children": []
+                  },
+                  {
+                    "name": "New Limited Purpose Driver License",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Commercial Driver License",
+            "children": [
+              {
+                "name": "Commercial Driver License",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "New Commericial Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Renew Commericial Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Duplicate Commericial Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Replacement Commericial Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "45 Days Paper Credential",
+                    "children": []
+                  },
+                  {
+                    "name": "Update Medical Certification",
+                    "children": []
+                  },
+                  {
+                    "name": "New Driver License/Permit Number (CDL) ",
+                    "children": []
+                  },
+                  {
+                    "name": "Upgrade / Downgrade",
+                    "children": []
+                  },
+                  {
+                    "name": "Reinstate / Reissue",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Upgrade / Downgrade",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Upgrade Commercial Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Downgrade CDL to Driver License ",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Reinstate / Reissue",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Reinstate Commercial Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Reissue Commercial Driver License",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Identification Card",
+            "children": [
+              {
+                "name": "Identification Card",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "New Identification Card",
+                    "children": []
+                  },
+                  {
+                    "name": "Renew Identification Card",
+                    "children": []
+                  },
+                  {
+                    "name": "Duplicate Identification Card",
+                    "children": []
+                  },
+                  {
+                    "name": "Replacement Identification Card",
+                    "children": []
+                  },
+                  {
+                    "name": "Change Identification Card Status",
+                    "children": []
+                  },
+                  {
+                    "name": "45 Day Identification Card Paper Credential Only",
+                    "children": []
+                  },
+                  {
+                    "name": "New Identification Card Number",
+                    "children": []
+                  },
+                  {
+                    "name": "Identification Card – Social Service",
+                    "children": []
+                  },
+                  {
+                    "name": "New Limited Purpose Social Service",
+                    "children": []
+                  },
+                  {
+                    "name": "New Limited Purpose Identification Card",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Ex-Offender",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "ID Card – Ex-Offender (Short Term)",
+                    "children": []
+                  },
+                  {
+                    "name": "ID Card – Ex-Offender (Full Term)",
+                    "children": []
+                  },
+                  {
+                    "name": "Duplicate ID Card – Ex-Offender",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Limited Purpose",
+            "children": [
+              {
+                "name": "Driver License",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "New Limited Purpose Driver License",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Identification Card",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "New Limited Purpose Social Service",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Driving Instructor Card",
+            "isSearchable": true,
+            "children": [
+              {
+                "name": "New Driver Instructor Card",
+                "children": []
+              },
+              {
+                "name": "Renew Driver Instructor Card",
+                "children": []
+              },
+              {
+                "name": "Duplicate Driver Instructor Card",
+                "children": []
+              },
+              {
+                "name": "Replacement Driver Instructor Card Driver Instructor Card",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "Short-Term License",
+            "children": [
+              {
+                "name": "Driver License",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Modify DL expiration for Short-Term",
+                    "children": []
+                  },
+                  {
+                    "name": "New Short-Term Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Renew Short-Term Driver License",
+                    "children": []
+                  },
+                  {
+                    "name": "Modify DL expiration for Short-Term",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Commercial Driver License (CDL)",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Modify CDL expiration for Short-Term",
+                    "children": []
+                  },
+                  {
+                    "name": "New Short-Term CDL",
+                    "children": []
+                  },
+                  {
+                    "name": "Renew Short-Term CDL",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Vehicle Titling & Registration",
+        "children": [
+          {
+            "name": "Vehicle Registration",
+            "children": [
+              {
+                "name": "Registration",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "IVS Batch Process",
+                    "children": []
+                  },
+                  {
+                    "name": "Renew Registration",
+                    "children": []
+                  },
+                  {
+                    "name": "Duplicate Registration",
+                    "visible": true,
+                    "children": []
+                  },
+                  {
+                    "name": "Replacement Registration",
+                    "children": []
+                  },
+                  {
+                    "name": "Reinstate Registration",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Existing Title Registration",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "New Vehicle/New Reg (Existing Title)",
+                    "children": []
+                  },
+                  {
+                    "name": "Used Vehicle/New Reg (Existing Title)",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "name": "Special Use Functions",
+                "isSearchable": true,
+                "children": [
+                  {
+                    "name": "Enter Registration Expiration Date",
+                    "children": []
+                  },
+                  {
+                    "name": "Add/Edit Vehicle Details",
+                    "children": []
+                  },
+                  {
+                    "name": "Replacement Inspection Sticker",
+                    "children": []
+                  },
+                  {
+                    "name": "Assign VIN",
+                    "children": []
+                  },
+                  {
+                    "name": "Manual Registration (Existing Title)",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Title",
+            "children": [
+              {
+                "name": "Title & Registration",
+                "children": []
+              },
+              {
+                "name": "Title & Tag Transfer",
+                "children": []
+              },
+              {
+                "name": "Title Only",
+                "children": []
+              },
+              {
+                "name": "Beneficiary Designation",
+                "children": []
+              },
+              {
+                "name": "Title Verification",
+                "children": []
+              },
+              {
+                "name": "Special Use Functions",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "Tags",
+            "children": [
+              {
+                "name": "Tags",
+                "children": []
+              },
+              {
+                "name": "Replacement Tags",
+                "children": []
+              },
+              {
+                "name": "Private Sale",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "Personalized Tags"
+          },
+          {
+            "name": "Parking Permits",
+            "children": [
+              {
+                "name": "Residential Parking Permits",
+                "children": []
+              },
+              {
+                "name": "Temporary Parking Permits",
+                "children": []
+              },
+              {
+                "name": "Reciprocity Parking Permits",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "DCTC",
+            "children": [
+              {
+                "name": "Inter-Jurisdiction LIMO",
+                "children": []
+              },
+              {
+                "name": "Inter-Jurisdiction TAXI",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "DPW"
+          }
+        ]
+      },
+      {
+        "name": "Adjudication Services"
+      },
+      {
+        "name": "Business Services"
+      },
+      {
+        "name": "General Services"
+      },
+      {
+        "name": "Bulk Transactions"
+      }
+    ]
+  }
+  

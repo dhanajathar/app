@@ -1,0 +1,89 @@
+{
+  "schema": [
+    {
+      "id": "siNum",
+      "numeric": true,
+      "label": "Index",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "year",
+      "numeric": true,
+      "label": "Year",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "make",
+      "numeric": false,
+      "label": "Make",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "model",
+      "numeric": true,
+      "label": "Model",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "vin",
+      "numeric": false,
+      "label": "VIN",
+      "align": "left",
+      "sortable": false
+    },
+    {
+      "id": "tagNumber",
+      "numeric": false,
+      "label": "Tag Number",
+      "align": "left",
+      "sortable": false
+    },
+    {
+      "id": "titleNumber",
+      "numeric": false,
+      "label": "Title Number",
+      "align": "left",
+      "sortable": false
+    },
+    {
+      "id": "regStatus",
+      "numeric": false,
+      "label": "Registration Status",
+      "align": "left",
+      "sortable": true
+    }
+  ],
+  "results": [
+    {
+      "year": 2005,
+      "make": "Volkswagen",
+      "model": "Jetta",
+      "vin": "1GKE63R3YR179479",
+      "tagNumber": "BYOB-0690",
+      "titleNumber": "k1696424",
+      "regStatus": "ACTIVE"
+    },
+    {
+      "year": 2018,
+      "make": "Honda",
+      "model": "Accord",
+      "vin": "2GBDE63R3YR179498",
+      "tagNumber": "FUN-CART",
+      "titleNumber": "78k987T54",
+      "regStatus": "INACTIVE"
+    },
+    {
+      "year": 1966,
+      "make": "Volkswagen",
+      "model": "Carmen Ghia",
+      "vin": "432E63R3YR1794GG",
+      "tagNumber": "987-06578",
+      "titleNumber": "lim96487",
+      "regStatus": "ACTIVE"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+.MuiInputBase-adornedEnd {
+  padding-right: 0 !important;
+}
+
+.input-adornment-text {
+  background: var(--white70);
+  padding: 16.5px 14px;
+  border-radius: 0 4px 4px 0;
+  border-color: #ededed;
+}
+
+.verified-text {
+  color: #27ae60;
+}
+
+.date-picker {
+  display: flex;
+}
+
+.date-picker .MuiFormControl-root {
+  flex: 1;
+}
+
+.date-picker .MuiInputBase-adornedEnd {
+  padding-right: 14px !important;
+}
+
+.has-date .MuiOutlinedInput-root {
+  border-radius: 4px 0px 0px 4px;
+  border-right: none;
+}
+
+.date-helper-text {
+  background: var(--white70);
+  padding: 0px 10px;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-left: none;
+  font: normal normal 600 12px/17px Open Sans;
+  color: var(--black80);
+  display: flex;
+  align-items: center;
+}
+
+.custom-error {
+  margin-left: 14px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.override-dialog .MuiPaper-root {
+  overflow: visible;
+}
+
+.override-dialog .MuiDialogTitle-root {
+  font: normal normal bold 20px/16px Open Sans;
+}
+
+.override-dialog .MuiDialogActions-root {
+  margin-right: 1rem;
+}
+
+.requester-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -1rem;
+}
+
+.requester {
+  background: #404040 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  width: auto;
+  color: var(--white100);
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.requester-title {
+  font: normal normal normal 12px/17px Open Sans;
+}
+
+.requester-user {
+  font: normal normal bold 14px/19px Open Sans;
+  letter-spacing: 0px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.not-verified-text {
+  color: red;
+}
+
+@media screen and (min-width: 768px) {
+  .truncation-row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .truncation-row > [class*='col-'] > :last-child {
+    margin-top: auto;
+  }
+}
+
+.capture-button {
+  display: flex;
+  align-items: center;
+  color: var(--primary80);
+  border: 1px solid var(--primary80);
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  background: var(--white100);
+  font: normal normal bold 14px/20px Open Sans;
+  cursor: pointer;
+}
+.capture-button svg {
+  color: var(--black80);
+  margin-right: 0.5rem;
+}
+.MuiFormHelperText-root {
+  margin-top: 0 !important;
+}
+.MuiFormControl-root .MuiOutlinedInput-notchedOutline {
+  border-color: var(--black100);
+}

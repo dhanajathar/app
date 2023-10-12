@@ -1,0 +1,143 @@
+.usp-datepick {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: black;
+  width: 330px;
+  height: 40px;
+}
+
+.usp-datepick button svg {
+  padding-right: 1rem;
+}
+
+.vs-exam-type {
+  width: 328px;
+  height: 55px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
+.vs-date-exam {
+  width: 330px;
+  height: 55px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+  margin-left: 10px;
+}
+
+.vs-examiner-type {
+  width: 330px;
+  height: 55px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+  margin-right: 10px;
+}
+
+.vs-all-tag {
+  margin-top: 1rem;
+  padding: 0px 0px 0px 36px;
+}
+
+.vs-examiner {
+  margin-top: 2rem;
+  padding: 0px 0px 0px 36px;
+  font-weight: bold;
+}
+
+.vs-all-tag-examiner {
+  margin-top: 1rem;
+  padding: 0px 0px 0px 36px;
+}
+
+.vs-test-result-Optometrist {
+  width: 330px;
+  height: 55px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+  margin-right: 10px;
+}
+
+.vs-test-result {
+  width: 97.3%;
+  height: 121px;
+  background: #e5f4fe;
+  border-radius: 0px 0px 4px 4px;
+  opacity: 1;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center; /* This centers the content vertically */
+  padding: 0px 0px 0px 36px !important;
+}
+
+.vs-text-right-left-both {
+  margin-right: 10px;
+  background: linear-gradient(to right, #f5f5f5 50%, white 50%);
+  width: 160px;
+  height: 55px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.vs-text-right-left-both-start {
+  margin-right: 14px;
+  padding: 10px 13px;
+}
+
+.vs-remedy-text {
+  width: 330px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+  margin-right: 10px;
+}
+
+.vs-text-field-vision {
+  margin-right: 10px;
+  width: 160px;
+  height: 40px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.vs-text-vision-cond {
+  width: 328px;
+  height: 55px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
+.comment-item-parent {
+  margin-top: 4rem;
+}
+
+.comment-item {
+  display: flex;
+  align-items: center;
+}
+
+.comment-item .comment-details {
+  margin-left: 5px;
+}
+
+.comment-item .comment-details > * {
+  margin-bottom: 5px;
+}
+
+.vs-comment-section {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0px 0px 0px 36px;
+  display: flex;
+  align-items: center;
+}
+
+.vs-comment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vs-comment-text {
+  text-transform: none;
+}
+
+.vs-icon-com {
+  margin-right: 5px;
+}

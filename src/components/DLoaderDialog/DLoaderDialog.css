@@ -1,0 +1,12 @@
+.loader-wrapper {
+    display: flex;
+    min-width: 450px;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+.loading-text {
+    font: normal normal normal 16px/22px Open Sans;
+    color: #333;
+    margin-top: 2rem;
+}

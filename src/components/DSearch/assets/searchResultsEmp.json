@@ -1,0 +1,107 @@
+{
+  "schema": [
+    {
+      "id": "siNum",
+      "numeric": true,
+      "label": "Index",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "empId",
+      "numeric": true,
+      "label": "Emp ID",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "loginId",
+      "numeric": false,
+      "label": "Login ID",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "name",
+      "numeric": false,
+      "label": "Name",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "location",
+      "numeric": false,
+      "label": "Location",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "jobTitle",
+      "numeric": false,
+      "label": "Job Title",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "role",
+      "numeric": false,
+      "label": "Role",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "status",
+      "numeric": false,
+      "label": "Status",
+      "align": "center",
+      "sortable": true
+    }
+  ],
+  "results": [
+    {
+      "empId": 1010,
+      "loginId": "nscourge0@army.mil",
+      "name": "Panni Scourge",
+      "location": "GEORGETOWN",
+      "jobTitle": "Director",
+      "role": "SITE ADMIN",
+      "status": "Active"
+    },
+    {
+      "empId": 1011,
+      "loginId": "bosslady@dc.dmv.gov",
+      "name": "Nalini Rangaraju",
+      "location": "SOUTHWEST",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "CSR",
+      "status": "Active"
+    },
+    {
+      "empId": 1012,
+      "loginId": "joeydonut@dc.dmv.gov",
+      "name": "Joey Donut",
+      "location": "SOUTHWEST",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "SUPER ADMIN",
+      "status": "Active"
+    },
+    {
+      "empId": 1013,
+      "loginId": "burgerman@dc.dmv.gov",
+      "name": "Ronald McDonald",
+      "location": "SOUTHWEST",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "CSR",
+      "status": "Inactive"
+    },
+    {
+      "empId": 1014,
+      "loginId": "chewwy@dc.dmv.gov",
+      "name": "Chewbacca Wookie",
+      "location": "SOUTHWEST",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "CSR",
+      "status": "Active"
+    }
+  ]
+}

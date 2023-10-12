@@ -1,0 +1,120 @@
+.profile-list-container {
+  align-items: stretch;
+}
+.profile-list-table * {
+  box-sizing: border-box;
+}
+.profile-list-table-container {
+  max-height: 28.688rem;
+}
+.profile-list-table .MuiTableRow-root:nth-child(even) {
+  background-color: var(--white60);
+}
+
+.profile-list-table .MuiTableCell-root {
+  font: normal normal normal 16px/22px Open Sans;
+  letter-spacing: 0;
+}
+
+.profile-list-table td.MuiTableCell-root:first-child {
+  text-align: center !important;
+  width: 6.25rem !important;
+}
+
+.profile-list-table td.MuiTableCell-root:last-child {
+  width: 6.25rem !important;
+}
+
+.profile-list-table .MuiTableCell-head,
+.profile-list-table .MuiTableCell-root {
+  padding: 0.15rem 0.5rem;
+  height: 2.938rem;
+  box-sizing: border-box;
+  font: normal normal normal 17px/23px Open Sans;
+  color: var(--black100);
+}
+
+.profile-list-table .MuiTableCell-root.profile-name {
+  text-transform: uppercase;
+}
+
+.profile-list-table .MuiTableCell-head {
+  font: normal normal bold 14px/18px Open Sans;
+  letter-spacing: 0;
+  padding: 0.5rem;
+  background-color: #f8f9fb;
+  line-height: 1.5rem;
+  color: #4d4d4d;
+}
+
+.profile-list-table .MuiSvgIcon-root {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  margin-bottom: -0.25rem;
+}
+
+.profile-list-table td.date-feild {
+  width: 11.563rem !important;
+}
+
+.profile-list-table .MuiInputBase-input {
+  padding: 0.531rem 0.5rem !important;
+  font: normal normal normal 16px/22px Open Sans;
+}
+
+.profile-list-table .table-btn,
+.profile-list-table-footer .table-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: normal normal 600 14px/30px Open Sans;
+  letter-spacing: 0rem;
+  padding: 0;
+  color: #004dc7;
+  cursor: pointer;
+}
+.profile-list-table-footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0rem 1rem 0rem;
+  height: 2.938rem;
+  box-sizing: border-box;
+}
+
+.profile-permisiions-list.list-view {
+  background: var(--white100) 0% 0% no-repeat padding-box;
+  border-radius: 0.313rem;
+  border: 0rem;
+  min-height: 100%;
+  padding: 0rem;
+  box-shadow: unset;
+}
+
+.profile-list-table .profile-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white100) 0% 0% no-repeat padding-box;
+  font: normal normal normal 14px/24px Open Sans;
+  letter-spacing: 0rem;
+  border-radius: 1.5rem;
+  line-height: 1.188rem;
+  padding: 0.34rem 0.7105rem;
+  text-transform: capitalize;
+}
+
+.profile-list-table .profile-status.active {
+  border: 0.063rem solid #07711f;
+  color: #07711f;
+}
+
+.profile-list-table .sort-icon {
+  margin-left: 0.35rem;
+}
+
+.profile-list-table .sort-icon svg {
+  width: 1rem;
+  height: 0.75rem;
+}

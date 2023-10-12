@@ -1,0 +1,41 @@
+[
+  {
+    "addressType": "PRIMARY",
+    "fromDate": "2023-08-22",
+    "toDate": "2023-12-31",
+    "addressDetails": {
+      "addressLine": "200 I ST SE",
+      "city": "WASHINGTON",
+      "state": "DC",
+      "zipCode": "20003-3317",
+      "country": "UNITED STATES"
+    },
+    "residencyCertification": {
+      "isCertification": "NO"
+    }
+  },
+  {
+    "addressType": "TEMPORARY",
+    "fromDate": "05/11/2023",
+    "toDate": "06/10/2023",
+    "addressDetails": {
+      "addressLine": "795 S. PENNSYLVANIA DR.",
+      "city": "WASHINGTON",
+      "state": "DC",
+      "zipCode": "20554-0001",
+      "country": "UNITED STATES"
+    }
+  },
+  {
+    "addressType": "TEMPORARY",
+    "fromDate": "09/09/2022",
+    "toDate": "10/08/2022",
+    "addressDetails": {
+      "addressLine": "615 SOUTH ADDISON DRIVE",
+      "city": "WASHINGTON",
+      "state": "DC",
+      "zipCode": "20470-0001",
+      "country": "UNITED STATES"
+    }
+  }
+]

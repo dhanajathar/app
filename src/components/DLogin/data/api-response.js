@@ -1,0 +1,23 @@
+export default {
+  transactionId: '95edbce7-cc3b-4c83-a589-cc23e042446a',
+  customerId: 'a41bf5f7-0785-45a3-b6a7-e33dc2aafb4f',
+  userId: 'da5fff3c-ae04-4409-b880-1685c5c91812',
+  OTP: '123456',
+  revokedemail: 'TEST1',
+  password: 'test1234',
+
+  cardData: [
+    {
+      type: 'Email',
+      content: 'sd@dc.gov'
+    },
+    {
+      type: 'Text',
+      content: '(202)***-**23'
+    },
+    {
+      type: 'Call',
+      content: '(202)***-**23'
+    }
+  ]
+};

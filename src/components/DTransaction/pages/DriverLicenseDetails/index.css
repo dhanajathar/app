@@ -1,0 +1,75 @@
+.dl-text-driver-license {
+  margin-right: 10px;
+  width: 328px;
+  height: 55px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.dl-text-vision-cond {
+  margin-right: 10px;
+  width: 328px;
+  height: 55px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
+.dl-datepick {
+  margin-right: 10px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: black;
+  width: 159px;
+  height: 40px;
+}
+
+.dl-datepick button svg {
+  padding-right: 1rem;
+}
+
+.dl-datepick input {
+  font-size: 0.9rem;
+}
+
+.dl-previous-DL {
+  margin-right: 10px;
+  width: 159px;
+  height: 55px;
+}
+
+.dl-previous-state {
+  margin-right: 10px;
+  width: 80px;
+  height: 55px;
+}
+
+.dl-previous-cardnum {
+  margin-right: 10px;
+  width: 238px;
+  height: 55px;
+}
+
+.dl-all-tag {
+  margin-top: 1rem;
+  padding: 0px 0px 0px 36px;
+}
+
+.dl-examiner {
+  margin-top: 1.5rem;
+  padding: 0px 0px 0px 36px;
+  font-weight: bold;
+}
+
+.dl-restriction {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.dl-datepick-restriction {
+  margin-right: 10px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: black;
+}
+
+.dl-datepick-restriction button svg {
+  padding-right: 1rem;
+}

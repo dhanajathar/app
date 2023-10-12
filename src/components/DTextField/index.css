@@ -1,0 +1,24 @@
+.DTextField-base {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  width: 100%;
+}
+
+.DTextField-base .DTextField-close-icon {
+  position: absolute;
+  align-self: center;
+  right: 0.5rem;
+  visibility: hidden;
+}
+
+.DTextField-base:hover .DTextField-close-icon:not(:disabled),
+.DTextField-base:active .DTextField-close-icon,
+.DTextField-base:focus .DTextField-close-icon {
+  visibility: visible;
+}
+
+.DTextField-base input {
+  padding-right: 1.5rem !important;
+}

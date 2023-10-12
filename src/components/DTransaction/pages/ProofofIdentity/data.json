@@ -1,0 +1,411 @@
+{
+    "verificationRequestDocument": "", 
+    "alienNumber": "",
+    "receiptNumber": "",
+    "documentExpirationDate": null,
+    "lastName": {
+        "isTruncated": true,
+        "isTransliterated": null,
+        "value": "DOE"
+    },
+    "firstName": {
+        "isTruncated": null,
+        "isTransliterated": null,
+        "value": "JONNY"
+    },
+    "middleName": {
+        "isTruncated": null,
+        "isTransliterated": null,
+        "value": "TET"
+    },
+    "dateOfBirth": "12/29/1984",
+    "verificationStatus": "",
+    "initialVerification": {
+        "status": "INSTITUTE ADDITIONAL VERIFICATION",
+        "lastname": "DOE",
+        "firstName": "JONNY",
+        "middleName": "",
+        "dateOfBirth": "12/29/1984",
+        "country": "",
+        "caseNumber": "0123456789",
+        "dateOfEntry": "",
+        "admittedTo": "",
+        "expirationDate": "04/22/2022"
+    },
+    "verificationHistory": [
+        {
+            "srNo": 1,
+            "documentType": "1-551 (PERMANENT RESIDENT CARD)",
+            "alien": "401-232-232",
+            "receipt": "12323233412",
+            "uSCISDate": "12/29/1989",
+            "destinyDate": "04/22/2022"
+        },
+        {
+            "srNo": 2,
+            "documentType": "1-571 (REFUGEE TRAVEL DOCUMENT)",
+            "alien": "401-232-232",
+            "receipt": "89000666543",
+            "uSCISDate": "12/29/1984",
+            "destinyDate": "04/22/2022"
+        },
+        {
+            "srNo": 3,
+            "documentType": "1-571 (REFUGEE TRAVEL DOCUMENT)",
+            "alien": "401-232-232",
+            "receipt": "89000666543",
+            "uSCISDate": "12/29/1984",
+            "destinyDate": "04/22/2022"
+        },
+        {
+            "srNo": 4,
+            "documentType": "1-571 (REFUGEE TRAVEL DOCUMENT)",
+            "alien": "401-232-232",
+            "receipt": "89000666543",
+            "uSCISDate": "12/29/1984",
+            "destinyDate": "04/22/2022"
+        }
+    ],
+    "visaTypeList": [
+        {
+            "value": 1,
+            "label": "A-1"
+        },
+        {
+            "value": 2,
+            "label": "A-2"
+        },
+        {
+            "value": 3,
+            "label": "A-3"
+        },
+        {
+            "value": 4,
+            "label": "B-1"
+        },
+        {
+            "value": 5,
+            "label": "B-1/2"
+        },
+        {
+            "value": 6,
+            "label": "B-2"
+        },
+        {
+            "value": 7,
+            "label": "C-1"
+        },
+        {
+            "value": 8,
+            "label": "C-1/D"
+        },
+        {
+            "value": 9,
+            "label": "C-2"
+        },
+        {
+            "value": 10,
+            "label": "C-3"
+        },
+        {
+            "value": 11,
+            "label": "D"
+        },
+        {
+            "value": 12,
+            "label": "E-1"
+        },
+        {
+            "value": 13,
+            "label": "E-2"
+        },
+        {
+            "value": 14,
+            "label": "F-1"
+        },
+        {
+            "value": 15,
+            "label": "F-2"
+        },
+        {
+            "value": 16,
+            "label": "G-1"
+        },
+        {
+            "value": 17,
+            "label": "G-2"
+        },
+        {
+            "value": 18,
+            "label": "G-3"
+        },
+        {
+            "value": 19,
+            "label": "G-4"
+        },
+        {
+            "value": 20,
+            "label": "G-5"
+        },
+        {
+            "value": 21,
+            "label": "H-1A"
+        },
+        {
+            "value": 22,
+            "label": "H-1B"
+        },
+        {
+            "value": 23,
+            "label": "H-2A"
+        },
+        {
+            "value": 24,
+            "label": "H-2B"
+        },
+        {
+            "value": 25,
+            "label": "H-3"
+        },
+        {
+            "value": 26,
+            "label": "H-4"
+        },
+        {
+            "value": 27,
+            "label": "H-1C"
+        },
+        {
+            "value": 28,
+            "label": "I"
+        },
+        {
+            "value": 29,
+            "label": "J-1"
+        },
+        {
+            "value": 30,
+            "label": "J-2"
+        },
+        {
+            "value": 31,
+            "label": "K-1"
+        },
+        {
+            "value": 32,
+            "label": "K-2"
+        },
+        {
+            "value": 33,
+            "label": "K-3"
+        },
+        {
+            "value": 34,
+            "label": "K-4"
+        },
+        {
+            "value": 35,
+            "label": "L-1"
+        },
+        {
+            "value": 36,
+            "label": "L-2"
+        },
+        {
+            "value": 37,
+            "label": "M-1"
+        },
+        {
+            "value": 38,
+            "label": "M-2"
+        },
+        {
+            "value": 39,
+            "label": "M-8"
+        },
+        {
+            "value": 40,
+            "label": "M-9"
+        },
+        {
+            "value": 41,
+            "label": "NATO-1"
+        },
+        {
+            "value": 42,
+            "label": "NATO-2"
+        },
+        {
+            "value": 43,
+            "label": "NATO-3"
+        },
+        {
+            "value": 44,
+            "label": "NATO-4"
+        },
+        {
+            "value": 45,
+            "label": "NATO-5"
+        },
+        {
+            "value": 46,
+            "label": "NATO-6"
+        },
+        {
+            "value": 47,
+            "label": "NATO-7"
+        },
+        {
+            "value": 48,
+            "label": "O-1"
+        },
+        {
+            "value": 49,
+            "label": "O-2"
+        },
+        {
+            "value": 50,
+            "label": "O-3"
+        },
+        {
+            "value": 51,
+            "label": "OTHER"
+        },
+        {
+            "value": 52,
+            "label": "P-1"
+        },
+        {
+            "value": 53,
+            "label": "P-2"
+        },
+        {
+            "value": 54,
+            "label": "P-3"
+        },
+        {
+            "value": 55,
+            "label": "P-4"
+        },
+        {
+            "value": 56,
+            "label": "Q-1"
+        },
+        {
+            "value": 57,
+            "label": "Q-2"
+        },
+        {
+            "value": 58,
+            "label": "Q-3"
+        },
+        {
+            "value": 59,
+            "label": "R-1"
+        },
+        {
+            "value": 60,
+            "label": "R-2"
+        },
+        {
+            "value": 61,
+            "label": "S-5"
+        },
+        {
+            "value": 62,
+            "label": "S-6"
+        },
+        {
+            "value": 63,
+            "label": "S-7"
+        },
+        {
+            "value": 64,
+            "label": "T-1"
+        },
+        {
+            "value": 65,
+            "label": "T-2"
+        },
+        {
+            "value": 66,
+            "label": "TD"
+        },
+        {
+            "value": 67,
+            "label": "TN"
+        },
+        {
+            "value": 68,
+            "label": "U-1"
+        },
+        {
+            "value": 69,
+            "label": "U-2"
+        },
+        {
+            "value": 70,
+            "label": "V-1"
+        },
+        {
+            "value": 71,
+            "label": "V-2"
+        }
+    ],
+    "docuementType": [
+        {
+            "value": 1,
+            "label": "ASYLEE"
+        },
+        {
+            "value": 2,
+            "label": "I-766 (EMPLOYMENT AUTHORIZATION CARD)"
+        },
+        {
+            "value": 3,
+            "label": "INS NOTICE OF ACTION"
+        },
+        {
+            "value": 4,
+            "label": "I-20 (F-1 STUDENTS STATUS)"
+        },
+        {
+            "value": 5,
+            "label": "I-327 (REENTRY PERMIT) "
+        },
+        {
+            "value": 6,
+            "label": "TEMPORARY I-551 STAMP (ON PASSPORT OR I-94)"
+        },
+        {
+            "value": 7,
+            "label": "OTHER"
+        },
+        {
+            "value": 8,
+            "label": "I-551 (PERMANENT RESIDENT CARD)"
+        },
+        {
+            "value": 9,
+            "label": "I-571 (REFUGEE TRAVEL DOCUMENT)"
+        },
+        {
+            "value": 10,
+            "label": "VISA W/I-94 (ARRIVAL/DEPARTURE RECORD) "
+        },
+        {
+            "value": 10,
+            "label": "DS2019 EXCHANGE VISITOR J-1 STATUS)"
+        }
+    ],
+    "countryList": [
+        {
+            "value": "USA",
+            "label": "USA"
+        }
+    ],
+    "statusList": [
+        "INSTITUTE ADDITIONAL VERIFICATION",
+        "SECONDARY VERIFICATION SUCCESSFULLY REQUESTED"
+    ]
+}

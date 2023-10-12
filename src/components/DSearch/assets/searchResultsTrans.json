@@ -1,0 +1,69 @@
+{
+  "schema": [
+    {
+      "id": "siNum",
+      "numeric": true,
+      "label": "Index",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "stID",
+      "numeric": true,
+      "label": "Super Transaction ID",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "stStatus",
+      "numeric": false,
+      "label": "Super Transaction Status",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "transName",
+      "numeric": true,
+      "label": "TransactionName",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "transStartDate",
+      "numeric": false,
+      "label": "Transaction Start Date",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "transStatus",
+      "numeric": true,
+      "label": "Transaction Status",
+      "align": "center",
+      "sortable": true
+    }
+  ],
+  "results": [
+    {
+      "stId": 21997907,
+      "stStatus": "complete",
+      "transName": "RENEW DRIVERS LICENSE",
+      "transStartDate": "09/07/2022",
+      "transStatus": "complete"
+    },
+    {
+      "stId": 28994872,
+      "stStatus": "incomplete",
+      "transName": "NEW ID",
+      "transStartDate": "05/02/2023",
+      "transStatus": "incomplete"
+    },
+    {
+      "stId": 12345678,
+      "stStatus": "incomplete",
+      "transName": "DUPLICATE DRIVERS LICENSE",
+      "transStartDate": "01/02/2023",
+      "transStatus": "complete"
+    }
+  ]
+}

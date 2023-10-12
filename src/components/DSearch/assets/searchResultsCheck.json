@@ -1,0 +1,33 @@
+{
+  "schema": [
+    {
+      "id": "siNum",
+      "numeric": true,
+      "label": "Index",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "checkNum",
+      "numeric": true,
+      "label": "Check Number",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "amount",
+      "numeric": false,
+      "label": "Amount",
+      "align": "center",
+      "sortable": true
+    },
+    {
+      "id": "issueDate",
+      "numeric": false,
+      "label": "Issue Date",
+      "align": "center",
+      "sortable": true
+    }
+  ],
+  "results": []
+}

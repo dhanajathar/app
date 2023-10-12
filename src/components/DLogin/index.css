@@ -1,0 +1,427 @@
+.d-login {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-image: url('./assets/login-bg.svg'), linear-gradient(#153a8b, #0c255f);
+  background-size: cover;
+  height: 100%;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.ecode-footertext,
+.selectopt-footertext,
+.welcome-footertext,
+.login-footertext {
+  padding-top: 0.5rem;
+  text-align: center;
+  font: normal normal normal 12px/20px Open Sans;
+  letter-spacing: -0.09px;
+  color: #ffffff6e;
+  opacity: 1;
+}
+
+.login-footer-container {
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.ecode-container,
+.selectopt-container,
+.welcome-container {
+  border-radius: 0.625rem;
+  background: white;
+  padding-bottom: 2rem;
+  padding-top: 0.063rem;
+}
+
+.login-container {
+  border-radius: 0.625rem;
+  background: white;
+  padding-bottom: 2rem;
+  padding-top: 0.063rem;
+}
+
+.login-container .MuiInputBase-input {
+  background: rgba(0, 0, 0, 0);
+}
+
+.ecode-box,
+.selectopt-box,
+.welcome-box {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-box {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ecode-destext,
+.login-destext,
+.selectopt-destext,
+.welcome-destext {
+  text-align: left;
+  font: normal normal bold 32px/30px Open Sans;
+  letter-spacing: 1.28px;
+  color: #00488e;
+  text-shadow: 0px 0px 2px #00000040;
+  text-transform: uppercase;
+  opacity: 1;
+  padding-bottom: 1rem;
+}
+
+.ecode-validcodetext {
+  text-align: left;
+  font: normal normal bold 14px/18px Open Sans;
+  padding-top: 1rem;
+  letter-spacing: 0px;
+  color: #333333;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.ecode-msgtext {
+  margin: 0.5rem;
+  text-align: left;
+  font: normal normal normal 12px/50px Open Sans;
+  letter-spacing: 0.26px;
+  color: #7c7c7c;
+  opacity: 1;
+}
+
+.ecode-phtext {
+  margin: 0.5rem;
+  text-align: left;
+  font: normal normal bold 16px/22px Open Sans;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+}
+
+.ecode-resend {
+  font: normal normal 600 14px/30px Open Sans;
+  letter-spacing: 0.26px;
+  color: #008ad7;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.ecode-legacy,
+.login-legacy,
+.selectopt-legacy,
+.welcome-legacy {
+  padding-top: 0.75rem;
+  display: flex;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 13px;
+  letter-spacing: 0.7px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.login-facetouch {
+  text-align: left;
+  font: normal normal bold 14px/20px Open Sans;
+  letter-spacing: 0px;
+  color: #333333;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.login-forgotpass {
+  text-align: right;
+  font: normal normal normal 14px/36px Open Sans;
+  letter-spacing: 0.26px;
+  color: #438afe;
+  opacity: 1;
+  outline: 0;
+}
+
+.ecode-footerlogo,
+.login-footerlogo,
+.selectopt-footerlogo,
+.welcome-footerlogo {
+  background: #ffffff 0% 0% no-repeat paddingbox;
+  margin: 20px auto;
+  width: 100px;
+  height: 60px;
+  padding: 10px;
+}
+
+.welcome-logintext {
+  text-align: left;
+  font: normal normal normal 16px/22px Open Sans;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+  padding-top: 1rem;
+}
+
+.welcome-circleicon {
+  color: #0e8e00;
+  margin: 2rem;
+  opacity: 1;
+  height: 4.5rem !important;
+  width: 4.5rem !important;
+  cursor: pointer;
+  text-align: center;
+}
+
+.welcome-loadprofiletext {
+  text-align: left;
+  margin: 1rem;
+  font: normal normal normal 16px/22px Open Sans;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+  padding-top: 2rem;
+}
+
+.welcome-loader {
+  margin-left: 4rem;
+}
+
+.welcome-user {
+  text-align: center;
+  padding-top: 1rem;
+  font: normal normal bold 28px/38px Open Sans;
+  letter-spacing: 0px;
+  color: #333333;
+  opacity: 1;
+}
+
+.ecode-codetext {
+  margin: 1rem;
+}
+
+.selectopt-optiontext {
+  margin: 0.1rem;
+  font: normal normal bold 14px/20px Open Sans;
+  color: black;
+  text-align: left;
+  padding-top: 1rem;
+}
+
+.selectopt-optiontext-subtext {
+  margin: 0.1rem;
+  font: normal normal normal 12px/22px Open Sans;
+  letter-spacing: 0.26px;
+  color: #7c7c7c;
+  text-align: left;
+  opacity: 1;
+}
+
+.select-loginaccttext {
+  text-align: left;
+  font: normal normal normal 13px/40px Open Sans;
+  letter-spacing: 0.26px;
+  color: #7c7c7c;
+  opacity: 1;
+  margin-left: 0.6rem;
+}
+
+.selectopt-cardtext {
+  width: 22rem;
+  padding: 1rem;
+  margin: 0.625rem;
+  background: #f0f8ff;
+}
+
+.selectopt-cardtext1 {
+  display: inline-block;
+  flex-direction: row;
+  padding: 0.5rem;
+  margin: 0.225rem;
+  background: #f0f8ff;
+}
+
+.selectopt-mobilenum {
+  margin-left: 1rem;
+}
+
+.login-gridforgotp {
+  padding-top: 1rem;
+}
+
+.login-divderlog {
+  text-align: center;
+  font: normal normal normal 14px/23px Open Sans;
+  letter-spacing: 0px;
+  color: #333333;
+  opacity: 1;
+  padding-top: 2rem;
+}
+
+.login-boxicon {
+  display: flex;
+  padding-bottom: 0.938rem;
+  padding-left: 6rem;
+  padding-top: 2rem;
+}
+
+.login-InputLabel {
+  text-align: left;
+  font: normal normal normal 12px/20px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.ecode-codevalid {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.logofooter-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.logo-circle {
+  background: white;
+  border-radius: 50%;
+  height: 6rem;
+  width: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-alert-error {
+  background-color: #cd292c;
+  font: normal normal normal 14px/19px Open Sans;
+  letter-spacing: 0px;
+  color: #ffffff;
+}
+
+.logofooter-circle {
+  background: white;
+  height: 2.125rem;
+  width: 5.563rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-header {
+  height: 60px;
+}
+
+.logofooter {
+  height: 1.625rem;
+}
+
+.ecode-cardcontent {
+  padding: 10px 14px 10px 10px !important;
+  width: 124px;
+  height: 62px;
+}
+
+.ecode-cardcontent-text {
+  font: normal normal bold 12px/18px Open Sans;
+}
+
+.ecode-cardcontent-subtext {
+  font: normal normal normal 14px/26px Open Sans;
+}
+
+.ecode-cardcontent-subtext-email {
+  font: normal normal normal 12px/22px Open Sans;
+  /* width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
+}
+
+.ecode-doneIcon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.ecode-card {
+  position: relative;
+  background-color: #4c7cd2 !important;
+  color: white !important;
+  border-radius: 4px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ecode-card.selected {
+  background-color: #25824b !important;
+  color: white;
+  cursor: pointer;
+}
+
+.ecode-card.disabled {
+  background-color: #e0e0e0 !important;
+  color: #666666 !important;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ecode-helper-text {
+  text-align: left;
+  color: #d32f2f;
+  font-family: Open Sans;
+}
+
+.ecode-resend-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ecode-valid-counter {
+  text-align: right;
+  font: normal normal normal 14px/36px Open Sans;
+  letter-spacing: 0.26px;
+  color: #333333;
+  opacity: 1;
+}
+
+.ecode-verifybtn {
+  padding: 12px 16px 12px 16px;
+  font-family: Open Sans;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.ecode-helpertext-hidden {
+  visibility: hidden;
+  height: 1.5rem; /* Adjust the height as needed */
+}
+.validation-code-input {
+  font: normal normal bold 16px/12px Open Sans;
+
+  width: 3.1rem;
+  height: 3rem;
+  margin: 0.5rem;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid #dedede;
+  outline: none;
+  color: #666666;
+}

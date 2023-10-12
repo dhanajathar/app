@@ -1,0 +1,32 @@
+{
+    "examType": "Without Correction",
+    "rightEye": 20,
+    "leftEye": 20,
+    "bothEyes": 20,
+    "fieldOfVision": 180,
+    "visionCondition": "STABLE",
+    "remedyEyeCorrection": "",
+    "remedyDate": "2023-05-24",
+    "examiner": {
+        "examinerType": "DMV Employee",
+        "DMV": "DAVE, JONATHAN",
+        "examDate": "2023-05-24",
+        "testResult": "PASS",
+        "optometristRecommendation": "No",
+        "interimEyeReportRequired": "No"
+    },
+    "examTypeList" :[
+        "Without Correction",
+        "With Correction"
+    ],
+    "examinerTypeList" :[
+        "DMV Employee",
+        "Out of State DMV",
+        "Physician's Report"
+    ],
+    "eyeReport":[
+        "Yes",
+        "No"
+    ]
+
+}

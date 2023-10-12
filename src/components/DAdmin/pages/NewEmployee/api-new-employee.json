@@ -1,0 +1,52 @@
+{
+  "initial_values": {
+    "lastName": "",
+    "middleName": "",
+    "firstName": "",
+    "lastNameIsTransliterated": false,
+    "middleNameIsTransliterated": false,
+    "firstNameIsTransliterated": false,
+    "lastNameIsTruncated": false,
+    "middleNameIsTruncated": false,
+    "firstNameIsTruncated": false,
+    "loginId": "",
+    "employeeId": "",
+    "department": "",
+    "jobTitle": "",
+    "location": "",
+    "lockerBoxId": "",
+    "mobilePhone": "",
+    "workPhone": "",
+    "beginDate": "",
+    "endDate": "",
+    "userType": ""
+  },
+  "errors": {
+    "lastName": "",
+    "middleName": "",
+    "firstName": "",
+    "loginId": "",
+    "employeeId": "",
+    "department": "",
+    "jobTitle": "",
+    "location": "",
+    "lockerBoxId": "",
+    "mobilePhone": "",
+    "workPhone": "",
+    "beginDate": "",
+    "endDate": "",
+    "userType": ""
+  },
+  "dropDowns": {
+    "jobTitle": [
+      { "title": "DIRECTOR", "value": "DIRECTOR" },
+      { "title": "DMV", "value": "DMV" }
+    ],
+    "location": [
+      { "title": "ALL LOCATIONS", "value": "ALL LOCATIONS" },
+      { "title": "C STREET SERVICE CENTER", "value": "C STREET SERVICE CENTER" }
+    ],
+    "department": [{ "title": "ADMINISTRATIVE SERVICES", "value": "ADMINISTRATIVE SERVICES" }],
+    "userType": [{ "title": "NORMAL", "value": "NORMAL" }]
+  }
+}

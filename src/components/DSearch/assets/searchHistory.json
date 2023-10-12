@@ -1,0 +1,76 @@
+{
+  "schema": [
+    {
+      "id": "id",
+      "numeric": true,
+      "label": "Super Transaction ID",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "superStatus",
+      "numeric": false,
+      "label": "Super Transaction Status",
+      "align": "center",
+      "sortable": false
+    },
+    {
+      "id": "transactionName",
+      "numeric": false,
+      "label": "Transaction Name",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "startDate",
+      "numeric": false,
+      "label": "Transaction Start Date",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "id": "transactionStatus",
+      "numeric": false,
+      "label": "Transaction Status",
+      "align": "center",
+      "sortable": true
+    }
+  ],
+  "results": [
+    {
+      "id": "21997907",
+      "superStatus": "complete",
+      "transactionName": "RENEW DRIVER LICENSE",
+      "startDate": "09/07/2022",
+      "transactionStatus": "complete"
+    },
+    {
+      "id": "20115321",
+      "superStatus": "interrupted",
+      "transactionName": "NEW VEHICLE NEW TITLE",
+      "startDate": "09/07/2022",
+      "transactionStatus": "interrupted"
+    },
+    {
+      "id": "21997907",
+      "superStatus": "complete",
+      "transactionName": "RENEW DRIVER LICENSE",
+      "startDate": "09/07/2022",
+      "transactionStatus": "complete"
+    },
+    {
+      "id": "10997857",
+      "superStatus": "cancelled",
+      "transactionName": "RENEW DRIVER LICENSE",
+      "startDate": "01/01/2022",
+      "transactionStatus": "cancelled"
+    },
+    {
+      "id": "21997998",
+      "superStatus": "complete",
+      "transactionName": "RENEW DRIVER LICENSE",
+      "startDate": "09/07/2022",
+      "transactionStatus": "complete"
+    }
+  ]
+}

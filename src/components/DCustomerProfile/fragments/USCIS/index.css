@@ -1,0 +1,17 @@
+.status {
+  display: flex;
+  align-items: center;
+}
+.status > div {
+  margin-right: 1rem;
+}
+.status-text {
+  color: orange;
+  font-size: 14px;
+}
+.date-info {
+  background: #ccc;
+}
+.grid-top-margin {
+  margin-top: 2rem;
+}

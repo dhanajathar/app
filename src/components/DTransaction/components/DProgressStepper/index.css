@@ -1,0 +1,148 @@
+.stepperlabel {
+  font: normal normal bold 0.9rem/20px Open Sans;
+}
+
+.steppersubitile {
+  font-size: 0.6rem;
+  text-align: left;
+}
+
+.steppercompleted {
+  color: #1dc776;
+  z-index: 1;
+  font-size: 1.3rem;
+}
+.stepincomplete {
+  color: #dbdbdb;
+}
+
+.stepperroot {
+  color: #1dc776;
+  display: flex;
+  width: 25px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepperactive {
+  color: #1dc776;
+}
+
+.MuiStepConnector-root {
+  top: -0.7rem;
+  left: -2px;
+  letter-spacing: 0;
+}
+
+.MuiStepConnector-line {
+  border-color: #dbdbdb;
+  border-radius: 0.06rem;
+  border-width: 0.19rem;
+  display: none;
+}
+
+.Mui-active .MuiStepConnector-line,
+.Mui-completed .MuiStepConnector-line {
+  border-color: #1dc776;
+}
+
+.MuiStepLabel-label {
+  margin-top: 0rem !important;
+}
+
+.stepper-sub-step {
+  margin-left: 30px;
+  border: 0px solid;
+}
+.MuiStepLabel-alternativeLabel {
+  flex-direction: row !important;
+  text-align: left;
+}
+
+.sub-step-label {
+  font: normal normal normal 12px/20px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.sub-step-label.active {
+  font: normal normal 600 12px/20px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.sub-step-label.incomplete {
+  font: normal normal normal 12px/20px Open Sans;
+  letter-spacing: 0px;
+  color: #666666;
+}
+
+.sub-stepper-icon {
+  color: #1dc776;
+  z-index: 1;
+  font-size: 12px;
+  margin-right: 5px;
+  margin-left: -17px;
+}
+
+.step-wrapper.complete::after {
+  content: '';
+  border: 1px solid #1dc776;
+  position: absolute;
+  left: 11px;
+  height: 23px;
+  top: 27px;
+  z-index: -1;
+}
+
+.last-wrapper.complete::after {
+  border: none;
+}
+
+.step-wrapper.inprogress::after {
+  content: '';
+  border: 1px dotted #dbdbdb;
+  position: absolute;
+  left: 11px;
+  height: calc(100% - 24px);
+  top: 34px;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.last-wrapper.inprogress::after {
+  border: none;
+}
+
+.step-wrapper.incomplete::after {
+  content: '';
+  border: 1px solid #dbdbdb;
+  position: absolute;
+  left: 11px;
+  height: 21px;
+  top: 29px;
+  z-index: -1;
+}
+
+.step-wrapper.incomplete:last-child::after {
+  content: '';
+  border: 0px solid #dbdbdb;
+  position: absolute;
+  left: 11px;
+  height: 23px;
+  top: 29px;
+  z-index: -1;
+}
+
+.stepper-label {
+  cursor: pointer;
+}
+
+.sub-stepper-label {
+  cursor: pointer;
+  white-space: nowrap;
+}

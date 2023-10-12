@@ -1,0 +1,11 @@
+
+
+.truncated_icons svg {
+      width: 20px;
+      height: 20px;
+      background: #FCE68C 0% 0% no-repeat padding-box;
+      border-radius: 50%;
+      fill: var(--black100);
+      padding: 5px;
+      margin: 0 0.5rem;
+    }

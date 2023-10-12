@@ -1,0 +1,26 @@
+.container {
+  font-size: 3rem;
+  margin: auto;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+/* tempory CSS block to be removed when adding progress stepper */
+.d-container {
+  background-color: #ffffff;
+  padding-bottom: 1.5rem;
+  width: 100%;
+  max-height: 95%;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 1px 3px 6px #0000000d;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  overflow-y: auto;
+  max-width: calc(100% - 15rem);
+}
+
+.sub_title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 1rem 0;
+}

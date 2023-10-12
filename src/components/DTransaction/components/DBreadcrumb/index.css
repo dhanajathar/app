@@ -1,0 +1,342 @@
+.DBreadcrumb-item-index {
+  display: inline-flex;
+  align-items: center;
+  color: #000;
+  font: normal normal normal 16px/30px Open Sans;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+
+.DBreadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  color: #000;
+  font: normal normal 600 16px/30px Open Sans;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+
+.DBreadcrumb-icon {
+  font-size: 16;
+  margin-left: 4px;
+  color: #2580ec;
+  cursor: pointer;
+}
+
+.breadcrumb-dropdown {
+  width: 213px;
+  height: 336px;
+  z-index: 500;
+  position: relative;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+.breadcrumb-dropdown-close {
+  width: 20px;
+  height: 20px;
+  color: #707070;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.breadcrumb-dropdown-container {
+  margin-top: 34px;
+  margin-left: 15px;
+}
+
+.breadcrumb-dropdown-label {
+  font: normal normal bold 14px/19px Open Sans;
+  letter-spacing: 0px;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.breadcrumb-dropdown-content {
+  font: normal normal normal 14px/19px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  margin-bottom: 9px;
+}
+
+.breadcrumb-dropdown-copy {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.breadcrumb-dropdown-divider {
+  border: 1px solid #c3c3c3;
+  width: 90%;
+  margin: auto;
+}
+
+.breadcrumb-dropdown-button {
+  margin: 3px;
+  cursor: pointer;
+}
+
+.breadcrumb-minus-icon,
+.breadcrumb-plus-icon {
+  width: 14;
+  height: 14;
+}
+
+.l-shaped-border {
+  position: relative;
+  line-height: 2rem;
+}
+
+.breadcrumb-dialog-container {
+  display: flex;
+  height: 40rem;
+}
+
+.breadcrumb-left-pane {
+  min-width: 28rem;
+  border-right: 6px solid #d9d9d9;
+  overflow-x: hidden;
+}
+
+.breadcrumb-left-pane.isResizing {
+  cursor: col-resize;
+}
+
+.breadcrumb-right-pane {
+  flex: 2;
+  background-color: #d9d9d9;
+  text-align: center;
+  align-items: center;
+  min-width: 45%;
+  overflow: hidden;
+}
+
+.breadcrumb-treeview-content {
+  padding-top: 18px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font: normal bold 18px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #1860b5;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.breadcrumb-document {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tree-item-label-level-unique {
+  color: red;
+}
+
+.breadcrumb-slider-container {
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.breadcrumb-slider {
+  transform: rotate(180deg);
+}
+
+.breadcrumb-slider .MuiSlider-track {
+  color: grey;
+  border: none;
+  width: 0px;
+}
+
+.breadcrumb-slider .MuiSlider-rail {
+  color: grey;
+  width: 2px;
+}
+
+.breadcrumb-img-default,
+.breadcrumb-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.breadcrumb-dialog-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.breadcrumb-dialog-close-top {
+  text-align: left;
+  font: normal normal 600 14px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.breadcrumb-closeicon {
+  width: 1.25rem;
+  height: 1.875rem;
+  padding-left: 0.25rem;
+  opacity: 1;
+}
+
+.breadcrumb-border {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 1px 1px #00000029;
+  border: 4px solid #efefef;
+  border-radius: 6px;
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  height: 641px;
+}
+.l-shaped-border ul li {
+  position: relative;
+}
+
+.l-shaped-border .MuiTreeItem-label::after {
+  border: none;
+}
+
+.l-shaped-border li li li .MuiTreeItem-iconContainer {
+  display: none;
+}
+
+.l-shaped-border li li li .MuiTreeItem-content {
+  padding: 0;
+}
+
+.l-shaped-border ul li:after {
+  position: absolute;
+  border-left: 2px dashed #707070;
+  left: -1.25rem;
+  top: 0;
+  content: '';
+  height: 100%;
+}
+.l-shaped-border ul li:last-child::after {
+  border: none;
+}
+.l-shaped-border ul li:last-child::before {
+  border-left: 2px dashed #707070;
+  position: absolute;
+  height: 2rem;
+  left: -1.25rem;
+}
+
+.l-shaped-border ul li::before {
+  position: absolute;
+  border-bottom: 2px dashed #707070;
+  content: '';
+  left: -1.1rem;
+  width: 1.25rem;
+  height: 2rem;
+}
+
+
+.l-shaped-border ul li li::before {
+  border: none;
+}
+
+.l-shaped-border ul li li::after {
+  border: none;
+}
+.l-shaped-border ul li li:last-child::before {
+  border: none;
+}
+.l-shaped-border .Mui-selected {
+  background-color: inherit !important;
+}
+.l-shaped-border .MuiTreeItem-content {
+  cursor: inherit;
+}
+.l-shaped-border .MuiTreeItem-content:hover {
+  background-color: inherit !important;
+}
+.DBreadcrumb-treev-button {
+  text-transform: none;
+  font: normal normal 600 16px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #1860b5;
+  opacity: 1;
+}
+
+.DBreadcrumb-header-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.DBreadcrumb-scan-text {
+  font: normal normal bold 20px/16px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+}
+
+.tree-item-label-level-0 {
+  text-align: left;
+  font: normal normal bold 18px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #1860b5;
+  text-transform: uppercase;
+  opacity: 1;
+  white-space: normal;
+  padding-left: 0.125rem;
+}
+
+.tree-item-label-level-1 {
+  text-align: left;
+  font: normal normal 600 16px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #1960b5;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.tree-item-label-level-no {
+  text-align: left;
+  font: normal normal normal 14px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  text-transform: none;
+  white-space: normal;
+  padding-left: 1rem;
+}
+
+.tree-item-label-level-link {
+  text-align: left;
+  font: normal normal 600 14px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #1960b5;
+  opacity: 1;
+  text-transform: none;
+  white-space: normal;
+  cursor: pointer;
+  padding-left: 1rem;
+}
+
+.tree-item-label-level-optm {
+  text-align: left;
+  font: italic normal normal 14px/18px Open Sans;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  text-transform: none;
+  white-space: normal;
+}

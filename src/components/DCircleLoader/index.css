@@ -1,0 +1,41 @@
+@keyframes loader {
+    0% {
+      transform: translate(-5px);
+    }
+    50% {
+      transform: translate(0px);
+    }
+    100% {
+      transform: translate(-5px);
+    }
+  }
+  
+  .circle-container {
+    position: relative;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .blue {
+    background-color: #0e5fe3;
+    left: 6px;
+    animation: loader 1s infinite linear;
+  }
+  
+  .red {
+    background-color: #0ebfe3;
+    left: 12px;
+    z-index: 1;
+    animation: loader 1s infinite linear 0.5s;
+    animation-delay: -0.5s;
+  }
+  
