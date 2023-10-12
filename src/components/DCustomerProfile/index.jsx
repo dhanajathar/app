@@ -62,25 +62,28 @@ export default function DCustomerProfile() {
             <div className='profile-content'> <ProfileContent /> </div>
             <div className='tabs-wrapper'>
               <MuiTabs contentClass='tab-content-scroll' tabs={tabs} />
-              <div className='d-flex-between'>
-                <div> </div>
-                <div>
-                  <Button variant='outlined' color='inherit' startIcon={<ArrowBackIosIcon />}>
-                    {' '}
-                    {BACK.toUpperCase()}{' '}
-                  </Button>
-                  <Button
-                    className='select-button'
-                    onClick={event => handleSelectClick(event)}
-                    variant='contained'
-                    color='primary'
-                    endIcon={<ArrowForwardIosIcon />}
-                  >
-                    {' '}
-                    {SELECT_TRANSACTION.toUpperCase()}{' '}
-                  </Button>
-                </div>
+              <div className='version-button'>
+                <Button variant="text">Show Version History</Button>
               </div>
+            </div>
+          </div>
+          <div className='d-flex-between'>
+            <div> </div>
+            <div>
+              <Button variant='outlined' color='inherit' startIcon={<ArrowBackIosIcon />}>
+                {' '}
+                {BACK.toUpperCase()}{' '}
+              </Button>
+              <Button
+                className='select-button'
+                onClick={event => handleSelectClick(event)}
+                variant='contained'
+                color='primary'
+                endIcon={<ArrowForwardIosIcon />}
+              >
+                {' '}
+                {SELECT_TRANSACTION.toUpperCase()}{' '}
+              </Button>
             </div>
           </div>
 
