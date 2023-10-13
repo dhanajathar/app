@@ -1,19 +1,4 @@
-.usp-box {
-  margin-top: 2rem;
-  padding-bottom: 2rem;
-  flex-grow: 1;
-}
-
-.usp-passptnum {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: black;
-}
-
-.usp-datepick {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: black;
-  width: 100%;
-}
+ 
 
 .usp-datepick button svg {
   padding-right: 1rem;

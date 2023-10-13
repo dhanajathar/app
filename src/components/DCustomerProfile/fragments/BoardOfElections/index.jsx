@@ -1,307 +1,204 @@
-import {
-  Grid,
-  FormControl,
-  Checkbox,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField, 
-} from '@mui/material';
+
 import React, { useState } from 'react';
+import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+
+
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import './BoardOfElectionsFragment.css';
 import mockData from './data.json';
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function BoardOfElectionsFragment() {
   const [data, setData] = useState(mockData);
+  const PRIMARY = 'PRIMARY';
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <FormControl sx={{ mx: 1 }}>
-            <label className='contactlabel'>
-              Do you want to register to vote in the District of Columbia
-            </label>
+    <div className='notification-msg'> <CheckIcon/> BOE NOTIFIED </div>
+       <div className='d-row'>
+       <div className='col col-sm-12 col-md-4'>
+        <TextField
+            fullWidth
+            label='Registered to Vote in District of Columbia'
+            disabled
+            value={data.registerToVoteColumbia}
+
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <FormControl fullWidth>
+            <InputLabel id='registrationForm'>Registration For Form </InputLabel>
             <Select
-              sx={{ width: 320 }}
-              className='contactselect'
-              value={data.registerToVoteColumbia}
-              input={<OutlinedInput />}
-              disabled
-              onChange={e => setData({ ...data, registerToVoteColumbia: e.target.value })}
-            >
-              <MenuItem value={'yes'}>Yes</MenuItem>
-              <MenuItem value={'no'}>No</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl sx={{ mx: 1, width: 320 }}>
-            <label className='contactlabel'>Registration for Form</label>
-            <Select
-              className='contactselect'
+              labelId='registrationForm'
+              id='registrationForm'
               value={data.registrationForForm}
-              input={<OutlinedInput />}
+              label='Registration For Form '
               disabled
-              onChange={e => setData({ ...data, registrationForForm: e.target.value })}
             >
-              <MenuItem value={'yes'}>Yes</MenuItem>
-              <MenuItem value={'no'}>No</MenuItem>
+              <MenuItem value={'NEW REGISTRATION'}> NEW REGISTRATION </MenuItem> 
             </Select>
           </FormControl>
-          <FormControl sx={{ mx: 1, width: 320 }}>
-            <label className='contactlabel'>Poll Worker</label>
+        </div>
+       
+        
+      </div>
+      <div className='d-row'>
+       <div className='col col-sm-12 col-md-4'>
+        <TextField
+            fullWidth
+            label='Poll Worker'
+            disabled
+            value={data.pollWorker}
+
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <FormControl fullWidth>
+            <InputLabel id='language'>Language </InputLabel>
             <Select
-              className='contactselect'
-              value={data.pollWorker}
-              input={<OutlinedInput />}
-              disabled
-              onChange={e => setData({ ...data, pollWorker: e.target.value })}
-            >
-              <MenuItem value={'yes'}>Yes</MenuItem>
-              <MenuItem value={'no'}>No</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ mx: 1, width: 320 }}>
-            <label className='contactlabel'>Language</label>
-            <Select
-              className='contactselect'
+              labelId='language'
+              id='language'
               value={data.language}
-              input={<OutlinedInput />}
+              label='Language'
               disabled
-              onChange={e => setData({ ...data, language: e.target.value })}
             >
-              <MenuItem value={'yes'}>New Registration</MenuItem>
+              <MenuItem value={'ENGLISH'}> ENGLISH </MenuItem> 
             </Select>
           </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl sx={{ mx: 1, width: 320 }}>
-            <label className='contactlabel'>Party Affiliation</label>
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <FormControl fullWidth>
+            <InputLabel id='language'>Party Affiliation </InputLabel>
             <Select
-              className='contactselect'
+              labelId='partyAffiliation'
+              id='partyAffiliation'
               value={data.partyAffiliation}
-              input={<OutlinedInput />}
+              label='Party Affiliation'
               disabled
-              onChange={e => setData({ ...data, partyAffiliation: e.target.value })}
             >
-              <MenuItem value={'yes'}>Democratic</MenuItem>
+              <MenuItem value={'DEMOCRATIC'}> DEMOCRATIC </MenuItem> 
             </Select>
           </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container alignItems='flex-end'>
-            <Grid item>
-              <FormControl sx={{ mx: 1, width: 320 }}>
-                <label className='contactlabel'>
-                  <Checkbox disabled className='disabled-assistance-required' />
-                  Disabled Assistance Required
-                </label>
+        </div>
+       
+        
+      </div>
 
-                <TextField
-                  placeholder='Reason'
-                  className='contactinput'
-                  disabled
-                  value={data.disableAssistanceRequired}
-                  onChange={e => setData({ ...data, disableAssistanceRequired: e.target.value })}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl sx={{ mx: 1, width: 320 }}>
-                <TextField
-                  variant='outlined'
-                  label='Last Name Used'
-                  disabled
-                  className='contactinput'
-                  value={data.lastNameUsed}
-                  onChange={e => setData({ ...data, lastNameUsed: e.target.value })}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Grid>
+      <div className='d-row'>
+         <div className='col col-sm-12 col-md-4'>
+         <TextField
+            fullWidth
+            label='Last Name Used'
+            disabled
+            value={data.lastNameUsed}
 
-        <Grid item xs={12}>
-          <h3 className='address-title'>Address Details</h3>
-        </Grid>
-        <Grid item xs={6}>
-          <fieldset className='fieldset'>
-            <legend className='legend'>Mailing Address</legend>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <label className='contactlabel'>
-                  <Checkbox disabled />
-                  Copy Primary Address
-                </label>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    disabled
-                    variant='outlined'
-                    label='Address Line'
-                    className='contactinput'
-                    value={data.address.addressline}
-                    onChange={e =>
-                      setData({
-                        ...data,
-                        address: { ...data.address, addressline: e.target.value }
-                      })
-                    }
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='City'
-                    className='contactinputreadonly'
-                    disabled
-                    InputProps={{
-                      readOnly: true
-                    }}
-                    value={data.address.city}
-                    onChange={e =>
-                      setData({ ...data, address: { ...data.address, city: e.target.value } })
-                    }
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='State'
-                    disabled
-                    className='contactinputreadonly'
-                    InputProps={{
-                      readOnly: true
-                    }}
-                    value={data.address.state}
-                    onChange={e =>
-                      setData({ ...data, address: { ...data.address, state: e.target.value } })
-                    }
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    disabled
-                    label='ZIP Code'
-                    className='contactinput'
-                    value={data.address.zipcode}
-                    onChange={e =>
-                      setData({ ...data, address: { ...data.address, zipcode: e.target.value } })
-                    }
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='Country'
-                    disabled
-                    className='contactinputreadonly'
-                    InputProps={{
-                      readOnly: true
-                    }}
-                    value={data.address.country}
-                    onChange={e =>
-                      setData({ ...data, address: { ...data.address, country: e.target.value } })
-                    }
-                  />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </fieldset>
-        </Grid>
-        <Grid item xs={6}>
-          <fieldset className='fieldset'>
-            <legend className='legend'>Last Address</legend>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <label className='contactlabel'>
-                  <Checkbox disabled />
-                  Copy Mailing Address
-                </label>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='Address Line'
-                    className='contactinput'
-                    disabled
-                    value={data.addressLineLast}
-                    onChange={e => setData({ ...data, addressLineLast: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='City'
-                    disabled
-                    className='contactinputreadonly'
-                    InputProps={{
-                      readOnly: true
-                    }}
-                    value={data.cityLast}
-                    onChange={e => setData({ ...data, cityLast: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='State'
-                    disabled
-                    className='contactinputreadonly'
-                    InputProps={{
-                      readOnly: true
-                    }}
-                    value={data.stateLast}
-                    onChange={e => setData({ ...data, stateLast: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='ZIP Code'
-                    disabled
-                    className='contactinput'
-                    value={data.zipLast}
-                    onChange={e => setData({ ...data, zipLast: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl sx={{ width: 1 }}>
-                  <TextField
-                    variant='outlined'
-                    label='Country'
-                    disabled
-                    className='contactinputreadonly'
-                    InputProps={{
-                      readOnly: true
-                    }}
-                    value={data.countryLast}
-                    onChange={e => setData({ ...data, countryLast: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </fieldset>
-        </Grid>
-      </Grid>
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+        <FormControlLabel disabled
+        control={<Checkbox />}
+        label='Disabled Assistance Required'
+        labelPlacement='end'
+      />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+         <TextField
+            fullWidth
+            label='Disabled Assistance Reason'
+            disabled
+            value={data.disableAssistanceReason}
+
+          />
+        </div>
+      </div>
+      <div className='d-sub-title'> Mailing Address Details </div>
+      <div className='d-row'>
+        <div className='col col-sm-12 col-md-4'>
+          <FormControl fullWidth>
+            <InputLabel id='addressType'>Address Type</InputLabel>
+            <Select
+              labelId='addressType'
+              id='addressType'
+              value={data.address.addressType}
+              label='Address Type'
+              disabled
+            >
+              <MenuItem value={'PRIMARY'}>PRIMARY</MenuItem>
+              <MenuItem value={'TEMPORARY'}>TEMPORARY</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <div className='date-picker'>
+            <LocalizationProvider dateAdapter={AdapterDayjs}    >
+              <DatePicker
+                label='From Date'
+                value={data.address.fromDate ? dayjs(data.address.fromDate) : null}
+                disabled
+              />
+            </LocalizationProvider>
+          </div>
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <div className='date-picker'>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label='To Date'
+                value={data.address.toDate && dayjs(data.address.toDate)}
+                disabled
+              />
+            </LocalizationProvider>
+          </div>
+        </div>
+      </div>
+      <div className='d-row'>
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
+            fullWidth
+            label='Address Line'
+            disabled
+            value={data.address.addressLine}
+
+          />
+        </div>
+
+        <div className='col col-sm-12 col-md-2'>
+          <TextField
+            fullWidth
+            label='City'
+            disabled
+            value={data.address.city}
+
+          />
+        </div>
+        <div className='col col-sm-12 col-md-2'>
+          <TextField
+            fullWidth
+            label='State'
+            disabled
+            value={data.address.state}
+
+          />
+        </div>
+        <div className='col col-sm-12 col-md-2'>
+          <TextField
+            fullWidth
+            label='ZIP Code'
+            disabled
+            value={data.address.zipCode}
+          />
+        </div>
+        <div className='col col-sm-12 col-md-2'>
+          <TextField
+            fullWidth
+            label='Country'
+            disabled
+            value={data.address.country} 
+          />
+        </div>
+      </div>
     </>
   );
 }

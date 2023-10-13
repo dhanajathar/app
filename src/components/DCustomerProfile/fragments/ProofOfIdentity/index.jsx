@@ -11,13 +11,13 @@ export default function ProofOfIdentityFragment(props) {
       {props.citizen ? (
         <>
 
-<div className='sub_title'> US Passport </div>
+<div className='d-sub-title'> US Passport </div>
           <UspassportFragment />
  
         </>
       ) : (
         <>
-          <div className='sub_title'> USCIS </div>
+          <div className='d-sub-title'> USCIS </div>
           <UscisFragment />
         </>
       )}

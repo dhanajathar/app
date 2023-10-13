@@ -1,12 +1,7 @@
 {
-    "uspassport": {
-        "transactionId": "95edbce7-cc3b-4c83-a589-cc23e042446a",
-        "customerId": "a41bf5f7-0785-45a3-b6a7-e33dc2aafb4f",
-        "userId": "da5fff3c-ae04-4409-b880-1685c5c91812",
-        "passportnumber": "P5765434",
-        "issue_date": "2023-05-01",
-        "expiration_date": "10-20-2023",
-        "verify_date":"10-20-2022",
-        "status":""
-    }
+    "passportNumber": "P5765434",
+    "issueDate": "2023-05-01",
+    "expirationDate": "10-20-2023",
+    "verifyDate": "10-20-2022",
+    "status": true
 }

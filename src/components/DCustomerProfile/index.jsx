@@ -62,8 +62,7 @@ export default function DCustomerProfile() {
           <div className='user-profile'>
             <div className='profile-content'> <ProfileContent /> </div>
             <div className='tabs-wrapper'>
-              <MuiTabs tabAction={<VersionHistory/>}  contentClass='tab-content-scroll' tabs={tabs} />
-             
+              <MuiTabs tabAction={<VersionHistory/>}  contentClass='tab-content-scroll' tabs={tabs} /> 
             </div>
           </div>
           <div className='d-flex-between'>

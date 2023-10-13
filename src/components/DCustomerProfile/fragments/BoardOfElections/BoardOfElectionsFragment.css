@@ -1,41 +1,9 @@
-.contactlabel {
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin: 0.6rem 0;
-}
-
-
-.contactinputreadonly {
-    background: var(--white100) 0% 0% no-repeat padding-box;
-    border-radius: 0.3rem;
-    border: 1px solid #EDEDED;
-}
-
-.contactselect {
-    background: white;
-}
-
-.MuiInputBase-input {
-    background-color: var(--white100);
-}
-
-.disabled-assistance-required {
-    padding: 0;
-    height: 15px;
-}
-
-.address-title {
-    color: var(--black100);
-    font-size: 1.125rem;
-}
-
-.fieldset {
-    border: 1px solid #C6C6C6;
-    border-radius: 5px;
-}
-
-.legend {
-    color: var(--black100);
-    font-size: 1rem;
-    font-weight: bold;
+.notification-msg {
+    justify-content: flex-end;
+    font: normal normal normal 16px/22px Open Sans;
+    letter-spacing: 0px;
+    color: #0A7437;
+    text-transform: uppercase;
+    margin: 1rem;
+    display: flex;
 }
