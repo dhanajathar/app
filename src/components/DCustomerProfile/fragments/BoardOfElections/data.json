@@ -4,6 +4,7 @@
     "pollWorker": "yes",
     "language": "ENGLISH",
     "partyAffiliation": "DEMOCRATIC",
+    "disableAssistanceRequired": true,
     "disableAssistanceReason": "disabled",
     "lastNameUsed": "DOE",
     "addressLineLast": "",
@@ -11,13 +12,50 @@
     "stateLast": "",
     "countryLast": "",
     "zipLast": "",
-    "address": {
+    "addresses": [{
+        "addressType"   :"PRIMARY",
+        "title": "Mailing Address Details",
         "city": "WASHINGTON",
+        "fromDate":"04/22/2021",
+        "toDate":"05/21/2021",
         "state": "DISTRICT OF COLUMBIA",
         "country": "UNITED STATES",
-        "zipcode": "",
-        "addressline": "",
-        "transactionId": "4162baf6-e9c7-11ed-a05b-0242ac120003",
+        "zipCode": "20003-3317",
+        "addressLine": "200 I ST SE",
         "userId": "3a5e4112-e9c7-11ed-a05b-0242ac120003"
-    }
+    },
+    {
+        "addressType"   :"TEMPORARY",
+        "title": "Last Address Details",
+        "city": "WASHINGTON",
+        "fromDate":"04/22/2021",
+        "toDate":"05/21/2021",
+        "state": "DISTRICT OF COLUMBIA",
+        "country": "UNITED STATES",
+        "zipCode": "20003-3317",
+        "addressLine": "200 I ST SE",
+        "userId": "3a5e4112-e9c7-11ed-a05b-0242ac120003"
+    }],
+    "userConditions": [
+        {
+            "name": "I am a U.S. Citizen",
+            "value":true
+        },
+        {
+            "name": "I am at least 16 years old",
+            "value":true
+        },
+        {
+            "name": "I live in the District of Columbia at the above mailing address",
+            "value":true
+        },
+        {
+            "name": "I do not claim voting residence outside of the DC",
+            "value":true
+        },
+        {
+            "name": "I have not been found by a court to be legally incompetent to vote",
+            "value":true
+        }
+    ]
 }

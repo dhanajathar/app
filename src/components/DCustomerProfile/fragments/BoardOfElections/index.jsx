@@ -16,10 +16,10 @@ export default function BoardOfElectionsFragment() {
   const PRIMARY = 'PRIMARY';
   return (
     <>
-    <div className='notification-msg'> <CheckIcon/> BOE NOTIFIED </div>
-       <div className='d-row'>
-       <div className='col col-sm-12 col-md-4'>
-        <TextField
+      <div className='notification-msg'> <CheckIcon /> BOE NOTIFIED </div>
+      <div className='d-row'>
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
             fullWidth
             label='Registered to Vote in District of Columbia'
             disabled
@@ -37,16 +37,16 @@ export default function BoardOfElectionsFragment() {
               label='Registration For Form '
               disabled
             >
-              <MenuItem value={'NEW REGISTRATION'}> NEW REGISTRATION </MenuItem> 
+              <MenuItem value={'NEW REGISTRATION'}> NEW REGISTRATION </MenuItem>
             </Select>
           </FormControl>
         </div>
-       
-        
+
+
       </div>
       <div className='d-row'>
-       <div className='col col-sm-12 col-md-4'>
-        <TextField
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
             fullWidth
             label='Poll Worker'
             disabled
@@ -64,7 +64,7 @@ export default function BoardOfElectionsFragment() {
               label='Language'
               disabled
             >
-              <MenuItem value={'ENGLISH'}> ENGLISH </MenuItem> 
+              <MenuItem value={'ENGLISH'}> ENGLISH </MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -78,17 +78,17 @@ export default function BoardOfElectionsFragment() {
               label='Party Affiliation'
               disabled
             >
-              <MenuItem value={'DEMOCRATIC'}> DEMOCRATIC </MenuItem> 
+              <MenuItem value={'DEMOCRATIC'}> DEMOCRATIC </MenuItem>
             </Select>
           </FormControl>
         </div>
-       
-        
+
+
       </div>
 
       <div className='d-row'>
-         <div className='col col-sm-12 col-md-4'>
-         <TextField
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
             fullWidth
             label='Last Name Used'
             disabled
@@ -97,14 +97,14 @@ export default function BoardOfElectionsFragment() {
           />
         </div>
         <div className='col col-sm-12 col-md-4'>
-        <FormControlLabel disabled
-        control={<Checkbox />}
-        label='Disabled Assistance Required'
-        labelPlacement='end'
-      />
+          <FormControlLabel disabled
+            control={<Checkbox checked={data.disableAssistanceRequired} />}
+            label='Disabled Assistance Required'
+            labelPlacement='end'
+          />
         </div>
         <div className='col col-sm-12 col-md-4'>
-         <TextField
+          <TextField
             fullWidth
             label='Disabled Assistance Reason'
             disabled
@@ -113,92 +113,109 @@ export default function BoardOfElectionsFragment() {
           />
         </div>
       </div>
-      <div className='d-sub-title'> Mailing Address Details </div>
-      <div className='d-row'>
-        <div className='col col-sm-12 col-md-4'>
-          <FormControl fullWidth>
-            <InputLabel id='addressType'>Address Type</InputLabel>
-            <Select
-              labelId='addressType'
-              id='addressType'
-              value={data.address.addressType}
-              label='Address Type'
-              disabled
-            >
-              <MenuItem value={'PRIMARY'}>PRIMARY</MenuItem>
-              <MenuItem value={'TEMPORARY'}>TEMPORARY</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <div className='col col-sm-12 col-md-4'>
-          <div className='date-picker'>
-            <LocalizationProvider dateAdapter={AdapterDayjs}    >
-              <DatePicker
-                label='From Date'
-                value={data.address.fromDate ? dayjs(data.address.fromDate) : null}
-                disabled
-              />
-            </LocalizationProvider>
+      {data.addresses.map(address => (
+        <>
+          <div className='d-sub-title'> {address.title} </div>
+          <div className='d-row'>
+            <div className='col col-sm-12 col-md-4'>
+              <FormControl fullWidth>
+                <InputLabel id='addressType'>Address Type</InputLabel>
+                <Select
+                  labelId='addressType'
+                  id='addressType'
+                  value={address.addressType}
+                  label='Address Type'
+                  disabled
+                >
+                  <MenuItem value={'PRIMARY'}>PRIMARY</MenuItem>
+                  <MenuItem value={'TEMPORARY'}>TEMPORARY</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className='col col-sm-12 col-md-4'>
+              <div className='date-picker'>
+                <LocalizationProvider dateAdapter={AdapterDayjs}    >
+                  <DatePicker
+                    label='From Date'
+                    value={address.fromDate ? dayjs(address.fromDate) : null}
+                    disabled
+                  />
+                </LocalizationProvider>
+              </div>
+            </div>
+            <div className='col col-sm-12 col-md-4'>
+              <div className='date-picker'>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label='To Date'
+                    value={address.toDate && dayjs(address.toDate)}
+                    disabled
+                  />
+                </LocalizationProvider>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className='col col-sm-12 col-md-4'>
-          <div className='date-picker'>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label='To Date'
-                value={data.address.toDate && dayjs(data.address.toDate)}
+          <div className='d-row'>
+            <div className='col col-sm-12 col-md-4'>
+              <TextField
+                fullWidth
+                label='Address Line'
                 disabled
+                value={address.addressLine}
+
               />
-            </LocalizationProvider>
+            </div>
+
+            <div className='col col-sm-12 col-md-2'>
+              <TextField
+                fullWidth
+                label='City'
+                disabled
+                value={address.city}
+
+              />
+            </div>
+            <div className='col col-sm-12 col-md-2'>
+              <TextField
+                fullWidth
+                label='State'
+                disabled
+                value={address.state}
+
+              />
+            </div>
+            <div className='col col-sm-12 col-md-2'>
+              <TextField
+                fullWidth
+                label='ZIP Code'
+                disabled
+                value={address.zipCode}
+              />
+            </div>
+            <div className='col col-sm-12 col-md-2'>
+              <TextField
+                fullWidth
+                label='Country'
+                disabled
+                value={address.country}
+              />
+            </div>
           </div>
-        </div>
+        </>
+      ))}
+
+      <div className='d-row mt-1'>
+        {data.userConditions.map(item => (
+          <div className='col col-sm-12 col-md-6 pt-0'>
+            <FormControlLabel
+              control={<Checkbox checked={item.value} />}
+              label={item.name}
+              labelPlacement='end'
+            />
+          </div>
+        ))}
       </div>
-      <div className='d-row'>
-        <div className='col col-sm-12 col-md-4'>
-          <TextField
-            fullWidth
-            label='Address Line'
-            disabled
-            value={data.address.addressLine}
 
-          />
-        </div>
-
-        <div className='col col-sm-12 col-md-2'>
-          <TextField
-            fullWidth
-            label='City'
-            disabled
-            value={data.address.city}
-
-          />
-        </div>
-        <div className='col col-sm-12 col-md-2'>
-          <TextField
-            fullWidth
-            label='State'
-            disabled
-            value={data.address.state}
-
-          />
-        </div>
-        <div className='col col-sm-12 col-md-2'>
-          <TextField
-            fullWidth
-            label='ZIP Code'
-            disabled
-            value={data.address.zipCode}
-          />
-        </div>
-        <div className='col col-sm-12 col-md-2'>
-          <TextField
-            fullWidth
-            label='Country'
-            disabled
-            value={data.address.country} 
-          />
-        </div>
-      </div>
     </>
   );
 }
