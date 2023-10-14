@@ -10,10 +10,10 @@ import {
   TextField,
   Tooltip
 } from '@mui/material';
-import CropIcon from '@mui/icons-material/Crop';
-import TranslateIcon from '@mui/icons-material/Translate';
 import React, { useEffect, useState } from 'react';
 
+import CropIcon from '@mui/icons-material/Crop';
+import TranslateIcon from '@mui/icons-material/Translate';
 import data from './api-individual-details-fragment.json';
 
 const ADDITIONALL_INFORMATION = 'Personal Information';
@@ -62,27 +62,28 @@ const IndividualDetailsFragment = ({ citizenType }) => {
       month = 12 + month;
       age--;
     }
-    return `${age} year(s) ${month} month(s)`;
+    return `${age} Year(s) ${month} Month(s)`;
   };
 
   useEffect(() => {
     citizen === 'YES' ? citizenType(true) : citizenType(false);
   });
-  const truncationIcon = (input) => {
-    return <InputAdornment className='truncated_icons' position='end'>
-      {input.isTruncated &&
-        <Tooltip arrow title='Truncated' placement='top'>
-          <CropIcon />
-        </Tooltip>
-      }
-      {input.isTransliterated &&
-        <Tooltip title='Transliterated' arrow placement='top'>
-          <TranslateIcon />
-        </Tooltip>
-      }
-    </InputAdornment>
-  }
-
+  const truncationIcon = input => {
+    return (
+      <InputAdornment className='truncated_icons' position='end'>
+        {input.isTruncated && (
+          <Tooltip arrow title='Truncated' placement='top'>
+            <CropIcon />
+          </Tooltip>
+        )}
+        {input.isTransliterated && (
+          <Tooltip title='Transliterated' arrow placement='top'>
+            <TranslateIcon />
+          </Tooltip>
+        )}
+      </InputAdornment>
+    );
+  };
 
   return (
     <>
@@ -96,8 +97,7 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             label='Last Name'
             onChange={e => setLastName({ ...lastName, value: e.target.value })}
             InputProps={{
-              endAdornment: (truncationIcon(lastName)
-              )
+              endAdornment: truncationIcon(lastName)
             }}
             disabled
           />
@@ -111,10 +111,8 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             onChange={e => setFirstName({ ...firstName, value: e.target.value })}
             disabled
             InputProps={{
-              endAdornment: (truncationIcon(firstName)
-              )
+              endAdornment: truncationIcon(firstName)
             }}
-
           />
         </div>
         <div className='col col-md-4 col-sm-12'>
@@ -125,8 +123,7 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             onChange={e => setMiddleName({ ...middleName, value: e.target.value })}
             disabled
             InputProps={{
-              endAdornment: (truncationIcon(middleName)
-              )
+              endAdornment: truncationIcon(middleName)
             }}
           />
         </div>
@@ -141,7 +138,7 @@ const IndividualDetailsFragment = ({ citizenType }) => {
               id='suffix'
               defaultValue={suffix}
               disabled
-              label='Suffix'
+              label='Name Suffix'
               onChange={e => setSuffix(e.target.value)}
             >
               <MenuItem value={suffix}> {suffix} </MenuItem>;
@@ -157,12 +154,12 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             label='Date of Birth'
             onChange={e => setBirthDate(e.target.value)}
             disabled
-            className='input_adornment'
+            className='input-adornment'
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
                   {' '}
-                  <div className='input_adornment_text'> {calculateAge(birthDate)} </div>{' '}
+                  <div className='input-adornment-text'> {calculateAge(birthDate)} </div>{' '}
                 </InputAdornment>
               )
             }}
@@ -219,7 +216,6 @@ const IndividualDetailsFragment = ({ citizenType }) => {
                 </Select>
               </FormControl>
             </div>
-
           </div>
         </div>
         <div className='col col-md-4 col-sm-12'>
@@ -237,7 +233,6 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             </Select>
           </FormControl>
         </div>
-
       </div>
 
       <div className='d-row'>
@@ -258,7 +253,7 @@ const IndividualDetailsFragment = ({ citizenType }) => {
         </div>
         <div className='col col-md-2 col-sm-12'>
           <FormControl fullWidth>
-            <InputLabel id='military'>Military</InputLabel>
+            <InputLabel id='military'>Active Military</InputLabel>
             <Select
               labelId='military'
               id='military'
@@ -313,71 +308,71 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             </Select>
           </FormControl>
         </div>
-        <div className='col col-md-4 col-sm-12'>
-          <Grid container spacing={1}>
-            <Grid item xs={5}>
+        <div className='col col-md-4 col-sm-12 pt-0'>
+          <div className='d-row'>
+            <div className='col col-md-6 col-sm-12'>
               <TextField
                 value={weight}
                 label='Weight'
                 fullWidth
                 onChange={e => setWeight(e.target.value)}
                 disabled
-                className='input_adornment'
+                className='input-adornment'
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
                       {' '}
-                      <div className='input_adornment_text'>LBs </div>{' '}
+                      <div className='input-adornment-text'>Lbs. </div>{' '}
                     </InputAdornment>
                   )
                 }}
               />
-            </Grid>
-            <Grid item xs={7}>
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
+            </div>
+            <div className='col col-md-6 col-sm-12 pt-0'>
+              <div className='d-row'>
+                <div className='col col-md-6 col-sm-12'>
                   <TextField
                     value={heightFeet}
                     label='Height'
                     fullWidth
                     disabled
-                    className='input_adornment'
+                    className='input-adornment'
                     onChange={e => setHeightFeet(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position='end'>
                           {' '}
-                          <div className='input_adornment_text'>Ft</div>{' '}
+                          <div className='input-adornment-text'>Ft</div>{' '}
                         </InputAdornment>
                       )
                     }}
                   />
-                </Grid>
-                <Grid item xs={6}>
+                </div>
+                <div className='col col-md-6 col-sm-12'>
                   <TextField
                     value={heightInch}
                     label=''
                     fullWidth
                     disabled
-                    className='input_adornment'
+                    className='input-adornment'
                     onChange={e => setHeightInch(e.target.value)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position='end'>
                           {' '}
-                          <div className='input_adornment_text'>In</div>{' '}
+                          <div className='input-adornment-text'>In</div>{' '}
                         </InputAdornment>
                       )
                     }}
                   />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='col col-md-4 col-sm-12'>
-          <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <div className='col col-md-4 col-sm-12 pt-0'>
+         <div  className='d-row'>
+         <div className='col col-md-6 col-sm-12'>
               <FormControl fullWidth>
                 <InputLabel id='hairColor'>Hair Color</InputLabel>
                 <Select
@@ -391,8 +386,8 @@ const IndividualDetailsFragment = ({ citizenType }) => {
                   <MenuItem value={hairColor}> {hairColor} </MenuItem>;
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={6}>
+            </div>
+            <div className='col col-md-6 col-sm-12'>
               <FormControl fullWidth>
                 <InputLabel id='eyeColor'>Eye Color</InputLabel>
                 <Select
@@ -406,8 +401,8 @@ const IndividualDetailsFragment = ({ citizenType }) => {
                   <MenuItem value={eyeColor}> {eyeColor} </MenuItem>;
                 </Select>
               </FormControl>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </div>
       </div>
     </>

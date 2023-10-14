@@ -168,7 +168,7 @@ export default function UscisFragment() {
               endAdornment: (
                 <InputAdornment position='end'>
                   {' '}
-                  <div className='input_adornment_text'> {calculateAge(birthDate)} </div>{' '}
+                  <div className='input-adornment-text'> {calculateAge(birthDate)} </div>{' '}
                 </InputAdornment>
               )
             }}

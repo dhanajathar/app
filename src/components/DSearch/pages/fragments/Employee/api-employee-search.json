@@ -5,7 +5,7 @@
     "firstName": "",
     "loginId": "",
     "employeeId": "",
-    "jobTitle": "",
+    "jobTitle": null,
     "location": "ALL LOCATIONS"
   },
   "errors": {

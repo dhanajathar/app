@@ -14,8 +14,8 @@
 }
 
 .DTextField-base:hover .DTextField-close-icon:not(:disabled),
-.DTextField-base:active .DTextField-close-icon,
-.DTextField-base:focus .DTextField-close-icon {
+.DTextField-base:active .DTextField-close-icon:not(:disabled),
+.DTextField-base:focus .DTextField-close-icon:not(:disabled) {
   visibility: visible;
 }
 

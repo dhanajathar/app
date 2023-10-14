@@ -45,7 +45,7 @@ export function Search() {
     },
     selectedTab: 'transactions'
   };
-  const [formData, setFormData] = useState(sessionData ? sessionData : defaultFormData);
+  const [formData, setFormData] = useState(sessionData || defaultFormData);
   const [typeVal, setTypeVal] = useState(formData.selectedTab);
 
   const employeeRef = useRef();
@@ -233,8 +233,9 @@ export function Search() {
               return (
                 <div
                   id={item.id}
-                  className={`search-menu-item ${typeVal === item.id ? 'search-menu-item-active' : ''
-                    }`}
+                  className={`search-menu-item ${
+                    typeVal === item.id ? 'search-menu-item-active' : ''
+                  }`}
                   key={`${index}`}
                   onClick={handleTabClick}
                 >
@@ -246,7 +247,12 @@ export function Search() {
           <div className='search-field-box'>
             {typeVal === 'transactions' && <MuiTabs contentClass='tab-content' tabs={transTabs} />}
             {typeVal === 'individual' && (
-              <MuiTabs ref={tabRef} contentClass='tab-content' selectedTab={formData.selectedSubTab} tabs={indTabs} />
+              <MuiTabs
+                ref={tabRef}
+                contentClass='tab-content'
+                selectedTab={formData.selectedSubTab}
+                tabs={indTabs}
+              />
             )}
             {typeVal === 'business' && <MuiTabs contentClass='tab-content' tabs={busTabs} />}
             {typeVal === 'vehicle' && <MuiTabs contentClass='tab-content' tabs={vehTabs} />}

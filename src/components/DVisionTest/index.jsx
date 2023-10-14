@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import './DVisionTest.css';
+
 import {
   Container,
-  Grid,
-  Select,
-  MenuItem,
-  TextField,
-  InputAdornment,
   FormControl,
-  InputLabel
+  Grid,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField
 } from '@mui/material';
+import React, { useState } from 'react';
 
 import data from './data/api-commercial-driver-licenseFragment-fragment.json';
-
-import './DVisionTest.css';
 
 const DVisionTest = () => {
   const { examiner, examTypeList, examinerTypeList, eyeReport } = data;
@@ -76,16 +76,14 @@ const DVisionTest = () => {
                   value={rightEye}
                   fullWidth
                   label='Right Eye'
-                  helperText={
-                     'This Value should be between 1 and 140 '
-                  }
+                  helperText={'This Value should be between 1 and 140 '}
                   error={checkValidNumber(rightEye, 1, 140)}
                   onChange={e => setRightEye(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
                         {' '}
-                        <div className='input_adornment_text'> 20 </div>{' '}
+                        <div className='input-adornment-text'> 20 </div>{' '}
                       </InputAdornment>
                     )
                   }}
@@ -96,16 +94,14 @@ const DVisionTest = () => {
                   value={leftEye}
                   fullWidth
                   label='Left Eye'
-                  helperText={
-                     'This Value should be between 1 and 140 '
-                  }
+                  helperText={'This Value should be between 1 and 140 '}
                   error={checkValidNumber(leftEye, 1, 140)}
                   onChange={e => setLeftEye(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
                         {' '}
-                        <div className='input_adornment_text'> 20 </div>{' '}
+                        <div className='input-adornment-text'> 20 </div>{' '}
                       </InputAdornment>
                     )
                   }}
@@ -120,16 +116,14 @@ const DVisionTest = () => {
                   value={bothEyes}
                   fullWidth
                   label='Both Eye'
-                  helperText={
-                    'This Value should be between 1 and 140 '
-                  }
+                  helperText={'This Value should be between 1 and 140 '}
                   error={checkValidNumber(bothEyes, 1, 140)}
                   onChange={e => setBothEyes(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
                         {' '}
-                        <div className='input_adornment_text'> 20 </div>{' '}
+                        <div className='input-adornment-text'> 20 </div>{' '}
                       </InputAdornment>
                     )
                   }}
@@ -140,9 +134,7 @@ const DVisionTest = () => {
                   value={fieldOfVision}
                   fullWidth
                   label='Field Of Vision'
-                  helperText={
-                    'This Value should be between 110 and 180 '
-                  }
+                  helperText={'This Value should be between 110 and 180 '}
                   error={checkValidNumber(fieldOfVision, 110, 180)}
                   onChange={e => setFieldOfVision(e.target.value)}
                 />

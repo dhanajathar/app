@@ -193,24 +193,38 @@ const Employee = forwardRef((props, ref) => {
 
     switch (inputName) {
       case 'loginId':
-        setDisabledControls(['employeeId', 'firstName', 'lastName', 'middleName', 'location']);
+        setDisabledControls([
+          'employeeId',
+          'firstName',
+          'lastName',
+          'middleName',
+          'location',
+          'jobTitle'
+        ]);
         break;
       case 'employeeId':
-        setDisabledControls(['loginId', 'firstName', 'lastName', 'middleName', 'location']);
+        setDisabledControls([
+          'loginId',
+          'firstName',
+          'lastName',
+          'middleName',
+          'location',
+          'jobTitle'
+        ]);
         break;
       case 'firstName':
       case 'lastName':
       case 'middleName':
-        setDisabledControls(['loginId', 'employeeId', , 'location']);
+        setDisabledControls(['loginId', 'employeeId', , 'location', 'jobTitle']);
         break;
       case 'jobTitle':
-        resetForm();
+        setDisabledControls(['loginId', 'employeeId', 'firstName', 'lastName', 'middleName']);
         break;
       default:
     }
   };
 
-  const handleOnClear = controlName => {
+  const handleClear = controlName => {
     const targetField = formRef.current.querySelector(`[name='${controlName}']`);
     targetField.value = '';
     handleValueChange({ target: { name: controlName, value: null } });
@@ -225,8 +239,8 @@ const Employee = forwardRef((props, ref) => {
           </div>
           <div className='col col-md-8 col-sm-12'>
             <DTextField
-              onClear={e => handleOnClear('loginId')}
-              enableClear={true}
+              handleclear={e => handleClear('loginId')}
+              enableclear='enable'
               onFocus={handleFocus}
               value={formState.values.loginId}
               name='loginId'
@@ -256,8 +270,8 @@ const Employee = forwardRef((props, ref) => {
           </div>
           <div className='col col-md-4 col-sm-12'>
             <DTextField
-              onClear={e => handleOnClear('employeeId')}
-              enableClear={true}
+              handleclear={e => handleClear('employeeId')}
+              enableclear='enable'
               value={formState.values.employeeId}
               onFocus={handleFocus}
               name='employeeId'
@@ -289,8 +303,8 @@ const Employee = forwardRef((props, ref) => {
         <div className='d-row truncation-row'>
           <div className='col col-md-4 col-sm-12'>
             <DTextField
-              onClear={e => handleOnClear('lastName')}
-              enableClear={true}
+              handleclear={e => handleClear('lastName')}
+              enableclear='enable'
               value={formState.values.lastName}
               onFocus={handleFocus}
               name='lastName'
@@ -321,8 +335,8 @@ const Employee = forwardRef((props, ref) => {
 
           <div className='col col-md-4 col-sm-12'>
             <DTextField
-              onClear={e => handleOnClear('firstName')}
-              enableClear={true}
+              handleclear={e => handleClear('firstName')}
+              enableclear='enable'
               value={formState.values.firstName}
               onFocus={handleFocus}
               name='firstName'
@@ -353,8 +367,8 @@ const Employee = forwardRef((props, ref) => {
 
           <div className='col col-md-4 col-sm-12'>
             <DTextField
-              onClear={e => handleOnClear('middleName')}
-              enableClear={true}
+              handleclear={e => handleClear('middleName')}
+              enableclear='enable'
               value={formState.values.middleName}
               onFocus={handleFocus}
               name='middleName'

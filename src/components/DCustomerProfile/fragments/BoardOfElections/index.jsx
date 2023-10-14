@@ -117,7 +117,7 @@ export default function BoardOfElectionsFragment() {
         <>
           <div className='d-sub-title'> {address.title} </div>
           <div className='d-row'>
-            <div className='col col-sm-12 col-md-4'>
+             <div className='col col-sm-12 col-md-4'>
               <FormControl fullWidth>
                 <InputLabel id='addressType'>Address Type</InputLabel>
                 <Select
@@ -131,8 +131,8 @@ export default function BoardOfElectionsFragment() {
                   <MenuItem value={'TEMPORARY'}>TEMPORARY</MenuItem>
                 </Select>
               </FormControl>
-            </div>
-            <div className='col col-sm-12 col-md-4'>
+            </div> 
+             <div className='col col-sm-12 col-md-4'>
               <div className='date-picker'>
                 <LocalizationProvider dateAdapter={AdapterDayjs}    >
                   <DatePicker

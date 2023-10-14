@@ -26,7 +26,7 @@ export default function AddressFragment() {
             {address.addressDetails.addressLine}
             <div className='address-duration-wrapper'>
               <div className='customer-address-duration'>
-                {`${dayjs(address.fromDate).format('MM/DD/YYYY')} - To ${address.addressType === PRIMARY
+                {`${dayjs(address.fromDate).format('MM/DD/YYYY')} -  ${address.addressType === PRIMARY
                   ? 'TILL Date'
                   : dayjs(address.toDate).format('MM/DD/YYYY')
                   }`}

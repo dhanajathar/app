@@ -4,7 +4,7 @@
   margin: 1rem 0;
 }
 
-.input_adornment_text {
+.input-adornment-text {
   background: var(--white70);
   padding: 1.0313em 0.875rem;
   border-radius: 0 0.25rem 0.25rem 0;
@@ -21,7 +21,6 @@
   margin-top: 1rem;
 }
 .MuiFormHelperText-sizeMedium {
- font-size: 0.65rem; 
- text-align: right;
+  font-size: 0.65rem;
+  text-align: right;
 }
- 

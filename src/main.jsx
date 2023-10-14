@@ -1,7 +1,6 @@
-// import App from './App.jsx'
 import './index.css';
 
-import { RouterProvider, createBrowserRouter, useNavigate } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import React from 'react';

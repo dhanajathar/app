@@ -2,7 +2,7 @@
   {
     "addressType": "PRIMARY",
     "fromDate": "2023-08-22",
-    "toDate": "2023-12-31",
+    "toDate": "",
     "addressDetails": {
       "addressLine": "200 I ST SE",
       "city": "WASHINGTON",

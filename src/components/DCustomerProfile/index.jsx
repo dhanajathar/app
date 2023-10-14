@@ -60,9 +60,16 @@ export default function DCustomerProfile() {
         <div className='page-heading'> {USER_NAME} </div>
         <div className='tab-content'>
           <div className='user-profile'>
-            <div className='profile-content'> <ProfileContent /> </div>
+            <div className='profile-content'>
+              {' '}
+              <ProfileContent />{' '}
+            </div>
             <div className='tabs-wrapper'>
-              <MuiTabs tabAction={<VersionHistory/>}  contentClass='tab-content-scroll' tabs={tabs} /> 
+              <MuiTabs
+                tabAction={<VersionHistory />}
+                contentClass='tab-content-scroll'
+                tabs={tabs}
+              />
             </div>
           </div>
           <div className='d-flex-between'>
@@ -84,7 +91,6 @@ export default function DCustomerProfile() {
               </Button>
             </div>
           </div>
-
         </div>
       </div>
     </React.Fragment>
