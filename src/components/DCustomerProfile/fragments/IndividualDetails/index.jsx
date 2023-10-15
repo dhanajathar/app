@@ -165,6 +165,14 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             }}
           />
         </div>
+        <div className='col col-md-4 col-sm-12'>
+                  <TextField
+                    value={personalInformation.deceased}
+                    label='Deceased'
+                    fullWidth
+                    disabled 
+                  />
+                </div>
       </div>
       <div className='d-sub-title'> Additional Details </div>
       <div className='d-row'>
@@ -259,7 +267,7 @@ const IndividualDetailsFragment = ({ citizenType }) => {
               id='military'
               defaultValue={military}
               disabled
-              label='Military'
+              label='Active Military'
               onChange={e => setMilitary(e.target.value)}
             >
               <MenuItem value={military}> {military} </MenuItem>;

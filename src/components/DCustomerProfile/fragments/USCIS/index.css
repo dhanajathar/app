@@ -15,3 +15,45 @@
 .grid-top-margin {
   margin-top: 2rem;
 }
+.verification-history-accordion {
+  border: 2px solid #979ea3;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  margin-top: 1rem; 
+}
+.initial-verification { 
+  border: 2px solid #979ea3;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  margin-top: 1rem; 
+}
+.initial-verification .initial-verification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.initial-verification .initial-verification-header svg {
+  height: 18px;
+}
+.initial-verification .initial-verification-header .warning-status {
+  color: var(--orange70);
+}
+.initial-verification .initial-verification-header .success-status {
+  color: var(--green100);
+}
+.history-table {
+  table-layout: fixed;  
+}
+.history-table .MuiTableRow-head {
+  font: normal normal bold 14px/18px Open Sans;
+  white-space: nowrap;
+}
+
+.history-table .MuiTableRow-head:nth-child() {
+  background: #f8f9fa 0% 0% no-repeat padding-box;
+}
+
+.history-table .MuiTableRow-root:nth-child(even) {
+  background: #f8f9fa 0% 0% no-repeat padding-box;
+}

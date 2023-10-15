@@ -30,3 +30,48 @@
 .address-accordion .MuiAccordionSummary-root {
   padding: 0 !important;
 }
+
+.address-status-wrapper {
+  margin: 1rem 0;
+}
+
+.address-status {
+  background: #e5e5e5 0% 0% no-repeat padding-box;
+  border: 2px solid #979ea3;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.address-status input {
+  background: #fff;
+}
+
+.valid-address {
+  display: flex;
+  align-items: center;
+  font: normal normal 600 16px/22px Open Sans;
+  color: #000;
+}
+
+.invalid-address {
+  font: normal normal normal 16px/22px Open Sans;
+  letter-spacing: 0px;
+  color: #830909;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.address-line {
+  border-right: 1px solid #D0D0D0;
+  padding-right: 2rem;
+  margin-right: 2rem;
+
+
+}
+
+.address-status-text {
+  color: var(--green100);
+  display: flex;
+  margin-left: auto;
+}

@@ -104,6 +104,8 @@ input,
   width: 100px;
   height: 64px;
   object-fit: contain;
+  display: flex;
+  margin: 0 auto;
 }
 .img-badge {
   background: #164ABE 0% 0% no-repeat padding-box;

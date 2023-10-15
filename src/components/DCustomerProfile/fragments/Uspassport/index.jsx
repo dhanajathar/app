@@ -1,16 +1,32 @@
 import './UspassportFragment.css';
 
-import { InputAdornment, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { InputAdornment, InputLabel, TextField, FormControl, Select, MenuItem } from '@mui/material';
+import React from 'react';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import data from './api-response-uspassport.json';
+
 export default function UspassportFragment(props) {
   return (
     <>
+      <div className='d-row'>
+        <div className='col col-md-8 col-sm-12'>
+          <FormControl fullWidth>
+            <InputLabel id='docType'> Verification Request Document </InputLabel>
+            <Select
+              id='docType'
+              value={'US Passport'}
+              label='Verification Request Document'
+              disabled
+            >
+              <MenuItem value={'US Passport'}> US Passport </MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+      </div>
       <div className='d-row'>
         <div className='col col-sm-12 col-md-4'>
           <TextField

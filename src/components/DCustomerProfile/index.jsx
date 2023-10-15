@@ -44,7 +44,9 @@ export default function DCustomerProfile() {
     { classes: '', tabName: 'Board Of Elections', tabContent: <BoardOfElectionsFragment /> },
     { classes: '', tabName: 'DL / ID Card', tabContent: <DlIdCard /> },
     { classes: '', tabName: 'Vehicles', tabContent: <Vehicles /> },
-    { classes: '', tabName: 'Withdrawal', tabContent: <Withdrawal /> }
+    { classes: '', tabName: 'Withdrawal', tabContent: <Withdrawal /> },
+    { classes: '', tabName: 'Tags', tabContent: <> </> },
+    { classes: '', tabName: 'Convictions', tabContent: <></> }
   ];
 
   const handleSelectClick = e => {

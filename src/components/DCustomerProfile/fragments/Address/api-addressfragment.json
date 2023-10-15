@@ -8,11 +8,19 @@
       "city": "WASHINGTON",
       "state": "DC",
       "zipCode": "20003-3317",
-      "country": "UNITED STATES"
+      "country": "UNITED STATES",
+      "isValidate": true
     },
     "residencyCertification": {
-      "isCertification": "NO"
+      "isCertification": "YES",
+      "certifiedInfo": {
+        "certifierFullName": "John Doe",
+        "dateOfBirth": "12/29/1980",
+        "driverLicense": "1234567890",
+        "expirationDate": "04/21/2030"
+      }
     }
+    
   },
   {
     "addressType": "TEMPORARY",
@@ -23,7 +31,8 @@
       "city": "WASHINGTON",
       "state": "DC",
       "zipCode": "20554-0001",
-      "country": "UNITED STATES"
+      "country": "UNITED STATES",
+      "isValidate": true
     }
   },
   {
@@ -35,7 +44,8 @@
       "city": "WASHINGTON",
       "state": "DC",
       "zipCode": "20470-0001",
-      "country": "UNITED STATES"
+      "country": "UNITED STATES",
+      "isValidate": true
     }
   }
 ]
