@@ -19,8 +19,16 @@
   border: 2px solid #979ea3;
   border-radius: 4px !important;
   box-shadow: none !important;
-  margin-top: 1rem; 
+  margin-top: 1rem;  
 }
+ .history-table-wrapper {
+  overflow: auto;
+  max-height: 200px;
+ }
+.verification-history-accordion .MuiAccordionDetails-root {
+  padding: 0;
+}
+
 .initial-verification { 
   border: 2px solid #979ea3;
   border-radius: 4px !important;

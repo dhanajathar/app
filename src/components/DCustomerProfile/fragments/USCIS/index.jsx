@@ -419,9 +419,7 @@ export default function UscisFragment() {
             </div>
           </div>
         </AccordionDetails>
-      </Accordion>
-      <div className='d-row'>
-        <div className='col col-md-12 col-sm-12'>
+      </Accordion> 
           <Accordion
             className='verification-history-accordion'
             expanded={expanded === 'panel1'}
@@ -440,7 +438,7 @@ export default function UscisFragment() {
               Verification History
             </AccordionSummary>
             <AccordionDetails>
-              <TableContainer sx={{ maxHeight: 200 }} component={Paper}>
+              <div className='history-table-wrapper'>
                 <Table stickyHeader className='history-table'>
                   <TableHead>
                     <TableRow>
@@ -475,12 +473,11 @@ export default function UscisFragment() {
                         </TableRow>
                       ))}
                   </TableBody>
-                </Table>
-              </TableContainer>
+                </Table> 
+                </div>
             </AccordionDetails>
           </Accordion>
-        </div>
-      </div>
+        
     </>
   );
 }
