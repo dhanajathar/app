@@ -1,11 +1,13 @@
- .arrow-box {
-   position: relative;
+ .alert-box {
+   position: absolute;
    border-radius: 4px;
    padding: 4px;
-   margin-top: -10px;
+   margin-top: -4px;
    background: #fff;
    display: flex;
-   line-height: 1rem;
+   z-index: 1;
+   width: calc(100% - 20px);
+   font: normal normal normal 14px/16px Open Sans;
  }
 
  .error-box {
@@ -14,17 +16,30 @@
  }
 
  .warning-box {
-   border: 1px solid var(--orange100);
-   color: var(--orange100);
+   border: 1px solid #EA601C;
+   color: var(--black100);
+   background: #FFF4EB;
+
  }
 
- .error-icon {
+ .error-icon,
+ .warning-icon {
    font-size: 1rem !important;
    margin-right: 5px;
  }
 
+ .warning-icon {
+   color: #EA601C;
+ }
 
- .arrow-box::after {
+ .alert-close-icon {
+   font-size: 1rem !important;
+   margin-left: auto;
+   cursor: pointer;
+ }
+
+
+ .alert-box::after {
    content: '';
    position: absolute;
    border-right: 1px solid #fff;
@@ -45,7 +60,8 @@
 
  .warning-box::after {
    border-left: 1px solid var(--orange70);
-   border-top: 1px solid var(--orange100)
+   border-top: 1px solid var(--orange100);
+   background: #FFF4EB;
  }
 
  .MuiFormHelperText-root {
