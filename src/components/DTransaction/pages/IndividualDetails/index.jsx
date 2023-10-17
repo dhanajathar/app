@@ -47,7 +47,7 @@ const IndividualDetails = () => {
         substep: true
       }
     });
-  }, 10);
+  }, 100);
 
   const VerifiedSSN = '123456789';
   function formatSSN(value) {
@@ -93,10 +93,9 @@ const IndividualDetails = () => {
     heightFeet: '',
     hairColor: '',
     eyeColor: '',
-    vip: '',
-    activeMilitary: ''
-  })
-
+    vip: 'select',
+    activeMilitary: 'select'
+  });
 
   const [open, setOpen] = useState(false);
   const [socialSecurityNumber, setSocialSecurityNumber] = useState(
@@ -113,17 +112,17 @@ const IndividualDetails = () => {
 
   const handleSSNChange = e => {
     const value = e.target.value;
-    const ssn = value.replace(/[^\d]/g, "");
+    const ssn = value.replace(/[^\d]/g, '');
     let ssnValue;
     const ssnLength = ssn.length;
     if (ssnLength < 4) {
-      ssnValue = ssn
+      ssnValue = ssn;
     } else if (ssnLength < 6) {
       ssnValue = `${ssn.slice(0, 3)}-${ssn.slice(3)}`;
     } else {
       ssnValue = `${ssn.slice(0, 3)}-${ssn.slice(3, 5)}-${ssn.slice(5, 9)}`;
     }
-    setShowVerificationStatus(false)
+    setShowVerificationStatus(false);
     setSocialSecurityNumber(ssnValue);
     setFormattedSSN(ssnValue);
   };
@@ -143,18 +142,19 @@ const IndividualDetails = () => {
 
   useEffect(() => {
     if (socialSecurityNumber.length === 11) {
-      setShowLoader(true)
+      if(socialSecurityNumber.replace(/-/g, '')!=='000000000' && socialSecurityNumber.replace(/-/g, '')!=='999999999'){
+        setShowLoader(true);
+      }
+        
       setTimeout(() => {
-        setShowLoader(false)
-        socialSecurityNumber.replace(/-/g, "") !== VerifiedSSN && setOpen(true);
-        setShowVerificationStatus(true)
-      }, 3000)
+        setShowLoader(false);
+        socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN && setOpen(true);
+        setShowVerificationStatus(true);
+      }, 3000);
     }
-
   }, [socialSecurityNumber]);
 
-  const truncation = (value) => {
-
+  const truncation = value => {
     return (
       <FormGroup aria-label='position' row>
         <FormControlLabel
@@ -162,24 +162,15 @@ const IndividualDetails = () => {
           label='Truncated'
           labelPlacement='end'
         />
-        <FormControlLabel
-          control={
-            <Checkbox
-            />
-          }
-          label='Transliterated'
-          labelPlacement='end'
-        />      </FormGroup>
+        <FormControlLabel control={<Checkbox />} label='Transliterated' labelPlacement='end' />{' '}
+      </FormGroup>
     );
   };
 
-
-
-  const validateTransliterated = (value) => {
+  const validateTransliterated = value => {
     const regex = /^[a-zA-Z0-9 !"#$%&'()+,-./:;<=>?@\\_`{|}~]*$/;
     return regex.test(value);
   };
-
 
   const handleSubmitFrom = (e, form) => {
     e.preventDefault();
@@ -187,30 +178,30 @@ const IndividualDetails = () => {
     for (const [k, v] of Object.entries(form)) {
       const error = validateFiled(k, v);
       errorMsg = { ...errorMsg, [k]: error };
-      if (error === "") {
+      if (error === '') {
         delete errorMsg[k];
       }
     }
-    if ((personalInformationFrom.lastName !== "") && personalInformationFrom.birthDate !== "") {
-      setDisabledOtherInfo(false)
+    if (personalInformationFrom.lastName !== '' && personalInformationFrom.birthDate !== '') {
+      setDisabledOtherInfo(false);
     }
-    setValidationError(errorMsg)
-  }
+    setValidationError(errorMsg);
+  };
 
   const handlePersonalInfoChange = (e, field = null) => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...personalInformationFrom };
     newValues[field ? field : name] = field ? e : value;
     setPersonalInformationFrom(newValues);
-    handleError(field ? field : name, field ? e : value)
+    handleError(field ? field : name, field ? e : value);
   };
 
-  const handleOtherInfoChange = (e) => {
+  const handleOtherInfoChange = e => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...otherInformationFrom };
     newValues[name] = value;
     setOtherInformationFrom(newValues);
-    handleError(name, value)
+    handleError(name, value);
   };
 
   const handleLanguageChange = (name, value) => {
@@ -219,59 +210,69 @@ const IndividualDetails = () => {
         name: name,
         value: value
       }
-    }
-    handleOtherInfoChange(obj)
-  }
-  const handleNameChange = (e) => {
+    };
+    handleOtherInfoChange(obj);
+  };
+  const handleNameChange = e => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...personalInformationFrom };
     if (validateTransliterated(value) && !(/^\s/.test(value) || /\s\s/.test(value))) {
-      newValues[name] = value
+      newValues[name] = value;
       setPersonalInformationFrom(newValues);
     }
-    handleError(name, value)
-  }
+    handleError(name, value);
+  };
 
   const handleError = (name, value) => {
     const error = validateFiled(name, value);
     const errors = { ...validationError, [name]: error };
-    if (error === "") {
+    if (error === '') {
       delete errors[name];
     }
-    setValidationError(errors)
-  }
+    setValidationError(errors);
+  };
   const handleNumberChange = (e, min, max) => {
     const number = e.target.value;
-    if (e.target.value === "" || (Number(number) > min && Number(number) <= max)) {
-      handleOtherInfoChange(e)
+    if (e.target.value === '' || (Number(number) > min && Number(number) <= max)) {
+      handleOtherInfoChange(e);
     }
-  }
+  };
 
   const validateFiled = (name, value) => {
     let error = '';
     switch (name) {
       case 'lastName':
-        if (value === "") { error = 'Invalid Last Name'; }
-        value && /\d/.test(value) ?
-          setLastNameWarning('Last Name contains numeric, please remove if not intentional') : setLastNameWarning('');
-        break
+        if (value === '') {
+          error = 'Invalid Last Name';
+        }
+        value && /\d/.test(value)
+          ? setLastNameWarning('Last Name contains numeric, please remove if not intentional')
+          : setLastNameWarning('');
+        break;
       case 'firstName':
-        value && /\d/.test(value) ?
-          setFirstNameWarning('First Name contains numeric, please remove if not intentional') : setFirstNameWarning('');
-        break
+        value && /\d/.test(value)
+          ? setFirstNameWarning('First Name contains numeric, please remove if not intentional')
+          : setFirstNameWarning('');
+        break;
       case 'middleName':
-        value && /\d/.test(value) ?
-          setMiddleNameWarning('Last Name contains numeric, please remove if not intentional') : setMiddleNameWarning('');
-        break
+        value && /\d/.test(value)
+          ? setMiddleNameWarning('Last Name contains numeric, please remove if not intentional')
+          : setMiddleNameWarning('');
+        break;
       case 'birthDate':
-        if (!dayjs(value, 'MM/DD/YYYY', true).isValid()) { error = 'Invalid DOB' }
-        break
+        if (!dayjs(value, 'MM/DD/YYYY', true).isValid()) {
+          error = 'Invalid DOB';
+        }
+        break;
       case 'socialSecurityNumber':
-        if (value.trim() === '' || value.length <= 11 ) {
+        if (value.trim() === '') {
           error = 'Invalid SSN';
         }
-        if (otherInformationFrom.socialSecurityNumber.replace(/-/g, "") === '000000000' || otherInformationFrom.socialSecurityNumber.replace(/-/g, "") === '999999999') {
-          error = 'SSN Verification Not Required. SSN is Zeroes or All 9s'
+        if (
+          otherInformationFrom.socialSecurityNumber.replace(/-/g, '') === '000000000' ||
+          otherInformationFrom.socialSecurityNumber.replace(/-/g, '') === '999999999'
+        ) {
+          error = 'SSN Verification Not Required. SSN is Zeroes or All 9s';
         }
         break;
       case 'organDonor':
@@ -322,29 +323,34 @@ const IndividualDetails = () => {
       default:
     }
     return error;
-
-  }
-
-
+  };
 
   useEffect(() => {
     if (socialSecurityNumber) {
       setFormattedSSN('');
-      setShowVerificationStatus()
+      setShowVerificationStatus();
       setSocialSecurityNumber('');
     }
     if (validationError?.socialSecurityNumber) {
       const errors = { ...validationError };
-      setValidationError({ ...validationError, })
+      setValidationError({ ...validationError });
       delete errors['socialSecurityNumber'];
-      setValidationError(errors)
+      setValidationError(errors);
     }
-
-  }, [personalInformationFrom.firstName, personalInformationFrom.middleName, personalInformationFrom.lastName, personalInformationFrom.birthDate]);
+  }, [
+    personalInformationFrom.firstName,
+    personalInformationFrom.middleName,
+    personalInformationFrom.lastName,
+    personalInformationFrom.birthDate
+  ]);
 
   return (
     <div className='d-container'>
-      <form onSubmit={e => handleSubmitFrom(e, personalInformationFrom)} noValidate autoComplete='off'>
+      <form
+        onSubmit={e => handleSubmitFrom(e, personalInformationFrom)}
+        noValidate
+        autoComplete='off'
+      >
         <div className='d-sub-title'> Personal Information </div>
         <div className='d-row truncation-row'>
           <div className='col col-md-4 col-sm-12'>
@@ -352,13 +358,15 @@ const IndividualDetails = () => {
               value={personalInformationFrom.lastName}
               name='lastName'
               error={!!validationError?.lastName}
-              helperText={<DAlertBox errorText={validationError?.lastName} warningText={lastNameWarning} />}
+              helperText={
+                <DAlertBox errorText={validationError?.lastName} warningText={lastNameWarning} />
+              }
               fullWidth
               label='Last Name'
               inputProps={{ maxLength: 45 }}
               autoComplete='off'
               onChange={handleNameChange}
-              onBlur={(e) => handleError(e.target.name, e.target.value)}
+              onBlur={e => handleError(e.target.name, e.target.value)}
             />
             {truncation(personalInformationFrom.lastName)}
           </div>
@@ -371,7 +379,7 @@ const IndividualDetails = () => {
               label='First Name'
               inputProps={{ maxLength: 45 }}
               onChange={handleNameChange}
-              onBlur={(e) => handleError(e.target.name, e.target.value)}
+              onBlur={e => handleError(e.target.name, e.target.value)}
             />
             {truncation(personalInformationFrom.firstName)}
           </div>
@@ -384,7 +392,7 @@ const IndividualDetails = () => {
               label='Middle Name'
               inputProps={{ maxLength: 35 }}
               onChange={handleNameChange}
-              onBlur={(e) => handleError(e.target.name, e.target.value)}
+              onBlur={e => handleError(e.target.name, e.target.value)}
             />
             {truncation(personalInformationFrom.middleName)}
           </div>
@@ -399,11 +407,9 @@ const IndividualDetails = () => {
                 value={personalInformationFrom.suffix}
                 label='Name Suffix'
                 name='suffix'
-                onChange={(e) => handlePersonalInfoChange(e)}
+                onChange={e => handlePersonalInfoChange(e)}
               >
-                <MenuItem value={'select'} >
-                  Select
-                </MenuItem>
+                <MenuItem value={'select'}>Select</MenuItem>
                 {suffixList &&
                   suffixList.map(item => {
                     return (
@@ -416,7 +422,9 @@ const IndividualDetails = () => {
             </FormControl>
           </div>
           <div className='col col-md-4 col-sm-12'>
-            <div className={personalInformationFrom.birthDate ? 'date-picker has-date' : 'date-picker'}>
+            <div
+              className={personalInformationFrom.birthDate ? 'date-picker has-date' : 'date-picker'}
+            >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label='Date of Birth'
@@ -425,21 +433,29 @@ const IndividualDetails = () => {
                     textField: {
                       error: !!validationError?.birthDate,
                       helperText: <DAlertBox errorText={validationError?.birthDate} />,
-                      onBlur: (e) => handleError('birthDate', e.target.value),
+                      onBlur: e => handleError('birthDate', e.target.value)
                     }
                   }}
                   maxDate={dayjs(new Date())}
-                  value={personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)}
+                  value={
+                    personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)
+                  }
                   onChange={date => handlePersonalInfoChange(date, 'birthDate')}
-
                 />
               </LocalizationProvider>
-              {personalInformationFrom.birthDate && <div className='date-helper-text'>{calculateAge(personalInformationFrom.birthDate)}</div>}
+              {personalInformationFrom.birthDate && (
+                <div className='date-helper-text'>
+                  {calculateAge(personalInformationFrom.birthDate)}
+                </div>
+              )}
             </div>
           </div>
         </div>
         <div className='d-sub-title'> Photo & Signature </div>
-        <button type='submit' className='capture-button'> <CenterFocusStrongOutlinedIcon /> <span> CLICK TO CAPTURE </span>  </button>
+        <button type='submit' className='capture-button'>
+          {' '}
+          <CenterFocusStrongOutlinedIcon /> <span> CLICK TO CAPTURE </span>{' '}
+        </button>
       </form>
       <form onSubmit={e => handleSubmitFrom(e, otherInformationFrom)} noValidate autoComplete='off'>
         <div className='d-sub-title'> Additional Details </div>
@@ -459,12 +475,15 @@ const IndividualDetails = () => {
                 handleSSNChange(e);
                 handleOtherInfoChange(e);
               }}
-              onBlur={() => { handleError('socialSecurityNumber', socialSecurityNumber); setFormattedSSN(formatSSN(socialSecurityNumber)) }}
+              onBlur={e => {
+                handleError('socialSecurityNumber', e.target.value);
+                setFormattedSSN(formatSSN(socialSecurityNumber));
+              }}
               onFocus={() => setFormattedSSN(socialSecurityNumber)}
               InputProps={{
                 endAdornment: showVerificationStatus && (
                   <InputAdornment position='end'>
-                    {socialSecurityNumber.replace(/-/g, "") === VerifiedSSN ? (
+                    {socialSecurityNumber.replace(/-/g, '') === VerifiedSSN ? (
                       <div className='input-adornment-text verified-text'> &#10004; Verified </div>
                     ) : (
                       <div className='input-adornment-text not-verified-text'>
@@ -499,7 +518,10 @@ const IndividualDetails = () => {
                     );
                   })}
               </Select>
-              <FormHelperText> <DAlertBox errorText={validationError?.citizen} /> </FormHelperText>
+              <FormHelperText>
+                {' '}
+                <DAlertBox errorText={validationError?.citizen} />{' '}
+              </FormHelperText>
             </FormControl>
           </div>
           <div className='col col-md-2 col-sm-12'>
@@ -525,11 +547,13 @@ const IndividualDetails = () => {
                     );
                   })}
               </Select>
-              <FormHelperText> <DAlertBox errorText={validationError?.organDonor} /> </FormHelperText>
+              <FormHelperText>
+                {' '}
+                <DAlertBox errorText={validationError?.organDonor} />{' '}
+              </FormHelperText>
             </FormControl>
           </div>
           <div className='col col-md-4 col-sm-12'>
-
             <Autocomplete
               options={languageList}
               fullWidth
@@ -537,14 +561,15 @@ const IndividualDetails = () => {
               disabled={disabledOtherInfo}
               onChange={(e, value) => handleLanguageChange('language', value)}
               onBlur={e => handleError('language', e.target.value)}
-              renderInput={(params) => <TextField {...params}
-                error={!!validationError?.language}
-                label="Language"
-
-                helperText={<DAlertBox errorText={validationError?.language} />}
-              />}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  error={!!validationError?.language}
+                  label='Language'
+                  helperText={<DAlertBox errorText={validationError?.language} />}
+                />
+              )}
             />
-
           </div>
         </div>
         <div className='d-row'>
@@ -560,6 +585,8 @@ const IndividualDetails = () => {
                 label='VIP'
                 onChange={handleOtherInfoChange}
               >
+                {' '}
+                <MenuItem value={'select'}>Select</MenuItem>
                 {optionListUnknown &&
                   optionListUnknown.map(item => {
                     return (
@@ -583,6 +610,8 @@ const IndividualDetails = () => {
                 label='Active Military'
                 onChange={handleOtherInfoChange}
               >
+                {' '}
+                <MenuItem value={'select'}>Select</MenuItem>
                 {optionListUnknown &&
                   optionListUnknown.map(item => {
                     return (
@@ -596,11 +625,7 @@ const IndividualDetails = () => {
             </FormControl>
           </div>
           <div className='col col-md-2 col-sm-12'>
-            <FormControl
-              fullWidth
-              error={!!validationError?.veteran}
-              className='formControl'
-            >
+            <FormControl fullWidth error={!!validationError?.veteran} className='formControl'>
               <InputLabel id='veteran'> Veteran </InputLabel>
               <Select
                 id='veteran'
@@ -621,7 +646,10 @@ const IndividualDetails = () => {
                     );
                   })}
               </Select>
-              <FormHelperText> <DAlertBox errorText={validationError?.veteran} /> </FormHelperText>
+              <FormHelperText>
+                {' '}
+                <DAlertBox errorText={validationError?.veteran} />{' '}
+              </FormHelperText>
             </FormControl>
           </div>
         </div>
@@ -633,7 +661,7 @@ const IndividualDetails = () => {
               <Select
                 labelId='gender'
                 id='gender'
-                name="gender"
+                name='gender'
                 disabled={disabledOtherInfo}
                 defaultValue={otherInformationFrom.gender}
                 label='Gender'
@@ -650,7 +678,9 @@ const IndividualDetails = () => {
                     );
                   })}
               </Select>
-              <FormHelperText><DAlertBox errorText={validationError?.gender} /> </FormHelperText>
+              <FormHelperText>
+                <DAlertBox errorText={validationError?.gender} />{' '}
+              </FormHelperText>
             </FormControl>
           </div>
           <div className='col col-md-5 col-sm-12 pt-0'>
@@ -658,7 +688,7 @@ const IndividualDetails = () => {
               <div className='col col-md-4 col-sm-12'>
                 <TextField
                   value={otherInformationFrom.weight}
-                  label='Weight'
+                  label='Weight (Lbs)'
                   fullWidth
                   name='weight'
                   disabled={disabledOtherInfo}
@@ -738,7 +768,7 @@ const IndividualDetails = () => {
                   <Select
                     labelId='hairColor'
                     id='hairColor'
-                    name="hairColor"
+                    name='hairColor'
                     disabled={disabledOtherInfo}
                     value={otherInformationFrom.hairColor}
                     label='Hair Color'
@@ -767,7 +797,7 @@ const IndividualDetails = () => {
                   <Select
                     labelId='eyeColor'
                     id='eyeColor'
-                    name="eyeColor"
+                    name='eyeColor'
                     disabled={disabledOtherInfo}
                     value={otherInformationFrom.eyeColor}
                     label='Eye Color'
@@ -802,7 +832,7 @@ const IndividualDetails = () => {
           <div className='requester-container'>
             <div className='requester'>
               <span className='requester-title'> Requester </span>
-              <div className='requester-user'>  Joe </div>
+              <div className='requester-user'> Joe </div>
             </div>
           </div>
 

@@ -275,6 +275,7 @@ button.MuiButtonBase-root .MuiTouchRipple-root span {
 /* MU-tab style*/
 .MuiTabs-root {
   border-bottom: 1px solid #dedede;
+  margin-bottom: 0.5rem;
 }
 .MuiTabs-root .MuiTab-root {
   letter-spacing: 0.14px;

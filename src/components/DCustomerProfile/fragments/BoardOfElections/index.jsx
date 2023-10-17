@@ -113,7 +113,14 @@ export default function BoardOfElectionsFragment() {
       </div>
       {data.addresses.map(address => (
         <>
+        
           <div className='d-sub-title'> {address.title} </div>
+          <FormControlLabel
+              disabled
+              control={<Checkbox checked={true} />}
+              label={'some text'}
+              labelPlacement='end'
+            />
           <div className='d-row'>
              <div className='col col-sm-12 col-md-4'>
               <FormControl fullWidth>
@@ -206,6 +213,7 @@ export default function BoardOfElectionsFragment() {
         {data.userConditions.map(item => (
           <div className='col col-sm-12 col-md-6 pt-0'>
             <FormControlLabel
+              disabled
               control={<Checkbox checked={item.value} />}
               label={item.name}
               labelPlacement='end'

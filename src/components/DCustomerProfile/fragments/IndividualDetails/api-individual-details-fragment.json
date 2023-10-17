@@ -3,7 +3,7 @@
     "lastName": {
       "isTruncated": true,
       "isTransliterated": true,
-      "value": "Tyyler"
+      "value": "TyylersmithjohnLemarr"
     },
     "firstName": {
       "isTruncated": null,
@@ -13,13 +13,13 @@
     "middleName": {
       "isTruncated": true,
       "isTransliterated": null,
-      "value": "Lemarr"
+      "value": "LemarrsmithjohnLema"
     },
     "suffix": "SR",
     "socialSecurityNumber": "3254245749",
     "birthDate": "2000-05-24",
     "deceased": "NO",
-    "citizen": "NO",
+    "citizen": "YES",
     "veteran": "YES",
     "organDonor": "NO",
     "language": "English",

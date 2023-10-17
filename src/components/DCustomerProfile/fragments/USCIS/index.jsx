@@ -8,12 +8,10 @@ import {
   InputAdornment,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   TableSortLabel,
@@ -419,7 +417,8 @@ export default function UscisFragment() {
             </div>
           </div>
         </AccordionDetails>
-      </Accordion> 
+      </Accordion>
+     
           <Accordion
             className='verification-history-accordion'
             expanded={expanded === 'panel1'}
@@ -438,7 +437,7 @@ export default function UscisFragment() {
               Verification History
             </AccordionSummary>
             <AccordionDetails>
-              <div className='history-table-wrapper'>
+            <div className='history-table-wrapper'>
                 <Table stickyHeader className='history-table'>
                   <TableHead>
                     <TableRow>
@@ -473,7 +472,7 @@ export default function UscisFragment() {
                         </TableRow>
                       ))}
                   </TableBody>
-                </Table> 
+                </Table>
                 </div>
             </AccordionDetails>
           </Accordion>
