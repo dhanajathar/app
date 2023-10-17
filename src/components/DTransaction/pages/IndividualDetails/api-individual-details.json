@@ -74,5 +74,5 @@
   "suffixList": ["JR", "SR", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
   "optionList": ["YES", "NO"],
   "optionListUnknown": ["YES", "UNKNOWN"],
-  "genderList": ["Male", "Female", "Gender Neutral"]
+  "genderList": ["MALE", "FEMALE", "GENDER NEUTRAL"]
 }

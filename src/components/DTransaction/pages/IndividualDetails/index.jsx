@@ -78,7 +78,7 @@ const IndividualDetails = () => {
     lastName: '',
     firstName: '',
     middleName: '',
-    suffix: 'select',
+    suffix: '',
     birthDate: ''
   });
 
@@ -93,8 +93,8 @@ const IndividualDetails = () => {
     heightFeet: '',
     hairColor: '',
     eyeColor: '',
-    vip: 'select',
-    activeMilitary: 'select'
+    vip: '',
+    activeMilitary: ''
   });
 
   const [open, setOpen] = useState(false);
@@ -142,10 +142,10 @@ const IndividualDetails = () => {
 
   useEffect(() => {
     if (socialSecurityNumber.length === 11) {
-      if(socialSecurityNumber.replace(/-/g, '')!=='000000000' && socialSecurityNumber.replace(/-/g, '')!=='999999999'){
+      if (socialSecurityNumber.replace(/-/g, '') !== '000000000' && socialSecurityNumber.replace(/-/g, '') !== '999999999') {
         setShowLoader(true);
       }
-        
+
       setTimeout(() => {
         setShowLoader(false);
         socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN && setOpen(true);
@@ -168,7 +168,7 @@ const IndividualDetails = () => {
   };
 
   const validateTransliterated = value => {
-    const regex = /^[a-zA-Z0-9 !"#$%&'()+,-./:;<=>?@\\_`{|}~]*$/;
+    const regex = /^[a-zA-Z0-9 !"#$%&'()*+,-./:;<=>?@\\_`{|}~]*$/;
     return regex.test(value);
   };
 
@@ -247,17 +247,20 @@ const IndividualDetails = () => {
         }
         value && /\d/.test(value)
           ? setLastNameWarning('Last Name contains numeric, please remove if not intentional')
-          : setLastNameWarning('');
+          : value && value.length > 33 ? setLastNameWarning('Only 33 characters will be saved and printed on the credential') : setLastNameWarning('');
+
         break;
       case 'firstName':
         value && /\d/.test(value)
           ? setFirstNameWarning('First Name contains numeric, please remove if not intentional')
-          : setFirstNameWarning('');
+          : value && value.length > 33 ? setFirstNameWarning('Only 33 characters will be saved and printed on the credential') : setFirstNameWarning('');
+
         break;
       case 'middleName':
         value && /\d/.test(value)
           ? setMiddleNameWarning('Last Name contains numeric, please remove if not intentional')
-          : setMiddleNameWarning('');
+          : value && value.length > 33 ? setMiddleNameWarning('Only 33 characters will be saved and printed on the credential') : setMiddleNameWarning('');
+
         break;
       case 'birthDate':
         if (!dayjs(value, 'MM/DD/YYYY', true).isValid()) {
@@ -265,7 +268,7 @@ const IndividualDetails = () => {
         }
         break;
       case 'socialSecurityNumber':
-        if (value.trim() === '') {
+        if (value.trim() === '' || value.length < 11) {
           error = 'Invalid SSN';
         }
         if (
@@ -400,26 +403,18 @@ const IndividualDetails = () => {
 
         <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
-            <FormControl fullWidth className='formControl'>
-              <InputLabel id='name_suffix'> Name Suffix </InputLabel>
-              <Select
-                id='name_suffix'
-                value={personalInformationFrom.suffix}
-                label='Name Suffix'
-                name='suffix'
-                onChange={e => handlePersonalInfoChange(e)}
-              >
-                <MenuItem value={'select'}>Select</MenuItem>
-                {suffixList &&
-                  suffixList.map(item => {
-                    return (
-                      <MenuItem key={`suffix${item}`} value={item}>
-                        {item}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={suffixList}
+              fullWidth
+              name='suffix'
+              onChange={handlePersonalInfoChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Name Suffix'
+                />
+              )}
+            />
           </div>
           <div className='col col-md-4 col-sm-12'>
             <div
@@ -433,10 +428,11 @@ const IndividualDetails = () => {
                     textField: {
                       error: !!validationError?.birthDate,
                       helperText: <DAlertBox errorText={validationError?.birthDate} />,
-                      onBlur: e => handleError('birthDate', e.target.value)
+                      onBlur: e => handleError('birthDate', e.target.value),
                     }
                   }}
                   maxDate={dayjs(new Date())}
+                  minDate={dayjs('1991-01-01')}
                   value={
                     personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)
                   }
@@ -497,61 +493,45 @@ const IndividualDetails = () => {
             />
           </div>
           <div className='col col-md-2 col-sm-12'>
-            <FormControl fullWidth error={!!validationError?.citizen} className='formControl'>
-              <InputLabel id='citizen'> Citizen </InputLabel>
-              <Select
-                id='citizen'
-                value={otherInformationFrom.citizen}
-                name='citizen'
-                disabled={disabledOtherInfo}
-                label='Citizen'
-                onChange={handleOtherInfoChange}
-                onBlur={e => handleError('citizen', e.target.value)}
-              >
-                {optionList &&
-                  optionList.map(item => {
-                    return (
-                      <MenuItem key={`citizen${item}`} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText>
-                {' '}
-                <DAlertBox errorText={validationError?.citizen} />{' '}
-              </FormHelperText>
-            </FormControl>
+
+            <Autocomplete
+              options={optionList}
+              fullWidth
+              name='citizen'
+              disabled={disabledOtherInfo}
+              onChange={handleOtherInfoChange}
+              onBlur={e => handleError('citizen', e.target.value)}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  error={!!validationError?.citizen}
+                  label='Citizen'
+                  helperText={<DAlertBox errorText={validationError?.citizen} />}
+                />
+              )}
+            />
+
           </div>
           <div className='col col-md-2 col-sm-12'>
-            <FormControl fullWidth error={!!validationError?.organDonor}>
-              <InputLabel id='organDonor'>Organ Donor</InputLabel>
-              <Select
-                labelId='organDonor'
-                id='organDonor'
-                disabled={disabledOtherInfo}
-                name='organDonor'
-                defaultValue={otherInformationFrom.organDonor}
-                label='Organ Donor'
-                onChange={handleOtherInfoChange}
-                onBlur={e => handleError('organDonor', e.target.value)}
-              >
-                {optionListUnknown &&
-                  optionListUnknown.map(item => {
-                    return (
-                      <MenuItem key={`organ${item}`} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText>
-                {' '}
-                <DAlertBox errorText={validationError?.organDonor} />{' '}
-              </FormHelperText>
-            </FormControl>
+            <Autocomplete
+              options={optionListUnknown}
+              fullWidth
+              name='organDonor'
+              disabled={disabledOtherInfo}
+              onChange={handleOtherInfoChange}
+              onBlur={e => handleError('organDonor', e.target.value)}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  error={!!validationError?.organDonor}
+                  label='Organ Donor'
+                  helperText={<DAlertBox errorText={validationError?.organDonor} />}
+                />
+              )}
+            />
+
+
+
           </div>
           <div className='col col-md-4 col-sm-12'>
             <Autocomplete
@@ -559,7 +539,7 @@ const IndividualDetails = () => {
               fullWidth
               name='language'
               disabled={disabledOtherInfo}
-              onChange={(e, value) => handleLanguageChange('language', value)}
+              onChange={handleOtherInfoChange}
               onBlur={e => handleError('language', e.target.value)}
               renderInput={params => (
                 <TextField
@@ -574,118 +554,82 @@ const IndividualDetails = () => {
         </div>
         <div className='d-row'>
           <div className='col col-md-2 col-sm-12'>
-            <FormControl fullWidth>
-              <InputLabel id='VIP'>VIP</InputLabel>
-              <Select
-                labelId='VIP'
-                id='VIP'
-                name='vip'
-                disabled={disabledOtherInfo}
-                defaultValue={otherInformationFrom.vip}
-                label='VIP'
-                onChange={handleOtherInfoChange}
-              >
-                {' '}
-                <MenuItem value={'select'}>Select</MenuItem>
-                {optionListUnknown &&
-                  optionListUnknown.map(item => {
-                    return (
-                      <MenuItem key={`vip${item}`} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={optionListUnknown}
+              fullWidth
+              name='vip'
+              disabled={disabledOtherInfo}
+              onChange={handleOtherInfoChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='VIP'
+                />
+              )}
+            />
+
           </div>
           <div className='col col-md-2 col-sm-12'>
-            <FormControl fullWidth>
-              <InputLabel id='activeMilitary'>Active Military</InputLabel>
-              <Select
-                labelId='activeMilitary'
-                id='activeMilitary'
-                disabled={disabledOtherInfo}
-                defaultValue={otherInformationFrom.activeMilitary}
-                label='Active Military'
-                onChange={handleOtherInfoChange}
-              >
-                {' '}
-                <MenuItem value={'select'}>Select</MenuItem>
-                {optionListUnknown &&
-                  optionListUnknown.map(item => {
-                    return (
-                      <MenuItem key={`military${item}`} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={optionListUnknown}
+              fullWidth
+              name='activeMilitary'
+              disabled={disabledOtherInfo}
+              onChange={handleOtherInfoChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Active Military'
+                />
+              )}
+            />
           </div>
           <div className='col col-md-2 col-sm-12'>
-            <FormControl fullWidth error={!!validationError?.veteran} className='formControl'>
-              <InputLabel id='veteran'> Veteran </InputLabel>
-              <Select
-                id='veteran'
-                name='veteran'
-                disabled={disabledOtherInfo}
-                value={otherInformationFrom.veteran}
-                label='Veteran'
-                onBlur={e => handleError('veteran', e.target.value)}
-                onChange={handleOtherInfoChange}
-              >
-                {optionList &&
-                  optionList.map(item => {
-                    return (
-                      <MenuItem key={`veteran${item}`} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText>
-                {' '}
-                <DAlertBox errorText={validationError?.veteran} />{' '}
-              </FormHelperText>
-            </FormControl>
+
+            <Autocomplete
+              options={optionList}
+              fullWidth
+              name='veteran'
+              disabled={disabledOtherInfo}
+              onChange={handleOtherInfoChange}
+              onBlur={e => handleError('veteran', e.target.value)}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  error={!!validationError?.veteran}
+                  label='Veteran'
+                  helperText={<DAlertBox errorText={validationError?.veteran} />}
+                />
+              )}
+            />
           </div>
         </div>
         <div className='d-sub-title'> {PHYSICAL_INFORMATION} </div>
         <div className='d-row'>
-          <div className='col col-md-3 col-sm-12'>
-            <FormControl fullWidth error={!!validationError?.gender}>
-              <InputLabel id='gender'>Gender</InputLabel>
-              <Select
-                labelId='gender'
-                id='gender'
-                name='gender'
-                disabled={disabledOtherInfo}
-                defaultValue={otherInformationFrom.gender}
-                label='Gender'
-                onBlur={e => handleError('gender', e.target.value)}
-                onChange={handleOtherInfoChange}
-              >
-                {genderList &&
-                  genderList.map(item => {
-                    return (
-                      <MenuItem key={`gender${item}`} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-              <FormHelperText>
-                <DAlertBox errorText={validationError?.gender} />{' '}
-              </FormHelperText>
-            </FormControl>
-          </div>
-          <div className='col col-md-5 col-sm-12 pt-0'>
+          <div className='col col-md-4 col-sm-12 pt-0'>
             <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
+              <div className='col col-md-6 col-sm-12'>
+
+                <Autocomplete
+                  options={genderList}
+                  fullWidth
+                  name='gender'
+                  disabled={disabledOtherInfo}
+                  onChange={handleOtherInfoChange}
+                  onBlur={e => handleError('gender', e.target.value)}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      error={!!validationError?.gender}
+                      label='Gender'
+                      helperText={<DAlertBox errorText={validationError?.gender} />}
+                    />
+                  )}
+                />
+
+
+              </div>
+              <div className='col col-md-6 col-sm-12'>
                 <TextField
                   value={otherInformationFrom.weight}
                   label='Weight (Lbs)'
@@ -711,114 +655,96 @@ const IndividualDetails = () => {
                   }}
                 />
               </div>
-              <div className='col col-md-8 col-sm-12 pt-0'>
-                <div className='d-row'>
-                  <div className='col col-md-6 col-sm-12'>
-                    <TextField
-                      value={otherInformationFrom.heightFeet}
-                      label='Height (ft)'
-                      fullWidth
-                      disabled={disabledOtherInfo}
-                      name='heightFeet'
-                      type='number'
-                      error={!!validationError?.heightFeet}
-                      onBlur={e => handleError('heightFeet', e.target.value)}
-                      onChange={e => handleNumberChange(e, 0, 9)}
-                      InputProps={{
-                        endAdornment: otherInformationFrom.heightFeet && (
-                          <InputAdornment position='end'>
-                            <div className='input-adornment-text'>Ft</div>{' '}
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </div>
-                  <div className='col col-md-6 col-sm-12'>
-                    <TextField
-                      value={otherInformationFrom.heightInch}
-                      label='Height (in)'
-                      fullWidth
-                      disabled={disabledOtherInfo}
-                      name='heightInch'
-                      type='number'
-                      error={!!validationError?.heightFeet}
-                      onChange={e => handleNumberChange(e, 0, 11)}
-                      InputProps={{
-                        endAdornment: otherInformationFrom.heightInch && (
-                          <InputAdornment position='end'>
-                            <div className='input-adornment-text'>In</div>{' '}
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </div>
-                </div>
-                <FormHelperText className='custom-error' error={true}>
-                  {' '}
-                  <DAlertBox errorText={validationError?.heightFeet} />
-                </FormHelperText>
+            </div>
+
+          </div>
+          <div className='col col-md-4 col-sm-12 pt-0'>
+            <div className='d-row'>
+              <div className='col col-md-6 col-sm-12'>
+                <TextField
+                  value={otherInformationFrom.heightFeet}
+                  label='Height (ft)'
+                  fullWidth
+                  disabled={disabledOtherInfo}
+                  name='heightFeet'
+                  type='number'
+                  error={!!validationError?.heightFeet}
+                  onBlur={e => handleError('heightFeet', e.target.value)}
+                  onChange={e => handleNumberChange(e, 0, 9)}
+                  InputProps={{
+                    endAdornment: otherInformationFrom.heightFeet && (
+                      <InputAdornment position='end'>
+                        <div className='input-adornment-text'>Ft</div>{' '}
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </div>
+              <div className='col col-md-6 col-sm-12'>
+                <TextField
+                  value={otherInformationFrom.heightInch}
+                  label='Height (in)'
+                  fullWidth
+                  disabled={disabledOtherInfo}
+                  name='heightInch'
+                  type='number'
+                  error={!!validationError?.heightFeet}
+                  onChange={e => handleNumberChange(e, 0, 11)}
+                  InputProps={{
+                    endAdornment: otherInformationFrom.heightInch && (
+                      <InputAdornment position='end'>
+                        <div className='input-adornment-text'>In</div>{' '}
+                      </InputAdornment>
+                    )
+                  }}
+                />
               </div>
             </div>
+            <FormHelperText className='custom-error' error={true}>
+              {' '}
+              <DAlertBox errorText={validationError?.heightFeet} />
+            </FormHelperText>
           </div>
           <div className='col col-md-4 col-sm-12'>
             <div className='d-row'>
               <div className='col col-md-6 col-sm-12 pt-0'>
-                <FormControl fullWidth error={!!validationError?.hairColor}>
-                  <InputLabel id='hairColor'>Hair Color</InputLabel>
-                  <Select
-                    labelId='hairColor'
-                    id='hairColor'
-                    name='hairColor'
-                    disabled={disabledOtherInfo}
-                    value={otherInformationFrom.hairColor}
-                    label='Hair Color'
-                    onBlur={e => handleError('hairColor', e.target.value)}
-                    onChange={handleOtherInfoChange}
-                  >
-                    {hairColorList &&
-                      hairColorList.map(item => {
-                        return (
-                          <MenuItem key={`hair${item}`} value={item}>
-                            {' '}
-                            {item}{' '}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                  <FormHelperText>
-                    {' '}
-                    <DAlertBox errorText={validationError?.hairColor} />{' '}
-                  </FormHelperText>
-                </FormControl>
+                <Autocomplete
+                  options={hairColorList}
+                  fullWidth
+                  getOptionDisabled={(option) => option === 'UNKNOWN'}
+                  name='hairColor'
+                  disabled={disabledOtherInfo}
+                  onChange={handleOtherInfoChange}
+                  onBlur={e => handleError('hairColor', e.target.value)}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      error={!!validationError?.hairColor}
+                      label='Hair Color'
+                      helperText={<DAlertBox errorText={validationError?.hairColor} />}
+                    />
+                  )}
+                />
+
               </div>
               <div className='col col-md-6 col-sm-12 pt-0'>
-                <FormControl fullWidth error={!!validationError?.eyeColor}>
-                  <InputLabel id='eyeColor'>Eye Color</InputLabel>
-                  <Select
-                    labelId='eyeColor'
-                    id='eyeColor'
-                    name='eyeColor'
-                    disabled={disabledOtherInfo}
-                    value={otherInformationFrom.eyeColor}
-                    label='Eye Color'
-                    onBlur={e => handleError('eyeColor', e.target.value)}
-                    onChange={handleOtherInfoChange}
-                  >
-                    {eyeColorList &&
-                      eyeColorList.map(item => {
-                        return (
-                          <MenuItem key={`eye${item}`} value={item}>
-                            {' '}
-                            {item}{' '}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                  <FormHelperText>
-                    {' '}
-                    <DAlertBox errorText={validationError?.eyeColor} />
-                  </FormHelperText>
-                </FormControl>
+                <Autocomplete
+                  options={eyeColorList}
+                  fullWidth
+                  name='eyeColor'
+                  getOptionDisabled={(option) => option === 'UNKNOWN'}
+                  disabled={disabledOtherInfo}
+                  onChange={handleOtherInfoChange}
+                  onBlur={e => handleError('eyeColor', e.target.value)}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      error={!!validationError?.eyeColor}
+                      label='Eye Color'
+                      helperText={<DAlertBox errorText={validationError?.eyeColor} />}
+                    />
+                  )}
+                />
               </div>
             </div>
           </div>
@@ -838,7 +764,12 @@ const IndividualDetails = () => {
 
           <DialogTitle> Supervisor Override </DialogTitle>
           <DialogContent>
-            Supervisor Override is necessary to skip document scans.
+            {socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN ?
+              <> {(socialSecurityNumber.replace(/-/g, '') === '000000000' || socialSecurityNumber.replace(/-/g, '') === '999999999') ? <div>
+                SSN Verification Not Required. SSN is Zeroes or All 9s
+              </div>
+                : <div> SSN Verification: Not Verified; {socialSecurityNumber} Supervisor override required </div>} </> : <>  Supervisor Override is necessary to skip document scans. </>}
+
             <div className='d-row'>
               <div className='col col-md-6'>
                 <TextField label='Login ID' fullWidth />
@@ -885,5 +816,4 @@ const IndividualDetails = () => {
     </div>
   );
 };
-
 export default IndividualDetails;

@@ -3,6 +3,8 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './assets/theme'; // Import the custom theme
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { routes } from './routing/routes';
@@ -13,8 +15,10 @@ const browserRouter = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
-    <RouterProvider router={browserRouter} />
+     <ThemeProvider theme={theme}>
+        {/* <Provider store={store}> */}
+    <RouterProvider router={browserRouter} /> 
     {/* </Provider> */}
+    </ThemeProvider>
   </React.StrictMode>
 );
