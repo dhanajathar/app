@@ -124,13 +124,13 @@ export default function Uspassport() {
 
         <div className='d-row'>
           <div className='col col-md-8 col-sm-12'>
-            <FormControl fullWidth>
+            <FormControl disabled fullWidth>
               <InputLabel id='docType'> Verification Request Document </InputLabel>
               <Select
                 id='docType'
                 value={'US Passport'}
                 label='Verification Request Document'
-                disabled
+                
               >
                 <MenuItem value={'US Passport'}> US Passport </MenuItem>
               </Select>
@@ -140,9 +140,8 @@ export default function Uspassport() {
         <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              className='usp-passptnum'
-              fullWidth
-              id='passportnumber'
+              
+              fullWidth 
               label='Passport Number'
               inputProps={{ maxLength: 20 }}
               error={!!validationError?.passportNumber}
@@ -209,6 +208,21 @@ export default function Uspassport() {
               </LocalizationProvider>
             </div>
           </div>
+          </div>
+          <div className='d-row'>
+          <div className='col col-md-4 col-sm-12'>
+          <div className='date-picker has-date'>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label='Issue Date' 
+                  disabled={isVerified===null}
+                  value={ dayjs(new Date())}
+                />
+              </LocalizationProvider>
+              </div>
+            </div> 
+          </div>
+          <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
             {isVerified ? (
               <div className='date-picker has-date'>

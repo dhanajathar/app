@@ -1,11 +1,12 @@
 import './index.css';
 
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, InputAdornment, TextField } from '@mui/material';
 import React, { useState } from 'react';
 
 import mockData from './data.json';
 import { useSearchParams } from 'react-router-dom';
+import DAlertBox from '../../../DAlertBox';
 
 export default function Contact() {
   const [searchParams] = useSearchParams();
@@ -18,19 +19,43 @@ export default function Contact() {
   }, 100);
 
   const { optionList, activatedOptionList } = mockData;
-  const [mobilePhoneRegistration, setMobilePhoneRegistration] = useState(
-    mockData.mobilePhoneRegistration
-  );
-  const [emailSubscriber, setEmailSubscriber] = useState(mockData.emailSubscriber);
-  const [emailAlert, setEmailAlert] = useState(mockData.emailAlert);
-  const [activated, setActivated] = useState(mockData.activated);
-  const [email, setEmail] = useState(mockData.email);
-  const [mobile, setMobile] = useState(mockData.mobile);
-  const [altPhone, setAltPhone] = useState(mockData.altPhone);
-  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const [isValidEmail, setIsValidEmail] = useState(null);
+
+  const verifiedEmail = 'jony_doe@gmail.com'
   const handleSubmit = e => {
     e.preventDefault();
     if (isValidEmail) {
+    }
+  };
+  const [validationError, setValidationError] = useState();
+
+  const [contactFrom, setContactFrom] = useState({
+    mobile: '',
+    mobilePhoneRegistration: '',
+    emailNoticeSubscriber: '',
+    email: '',
+    altPhone: '',
+    emailAlert: '',
+    activated: ''
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value } = e?.target ?? {};
+    const newValues = { ...contactFrom };
+    newValues[name] = (name == 'mobile' || name == 'altPhone') ? formatPhoneNumber(value) : value;
+    setContactFrom(newValues);
+  };
+
+  const handleBackspace = (e) => {
+    const { name, value } = e?.target ?? {};
+    if (e.key === 'Backspace') {
+      e.preventDefault()
+      const newValues = { ...contactFrom };
+      newValues[name] = value.slice(0, -1);
+      setContactFrom(newValues);
+
     }
   };
 
@@ -58,17 +83,58 @@ export default function Contact() {
     if (lineNumber) {
       formattedNumber += `-${lineNumber}`;
     }
-
     return formattedNumber;
   };
 
   const validateEmail = email => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValidEmail = emailRegex.test(email);
-    setIsValidEmail(isValidEmail);
-    setEmail(email);
+    if (email !== "") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValidEmail = emailRegex.test(email);
+      setIsValidEmail(isValidEmail);
+    } else {
+      setIsValidEmail(null)
+    }
+
   };
 
+  const isValidPhoneNumber = (value) => {
+    const pattern = /^\+\d{1,3}\s\(\d{3}\)\s\d{3}-\d{4}$/;
+    return pattern.test(value)
+  }
+
+  const handleError = (e) => {
+    const { name, value } = e?.target ?? {};
+    const error = validateFiled(name, value);
+    const errors = { ...validationError, [name]: error };
+    if (error === '') {
+      delete errors[name];
+    }
+    setValidationError(errors);
+  };
+
+  const validateFiled = (name, value) => {
+    console.log(isValidPhoneNumber(value))
+    let error = '';
+    switch (name) {
+      case 'mobile':
+        if (value !== "" && !isValidPhoneNumber(value)) {
+          error = 'Invalid Mobile Phone Number';
+        }
+        break;
+      case 'altPhone':
+        if (value !== "" && !isValidPhoneNumber(value)) {
+          error = 'Invalid Alternate Phone Number';
+        }
+        break;
+      case 'language':
+        if (!value) {
+          error = 'Invalid  Language';
+        }
+        break;
+      default:
+    }
+    return error;
+  };
   return (
     <div className='d-container'>
       <form onSubmit={handleSubmit}>
@@ -78,37 +144,47 @@ export default function Contact() {
             <TextField
               fullWidth
               label='Mobile Phone'
-              value={mobile}
-              onChange={e => setMobile(formatPhoneNumber(e.target.value))}
+              name="mobile"
+              error={!!validationError?.mobile}
+              value={contactFrom.mobile}
+              helperText={
+                <DAlertBox errorText={validationError?.mobile} />
+              }
+              onKeyDown={handleBackspace}
+              onBlur={handleError}
+              onChange={handleChange}
             />
           </div>
 
           <div className='col col-md-4 col-sm-12'>
-            <FormControl fullWidth>
-              <InputLabel id='mobilePhoneRegistration'> Mobile Phone Registration </InputLabel>
-              <Select
-                id={'mobilePhoneRegistration'}
-                label={'Mobile Phone Registration'}
-                value={mobilePhoneRegistration}
-                onChange={e => setMobilePhoneRegistration(e.target.value)}
-              >
-                {optionList?.map(item => {
-                  return (
-                    <MenuItem key={item} value={item}>
-                      {' '}
-                      {item}{' '}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={optionList}
+              fullWidth
+              name='mobilePhoneRegistration'
+              value={contactFrom.mobilePhoneRegistration}
+              onChange={handleChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Mobile Phone Registration'
+                />
+              )}
+            />
           </div>
           <div className='col col-md-4 col-sm-12'>
             <TextField
+              disabled={contactFrom.mobile === ""}
               fullWidth
+              name="altPhone"
               label='Alternate Phone'
-              value={altPhone}
-              onChange={e => setAltPhone(formatPhoneNumber(e.target.value))}
+              value={contactFrom.altPhone}
+              onChange={handleChange}
+              onBlur={handleError}
+              error={!!validationError?.altPhone}
+              onKeyDown={handleBackspace}
+              helperText={
+                <DAlertBox errorText={validationError?.altPhone} />
+              }
             />
           </div>
         </div>
@@ -118,73 +194,76 @@ export default function Contact() {
               label='Email Address'
               type={'email'}
               fullWidth
-              value={email}
-              error={!isValidEmail}
-              helperText={!isValidEmail ? 'Invalid email address' : ''}
-              onChange={e => validateEmail(e.target.value)}
+              name="email"
+              value={contactFrom.email}
+              error={isValidEmail == false}
+              helperText={isValidEmail == false ? 'Invalid email address' : ''}
+              onChange={handleChange}
+              onBlur={e => validateEmail(e.target.value)}
+              InputProps={{
+                endAdornment: contactFrom.email !== "" && isValidEmail && (
+                  <InputAdornment position='end'>
+                    {verifiedEmail === contactFrom.email ? (
+                      <div className='input-adornment-text verified-text'> &#10004; Verified </div>
+                    ) : (
+                      <div className='input-adornment-text not-verified-text'>
+                        {' '}
+                        &#10060; Not Verified{' '}
+                      </div>
+                    )}
+                  </InputAdornment>
+                )
+              }}
             />
           </div>
         </div>
         <div className='d-row'>
           <div className='col col-lg-2 col-md-4 col-sm-12'>
-            <FormControl fullWidth>
-              <InputLabel id='Enotice'>Enotice Subscriber</InputLabel>
-              <Select
-                id='Enotice'
-                value={emailSubscriber}
-                label={'Enotice Subscriber'}
-                onChange={e => setEmailSubscriber(e.target.value)}
-              >
-                {optionList?.map(item => {
-                  return (
-                    <MenuItem key={item} value={item}>
-                      {' '}
-                      {item}{' '}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={optionList}
+              fullWidth
+              value={contactFrom.emailNoticeSubscriber}
+              name='emailNoticeSubscriber'
+              onChange={handleChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Enotice Subscriber'
+                />
+              )}
+            />
+
+
           </div>
           <div className='col col-lg-2 col-md-4 col-sm-12'>
-            <FormControl fullWidth>
-              <InputLabel id='emailAlert'>Email Alert</InputLabel>
-              <Select
-                id='emailAlert'
-                value={emailAlert}
-                label={'Email Alert'}
-                onChange={e => setEmailAlert(e.target.value)}
-              >
-                {optionList?.map(item => {
-                  return (
-                    <MenuItem key={item} value={item}>
-                      {' '}
-                      {item}{' '}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={optionList}
+              fullWidth
+              value={contactFrom.emailAlert}
+              name='emailAlert'
+              onChange={handleChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Email Alert'
+                />
+              )}
+            />
           </div>
           <div className='col col-lg-2 col-md-4 col-sm-12'>
-            <FormControl fullWidth>
-              <InputLabel id='activated'>Activated</InputLabel>
-              <Select
-                id='activated'
-                value={activated}
-                label={'Activated'}
-                onChange={e => setActivated(e.target.value)}
-              >
-                {activatedOptionList?.map(item => {
-                  return (
-                    <MenuItem key={item} value={item}>
-                      {' '}
-                      {item}{' '}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              options={activatedOptionList}
+              fullWidth
+              value={contactFrom.activated}
+              name='activated'
+              onChange={handleChange}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Activated'
+                />
+              )}
+            />
           </div>
         </div>
       </form>
