@@ -71,8 +71,9 @@
     "UNKNOWN"
   ],
   "hairColorList": ["BALD", "BLACK", "BLONDE", "BROWN", "GREY", "RED", "SANDY", "UNKNOWN", "WHITE"],
-  "suffixList": ["JR", "SR", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+  "suffixList": ["SELECT", "JR", "SR", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
   "optionList": ["YES", "NO"],
-  "optionListUnknown": ["YES", "UNKNOWN"],
-  "genderList": ["MALE", "FEMALE", "GENDER NEUTRAL"]
+  "optionListUnknown": ["SELECT","YES", "UNKNOWN"],
+  "optionOrganDonorList": ["YES", "UNKNOWN"],
+  "genderList": ["MALE", "FEMALE", "UNSPECIFIED", "GENDER NEUTRAL"]
 }

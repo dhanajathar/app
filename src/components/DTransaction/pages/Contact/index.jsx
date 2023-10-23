@@ -2,7 +2,7 @@ import './index.css';
 
 import { DEventService, DEvents } from '../../../../services/DEventService';
 import { Autocomplete, InputAdornment, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import mockData from './data.json';
 import { useSearchParams } from 'react-router-dom';
@@ -11,6 +11,10 @@ import DAlertBox from '../../../DAlertBox';
 export default function Contact() {
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
+  const mRegistrationRef = useRef();
+  const eNoticeRef = useRef();
+  const emailRef = useRef();
+  const activatedRef = useRef();
 
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
@@ -44,7 +48,7 @@ export default function Contact() {
   const handleChange = (e) => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...contactFrom };
-    newValues[name] = (name == 'mobile' || name == 'altPhone') ? formatPhoneNumber(value) : value;
+    newValues[name] = (name == 'mobile' || name == 'altPhone') ? formatPhoneNumber(value) : value === 'SELECT' ? null : value;
     setContactFrom(newValues);
   };
 
@@ -62,18 +66,15 @@ export default function Contact() {
   const formatPhoneNumber = phoneNumber => {
     let formattedValue = phoneNumber.replace(/\D/g, '');
 
-    if (formattedValue.length > 11) {
-      formattedValue = formattedValue.slice(0, 11);
+    if (formattedValue.length > 10) {
+      formattedValue = formattedValue.slice(0, 10);
     }
-    const countryCode = formattedValue.slice(0, 1);
-    const areaCode = formattedValue.slice(1, 4);
-    const prefix = formattedValue.slice(4, 7);
-    const lineNumber = formattedValue.slice(7);
+    const areaCode = formattedValue.slice(0, 3);
+    const prefix = formattedValue.slice(3, 6);
+    const lineNumber = formattedValue.slice(6);
 
     let formattedNumber = '';
-    if (countryCode) {
-      formattedNumber += `+${countryCode} `;
-    }
+
     if (areaCode) {
       formattedNumber += `(${areaCode})`;
     }
@@ -98,7 +99,8 @@ export default function Contact() {
   };
 
   const isValidPhoneNumber = (value) => {
-    const pattern = /^\+\d{1,3}\s\(\d{3}\)\s\d{3}-\d{4}$/;
+    console.log(value)
+    const pattern = /^\(\d{3}\) \d{3}-\d{4}$/;
     return pattern.test(value)
   }
 
@@ -143,6 +145,7 @@ export default function Contact() {
           <div className='col col-md-4 col-sm-12'>
             <TextField
               fullWidth
+              size='small'
               label='Mobile Phone'
               name="mobile"
               error={!!validationError?.mobile}
@@ -150,6 +153,9 @@ export default function Contact() {
               helperText={
                 <DAlertBox errorText={validationError?.mobile} />
               }
+              InputProps={{
+                startAdornment: <InputAdornment position="start">+1</InputAdornment>,
+              }}
               onKeyDown={handleBackspace}
               onBlur={handleError}
               onChange={handleChange}
@@ -160,12 +166,18 @@ export default function Contact() {
             <Autocomplete
               options={optionList}
               fullWidth
+              size='small'
               name='mobilePhoneRegistration'
               value={contactFrom.mobilePhoneRegistration}
-              onChange={handleChange}
+              onChange={(e, v) => {
+                handleChange({ target: { name: 'mobilePhoneRegistration', value: v || null } });
+                v == 'SELECT' && mRegistrationRef.current.blur()
+
+              }}
               renderInput={params => (
                 <TextField
                   {...params}
+                  inputRef={mRegistrationRef}
                   label='Mobile Phone Registration'
                 />
               )}
@@ -175,11 +187,15 @@ export default function Contact() {
             <TextField
               disabled={contactFrom.mobile === ""}
               fullWidth
+              size='small'
               name="altPhone"
               label='Alternate Phone'
               value={contactFrom.altPhone}
               onChange={handleChange}
               onBlur={handleError}
+              InputProps={{
+                startAdornment: contactFrom.mobile !== "" && <InputAdornment position="start">+1</InputAdornment>,
+              }}
               error={!!validationError?.altPhone}
               onKeyDown={handleBackspace}
               helperText={
@@ -194,10 +210,14 @@ export default function Contact() {
               label='Email Address'
               type={'email'}
               fullWidth
+              size='small'
               name="email"
               value={contactFrom.email}
               error={isValidEmail == false}
-              helperText={isValidEmail == false ? 'Invalid email address' : ''}
+              helperText={
+                <DAlertBox errorText={isValidEmail == false ? 'Invalid email address' : ''} />
+              }
+
               onChange={handleChange}
               onBlur={e => validateEmail(e.target.value)}
               InputProps={{
@@ -222,12 +242,18 @@ export default function Contact() {
             <Autocomplete
               options={optionList}
               fullWidth
+              size='small'
               value={contactFrom.emailNoticeSubscriber}
               name='emailNoticeSubscriber'
-              onChange={handleChange}
+              className='enotice-sub'
+              onChange={(e, v) => {
+                handleChange({ target: { name: 'emailNoticeSubscriber', value: v || null } });
+                v == 'SELECT' && eNoticeRef.current.blur()
+              }}
               renderInput={params => (
                 <TextField
                   {...params}
+                  inputRef={eNoticeRef}
                   label='Enotice Subscriber'
                 />
               )}
@@ -239,12 +265,17 @@ export default function Contact() {
             <Autocomplete
               options={optionList}
               fullWidth
+              size='small'
               value={contactFrom.emailAlert}
               name='emailAlert'
-              onChange={handleChange}
+              onChange={(e, v) => {
+                handleChange({ target: { name: 'emailAlert', value: v || null } });
+                v == 'SELECT' && emailRef.current.blur()
+              }}
               renderInput={params => (
                 <TextField
                   {...params}
+                  inputRef={emailRef}
                   label='Email Alert'
                 />
               )}
@@ -254,12 +285,17 @@ export default function Contact() {
             <Autocomplete
               options={activatedOptionList}
               fullWidth
+              size='small'
               value={contactFrom.activated}
               name='activated'
-              onChange={handleChange}
+              onChange={(e, v) => {
+                handleChange({ target: { name: 'activated', value: v || null } });
+                v == 'SELECT' && activatedRef.current.blur()
+              }}
               renderInput={params => (
                 <TextField
                   {...params}
+                  inputRef={activatedRef}
                   label='Activated'
                 />
               )}

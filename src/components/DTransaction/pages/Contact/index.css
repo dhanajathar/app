@@ -3,3 +3,7 @@
 .d-container {
   padding-bottom: 1.5rem;
 }
+
+.enotice-sub svg{
+  margin: -3px;
+}

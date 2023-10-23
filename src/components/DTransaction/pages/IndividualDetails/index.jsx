@@ -19,7 +19,7 @@ import {
   Autocomplete
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -34,6 +34,9 @@ import DLoaderDialog from '../../../DLoaderDialog';
 const PHYSICAL_INFORMATION = 'Physical Information';
 
 const IndividualDetails = () => {
+  const suffixInputRef = useRef();
+  const vipInputRef = useRef();
+  const activeInputRef = useRef(); 
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
   const [showLoader, setShowLoader] = useState(false);
@@ -71,7 +74,8 @@ const IndividualDetails = () => {
     suffixList,
     genderList,
     optionList,
-    optionListUnknown
+    optionListUnknown,
+    optionOrganDonorList
   } = data;
 
   const [personalInformationFrom, setPersonalInformationFrom] = useState({
@@ -156,13 +160,13 @@ const IndividualDetails = () => {
 
   const truncation = value => {
     return (
-      <FormGroup aria-label='position' row>
+      <FormGroup  aria-label='position' row>
         <FormControlLabel
-          control={<Checkbox tabIndex='-1' checked={value && value.length > 33 ? true : false} />}
+          control={<Checkbox size='small' tabIndex='-1' checked={value && value.length > 33 ? true : false} />}
           label='Truncated'
           labelPlacement='end'
         />
-        <FormControlLabel control={<Checkbox />} label='Transliterated' labelPlacement='end' />{' '}
+        <FormControlLabel control={<Checkbox  size='small' />} label='Transliterated' labelPlacement='end' />{' '}
       </FormGroup>
     );
   };
@@ -189,30 +193,21 @@ const IndividualDetails = () => {
   };
 
   const handlePersonalInfoChange = (e, field = null) => {
+     
     const { name, value } = e?.target ?? {};
     const newValues = { ...personalInformationFrom };
-    newValues[field ? field : name] = field ? e : value;
+    newValues[field ? field : name] = field ? e : value === 'SELECT' ? null : value;
     setPersonalInformationFrom(newValues);
-    handleError(field ? field : name, field ? e : value);
+    handleError(field ? field : name, field ? e : value === 'SELECT' ? null : value);
   };
 
   const handleOtherInfoChange = e => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...otherInformationFrom };
-    newValues[name] = value;
+    newValues[name] = value === 'SELECT' ? "" : value;
     setOtherInformationFrom(newValues);
-    handleError(name, value);
   };
 
-  const handleLanguageChange = (name, value) => {
-    const obj = {
-      target: {
-        name: name,
-        value: value
-      }
-    };
-    handleOtherInfoChange(obj);
-  };
   const handleNameChange = e => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...personalInformationFrom };
@@ -275,7 +270,7 @@ const IndividualDetails = () => {
           otherInformationFrom.socialSecurityNumber.replace(/-/g, '') === '000000000' ||
           otherInformationFrom.socialSecurityNumber.replace(/-/g, '') === '999999999'
         ) {
-          error = 'SSN Verification Not Required. SSN is Zeroes or All 9s';
+          error = 'Supervisor Override Required. SSN is all 0s or all 9s.';
         }
         break;
       case 'organDonor':
@@ -360,6 +355,7 @@ const IndividualDetails = () => {
             <TextField
               value={personalInformationFrom.lastName}
               name='lastName'
+              size='small'
               error={!!validationError?.lastName}
               helperText={
                 <DAlertBox errorText={validationError?.lastName} warningText={lastNameWarning} />
@@ -378,6 +374,7 @@ const IndividualDetails = () => {
               value={personalInformationFrom.firstName}
               name='firstName'
               fullWidth
+              size='small'
               helperText={<DAlertBox warningText={firstNameWarning} />}
               label='First Name'
               inputProps={{ maxLength: 45 }}
@@ -390,6 +387,7 @@ const IndividualDetails = () => {
             <TextField
               value={personalInformationFrom.middleName}
               fullWidth
+              size='small'
               name='middleName'
               helperText={<DAlertBox warningText={middleNameWarning} />}
               label='Middle Name'
@@ -405,16 +403,24 @@ const IndividualDetails = () => {
           <div className='col col-md-4 col-sm-12'>
             <Autocomplete
               options={suffixList}
-              fullWidth
+              fullWidth 
+              size='small'
               name='suffix'
-              onChange={handlePersonalInfoChange}
+              value={personalInformationFrom.suffix}
+              onChange={(e, v) => {
+                handlePersonalInfoChange({ target: { name: 'Suffix', value: v || null } });
+                 
+              }} 
               renderInput={params => (
                 <TextField
                   {...params}
-                  label='Name Suffix'
+                  label='Suffix'
+                  inputRef={suffixInputRef}
                 />
               )}
             />
+
+            {personalInformationFrom.suffix}
           </div>
           <div className='col col-md-4 col-sm-12'>
             <div
@@ -426,6 +432,7 @@ const IndividualDetails = () => {
                   fullWidth
                   slotProps={{
                     textField: {
+                      size:'small',
                       error: !!validationError?.birthDate,
                       helperText: <DAlertBox errorText={validationError?.birthDate} />,
                       onBlur: e => handleError('birthDate', e.target.value),
@@ -460,6 +467,7 @@ const IndividualDetails = () => {
             <TextField
               value={formattedSSN}
               fullWidth
+              size='small'
               error={!!validationError?.socialSecurityNumber}
               name='socialSecurityNumber'
               helperText={<DAlertBox errorText={validationError?.socialSecurityNumber} />}
@@ -498,6 +506,7 @@ const IndividualDetails = () => {
               options={optionList}
               fullWidth
               name='citizen'
+              size='small'
               disabled={disabledOtherInfo}
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('citizen', e.target.value)}
@@ -514,29 +523,34 @@ const IndividualDetails = () => {
           </div>
           <div className='col col-md-2 col-sm-12'>
             <Autocomplete
-              options={optionListUnknown}
+              options={optionOrganDonorList}
               fullWidth
+              size='small'
               name='organDonor'
               disabled={disabledOtherInfo}
-              onChange={handleOtherInfoChange}
+              value={otherInformationFrom.organDonor}
+              onChange={(e, v) => {
+                handleOtherInfoChange({ target: { name: 'organDonor', value: v || null } });
+                 
+              }}
               onBlur={e => handleError('organDonor', e.target.value)}
               renderInput={params => (
                 <TextField
                   {...params}
+                  
                   error={!!validationError?.organDonor}
-                  label='Organ Donor'
+                  label='Organ Donor' 
                   helperText={<DAlertBox errorText={validationError?.organDonor} />}
                 />
               )}
-            />
-
-
+            /> 
 
           </div>
           <div className='col col-md-4 col-sm-12'>
             <Autocomplete
               options={languageList}
               fullWidth
+              size='small'
               name='language'
               disabled={disabledOtherInfo}
               onChange={handleOtherInfoChange}
@@ -558,12 +572,19 @@ const IndividualDetails = () => {
               options={optionListUnknown}
               fullWidth
               name='vip'
+              size='small'
               disabled={disabledOtherInfo}
-              onChange={handleOtherInfoChange}
+              value={otherInformationFrom.vip}
+              onChange={(e, v) => {
+                handleOtherInfoChange({ target: { name: 'vip', value: v || null } });
+                vipInputRef.current.blur()
+              }}
+
               renderInput={params => (
                 <TextField
                   {...params}
                   label='VIP'
+                  inputRef={vipInputRef}
                 />
               )}
             />
@@ -573,13 +594,20 @@ const IndividualDetails = () => {
             <Autocomplete
               options={optionListUnknown}
               fullWidth
+              size='small'
               name='activeMilitary'
               disabled={disabledOtherInfo}
-              onChange={handleOtherInfoChange}
+              value={otherInformationFrom.activeMilitary}
+              onChange={(e, v) => {
+                handleOtherInfoChange({ target: { name: 'activeMilitary', value: v || null } });
+                activeInputRef.current.blur();
+              }}
+
               renderInput={params => (
                 <TextField
                   {...params}
                   label='Active Military'
+                  inputRef={activeInputRef}
                 />
               )}
             />
@@ -590,6 +618,7 @@ const IndividualDetails = () => {
               options={optionList}
               fullWidth
               name='veteran'
+              size='small'
               disabled={disabledOtherInfo}
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('veteran', e.target.value)}
@@ -614,6 +643,7 @@ const IndividualDetails = () => {
                   options={genderList}
                   fullWidth
                   name='gender'
+                  size='small'
                   disabled={disabledOtherInfo}
                   onChange={handleOtherInfoChange}
                   onBlur={e => handleError('gender', e.target.value)}
@@ -635,6 +665,7 @@ const IndividualDetails = () => {
                   label='Weight (Lbs)'
                   fullWidth
                   name='weight'
+                  size='small'
                   disabled={disabledOtherInfo}
                   error={!!validationError?.weight}
                   onBlur={e => handleError('weight', e.target.value)}
@@ -649,7 +680,7 @@ const IndividualDetails = () => {
                     endAdornment: otherInformationFrom.weight && (
                       <InputAdornment position='end'>
                         {' '}
-                        <div className='input-adornment-text'> LBs </div>{' '}
+                        <div className='input-adornment-text'> Lbs </div>{' '}
                       </InputAdornment>
                     )
                   }}
@@ -663,8 +694,9 @@ const IndividualDetails = () => {
               <div className='col col-md-6 col-sm-12'>
                 <TextField
                   value={otherInformationFrom.heightFeet}
-                  label='Height (ft)'
+                  label='Height (Ft)'
                   fullWidth
+                  size='small'
                   disabled={disabledOtherInfo}
                   name='heightFeet'
                   type='number'
@@ -683,8 +715,9 @@ const IndividualDetails = () => {
               <div className='col col-md-6 col-sm-12'>
                 <TextField
                   value={otherInformationFrom.heightInch}
-                  label='Height (in)'
+                  label='Height (In)'
                   fullWidth
+                  size='small'
                   disabled={disabledOtherInfo}
                   name='heightInch'
                   type='number'
@@ -711,6 +744,7 @@ const IndividualDetails = () => {
                 <Autocomplete
                   options={hairColorList}
                   fullWidth
+                  size='small'
                   getOptionDisabled={(option) => option === 'UNKNOWN'}
                   name='hairColor'
                   disabled={disabledOtherInfo}
@@ -731,6 +765,7 @@ const IndividualDetails = () => {
                 <Autocomplete
                   options={eyeColorList}
                   fullWidth
+                  size='small'
                   name='eyeColor'
                   getOptionDisabled={(option) => option === 'UNKNOWN'}
                   disabled={disabledOtherInfo}
@@ -766,19 +801,19 @@ const IndividualDetails = () => {
           <DialogContent>
             {socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN ?
               <> {(socialSecurityNumber.replace(/-/g, '') === '000000000' || socialSecurityNumber.replace(/-/g, '') === '999999999') ? <div>
-                SSN Verification Not Required. SSN is Zeroes or All 9s
+                SSN Verification Not Required. SSN is all 0s or all 9s.
               </div>
                 : <div> SSN Verification: Not Verified; {socialSecurityNumber} Supervisor override required </div>} </> : <>  Supervisor Override is necessary to skip document scans. </>}
 
             <div className='d-row'>
               <div className='col col-md-6'>
-                <TextField label='Login ID' fullWidth />
+                <TextField  size='small' label='Login ID' fullWidth />
               </div>
               <div className='col col-md-6'>
-                <TextField label='Password' fullWidth />
+                <TextField  size='small' label='Password' fullWidth />
               </div>
               <div className='col'>
-                <FormControl fullWidth>
+                <FormControl  size='small' fullWidth>
                   <InputLabel id='ReasonOverride'>Reason for Override </InputLabel>
                   <Select
                     labelId='ReasonOverride'
