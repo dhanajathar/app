@@ -1,25 +1,28 @@
 import './index.css';
 
 import {
-  Checkbox,
-  Container,
-  FormControl,
+  Autocomplete,
   FormControlLabel,
-  Grid,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField
+  FormHelperText,
+  TextField,
+  Checkbox
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import mockData from './data.json';
 import { useSearchParams } from 'react-router-dom';
+import DAlertBox from '../../../DAlertBox';
+import BOEAddress from './component/BOEAddress';
 
 export default function BoardOfElections() {
+  const { optionList, reasonForFormList, languageList, partyList, primaryAddresses, initialData, defaultAddress } = mockData;
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
+  const [validationError, setValidationError] = useState();
+  const [copyData, setCopyData] = useState(false);
+  const [copyMailingData, setCopyMailingData] = useState(false);
+  const [formData, setFormData] = useState(initialData)
 
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
@@ -32,297 +35,396 @@ export default function BoardOfElections() {
     });
   }, 100);
 
-  const [data, setData] = useState(mockData);
+  const handleLastName = e => {
+    const { name, value } = e?.target ?? {};
+    if (validateTransliterated(value) && !(/^\s/.test(value) || /\s\s/.test(value))) {
+      handleChange(name, value)
+    }
+
+  };
+
+
+  const validateTransliterated = value => {
+    const regex = /^[a-zA-Z0-9 !"#$%&'()*+,-./:;<=>?@\\_`{|}~]*$/;
+    return regex.test(value);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
   };
 
-  return (
-    <Container>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FormControl sx={{ mx: 1 }}>
-              <label className='contactlabel'>
-                Do you want to register to vote in the District of Columbia
-              </label>
-              <Select
-                sx={{ width: 320 }}
-                className='contactselect'
-                value={data.registerToVoteColumbia}
-                input={<OutlinedInput />}
-                onChange={e => setData({ ...data, registerToVoteColumbia: e.target.value })}
-              >
-                <MenuItem value={'yes'}>Yes</MenuItem>
-                <MenuItem value={'no'}>No</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl sx={{ mx: 1, width: 320 }}>
-              <label className='contactlabel'>Registration for Form</label>
-              <Select
-                className='contactselect'
-                value={data.registrationForForm}
-                input={<OutlinedInput />}
-                onChange={e => setData({ ...data, registrationForForm: e.target.value })}
-              >
-                <MenuItem value={'yes'}>Yes</MenuItem>
-                <MenuItem value={'no'}>No</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ mx: 1, width: 320 }}>
-              <label className='contactlabel'>Poll Worker</label>
-              <Select
-                className='contactselect'
-                value={data.pollWorker}
-                input={<OutlinedInput />}
-                onChange={e => setData({ ...data, pollWorker: e.target.value })}
-              >
-                <MenuItem value={'yes'}>Yes</MenuItem>
-                <MenuItem value={'no'}>No</MenuItem>
-              </Select>
-            </FormControl>
+  const handleChange = (name, value) => {
+    const newValues = { ...formData };
+    newValues[name] = value;
+    setFormData(newValues);
+  };
 
-            <FormControl sx={{ mx: 1, width: 320 }}>
-              <label className='contactlabel'>Language</label>
+  const handleAddressChange = (name, value, addressType) => {
+    const newValues = { ...formData };
+    newValues[addressType][name] = value;
+    setFormData(newValues);
+  };
 
-              <Select
-                className='contactselect'
-                value={data.language}
-                input={<OutlinedInput />}
-                onChange={e => setData({ ...data, language: e.target.value })}
-              >
-                {data.languageList &&
-                  data.languageList.map((item, idx) => {
-                    return (
-                      <MenuItem key={idx} value={item}>
-                        {' '}
-                        {item}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl sx={{ mx: 1, width: 320 }}>
-              <label className='contactlabel'>Party Affiliation</label>
-              <Select
-                className='contactselect'
-                value={data.partyAffiliation}
-                input={<OutlinedInput />}
-                onChange={e => setData({ ...data, partyAffiliation: e.target.value })}
-              >
-                <MenuItem value={'yes'}>Democratic</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container alignItems='flex-end'>
-              <Grid item>
-                <FormControl sx={{ mx: 1, width: 320 }}>
-                  <FormControlLabel
-                    disabled
-                    control={<Checkbox />}
-                    className='checkbox'
-                    label='Disabled Assistance Required'
-                  />
-                  <TextField
-                    placeholder='Reason'
-                    className='contactinput'
-                    value={data.disableAssistanceRequired}
-                    onChange={e => setData({ ...data, disableAssistanceRequired: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item>
-                <FormControl sx={{ mx: 1, width: 320 }}>
-                  <TextField
-                    variant='outlined'
-                    label='Last Name Used'
-                    className='contactinput'
-                    value={data.lastNameUsed}
-                    onChange={e => setData({ ...data, lastNameUsed: e.target.value })}
-                  />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Grid>
 
-          <Grid item xs={12}>
-            <h3 className='address-title'>Address Details</h3>
-          </Grid>
-          <Grid item xs={6}>
-            <fieldset className='fieldset'>
-              <legend className='legend'>Mailing Address</legend>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <label className='contactlabel'>
-                    <Checkbox disabled />
-                    Copy Primary Address
-                  </label>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='Address Line'
-                      className='contactinput'
-                      value={data.address.addressline}
-                      onChange={e =>
-                        setData({
-                          ...data,
-                          address: { ...data.address, addressline: e.target.value }
-                        })
-                      }
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='City'
-                      className='contactinputreadonly'
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={data.address.city}
-                      onChange={e =>
-                        setData({ ...data, address: { ...data.address, city: e.target.value } })
-                      }
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='State'
-                      className='contactinputreadonly'
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={data.address.state}
-                      onChange={e =>
-                        setData({ ...data, address: { ...data.address, state: e.target.value } })
-                      }
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='ZIP Code'
-                      className='contactinput'
-                      value={data.address.zipcode}
-                      onChange={e =>
-                        setData({ ...data, address: { ...data.address, zipcode: e.target.value } })
-                      }
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='Country'
-                      className='contactinputreadonly'
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={data.address.country}
-                      onChange={e =>
-                        setData({ ...data, address: { ...data.address, country: e.target.value } })
-                      }
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </fieldset>
-          </Grid>
-          <Grid item xs={6}>
-            <fieldset className='fieldset'>
-              <legend className='legend'>Last Address</legend>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <label className='contactlabel'>
-                    <Checkbox />
-                    Copy Mailing Address
-                  </label>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='Address Line'
-                      className='contactinput'
-                      value={data.addressLineLast}
-                      onChange={e => setData({ ...data, addressLineLast: e.target.value })}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='City'
-                      className='contactinputreadonly'
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={data.cityLast}
-                      onChange={e => setData({ ...data, cityLast: e.target.value })}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='State'
-                      className='contactinputreadonly'
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={data.stateLast}
-                      onChange={e => setData({ ...data, stateLast: e.target.value })}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='ZIP Code'
-                      className='contactinput'
-                      value={data.zipLast}
-                      onChange={e => setData({ ...data, zipLast: e.target.value })}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl sx={{ width: 1 }}>
-                    <TextField
-                      variant='outlined'
-                      label='Country'
-                      className='contactinputreadonly'
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={data.countryLast}
-                      onChange={e => setData({ ...data, countryLast: e.target.value })}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </fieldset>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+  const handleError = (name, value) => {
+    const error = validateFiled(name, value);
+    const errors = { ...validationError, [name]: error };
+    if (error === '') {
+      delete errors[name];
+    }
+    setValidationError(errors);
+  };
+
+
+  const handleAddressError = (name, value, addressType) => {
+    const error = validateFiled(name, value);
+    const updatedAddress = { ...validationError[addressType], [name]: error };
+    const updatedErrors = { ...validationError, [addressType]: updatedAddress };
+
+    if (Object.keys(updatedAddress).length === 0) {
+      delete updatedErrors[addressType];
+    }
+
+    setValidationError(updatedErrors);
+  };
+
+
+
+
+
+  const copyPrimaryAddress = () => {
+    setCopyData(true)
+    const newValues = { ...formData };
+    newValues.mailingAddress = primaryAddresses;
+    setFormData(newValues);
+  }
+
+  const copyMailingAddress = () => {
+    setCopyMailingData(true)
+    const newValues = { ...formData };
+    newValues.lastAddress = { ...newValues.mailingAddress }
+    setFormData(newValues);
+  }
+
+  const handleUserConditions = (e, index) => {
+    const newValues = { ...formData };
+    newValues.userConditions[index].value = e.target.checked
+  }
+
+  useEffect(() => {
+    if (formData.registerToVoteColumbia === 'YES') {
+      const newValues = { ...formData };
+      newValues.mailingAddress = defaultAddress;
+      newValues.lastAddress = defaultAddress;
+      setFormData(newValues);
+    } else {
+      initialData.registerToVoteColumbia = formData.registerToVoteColumbia
+      setFormData(initialData)
+    }
+  }, [formData.registerToVoteColumbia])
+
+  const validateFiled = (name, value) => {
+    let error = '';
+    switch (name) {
+      case 'registerToVoteColumbia':
+        if (!value) {
+          error = 'Must select a value for Register to Vote in District of Columbia';
+        }
+        break;
+      case 'reasonForForm':
+        if (!value && formData.registerToVoteColumbia === 'YES') {
+          error = 'Must select a value for Reason for Form';
+        }
+        break;
+      case 'pollWorker':
+        if (!value && formData.registerToVoteColumbia === 'YES') {
+          error = 'Must select a value for Poll Worker';
+        }
+        break;
+      case 'language':
+        if (!value && formData.registerToVoteColumbia === 'YES') {
+          error = 'Must select a value for Language';
+        }
+        break;
+      case 'partyAffiliation':
+        if (!value && formData.registerToVoteColumbia === 'YES') {
+          error = 'Please specify the Other Party Affiliation';
+        }
+        break;
+      case 'otherParty':
+        if (!value && (formData.registerToVoteColumbia === 'YES' || formData.partyAffiliation !== 'Other')) {
+          error = 'Please specify the Other Party Affiliation';
+        }
+        break;
+      case 'disableAssistanceReason':
+        if (!value && (formData.registerToVoteColumbia === 'YES' || formData.partyAffiliation !== 'Other')) {
+          error = 'Must enter Disabled Assistance Reason';
+        }
+        break;
+      case 'addressLine':
+        if (!value && (formData.registerToVoteColumbia === 'YES')) {
+          error = 'InValid Address Line';
+        }
+        break;
+      case 'city':
+        if (!value && (formData.registerToVoteColumbia === 'YES')) {
+          error = 'Invalid city';
+        }
+        break;
+      case 'state':
+        if (!value && (formData.registerToVoteColumbia === 'YES')) {
+          error = 'Invalid State';
+        }
+        break;
+      case 'zipCode':
+        if (!value && (formData.registerToVoteColumbia === 'YES')) {
+          error = 'Invalid Zip Code';
+        }
+        break;
+      case 'country':
+        if (!value && (formData.registerToVoteColumbia === 'YES')) {
+          error = 'Invalid Zip Country';
+        }
+        break;
+      case 'disableAssistanceRequired':
+        if (!value && (formData.registerToVoteColumbia === 'YES')) {
+          error = 'Must select a value for Disabled Assistance Required';
+        }
+        break;
+      default:
+    }
+    return error;
+  };
+
+  function checkAllValues(obj) {
+    for (let key in obj) {
+      if (obj[key] === null || obj[key] === undefined || obj[key] === '') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  return (<div className='d-container'>
+    <form onSubmit={handleSubmit}>
+      <div className='d-sub-title'> Board of Elections </div>
+      <div className='d-row'>
+        <div className='col col-sm-12 col-md-4'>
+          <Autocomplete
+            options={optionList}
+            fullWidth
+            size='small'
+            name='registerToVoteColumbia'
+            value={formData.registerToVoteColumbia}
+            onChange={(e, v) => handleChange('registerToVoteColumbia', v)}
+            onBlur={e => handleError('registerToVoteColumbia', e.target.value)}
+            renderInput={params => (
+              <TextField
+                {...params}
+
+                error={!!validationError?.registerToVoteColumbia}
+                helperText={<DAlertBox errorText={validationError?.registerToVoteColumbia} />}
+                label='Registered to Vote in District of Columbia'
+              />
+            )}
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <Autocomplete
+            options={reasonForFormList}
+            fullWidth
+            size='small'
+            name='reasonForForm'
+            value={formData.reasonForForm}
+            onChange={(e, v) => handleChange('reasonForForm', v)}
+            getOptionDisabled={(option) => option === 'Unknown'}
+            disabled={formData.registerToVoteColumbia !== 'YES'}
+            onBlur={e => handleError('reasonForForm', e.target.value)}
+            renderInput={params => (
+              <TextField
+                {...params}
+                error={!!validationError?.reasonForForm}
+                helperText={<DAlertBox errorText={validationError?.reasonForForm} />}
+                label='Reason for Form'
+              />
+            )}
+          />
+
+        </div>
+
+
+      </div>
+      <div className='d-row'>
+        <div className='col col-sm-12 col-md-4'>
+
+          <Autocomplete
+            options={optionList}
+            fullWidth
+            size='small'
+            name='pollWorker'
+            value={formData.pollWorker}
+            disabled={formData.registerToVoteColumbia !== 'YES'}
+            onChange={(e, v) => handleChange('pollWorker', v)}
+            onBlur={e => handleError('pollWorker', e.target.value)}
+            renderInput={params => (
+              <TextField
+                {...params}
+
+                error={!!validationError?.pollWorker}
+                helperText={<DAlertBox errorText={validationError?.pollWorker} />}
+                label='Poll Worker'
+              />
+            )}
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+
+          <Autocomplete
+            options={languageList}
+            fullWidth
+            size='small'
+            name='pollWorker'
+            value={formData.language}
+            disabled={formData.registerToVoteColumbia !== 'YES'}
+            onChange={(e, v) => handleChange('language', v)}
+            onBlur={e => handleError('language', e.target.value)}
+            renderInput={params => (
+              <TextField
+                {...params}
+
+                error={!!validationError?.language}
+                helperText={<DAlertBox errorText={validationError?.language} />}
+                label='Language'
+              />
+            )}
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <Autocomplete
+            options={partyList}
+            fullWidth
+            name='partyAffiliation'
+            size='small'
+            value={formData.partyAffiliation}
+            disabled={formData.registerToVoteColumbia !== 'YES'}
+            onChange={(e, v) => handleChange('partyAffiliation', v)}
+            onBlur={e => handleError('partyAffiliation', e.target.value)}
+            renderInput={params => (
+              <TextField
+                {...params}
+                error={!!validationError?.partyAffiliation}
+                helperText={<DAlertBox errorText={validationError?.partyAffiliation} />}
+                label='Party Affiliation'
+              />
+            )}
+          />
+        </div>
+      </div>
+      <div className='d-row'>
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
+            fullWidth
+            label='Other Party'
+            size='small'
+            disabled={formData.registerToVoteColumbia !== 'YES' || formData.partyAffiliation !== 'Other'}
+            value={formData.otherParty}
+            name='otherParty'
+            inputProps={{ maxLength: 50 }}
+            onChange={(e) => handleChange('otherParty', e.target.value)}
+            onBlur={e => handleError('otherParty', e.target.value)}
+            error={!!validationError?.otherParty}
+            helperText={<DAlertBox errorText={validationError?.otherParty} />}
+          />
+        </div>
+
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
+            fullWidth
+            size='small'
+            label='Last Name Used'
+            value={formData.lastNameUsed}
+            name='lastNameUsed'
+            disabled={formData.registerToVoteColumbia !== 'YES'}
+            inputProps={{ maxLength: 33 }}
+            autoComplete='off'
+            onChange={handleLastName}
+            onBlur={e => handleError(e.target.name, e.target.value)}
+          />
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <FormControlLabel disabled={formData.registerToVoteColumbia !== 'YES'}
+            control={<Checkbox size='small'
+              onBlur={e => handleError('disableAssistanceRequired', e.target.value)} onChange={e => handleChange('disableAssistanceRequired', e.target.checked)} checked={formData.disableAssistanceRequired} />}
+            label='Disabled Assistance Required'
+            labelPlacement='end'
+          />
+          <FormHelperText > <DAlertBox errorText={validationError?.disableAssistanceRequired} /> </FormHelperText>
+        </div>
+        <div className='col col-sm-12 col-md-4'>
+          <TextField
+            fullWidth
+            size='small'
+            label='Disabled Assistance Reason'
+            value={formData.disableAssistanceReason}
+            name='disableAssistanceReason'
+            disabled={formData.disableAssistanceRequired !== true}
+            inputProps={{ maxLength: 150 }}
+            autoComplete='off'
+            onChange={(e) => handleChange('disableAssistanceReason', e.target.value)}
+            onBlur={e => handleError(e.target.name, e.target.value)}
+            error={!!validationError?.disableAssistanceReason}
+            helperText={<DAlertBox errorText={validationError?.disableAssistanceReason} />}
+          />
+
+        </div>
+      </div>
+      <div className='d-sub-title'> Mailing Address Details  </div>
+      <FormControlLabel
+        control={<Checkbox size='small' value={copyData} disabled={formData.registerToVoteColumbia !== "YES"} onChange={copyPrimaryAddress} />}
+        label={'Copy Primary Address'}
+        labelPlacement='end'
+      />
+      <BOEAddress
+        validationErrors={validationError?.mailingAddress}
+        address={formData.mailingAddress}
+        disabledFields={formData.registerToVoteColumbia !== 'YES'}
+        handleAddressChange={(name, value) =>
+          handleAddressChange(name, value, 'mailingAddress')
+        }
+        handleAddressError={(name, value) =>
+          handleAddressError(name, value, 'mailingAddress')
+        }
+      />
+      <div className='d-sub-title'> Last Address Details  </div>
+      <FormControlLabel disabled={!checkAllValues(formData.mailingAddress)}
+        control={<Checkbox size='small' value={copyMailingData} disabled={formData.registerToVoteColumbia !== "YES"} onChange={copyMailingAddress} />}
+        label={'Copy Mailing Address'}
+
+        labelPlacement='end'
+      />
+      <BOEAddress
+        validationErrors={validationError?.lastAddress}
+        address={formData.lastAddress}
+        disabledFields={formData.registerToVoteColumbia !== 'YES'}
+        handleAddressChange={(name, value) =>
+          handleAddressChange(name, value, 'lastAddress')
+        }
+        handleAddressError={(name, value) =>
+          handleAddressError(name, value, 'lastAddress')
+        }
+      />
+      <div className='d-row mt-1'>
+        {formData.userConditions.map((item, index) => (
+          <div key={item.name} className='col col-sm-12 col-md-6'>
+            <FormControlLabel
+              control={<Checkbox size='small' onChange={e => handleUserConditions(e, index)} checked={item.value} />}
+              label={item.name}
+              labelPlacement='end'
+            />
+          </div>
+        ))}
+      </div>
+    </form>
+  </div>
   );
 }
