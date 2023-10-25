@@ -99,9 +99,24 @@ export default function Contact() {
   };
 
   const isValidPhoneNumber = (value) => {
-    console.log(value)
     const pattern = /^\(\d{3}\) \d{3}-\d{4}$/;
-    return pattern.test(value)
+
+    if (!pattern.test(value)) {
+      return false;
+    }
+
+    const strippedNumber = value.replace(/\D/g, '');
+    const firstThreeDigits = strippedNumber.substring(0, 3);
+
+    if (strippedNumber.split('').every(char => char === strippedNumber[0])) {
+      return false;
+    }
+
+    if (firstThreeDigits.split('').every(char => char === firstThreeDigits[0])) {
+      return false;
+    }
+
+    return true;
   }
 
   const handleError = (e) => {
@@ -154,7 +169,7 @@ export default function Contact() {
                 <DAlertBox errorText={validationError?.mobile} />
               }
               InputProps={{
-                startAdornment: <InputAdornment position="start">+1</InputAdornment>,
+                startAdornment: contactFrom.mobile !== "" && <InputAdornment position="start">+1</InputAdornment>,
               }}
               onKeyDown={handleBackspace}
               onBlur={handleError}
@@ -194,7 +209,7 @@ export default function Contact() {
               onChange={handleChange}
               onBlur={handleError}
               InputProps={{
-                startAdornment: contactFrom.mobile !== "" && <InputAdornment position="start">+1</InputAdornment>,
+                startAdornment: contactFrom.altPhone !== "" && <InputAdornment position="start">+1</InputAdornment>,
               }}
               error={!!validationError?.altPhone}
               onKeyDown={handleBackspace}
@@ -208,7 +223,6 @@ export default function Contact() {
           <div className='col col-md-8 col-sm-12'>
             <TextField
               label='Email Address'
-              type={'email'}
               fullWidth
               size='small'
               name="email"
@@ -217,18 +231,17 @@ export default function Contact() {
               helperText={
                 <DAlertBox errorText={isValidEmail == false ? 'Invalid email address' : ''} />
               }
-
               onChange={handleChange}
               onBlur={e => validateEmail(e.target.value)}
               InputProps={{
                 endAdornment: contactFrom.email !== "" && isValidEmail && (
                   <InputAdornment position='end'>
                     {verifiedEmail === contactFrom.email ? (
-                      <div className='input-adornment-text verified-text'> &#10004; Verified </div>
+                      <div className='input-adornment-text verified-text'> &#10004; Valid </div>
                     ) : (
                       <div className='input-adornment-text not-verified-text'>
                         {' '}
-                        &#10060; Not Verified{' '}
+                        &#10060; Not Valid{' '}
                       </div>
                     )}
                   </InputAdornment>
@@ -243,6 +256,7 @@ export default function Contact() {
               options={optionList}
               fullWidth
               size='small'
+              disabled={verifiedEmail !== contactFrom.email}
               value={contactFrom.emailNoticeSubscriber}
               name='emailNoticeSubscriber'
               className='enotice-sub'
@@ -266,6 +280,7 @@ export default function Contact() {
               options={optionList}
               fullWidth
               size='small'
+              disabled={verifiedEmail !== contactFrom.email}
               value={contactFrom.emailAlert}
               name='emailAlert'
               onChange={(e, v) => {
@@ -284,7 +299,7 @@ export default function Contact() {
           <div className='col col-lg-2 col-md-4 col-sm-12'>
             <Autocomplete
               options={activatedOptionList}
-              fullWidth
+              fullWidth disabled
               size='small'
               value={contactFrom.activated}
               name='activated'
