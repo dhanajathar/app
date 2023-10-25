@@ -67,10 +67,9 @@
     "GREY",
     "HAZEL",
     "MAROON",
-    "PINK",
-    "UNKNOWN"
+    "PINK"
   ],
-  "hairColorList": ["BALD", "BLACK", "BLONDE", "BROWN", "GREY", "RED", "SANDY", "UNKNOWN", "WHITE"],
+  "hairColorList": ["BALD", "BLACK", "BLONDE", "BROWN", "GREY", "RED", "SANDY", "WHITE"],
   "suffixList": ["SELECT", "JR", "SR", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
   "optionList": ["YES", "NO"],
   "optionListUnknown": ["SELECT","YES", "UNKNOWN"],

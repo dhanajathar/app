@@ -36,7 +36,7 @@ const PHYSICAL_INFORMATION = 'Physical Information';
 const IndividualDetails = () => {
   const suffixInputRef = useRef();
   const vipInputRef = useRef();
-  const activeInputRef = useRef(); 
+  const activeInputRef = useRef();
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
   const [showLoader, setShowLoader] = useState(false);
@@ -160,13 +160,13 @@ const IndividualDetails = () => {
 
   const truncation = value => {
     return (
-      <FormGroup  aria-label='position' row>
+      <FormGroup aria-label='position' row>
         <FormControlLabel
           control={<Checkbox size='small' tabIndex='-1' checked={value && value.length > 33 ? true : false} />}
           label='Truncated'
           labelPlacement='end'
         />
-        <FormControlLabel control={<Checkbox  size='small' />} label='Transliterated' labelPlacement='end' />{' '}
+        <FormControlLabel control={<Checkbox size='small' />} label='Transliterated' labelPlacement='end' />{' '}
       </FormGroup>
     );
   };
@@ -193,7 +193,6 @@ const IndividualDetails = () => {
   };
 
   const handlePersonalInfoChange = (e, field = null) => {
-     
     const { name, value } = e?.target ?? {};
     const newValues = { ...personalInformationFrom };
     newValues[field ? field : name] = field ? e : value === 'SELECT' ? null : value;
@@ -228,7 +227,7 @@ const IndividualDetails = () => {
   };
   const handleNumberChange = (e, min, max) => {
     const number = e.target.value;
-    if (e.target.value === '' || (Number(number) > min && Number(number) <= max)) {
+    if (e.target.value === '' || (Number(number) >= min && Number(number) <= max)) {
       handleOtherInfoChange(e);
     }
   };
@@ -303,9 +302,14 @@ const IndividualDetails = () => {
           error = 'Invalid Height';
         }
         break;
+      case 'heightInch':
+        if (!value) {
+          error = 'Invalid Height';
+        }
+        break;
       case 'veteran':
         if (!value) {
-          error = 'Invalid veteran';
+          error = 'Invalid Veteran';
         }
         break;
       case 'hairColor':
@@ -403,14 +407,14 @@ const IndividualDetails = () => {
           <div className='col col-md-4 col-sm-12'>
             <Autocomplete
               options={suffixList}
-              fullWidth 
+              fullWidth
               size='small'
               name='suffix'
               value={personalInformationFrom.suffix}
               onChange={(e, v) => {
-                handlePersonalInfoChange({ target: { name: 'Suffix', value: v || null } });
-                 
-              }} 
+                handlePersonalInfoChange({ target: { name: 'suffix', value: v || null } });
+                v === 'SELECT' && suffixInputRef.current.blur()
+              }}
               renderInput={params => (
                 <TextField
                   {...params}
@@ -419,8 +423,6 @@ const IndividualDetails = () => {
                 />
               )}
             />
-
-            {personalInformationFrom.suffix}
           </div>
           <div className='col col-md-4 col-sm-12'>
             <div
@@ -432,14 +434,14 @@ const IndividualDetails = () => {
                   fullWidth
                   slotProps={{
                     textField: {
-                      size:'small',
+                      size: 'small',
                       error: !!validationError?.birthDate,
                       helperText: <DAlertBox errorText={validationError?.birthDate} />,
                       onBlur: e => handleError('birthDate', e.target.value),
                     }
                   }}
                   maxDate={dayjs(new Date())}
-                  minDate={dayjs('1991-01-01')}
+                  minDate={dayjs('1901-01-01')}
                   value={
                     personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)
                   }
@@ -531,19 +533,19 @@ const IndividualDetails = () => {
               value={otherInformationFrom.organDonor}
               onChange={(e, v) => {
                 handleOtherInfoChange({ target: { name: 'organDonor', value: v || null } });
-                 
+
               }}
               onBlur={e => handleError('organDonor', e.target.value)}
               renderInput={params => (
                 <TextField
                   {...params}
-                  
+
                   error={!!validationError?.organDonor}
-                  label='Organ Donor' 
+                  label='Organ Donor'
                   helperText={<DAlertBox errorText={validationError?.organDonor} />}
                 />
               )}
-            /> 
+            />
 
           </div>
           <div className='col col-md-4 col-sm-12'>
@@ -635,9 +637,9 @@ const IndividualDetails = () => {
         </div>
         <div className='d-sub-title'> {PHYSICAL_INFORMATION} </div>
         <div className='d-row'>
-          <div className='col col-md-4 col-sm-12 pt-0'>
+          <div className='col col-md-6 col-sm-12 pt-0'>
             <div className='d-row'>
-              <div className='col col-md-6 col-sm-12'>
+              <div className='col col-md-8 col-sm-12'>
 
                 <Autocomplete
                   options={genderList}
@@ -659,7 +661,7 @@ const IndividualDetails = () => {
 
 
               </div>
-              <div className='col col-md-6 col-sm-12'>
+              <div className='col col-md-4 col-sm-12'>
                 <TextField
                   value={otherInformationFrom.weight}
                   label='Weight (Lbs)'
@@ -689,7 +691,7 @@ const IndividualDetails = () => {
             </div>
 
           </div>
-          <div className='col col-md-4 col-sm-12 pt-0'>
+          <div className='col col-md-2 col-sm-12 pt-0'>
             <div className='d-row'>
               <div className='col col-md-6 col-sm-12'>
                 <TextField
@@ -702,7 +704,7 @@ const IndividualDetails = () => {
                   type='number'
                   error={!!validationError?.heightFeet}
                   onBlur={e => handleError('heightFeet', e.target.value)}
-                  onChange={e => handleNumberChange(e, 0, 9)}
+                  onChange={e => handleNumberChange(e, 1, 9)}
                   InputProps={{
                     endAdornment: otherInformationFrom.heightFeet && (
                       <InputAdornment position='end'>
@@ -712,7 +714,7 @@ const IndividualDetails = () => {
                   }}
                 />
               </div>
-              <div className='col col-md-6 col-sm-12'>
+              <div className='col col-md-6 col-sm-12 height-in'>
                 <TextField
                   value={otherInformationFrom.heightInch}
                   label='Height (In)'
@@ -721,8 +723,9 @@ const IndividualDetails = () => {
                   disabled={disabledOtherInfo}
                   name='heightInch'
                   type='number'
-                  error={!!validationError?.heightFeet}
+                  error={!!validationError?.heightInch}
                   onChange={e => handleNumberChange(e, 0, 11)}
+                  onBlur={e => handleError('heightInch', e.target.value)}
                   InputProps={{
                     endAdornment: otherInformationFrom.heightInch && (
                       <InputAdornment position='end'>
@@ -735,7 +738,7 @@ const IndividualDetails = () => {
             </div>
             <FormHelperText className='custom-error' error={true}>
               {' '}
-              <DAlertBox errorText={validationError?.heightFeet} />
+              <DAlertBox errorText={validationError?.heightFeet || validationError?.heightInch} />
             </FormHelperText>
           </div>
           <div className='col col-md-4 col-sm-12'>
@@ -807,13 +810,13 @@ const IndividualDetails = () => {
 
             <div className='d-row'>
               <div className='col col-md-6'>
-                <TextField  size='small' label='Login ID' fullWidth />
+                <TextField size='small' label='Login ID' fullWidth />
               </div>
               <div className='col col-md-6'>
-                <TextField  size='small' label='Password' fullWidth />
+                <TextField size='small' label='Password' fullWidth />
               </div>
               <div className='col'>
-                <FormControl  size='small' fullWidth>
+                <FormControl size='small' fullWidth>
                   <InputLabel id='ReasonOverride'>Reason for Override </InputLabel>
                   <Select
                     labelId='ReasonOverride'
