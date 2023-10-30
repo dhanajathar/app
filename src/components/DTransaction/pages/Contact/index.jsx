@@ -25,6 +25,8 @@ export default function Contact() {
   const { optionList, activatedOptionList } = mockData;
 
   const [isValidEmail, setIsValidEmail] = useState(null);
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
 
   const verifiedEmail = 'jony_doe@gmail.com'
   const handleSubmit = e => {
@@ -48,7 +50,7 @@ export default function Contact() {
   const handleChange = (e) => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...contactFrom };
-    newValues[name] = (name == 'mobile' || name == 'altPhone') ? formatPhoneNumber(value) : value === 'SELECT' ? null : value;
+    newValues[name] = (name == 'mobile' || name == 'altPhone') ? formatPhoneNumber(value) : value === '--SELECT--' ? null : value;
     setContactFrom(newValues);
   };
 
@@ -92,8 +94,13 @@ export default function Contact() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const isValidEmail = emailRegex.test(email);
       setIsValidEmail(isValidEmail);
+      if (!isValidEmail) {
+        setIsFormDisabled(true);
+        setFocusedField('email');
+      }
     } else {
-      setIsValidEmail(null)
+      setIsValidEmail(null);
+
     }
 
   };
@@ -127,10 +134,12 @@ export default function Contact() {
       delete errors[name];
     }
     setValidationError(errors);
+    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
+    setFocusedField(error !== '' ? name : '');
+
   };
 
   const validateFiled = (name, value) => {
-    console.log(isValidPhoneNumber(value))
     let error = '';
     switch (name) {
       case 'mobile':
@@ -168,6 +177,8 @@ export default function Contact() {
               helperText={
                 <DAlertBox errorText={validationError?.mobile} />
               }
+              disabled={isFormDisabled && focusedField !== 'mobile'}
+              inputRef={focusedField === 'mobile' ? (input) => input && input.focus() : null}
               InputProps={{
                 startAdornment: contactFrom.mobile !== "" && <InputAdornment position="start">+1</InputAdornment>,
               }}
@@ -183,10 +194,11 @@ export default function Contact() {
               fullWidth
               size='small'
               name='mobilePhoneRegistration'
+              disabled={isFormDisabled}
               value={contactFrom.mobilePhoneRegistration}
               onChange={(e, v) => {
                 handleChange({ target: { name: 'mobilePhoneRegistration', value: v || null } });
-                v == 'SELECT' && mRegistrationRef.current.blur()
+                v == '--SELECT--' && mRegistrationRef.current.blur()
 
               }}
               renderInput={params => (
@@ -200,7 +212,6 @@ export default function Contact() {
           </div>
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={contactFrom.mobile === ""}
               fullWidth
               size='small'
               name="altPhone"
@@ -212,6 +223,8 @@ export default function Contact() {
                 startAdornment: contactFrom.altPhone !== "" && <InputAdornment position="start">+1</InputAdornment>,
               }}
               error={!!validationError?.altPhone}
+              disabled={contactFrom.mobile === "" || (isFormDisabled && focusedField !== 'altPhone')}
+              inputRef={focusedField === 'altPhone' ? (input) => input && input.focus() : null}
               onKeyDown={handleBackspace}
               helperText={
                 <DAlertBox errorText={validationError?.altPhone} />
@@ -231,6 +244,8 @@ export default function Contact() {
               helperText={
                 <DAlertBox errorText={isValidEmail == false ? 'Invalid email address' : ''} />
               }
+              disabled={isFormDisabled && focusedField !== 'email'}
+              inputRef={focusedField === 'email' ? (input) => input && input.focus() : null}
               onChange={handleChange}
               onBlur={e => validateEmail(e.target.value)}
               InputProps={{
@@ -256,13 +271,13 @@ export default function Contact() {
               options={optionList}
               fullWidth
               size='small'
-              disabled={verifiedEmail !== contactFrom.email}
+              disabled={verifiedEmail !== contactFrom.email || isFormDisabled}
               value={contactFrom.emailNoticeSubscriber}
               name='emailNoticeSubscriber'
               className='enotice-sub'
               onChange={(e, v) => {
                 handleChange({ target: { name: 'emailNoticeSubscriber', value: v || null } });
-                v == 'SELECT' && eNoticeRef.current.blur()
+                v == '--SELECT--' && eNoticeRef.current.blur()
               }}
               renderInput={params => (
                 <TextField
@@ -280,12 +295,12 @@ export default function Contact() {
               options={optionList}
               fullWidth
               size='small'
-              disabled={verifiedEmail !== contactFrom.email}
+              disabled={verifiedEmail !== contactFrom.email || isFormDisabled}
               value={contactFrom.emailAlert}
               name='emailAlert'
               onChange={(e, v) => {
                 handleChange({ target: { name: 'emailAlert', value: v || null } });
-                v == 'SELECT' && emailRef.current.blur()
+                v == '--SELECT--' && emailRef.current.blur()
               }}
               renderInput={params => (
                 <TextField
@@ -305,7 +320,7 @@ export default function Contact() {
               name='activated'
               onChange={(e, v) => {
                 handleChange({ target: { name: 'activated', value: v || null } });
-                v == 'SELECT' && activatedRef.current.blur()
+                v == '--SELECT--' && activatedRef.current.blur()
               }}
               renderInput={params => (
                 <TextField

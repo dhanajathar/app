@@ -4,9 +4,9 @@ import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import CloseIcon from '@mui/icons-material/Close';
 
-const DAlertBox = ({ errorText, warningText }) => {
+const DAlertBox = ({ errorText, warningText, onClearWarning }) => {
     const [expanded, setExpanded] = useState(false);
-    const [clearWarning, setClearWarning] = useState(false);
+   // const [clearWarning, setClearWarning] = useState(false);
     const toggleExpansion = () => {
         setExpanded(!expanded);
     };
@@ -17,27 +17,27 @@ const DAlertBox = ({ errorText, warningText }) => {
         whiteSpace: expanded ? 'normal' : 'nowrap'
     }), [expanded]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         setClearWarning(false)
-    }, [warningText])
+    }, [warningText])*/
 
-    return (<> {errorText ? <div className={'error-box alert-box'} >
+    return (<> {errorText ? <span className={'error-box alert-box'} >
         <ErrorOutlineOutlinedIcon className='error-icon' />
-        <div style={divStyle} onClick={toggleExpansion}>
+        <span style={divStyle} onClick={toggleExpansion}>
             <span>
                 {errorText}
             </span>
-        </div>
-    </div> : <>
-        {warningText && !clearWarning && <div className={'warning-box alert-box'} >
+        </span>
+    </span> : <>
+        {warningText && <span className={'warning-box alert-box'} >
             <WarningAmberIcon className='warning-icon' />
-            <div>
+            <span>
                 <span>
                     {warningText}
                 </span>
-            </div>
-            <CloseIcon className='alert-close-icon' onClick={() => setClearWarning(true)} />
-        </div>}
+            </span>
+            <CloseIcon className='alert-close-icon' onClick={() => onClearWarning(warningText)} />
+        </span>}
     </>
     }
     </>

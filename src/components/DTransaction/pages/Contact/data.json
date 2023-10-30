@@ -1,5 +1,13 @@
 {
-    
-    "optionList": ["SELECT","YES","NO"],
-    "activatedOptionList": ["SELECT","Activated","Pending", "Not Activated/Inactive"]
+    "optionList": [
+        "--SELECT--",
+        "YES",
+        "NO"
+    ],
+    "activatedOptionList": [
+        "--SELECT--",
+        "Activated",
+        "Pending",
+        "Not Activated/Inactive"
+    ]
 }
