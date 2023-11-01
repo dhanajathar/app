@@ -15,7 +15,9 @@ import {
   InputLabel,
   Select,
   TextField,
-  Autocomplete
+  Autocomplete,
+  IconButton,
+
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
 import React, { useEffect, useRef, useState } from 'react';
@@ -31,6 +33,7 @@ import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrong
 import DLoaderDialog from '../../../DLoaderDialog';
 import { prettifyCamelCase } from '../../../../utils/stringUtils';
 import { calculateAge } from '../../../../utils/dateUtils';
+import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
 
 const PHYSICAL_INFORMATION = 'Physical Information';
 
@@ -42,6 +45,7 @@ const IndividualDetails = () => {
   const flowId = searchParams.get('flowId');
   const [showLoader, setShowLoader] = useState(false);
   const [showVerificationStatus, setShowVerificationStatus] = useState();
+  const [calendarOpen, setCalendarOpen] = useState(false)
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
       detail: {
@@ -169,7 +173,7 @@ const IndividualDetails = () => {
           label='Truncated'
           labelPlacement='end'
         />
-        <FormControlLabel control={<Checkbox size='small' />} label='Transliterated' labelPlacement='end' />{' '}
+        <FormControlLabel disabled={isFormDisabled} control={<Checkbox size='small' />} label='Transliterated' labelPlacement='end' />{' '}
       </FormGroup>
     );
   };
@@ -486,38 +490,48 @@ const IndividualDetails = () => {
             />
           </div>
           <div className='col col-md-4 col-sm-12'>
-            <div
-              className={personalInformationFrom.birthDate ? 'date-picker has-date' : 'date-picker'}
-            >
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label='Date of Birth'
-                  fullWidth
-                  disabled={isFormDisabled && focusedField !== 'birthDate'}
-
-                  slotProps={{
-                    textField: {
-                      size: 'small',
-                      error: !!validationError?.birthDate,
-                      helperText: <DAlertBox errorText={validationError?.birthDate} />,
-                      inputRef: focusedField === 'birthDate' ? (input) => input && input.focus() : null,
-                      onBlur: e => handleError('birthDate', e.target.value),
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label='Date of Birth'
+                fullWidth
+                disabled={isFormDisabled && focusedField !== 'birthDate'}
+                open={calendarOpen}
+                onOpen={() => setOpen(true)}
+                onClose={() => setCalendarOpen(false)}
+                slotProps={{
+                  textField: {
+                    size: 'small',
+                    fullWidth: true,
+                    error: !!validationError?.birthDate,
+                    helperText: <DAlertBox errorText={validationError?.birthDate} />,
+                    inputRef: focusedField === 'birthDate' ? (input) => input && input.focus() : null,
+                    onBlur: e => handleError('birthDate', e.target.value),
+                    InputProps: {
+                      endAdornment: (
+                        <><InputAdornment position='end'>
+                          <IconButton onClick={() => setCalendarOpen((calendarOpen) => !calendarOpen)}>
+                            <CalendarMonthTwoToneIcon />
+                          </IconButton>
+                        </InputAdornment>
+                          {personalInformationFrom.birthDate && <InputAdornment position='end'>
+                            {' '}
+                            <div className='input-adornment-text'> {calculateAge(personalInformationFrom.birthDate)} </div>{' '}
+                          </InputAdornment>}
+                        </>
+                      )
                     }
-                  }}
-                  maxDate={dayjs(new Date())}
-                  minDate={dayjs('1901-01-01')}
-                  value={
-                    personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)
+
                   }
-                  onChange={date => handlePersonalInfoChange(date, 'birthDate')}
-                />
-              </LocalizationProvider>
-              {personalInformationFrom.birthDate && (
-                <div className='date-helper-text'>
-                  {calculateAge(personalInformationFrom.birthDate)}
-                </div>
-              )}
-            </div>
+                }}
+                maxDate={dayjs(new Date())}
+                minDate={dayjs('1901-01-01')}
+                value={
+                  personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)
+                }
+                onChange={date => handlePersonalInfoChange(date, 'birthDate')}
+              />
+            </LocalizationProvider>
+
           </div>
         </div>
         <div className='d-sub-title'> Photo & Signature </div>
