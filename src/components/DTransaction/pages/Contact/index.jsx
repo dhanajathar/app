@@ -38,12 +38,12 @@ export default function Contact() {
 
   const [contactFrom, setContactFrom] = useState({
     mobile: '',
-    mobilePhoneRegistration: '',
-    emailNoticeSubscriber: '',
+    mobilePhoneRegistration: null,
+    emailNoticeSubscriber: null,
     email: '',
     altPhone: '',
-    emailAlert: '',
-    activated: ''
+    emailAlert: null,
+    activated: null
   });
 
 
@@ -97,6 +97,8 @@ export default function Contact() {
       if (!isValidEmail) {
         setIsFormDisabled(true);
         setFocusedField('email');
+      } else {
+        setIsFormDisabled(false);
       }
     } else {
       setIsValidEmail(null);
