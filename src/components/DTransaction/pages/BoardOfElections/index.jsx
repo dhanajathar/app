@@ -22,7 +22,11 @@ export default function BoardOfElections() {
   const [validationError, setValidationError] = useState();
   const [copyData, setCopyData] = useState(false);
   const [copyMailingData, setCopyMailingData] = useState(false);
-  const [formData, setFormData] = useState(initialData)
+  const [formData, setFormData] = useState(initialData);
+  const [focusedField, setFocusedField] = useState(null);
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+
+
 
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
@@ -73,6 +77,8 @@ export default function BoardOfElections() {
       delete errors[name];
     }
     setValidationError(errors);
+    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
+    setFocusedField(error !== '' ? name : '');
   };
 
 
@@ -84,8 +90,12 @@ export default function BoardOfElections() {
     if (Object.keys(updatedAddress).length === 0) {
       delete updatedErrors[addressType];
     }
-
+    if (error === '') {
+      delete updatedErrors[addressType][name]
+    }
     setValidationError(updatedErrors);
+    setIsFormDisabled(error !== '' ? true : false);
+
   };
 
 
@@ -113,9 +123,10 @@ export default function BoardOfElections() {
 
   useEffect(() => {
     if (formData.registerToVoteColumbia === 'YES') {
+
       const newValues = { ...formData };
-      newValues.mailingAddress = defaultAddress;
-      newValues.lastAddress = defaultAddress;
+      newValues.mailingAddress = { ...defaultAddress };
+      newValues.lastAddress = { ...defaultAddress };
       setFormData(newValues);
     } else {
       initialData.registerToVoteColumbia = formData.registerToVoteColumbia
@@ -221,7 +232,6 @@ export default function BoardOfElections() {
             renderInput={params => (
               <TextField
                 {...params}
-
                 error={!!validationError?.registerToVoteColumbia}
                 helperText={<DAlertBox errorText={validationError?.registerToVoteColumbia} />}
                 label='Registered to Vote in District of Columbia'
@@ -238,11 +248,12 @@ export default function BoardOfElections() {
             value={formData.reasonForForm}
             onChange={(e, v) => handleChange('reasonForForm', v)}
             getOptionDisabled={(option) => option === 'Unknown'}
-            disabled={formData.registerToVoteColumbia !== 'YES'}
+            disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'reasonForForm')}
             onBlur={e => handleError('reasonForForm', e.target.value)}
             renderInput={params => (
               <TextField
                 {...params}
+                inputRef={focusedField === 'reasonForForm' ? (input) => input && input.focus() : null}
                 error={!!validationError?.reasonForForm}
                 helperText={<DAlertBox errorText={validationError?.reasonForForm} />}
                 label='Reason for Form'
@@ -263,13 +274,13 @@ export default function BoardOfElections() {
             size='small'
             name='pollWorker'
             value={formData.pollWorker}
-            disabled={formData.registerToVoteColumbia !== 'YES'}
+            disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'pollWorker')}
             onChange={(e, v) => handleChange('pollWorker', v)}
             onBlur={e => handleError('pollWorker', e.target.value)}
             renderInput={params => (
               <TextField
                 {...params}
-
+                inputRef={focusedField === 'pollWorker' ? (input) => input && input.focus() : null}
                 error={!!validationError?.pollWorker}
                 helperText={<DAlertBox errorText={validationError?.pollWorker} />}
                 label='Poll Worker'
@@ -285,13 +296,13 @@ export default function BoardOfElections() {
             size='small'
             name='pollWorker'
             value={formData.language}
-            disabled={formData.registerToVoteColumbia !== 'YES'}
+            disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'language')}
             onChange={(e, v) => handleChange('language', v)}
             onBlur={e => handleError('language', e.target.value)}
             renderInput={params => (
               <TextField
                 {...params}
-
+                inputRef={focusedField === 'language' ? (input) => input && input.focus() : null}
                 error={!!validationError?.language}
                 helperText={<DAlertBox errorText={validationError?.language} />}
                 label='Language'
@@ -306,12 +317,13 @@ export default function BoardOfElections() {
             name='partyAffiliation'
             size='small'
             value={formData.partyAffiliation}
-            disabled={formData.registerToVoteColumbia !== 'YES'}
+            disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'partyAffiliation')}
             onChange={(e, v) => handleChange('partyAffiliation', v)}
             onBlur={e => handleError('partyAffiliation', e.target.value)}
             renderInput={params => (
               <TextField
                 {...params}
+                inputRef={focusedField === 'partyAffiliation' ? (input) => input && input.focus() : null}
                 error={!!validationError?.partyAffiliation}
                 helperText={<DAlertBox errorText={validationError?.partyAffiliation} />}
                 label='Party Affiliation'
@@ -326,12 +338,13 @@ export default function BoardOfElections() {
             fullWidth
             label='Other Party'
             size='small'
-            disabled={formData.registerToVoteColumbia !== 'YES' || formData.partyAffiliation !== 'Other'}
+            disabled={formData.registerToVoteColumbia !== 'YES' || formData.partyAffiliation !== 'Other' || (isFormDisabled && focusedField !== 'otherParty')}
             value={formData.otherParty}
             name='otherParty'
             inputProps={{ maxLength: 50 }}
             onChange={(e) => handleChange('otherParty', e.target.value)}
             onBlur={e => handleError('otherParty', e.target.value)}
+            inputRef={focusedField === 'otherParty' ? (input) => input && input.focus() : null}
             error={!!validationError?.otherParty}
             helperText={<DAlertBox errorText={validationError?.otherParty} />}
           />
@@ -344,7 +357,7 @@ export default function BoardOfElections() {
             label='Last Name Used'
             value={formData.lastNameUsed}
             name='lastNameUsed'
-            disabled={formData.registerToVoteColumbia !== 'YES'}
+            disabled={formData.registerToVoteColumbia !== 'YES' || isFormDisabled}
             inputProps={{ maxLength: 33 }}
             autoComplete='off'
             onChange={handleLastName}
@@ -352,7 +365,7 @@ export default function BoardOfElections() {
           />
         </div>
         <div className='col col-sm-12 col-md-4'>
-          <FormControlLabel disabled={formData.registerToVoteColumbia !== 'YES'}
+          <FormControlLabel disabled={formData.registerToVoteColumbia !== 'YES' || isFormDisabled}
             control={<Checkbox size='small'
               onBlur={e => handleError('disableAssistanceRequired', e.target.value)} onChange={e => handleChange('disableAssistanceRequired', e.target.checked)} checked={formData.disableAssistanceRequired} />}
             label='Disabled Assistance Required'
@@ -367,11 +380,13 @@ export default function BoardOfElections() {
             label='Disabled Assistance Reason'
             value={formData.disableAssistanceReason}
             name='disableAssistanceReason'
-            disabled={formData.disableAssistanceRequired !== true}
+            disabled={formData.disableAssistanceRequired !== true || (isFormDisabled && focusedField !== 'disableAssistanceReason')}
             inputProps={{ maxLength: 150 }}
             autoComplete='off'
             onChange={(e) => handleChange('disableAssistanceReason', e.target.value)}
             onBlur={e => handleError(e.target.name, e.target.value)}
+
+            inputRef={focusedField === 'disableAssistanceReason' ? (input) => input && input.focus() : null}
             error={!!validationError?.disableAssistanceReason}
             helperText={<DAlertBox errorText={validationError?.disableAssistanceReason} />}
           />
@@ -380,13 +395,15 @@ export default function BoardOfElections() {
       </div>
       <div className='d-sub-title'> Mailing Address Details  </div>
       <FormControlLabel
-        control={<Checkbox size='small' value={copyData} disabled={formData.registerToVoteColumbia !== "YES"} onChange={copyPrimaryAddress} />}
+        control={<Checkbox size='small' value={copyData} disabled={formData.registerToVoteColumbia !== "YES" || isFormDisabled} onChange={copyPrimaryAddress} />}
         label={'Copy Primary Address'}
         labelPlacement='end'
       />
       <BOEAddress
+        key={'mailingAddress'}
         validationErrors={validationError?.mailingAddress}
         address={formData.mailingAddress}
+        isFormDisabled={isFormDisabled}
         disabledFields={formData.registerToVoteColumbia !== 'YES'}
         handleAddressChange={(name, value) =>
           handleAddressChange(name, value, 'mailingAddress')
@@ -397,14 +414,16 @@ export default function BoardOfElections() {
       />
       <div className='d-sub-title'> Last Address Details  </div>
       <FormControlLabel disabled={!checkAllValues(formData.mailingAddress)}
-        control={<Checkbox size='small' value={copyMailingData} disabled={formData.registerToVoteColumbia !== "YES"} onChange={copyMailingAddress} />}
+        control={<Checkbox size='small' value={copyMailingData} disabled={formData.registerToVoteColumbia !== "YES" || isFormDisabled} onChange={copyMailingAddress} />}
         label={'Copy Mailing Address'}
 
         labelPlacement='end'
       />
       <BOEAddress
+        key={'lastAddress'}
         validationErrors={validationError?.lastAddress}
         address={formData.lastAddress}
+        isFormDisabled={isFormDisabled}
         disabledFields={formData.registerToVoteColumbia !== 'YES'}
         handleAddressChange={(name, value) =>
           handleAddressChange(name, value, 'lastAddress')
@@ -417,7 +436,7 @@ export default function BoardOfElections() {
         {formData.userConditions.map((item, index) => (
           <div key={item.name} className='col col-sm-12 col-md-6'>
             <FormControlLabel
-              control={<Checkbox size='small' onChange={e => handleUserConditions(e, index)} checked={item.value} />}
+              control={<Checkbox size='small' disabled={formData.registerToVoteColumbia !== 'YES' || isFormDisabled} onChange={e => handleUserConditions(e, index)} checked={item.value} />}
               label={item.name}
               labelPlacement='end'
             />
