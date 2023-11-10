@@ -14,6 +14,21 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
   const [focusedField, setFocusedField] = useState();
   const { countryList, stateList } = mockData;
 
+
+  const handleZipCodeChange = value => {
+    const zipCode = value.replace(/[^\d]/g, '');
+    let zipCodeValue;
+    const zipCodeLength = zipCode.length;
+    if (zipCodeLength > 5) {
+      zipCodeValue = `${zipCode.slice(0, 5)}-${zipCode.slice(5, 9)}`;
+    } else {
+      zipCodeValue = zipCode;
+    }
+    handleAddressChange('zipCode', zipCodeValue)
+
+  }
+
+
   useEffect(() => {
     if (validationErrors) {
       const keys = Object.keys(validationErrors);
@@ -24,7 +39,7 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
   }, [validationErrors]);
 
   return (<div className='d-row'>
-    <div className='col col-sm-12 col-md-4'>
+    <div className='col col-sm-12 col-md-8'>
       <TextField
         fullWidth
         size='small'
@@ -38,11 +53,12 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
         onBlur={e => handleAddressError('addressLine', e.target.value)}
       />
     </div>
-    <div className='col col-sm-12 col-md-2'>
+    <div className='col col-sm-12 col-md-4'>
       <TextField
         fullWidth
         size='small'
         label='City'
+        inputProps={{ maxLength: 20 }}
         value={city}
         disabled={disabledFields || (isFormDisabled && focusedField !== 'city')}
         error={!!validationErrors?.city}
@@ -52,13 +68,14 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
         onBlur={e => handleAddressError('city', e.target.value)}
       />
     </div>
-    <div className='col col-sm-12 col-md-2'>
+    <div className='col col-sm-12 col-md-4'>
       <Autocomplete
         options={stateList}
         fullWidth
         size='small'
         name='state'
         value={state}
+        disableClearable={true}
         onChange={(e, v) => handleAddressChange('state', v)}
         disabled={disabledFields || (isFormDisabled && focusedField !== 'state')}
         onBlur={e => handleAddressError('state', e.target.value)}
@@ -73,7 +90,7 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
         )}
       />
     </div>
-    <div className='col col-sm-12 col-md-2'>
+    <div className='col col-sm-12 col-md-4'>
       <TextField
         fullWidth
         label='ZIP Code'
@@ -83,19 +100,20 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
         error={!!validationErrors?.zipCode}
         inputRef={focusedField === 'zipCode' ? (input) => input && input.focus() : null}
         helperText={<DAlertBox errorText={validationErrors?.zipCode} />}
-        onChange={e => handleAddressChange('zipCode', e.target.value)}
+        onChange={e => handleZipCodeChange(e.target.value)}
         onBlur={e => handleAddressError('zipCode', e.target.value)}
       />
     </div>
-    <div className='col col-sm-12 col-md-2'>
+    <div className='col col-sm-12 col-md-4'>
       <Autocomplete
         options={countryList}
         fullWidth
         size='small'
         name='country'
         value={country}
+        disableClearable={true}
         onChange={(e, v) => handleAddressChange('country', v)}
-        disabled={disabledFields || (isFormDisabled && focusedField !== 'country')}
+        disabled={true}
         onBlur={e => handleAddressError('country', e.target.value)}
         renderInput={params => (
           <TextField

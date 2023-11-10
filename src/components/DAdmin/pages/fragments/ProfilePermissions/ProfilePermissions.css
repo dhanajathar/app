@@ -77,6 +77,10 @@
   min-height: 100%;
 }
 
+.profile-permision-search {
+  margin-bottom: 0.75rem;
+}
+
 .align-items-strech {
   align-items: stretch;
 }

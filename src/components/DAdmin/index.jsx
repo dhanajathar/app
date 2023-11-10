@@ -18,7 +18,7 @@ const DAdmin = () => {
       <Route path='new-employee/' element={<NewEmployee />} />
       <Route path='employee-profile/' element={<EmployeeProfile />} />
       <Route path='edit-employee/' element={<EditEmployee />} />
-      <Route path='profile-permission/' element={<ProfilePermissions />} />
+      <Route path='profile-permissions/' element={<ProfilePermissions />} />
       <Route path='*' element={<AdminError />} />
     </Routes>
   );
