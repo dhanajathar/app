@@ -14,6 +14,7 @@ import { json, useSearchParams } from 'react-router-dom';
 import DAlertBox from '../../../DAlertBox';
 import BOEAddress from './component/BOEAddress';
 import * as _ from 'lodash';
+import Test from './component/test/test';
 
 export default function BoardOfElections() {
   const { optionList, reasonForFormList, languageList, partyList, primaryAddresses, initialData, defaultAddress } = mockData;
@@ -25,6 +26,7 @@ export default function BoardOfElections() {
   const [formData, setFormData] = useState({ ...initialData });
   const [focusedField, setFocusedField] = useState(null);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const isDemoPage = true;
 
 
 
@@ -270,8 +272,16 @@ export default function BoardOfElections() {
     }
   }
 
-  return (<div className='d-container'>
-    {focusedField}
+  return (<div className='d-container'>  
+    {isDemoPage ? <> 
+    <Test  address={{
+        city: "",
+        state: "",
+        country: "UNITED STATES",
+        addressLine: "",
+        zipCode: ""
+    }} />
+    </> :
     <form onSubmit={handleSubmit}>
       <div className='d-sub-title'> Board of Elections </div>
       <div className='d-row'>
@@ -516,7 +526,7 @@ export default function BoardOfElections() {
           </div>
         ))}
       </div>
-    </form>
+    </form>}
   </div>
   );
 }

@@ -9,8 +9,9 @@ import React, { useEffect, useState } from 'react';
 import DAlertBox from '../../../../DAlertBox';
 import mockData from '../data.json';
 
-export default function BOEAddress({ validationErrors, address, handleAddressChange, handleAddressError, disabledFields, isFormDisabled }) {
+export default function BOEAddress({ validationErrors, address, handleAddressChange, handleAddressError, disabledFields, isFormDisabled }) { 
   const { addressLine, city, state, zipCode, country } = address;
+  console.log(zipCode)
   const [focusedField, setFocusedField] = useState();
   const { countryList, stateList } = mockData;
 
@@ -82,6 +83,7 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
         renderInput={params => (
           <TextField
             {...params}
+            
             error={!!validationErrors?.state}
             inputRef={focusedField === 'state' ? (input) => input && input.focus() : null}
             helperText={<DAlertBox errorText={validationErrors?.state} />}
@@ -91,6 +93,7 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
       />
     </div>
     <div className='col col-sm-12 col-md-4'>
+      {zipCode}
       <TextField
         fullWidth
         label='ZIP Code'
