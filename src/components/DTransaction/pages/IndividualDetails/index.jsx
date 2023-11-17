@@ -34,6 +34,8 @@ import DLoaderDialog from '../../../DLoaderDialog';
 import { prettifyCamelCase } from '../../../../utils/stringUtils';
 import { calculateAge } from '../../../../utils/dateUtils';
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
+import HeightTextField from '../../../DHeight';
+import DHeight from '../../../DHeight';
 
 const PHYSICAL_INFORMATION = 'Physical Information';
 
@@ -286,7 +288,7 @@ const IndividualDetails = () => {
 
 
   };
-  const handleNumberChange = (e, min, max) => {
+  const handleNumberChange = (e, min, max) => { 
     const number = e.target.value;
     if (e.target.value === '' || (Number(number) >= min && Number(number) <= max)) {
       handleOtherInfoChange(e);
@@ -785,8 +787,9 @@ const IndividualDetails = () => {
             </div>
 
           </div>
-          <div className='col col-md-2 col-sm-12 pt-0'>
-            <div className='d-row'>
+          <div className='col col-md-2 col-sm-12'> 
+            <DHeight validationError={validationError} disabledOtherInfo={disabledOtherInfo} isFormDisabled={isFormDisabled} focusedField={focusedField}  values={otherInformationFrom} handleError={(fieldName,value)=> handleError(fieldName, value)}  handleChange={(e, start, end) => handleNumberChange(e, start, end)} />
+            {/* <div className='d-row'>
               <div className='col col-md-6 col-sm-12'>
                 <TextField
                   value={otherInformationFrom.heightFeet}
@@ -809,8 +812,9 @@ const IndividualDetails = () => {
                   }}
                 />
               </div>
-              <div className='col col-md-6 col-sm-12 height-in'>
-                <TextField
+              <div className='col col-md-6 col-sm-12 height-in'> 
+                
+                 <TextField
                   value={otherInformationFrom.heightInch}
                   label='Height (In)'
                   fullWidth
@@ -829,9 +833,9 @@ const IndividualDetails = () => {
                       </InputAdornment>
                     )
                   }}
-                />
+                /> 
               </div>
-            </div>
+            </div> */}
             <FormHelperText className='custom-error' error={true}>
               {' '}
               <DAlertBox errorText={validationError?.heightFeet || validationError?.heightInch} />

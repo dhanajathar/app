@@ -10,11 +10,10 @@ import { DEventService, DEvents } from '../../../../services/DEventService';
 import React, { useEffect, useState } from 'react';
 
 import mockData from './data.json';
-import { json, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import DAlertBox from '../../../DAlertBox';
 import BOEAddress from './component/BOEAddress';
 import * as _ from 'lodash';
-import Test from './component/test/test';
 
 export default function BoardOfElections() {
   const { optionList, reasonForFormList, languageList, partyList, primaryAddresses, initialData, defaultAddress } = mockData;
@@ -26,10 +25,6 @@ export default function BoardOfElections() {
   const [formData, setFormData] = useState({ ...initialData });
   const [focusedField, setFocusedField] = useState(null);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
-  const isDemoPage = true;
-
-
-
 
   const sortedList = (list) => {
     const sortedList = list.slice().sort((a, b) => a.localeCompare(b));
@@ -109,7 +104,7 @@ export default function BoardOfElections() {
       delete updatedErrors[addressType][name]
     }
     setValidationError(updatedErrors);
-    setIsFormDisabled(error !== '' ? true : false);
+    setIsFormDisabled(!!error);
   };
 
 
@@ -152,7 +147,7 @@ export default function BoardOfElections() {
       newValues.disableAssistanceReason = "";
       setFormData(newValues)
     }
-  }, [formData.disableAssistanceRequired])
+  }, [formData.disableAssistanceRequired, formData])
 
 
   useEffect(() => {
@@ -161,7 +156,7 @@ export default function BoardOfElections() {
       newValues.otherParty = "";
       setFormData(newValues)
     }
-  }, [formData.partyAffiliation])
+  }, [formData.partyAffiliation, formData])
 
 
   useEffect(() => {
@@ -176,7 +171,7 @@ export default function BoardOfElections() {
       setCopyMailingData(false);
       setCopyData(false)
     }
-  }, [formData.registerToVoteColumbia])
+  }, [formData.registerToVoteColumbia, defaultAddress, formData, initialData])
 
   const validateFiled = (name, value) => {
     let error = '';
@@ -236,7 +231,7 @@ export default function BoardOfElections() {
           error = 'Invalid Zip Code';
         }
 
-        if (value && !(value.replace(/[^0-9]/g, '').length === 5 || value.replace(/[^0-9]/g, '').length === 9)) {
+        if (value && !(/^\D*$/.test(value) && [5, 9].includes(value.length))) {
           error = 'Invalid Zip Code';
         }
         break;
@@ -272,16 +267,7 @@ export default function BoardOfElections() {
     }
   }
 
-  return (<div className='d-container'>  
-    {isDemoPage ? <> 
-    <Test  address={{
-        city: "",
-        state: "",
-        country: "UNITED STATES",
-        addressLine: "",
-        zipCode: ""
-    }} />
-    </> :
+  return (<div className='d-container'>
     <form onSubmit={handleSubmit}>
       <div className='d-sub-title'> Board of Elections </div>
       <div className='d-row'>
@@ -294,7 +280,7 @@ export default function BoardOfElections() {
             disableClearable={true}
             name='registerToVoteColumbia'
             value={formData.registerToVoteColumbia}
-            onChange={(e, v) => handleChange('registerToVoteColumbia', v)}
+            onChange={(_e, v) => handleChange('registerToVoteColumbia', v)}
             onBlur={e => handleError('registerToVoteColumbia', e.target.value)}
             renderInput={params => (
               <TextField
@@ -315,7 +301,7 @@ export default function BoardOfElections() {
             disableClearable={true}
             name='reasonForForm'
             value={formData.reasonForForm}
-            onChange={(e, v) => handleChange('reasonForForm', v)}
+            onChange={(_e, v) => handleChange('reasonForForm', v)}
             disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'reasonForForm')}
             onBlur={e => handleError('reasonForForm', e.target.value)}
             renderInput={params => (
@@ -338,7 +324,7 @@ export default function BoardOfElections() {
             disableClearable={true}
             value={formData.language}
             disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'language')}
-            onChange={(e, v) => handleChange('language', v)}
+            onChange={(_e, v) => handleChange('language', v)}
             onBlur={e => handleError('language', e.target.value)}
             renderInput={params => (
               <TextField
@@ -362,7 +348,7 @@ export default function BoardOfElections() {
             disableClearable={true}
             value={formData.pollWorker}
             disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'pollWorker')}
-            onChange={(e, v) => handleChange('pollWorker', v)}
+            onChange={(_e, v) => handleChange('pollWorker', v)}
             onBlur={e => handleError('pollWorker', e.target.value)}
             renderInput={params => (
               <TextField
@@ -386,7 +372,7 @@ export default function BoardOfElections() {
             value={formData.partyAffiliation}
             getOptionDisabled={(option) => option === 'Unknown'}
             disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'partyAffiliation')}
-            onChange={(e, v) => handleChange('partyAffiliation', v)}
+            onChange={(_e, v) => handleChange('partyAffiliation', v)}
             onBlur={e => handleError('partyAffiliation', e.target.value)}
             renderInput={params => (
               <TextField
@@ -444,7 +430,7 @@ export default function BoardOfElections() {
             disableClearable={true}
             value={formData.disableAssistanceRequired}
             disabled={formData.registerToVoteColumbia !== 'YES' || (isFormDisabled && focusedField !== 'disableAssistanceRequired')}
-            onChange={(e, v) => handleChange('disableAssistanceRequired', v)}
+            onChange={(_e, v) => handleChange('disableAssistanceRequired', v)}
             onBlur={e => handleError('disableAssistanceRequired', e.target.value)}
             renderInput={params => (
               <TextField
@@ -526,7 +512,7 @@ export default function BoardOfElections() {
           </div>
         ))}
       </div>
-    </form>}
+    </form>
   </div>
   );
 }

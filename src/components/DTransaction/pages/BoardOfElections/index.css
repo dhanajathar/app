@@ -1,12 +1,15 @@
   .invalid-checkbox {
     color: var(--red100)
   }
+
   .mailing-checkbox {
     margin-left: 2rem;
   }
+
   .last-address-checkbox {
     margin-left: 0.5rem;
   }
+
   .address-title {
     margin-bottom: -0.5rem;
   }

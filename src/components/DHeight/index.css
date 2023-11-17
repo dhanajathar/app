@@ -1,0 +1,15 @@
+.wrapper-input>.MuiInputBase-root>input {
+    display: none;
+}
+
+.remove-border .MuiInputBase-root {
+    border-radius: 0;
+}
+
+.remove-border .MuiOutlinedInput-notchedOutline {
+    border: none;
+}
+.input-group {
+    display: flex;
+    align-items: center;
+}

@@ -1,20 +1,17 @@
-
-
 import {
   Autocomplete,
   TextField
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-
+import PropTypes from 'prop-types';
 import DAlertBox from '../../../../DAlertBox';
 import mockData from '../data.json';
 
-export default function BOEAddress({ validationErrors, address, handleAddressChange, handleAddressError, disabledFields, isFormDisabled }) { 
+
+const BOEAddress = ({ validationErrors, address, handleAddressChange, handleAddressError, disabledFields, isFormDisabled }) => {
   const { addressLine, city, state, zipCode, country } = address;
-  console.log(zipCode)
   const [focusedField, setFocusedField] = useState();
   const { countryList, stateList } = mockData;
-
 
   const handleZipCodeChange = value => {
     const zipCode = value.replace(/[^\d]/g, '');
@@ -26,9 +23,7 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
       zipCodeValue = zipCode;
     }
     handleAddressChange('zipCode', zipCodeValue)
-
   }
-
 
   useEffect(() => {
     if (validationErrors) {
@@ -83,7 +78,7 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
         renderInput={params => (
           <TextField
             {...params}
-            
+
             error={!!validationErrors?.state}
             inputRef={focusedField === 'state' ? (input) => input && input.focus() : null}
             helperText={<DAlertBox errorText={validationErrors?.state} />}
@@ -93,7 +88,6 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
       />
     </div>
     <div className='col col-sm-12 col-md-4'>
-      {zipCode}
       <TextField
         fullWidth
         label='ZIP Code'
@@ -131,3 +125,20 @@ export default function BOEAddress({ validationErrors, address, handleAddressCha
     </div>
   </div>);
 }
+
+BOEAddress.propTypes = {
+  validationErrors: PropTypes.object,
+  address: PropTypes.shape({
+    addressLine: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipCode: PropTypes.string,
+    country: PropTypes.string,
+  }),
+  handleAddressChange: PropTypes.func,
+  handleAddressError: PropTypes.func,
+  disabledFields: PropTypes.bool,
+  isFormDisabled: PropTypes.bool,
+};
+
+export default BOEAddress;
