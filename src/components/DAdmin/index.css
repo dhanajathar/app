@@ -7,11 +7,9 @@
 
 /* tempory CSS block to be removed when adding progress stepper */
 .d-container {
-  background-color: #ffffff;
-  padding-bottom: 1.5rem;
+  background-color: var(--white100);
   width: 100%;
   max-height: 95%;
-  background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 1px 3px 6px #0000000d;
   border: 1px solid #dedede;
   border-radius: 5px;
@@ -24,4 +22,26 @@
   font-size: 18px;
   font-weight: bold;
   margin: 1rem 0;
+}
+
+.employee-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white100) 0% 0% no-repeat padding-box;
+  font: normal normal normal 12px/24px Open Sans;
+  letter-spacing: Orem;
+  border-radius: 1.5rem;
+  line-height: 1.313rem !important;
+  padding: 0rem 0.75rem;
+  text-transform: capitalize;
+  color: var(--white100);
+}
+
+.employee-status.active {
+  background-color: var(--green100);
+}
+
+.employee-status.inactive {
+  background-color: #9a0404;
 }

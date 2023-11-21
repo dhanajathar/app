@@ -27,10 +27,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import data from './api-response';
+import { useSelector } from 'react-redux';
 
 export function PaymentSummary() {
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
+
+  const { updatedTranData } = useSelector(state => state.transaction);
 
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
@@ -94,10 +97,10 @@ export function PaymentSummary() {
 
           <table width={'100%'}>
             <tbody>
-              {data.feesDetails.map((item, idx) => (
+              {updatedTranData.map((item, idx) => (
                 <tr key={idx}>
                   <td className='table-field'>{item.description}</td>
-                  <td className='table-value'>$ {item.feestobecollected}</td>
+                  <td className='table-value-amount'>$ {item.feestobecollected}</td>
                 </tr>
               ))}
               <tr>
@@ -107,8 +110,17 @@ export function PaymentSummary() {
               </tr>
               <tr>
                 <td className='table-value'>Grand Total</td>
-                <td className='table-value'>
-                  $ {data.feesDetails.reduce((p, i) => p + i.feestobecollected, 0)}
+                <td className='table-value-amount'>
+                  ${' '}
+                  {updatedTranData
+                    .reduce(
+                      (sum, a) =>
+                        sum + Math.round(parseFloat(a.feestobecollected.replace(/,/g, ''))) || sum,
+                      0
+                    )
+                    .toLocaleString('en-US', {
+                      minimumFractionDigits: 2
+                    })}
                 </td>
               </tr>
             </tbody>
@@ -130,7 +142,7 @@ export function PaymentSummary() {
                     checked={selectedMethods.indexOf(method.name) > -1}
                   />
                 }
-                label={method.name}
+                label={<span style={{ fontWeight: 'bold' }}>{method.name}</span>}
               />
             ))}
           </FormControl>

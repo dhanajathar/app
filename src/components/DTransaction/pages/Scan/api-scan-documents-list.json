@@ -1,0 +1,49 @@
+{
+    "rows": [
+     {
+       "id": 1,
+       "documentName": "DL / ID Card Application",
+       "scanDetails": "",
+       "pdfFile": null,
+       "isVerified": false,
+       "isMandate": true,
+       "isCommented": false
+     },
+     {
+       "id": 2,
+       "documentName": "Social Security Number",
+       "scanDetails": "",
+       "pdfFile": null,
+       "isVerified": false,
+       "isMandate": false,
+       "isCommented": false
+     },
+     {
+       "id": 3,
+       "documentName": "Proof of Identity",
+       "scanDetails": "",
+       "pdfFile": null,
+       "isVerified": false,
+       "isMandate": true,
+       "isCommented": false
+     },
+     {
+       "id": 4,
+       "documentName": "Proof of Current DC Residency",
+       "scanDetails": "",
+       "pdfFile": null,
+       "isVerified": false,
+       "isMandate": true,
+       "isCommented": false
+     },
+     {
+       "id": 5,
+       "documentName": "Sole Source Document / Other",
+       "scanDetails": "",
+       "pdfFile": null,
+       "isVerified": false,
+       "isMandate": true,
+       "isCommented": false
+     }
+   ]
+ }

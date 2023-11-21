@@ -22,7 +22,6 @@ const DTextField = ({ enableclear, handleclear, ...props }) => {
                 onClick={e => handleclear(e)}
               >
                 <svg
-                  className='MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root'
                   focusable='false'
                   aria-hidden='true'
                   viewBox='0 0 24 24'

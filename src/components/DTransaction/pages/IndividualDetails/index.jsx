@@ -1,3 +1,11 @@
+/*
+ * Component Name: DTransection Individual Details
+ * Author: Priyanka Pandey
+ * Created: 2023-06-17
+ * Last Modified: 2023-11-20
+ * Description: Individual Details Data entry page for new users.
+ * Application Release Version:1.0.0
+ */
 import './index.css';
 
 import {
@@ -34,7 +42,6 @@ import DLoaderDialog from '../../../DLoaderDialog';
 import { prettifyCamelCase } from '../../../../utils/stringUtils';
 import { calculateAge } from '../../../../utils/dateUtils';
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
-import HeightTextField from '../../../DHeight';
 import DHeight from '../../../DHeight';
 
 const PHYSICAL_INFORMATION = 'Physical Information';
@@ -109,11 +116,11 @@ const IndividualDetails = () => {
   });
 
   const [open, setOpen] = useState(false);
-  const [focusedField, setFocusedField] = useState(null);
+  const [focusedField, setFocusedField] = useState('');
   const [socialSecurityNumber, setSocialSecurityNumber] = useState(
     personalInformation.socialSecurityNumber
   );
-  const [validationError, setValidationError] = useState();
+  const [validationError, setValidationError] = useState({});
   const [validationWarnings, setValidationWarnings] = useState({});
   const [disabledOtherInfo, setDisabledOtherInfo] = useState(true);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
@@ -288,7 +295,7 @@ const IndividualDetails = () => {
 
 
   };
-  const handleNumberChange = (e, min, max) => { 
+  const handleNumberChange = (e, min, max) => {
     const number = e.target.value;
     if (e.target.value === '' || (Number(number) >= min && Number(number) <= max)) {
       handleOtherInfoChange(e);
@@ -395,6 +402,7 @@ const IndividualDetails = () => {
       delete errors['socialSecurityNumber'];
       setValidationError(errors);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     personalInformationFrom.firstName,
     personalInformationFrom.middleName,
@@ -428,7 +436,7 @@ const IndividualDetails = () => {
               onChange={handleNameChange}
               onBlur={e => handleError(e.target.name, e.target.value)}
               disabled={isFormDisabled && focusedField !== 'lastName'}
-              inputRef={focusedField === 'lastName' ? (input) => input && input.focus() : null}
+              inputRef={focusedField === 'lastName' ? (input) => input?.focus() : null}
             />
             {truncation(personalInformationFrom.lastName)}
           </div>
@@ -445,7 +453,7 @@ const IndividualDetails = () => {
               onChange={handleNameChange}
               onBlur={e => handleError(e.target.name, e.target.value)}
               disabled={isFormDisabled}
-              inputRef={focusedField === 'firstName' ? (input) => input && input.focus() : null}
+              inputRef={focusedField === 'firstName' ? (input) => input?.focus() : null}
             />
             {truncation(personalInformationFrom.firstName)}
           </div>
@@ -458,7 +466,7 @@ const IndividualDetails = () => {
               disabled={isFormDisabled}
               helperText={<DAlertBox onClearWarning={(warningText) => handleClearWarning(warningText, 'middleName')} warningText={getWarning('middleName')} />}
               label='Middle Name'
-              inputRef={focusedField === 'middleName' ? (input) => input && input.focus() : null}
+              inputRef={focusedField === 'middleName' ? (input) => input?.input.focus() : null}
               onKeyUp={e => handleKeyDown(e, 'middleName')}
               inputProps={{ maxLength: 34 }}
               onChange={handleNameChange}
@@ -506,7 +514,7 @@ const IndividualDetails = () => {
                     fullWidth: true,
                     error: !!validationError?.birthDate,
                     helperText: <DAlertBox errorText={validationError?.birthDate} />,
-                    inputRef: focusedField === 'birthDate' ? (input) => input && input.focus() : null,
+                    inputRef: focusedField === 'birthDate' ? (input) => input?.focus() : null,
                     onBlur: e => handleError('birthDate', e.target.value),
                     InputProps: {
                       endAdornment: (
@@ -522,7 +530,6 @@ const IndividualDetails = () => {
                         </>
                       )
                     }
-
                   }
                 }}
                 maxDate={dayjs(new Date())}
@@ -556,7 +563,7 @@ const IndividualDetails = () => {
               inputProps={{ maxLength: 11 }}
               label='Social Security Number (SSN)'
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'socialSecurityNumber')}
-              inputRef={focusedField === 'socialSecurityNumber' ? (input) => input && input.focus() : null}
+              inputRef={focusedField === 'socialSecurityNumber' ? (input) => input?.focus() : null}
               placeholder='   -  -    '
               onChange={e => {
                 handleSSNChange(e);
@@ -599,7 +606,7 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.citizen}
                   label='Citizen'
-                  inputRef={focusedField === 'citizen' ? (input) => input && input.focus() : null}
+                  inputRef={focusedField === 'citizen' ? (input) => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.citizen} />}
                 />
               )}
@@ -614,11 +621,9 @@ const IndividualDetails = () => {
               name='organDonor'
               disableClearable={true}
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'organDonor')}
-
               value={otherInformationFrom.organDonor}
               onChange={(e, v) => {
                 handleOtherInfoChange({ target: { name: 'organDonor', value: v || null } });
-
               }}
               onBlur={e => handleError('organDonor', e.target.value)}
               renderInput={params => (
@@ -627,7 +632,7 @@ const IndividualDetails = () => {
 
                   error={!!validationError?.organDonor}
                   label='Organ Donor'
-                  inputRef={focusedField === 'organDonor' ? (input) => input && input.focus() : null}
+                  inputRef={focusedField === 'organDonor' ? (input) => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.organDonor} />}
                 />
               )}
@@ -651,7 +656,7 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.language}
                   label='Language'
-                  inputRef={focusedField === 'language' ? (input) => input && input.focus() : null}
+                  inputRef={focusedField === 'language' ? (input) => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.language} />}
                 />
               )}
@@ -721,7 +726,7 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.veteran}
                   label='Veteran'
-                  inputRef={focusedField === 'veteran' ? (input) => input && input.focus() : null}
+                  inputRef={focusedField === 'veteran' ? (input) => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.veteran} />}
                 />
               )}
@@ -730,9 +735,9 @@ const IndividualDetails = () => {
         </div>
         <div className='d-sub-title'> {PHYSICAL_INFORMATION} </div>
         <div className='d-row'>
-          <div className='col col-md-6 col-sm-12 pt-0'>
+          <div className='col col-lg-12 col-xl-6 pt-0'>
             <div className='d-row'>
-              <div className='col col-md-8 col-sm-12'>
+              <div className='col col-lg-6 col-xl-8 col-sm-12'>
                 <Autocomplete
                   options={sortedList(genderList)}
                   fullWidth
@@ -748,7 +753,7 @@ const IndividualDetails = () => {
                       {...params}
                       error={!!validationError?.gender}
                       label='Gender'
-                      inputRef={focusedField === 'gender' ? (input) => input && input.focus() : null}
+                      inputRef={focusedField === 'gender' ? (input) => input?.focus() : null}
                       helperText={<DAlertBox errorText={validationError?.gender} />}
                     />
                   )}
@@ -756,7 +761,7 @@ const IndividualDetails = () => {
 
 
               </div>
-              <div className='col col-md-4 col-sm-12'>
+              <div className='col col-lg-6 col-xl-4  col-sm-12'>
                 <TextField
                   value={otherInformationFrom.weight}
                   label='Weight (Lbs)'
@@ -764,7 +769,7 @@ const IndividualDetails = () => {
                   name='weight'
                   size='small'
                   disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'weight')}
-                  inputRef={focusedField === 'weight' ? (input) => input && input.focus() : null}
+                  inputRef={focusedField === 'weight' ? (input) => input?.focus() : null}
                   error={!!validationError?.weight}
                   onBlur={e => handleError('weight', e.target.value)}
                   helperText={<DAlertBox errorText={validationError?.weight} />}
@@ -787,110 +792,60 @@ const IndividualDetails = () => {
             </div>
 
           </div>
-          <div className='col col-md-2 col-sm-12'> 
-            <DHeight validationError={validationError} disabledOtherInfo={disabledOtherInfo} isFormDisabled={isFormDisabled} focusedField={focusedField}  values={otherInformationFrom} handleError={(fieldName,value)=> handleError(fieldName, value)}  handleChange={(e, start, end) => handleNumberChange(e, start, end)} />
-            {/* <div className='d-row'>
-              <div className='col col-md-6 col-sm-12'>
-                <TextField
-                  value={otherInformationFrom.heightFeet}
-                  label='Height (Ft)'
-                  fullWidth
-                  size='small'
-                  disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'heightFeet')}
-                  inputRef={focusedField === 'heightFeet' ? (input) => input && input.focus() : null}
-                  name='heightFeet'
-                  type='number'
-                  error={!!validationError?.heightFeet}
-                  onBlur={e => handleError('heightFeet', e.target.value)}
-                  onChange={e => handleNumberChange(e, 1, 9)}
-                  InputProps={{
-                    endAdornment: otherInformationFrom.heightFeet && (
-                      <InputAdornment position='end'>
-                        <div className='input-adornment-text'>Ft</div>{' '}
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </div>
-              <div className='col col-md-6 col-sm-12 height-in'> 
-                
-                 <TextField
-                  value={otherInformationFrom.heightInch}
-                  label='Height (In)'
-                  fullWidth
-                  size='small'
-                  disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'heightInch')}
-                  inputRef={focusedField === 'heightInch' ? (input) => input && input.focus() : null}
-                  name='heightInch'
-                  type='number'
-                  error={!!validationError?.heightInch}
-                  onChange={e => handleNumberChange(e, 0, 11)}
-                  onBlur={e => handleError('heightInch', e.target.value)}
-                  InputProps={{
-                    endAdornment: otherInformationFrom.heightInch && (
-                      <InputAdornment position='end'>
-                        <div className='input-adornment-text'>In</div>{' '}
-                      </InputAdornment>
-                    )
-                  }}
-                /> 
-              </div>
-            </div> */}
+          <div className='col col-lg-6 col-xl-2 col-sm-12'>
+            <DHeight validationError={validationError} disabledOtherInfo={disabledOtherInfo} isFormDisabled={isFormDisabled} focusedField={focusedField} values={otherInformationFrom} handleError={(fieldName, value) => handleError(fieldName, value)} handleChange={(e, start, end) => handleNumberChange(e, start, end)} />
             <FormHelperText className='custom-error' error={true}>
               {' '}
               <DAlertBox errorText={validationError?.heightFeet || validationError?.heightInch} />
             </FormHelperText>
           </div>
-          <div className='col col-md-4 col-sm-12'>
-            <div className='d-row'>
-              <div className='col col-md-6 col-sm-12 pt-0'>
-                <Autocomplete
-                  options={sortedList(hairColorList)}
-                  fullWidth
-                  size='small'
-                  disableClearable={true}
-                  getOptionDisabled={(option) => option === 'UNKNOWN'}
-                  name='hairColor'
-                  disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'hairColor')}
+          <div className='col col-lg-6 col-xl-2 col-sm-12'>
+            <Autocomplete
+              options={sortedList(hairColorList)}
+              fullWidth
+              size='small'
+              disableClearable={true}
+              getOptionDisabled={(option) => option === 'UNKNOWN'}
+              name='hairColor'
+              disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'hairColor')}
 
-                  onChange={handleOtherInfoChange}
-                  onBlur={e => handleError('hairColor', e.target.value)}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      error={!!validationError?.hairColor}
-                      label='Hair Color'
-                      inputRef={focusedField === 'hairColor' ? (input) => input && input.focus() : null}
-                      helperText={<DAlertBox errorText={validationError?.hairColor} />}
-                    />
-                  )}
+              onChange={handleOtherInfoChange}
+              onBlur={e => handleError('hairColor', e.target.value)}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  error={!!validationError?.hairColor}
+                  label='Hair Color'
+                  inputRef={focusedField === 'hairColor' ? (input) => input && input.focus() : null}
+                  helperText={<DAlertBox errorText={validationError?.hairColor} />}
                 />
+              )}
+            />
 
-              </div>
-              <div className='col col-md-6 col-sm-12 pt-0'>
-                <Autocomplete
-                  options={sortedList(eyeColorList)}
-                  fullWidth
-                  size='small'
-                  name='eyeColor'
-                  disableClearable={true}
-                  getOptionDisabled={(option) => option === 'UNKNOWN'}
-                  disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'eyeColor')}
+          </div>
+          <div className='col col-lg-6 col-xl-2 col-sm-12'>
+            <Autocomplete
+              options={sortedList(eyeColorList)}
+              fullWidth
+              size='small'
+              name='eyeColor'
+              disableClearable={true}
+              getOptionDisabled={(option) => option === 'UNKNOWN'}
+              disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'eyeColor')}
 
-                  onChange={handleOtherInfoChange}
-                  onBlur={e => handleError('eyeColor', e.target.value)}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      error={!!validationError?.eyeColor}
-                      label='Eye Color'
-                      inputRef={focusedField === 'eyeColor' ? (input) => input && input.focus() : null}
-                      helperText={<DAlertBox errorText={validationError?.eyeColor} />}
-                    />
-                  )}
+              onChange={handleOtherInfoChange}
+              onBlur={e => handleError('eyeColor', e.target.value)}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  error={!!validationError?.eyeColor}
+                  label='Eye Color'
+                  inputRef={focusedField === 'eyeColor' ? (input) => input?.focus() : null}
+                  helperText={<DAlertBox errorText={validationError?.eyeColor} />}
                 />
-              </div>
-            </div>
+              )}
+            />
+
           </div>
         </div>
         <Dialog

@@ -1,3 +1,11 @@
+/*
+ * Component Name: Height Reusable Component
+ * Author: Priyanka Pandey
+ * Created: 2023-11-17
+ * Last Modified: 2023-11-20
+ * Description: 
+ * Application Release Version:1.0.0
+ */
 import React, { useRef, useState } from 'react';
 import { InputAdornment, TextField } from '@mui/material';
 import './index.css'
@@ -23,7 +31,7 @@ const DHeight = ({ values, validationError, handleChange, handleError, disabledO
       label="Height"
       size='small'
       InputLabelProps={{
-        shrink: focus || values.heightFeet || values.heightInches,
+        shrink: focus || !!values.heightFeet || !!values.heightInches,
       }}
       focused={focus}
       disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'heightInch' && focusedField !== 'heightFeet')}
@@ -47,7 +55,7 @@ const DHeight = ({ values, validationError, handleChange, handleError, disabledO
               name='heightFeet'
               onBlur={handleOnBlur}
               InputProps={{
-                endAdornment: (focus || values.heightFeet) && (
+                endAdornment: (focus || values.heightFeet || values.heightInch) && (
                   <InputAdornment position='end'>
                     <div className='input-adornment-text'>Ft</div>
                   </InputAdornment>
@@ -66,7 +74,7 @@ const DHeight = ({ values, validationError, handleChange, handleError, disabledO
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'heightInch')}
               onBlur={handleOnBlur}
               InputProps={{
-                endAdornment: (focus || values.heightInch) && (
+                endAdornment: (focus || values.heightInch || values.heightFeet) && (
                   <InputAdornment position='end'>
                     <div className='input-adornment-text'>In</div>
                   </InputAdornment>

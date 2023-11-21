@@ -222,6 +222,7 @@
 .fees-tobe-collected-text-field {
   text-align: right;
   width: 4rem;
+  padding: 10px!important;
 }
 
 .secondary-button {

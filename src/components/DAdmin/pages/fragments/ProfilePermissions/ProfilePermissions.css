@@ -84,3 +84,7 @@
 .align-items-strech {
   align-items: stretch;
 }
+
+.MuiTable-root {
+  padding-bottom: 1.5rem;
+}

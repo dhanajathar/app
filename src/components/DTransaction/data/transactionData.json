@@ -178,7 +178,7 @@
       "flowId": 15
     },
     {
-      "label": "Print",
+      "label": "Submit Payment",
       "status": "incomplete",
       "path": "/transaction/print?flowId=16",
       "flowId": 16

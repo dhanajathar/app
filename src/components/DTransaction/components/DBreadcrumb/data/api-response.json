@@ -1,0 +1,242 @@
+{
+  "dynamicNodeData": [
+    {
+      "id": "1c",
+      "label": "2774750 - NEW ID CARD",
+      "addIcon": true,
+      "styles": "",
+      "children": [
+        {
+          "id": "2c",
+          "label": "Application",
+          "children": [
+            {
+              "id": "3a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "3b",
+                  "label": "DL / ID Card Application",
+                  "className": "link",
+                  "type": "document",
+                  "children": []
+                },
+                {
+                  "id": "3c",
+                  "label": "Scanned By: John Micheal, Scanned Date:09/03/2023",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4c",
+          "label": "Proof of Documents",
+          "children": [
+            {
+              "id": "5a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "5b",
+                  "label": "Proof of Identity",
+                  "className": "link",
+                  "type": "document",
+                  "children": []
+                },
+                {
+                  "id": "5c",
+                  "label": "Scanned By: John Micheal, Scanned Date: 09/03/2023",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "6a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "6b",
+                  "label": "Proof of Current DC Residency (2)",
+                  "className": "link",
+                  "type": "document",
+                  "children": []
+                },
+                {
+                  "id": "6c",
+                  "label": "Scanned By: John Micheal, Scanned Date: 09/03/2023",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "7a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "7b",
+                  "label": "Proof of Ability to Drive",
+                  "className": "link",
+                  "type": "document",
+                  "children": []
+                },
+                {
+                  "id": "7c",
+                  "label": "Scanned By: John Micheal, Scanned Date: 09/03/2023",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1b",
+      "label": "2324343 - VEHICLE REGISTRATION RENEWAL",
+      "addIcon": true,
+      "children": [
+        {
+          "id": "2b",
+          "label": "Application",
+          "children": [
+            {
+              "id": "3a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "3b",
+                  "label": "Certificate of Title/Temporary Tag Application",
+                  "className": "link",
+                  "type": "document",
+                  "children": []
+                },
+                {
+                  "id": "3c",
+                  "label": "Scanned by: John Micheal, Scanned Date: 03/07/2023",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4b",
+          "label": "Proof of Documents",
+          "children": [
+            {
+              "id": "5a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "5b",
+                  "label": "Vehicle Bill of Sale",
+                  "className": "no",
+                  "type": "comment",
+                  "children": []
+                },
+                {
+                  "id": "5c",
+                  "label": "No Documents were Scanned - Not Applicable (Overridden By: John Michael, Override Date: 03/07/2023)",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "6a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "6b",
+                  "label": "Proof of Odometer Reading",
+                  "className": "link",
+                  "type": "NA",
+                  "children": []
+                },
+                {
+                  "id": "6c",
+                  "label": "Scanned by: John Micheal, Scanned Date: 03/07/2023",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1a",
+      "label": "2121232 - DUPLICATE DRIVER LICENSE",
+      "addIcon": true,
+      "children": [
+        {
+          "id": "2a",
+          "label": "Application",
+          "children": [
+            {
+              "id": "3a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "3b",
+                  "label": "DL / ID Card Application",
+                  "className": "no",
+                  "type": "comment",
+                  "children": []
+                },
+                {
+                  "id": "3c",
+                  "label": "Comments: No Documents were Scanned - Not Applicable (Entered By: John Micheal, Entered Date: 11/07/2022)",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4a",
+          "label": "Proof of Documents",
+          "children": [
+            {
+              "id": "5a",
+              "label": "Mandatory",
+              "className": "optm",
+              "children": [
+                {
+                  "id": "5b",
+                  "label": "Proof of Identity",
+                  "className": "no",
+                  "type": "comment",
+                  "children": []
+                },
+                {
+                  "id": "5c",
+                  "label": "Comments: No Documents were Scanned - Not Applicable (Entered By: John Micheal, Entered Date: 11/07/2022)",
+                  "className": "no",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -70,7 +70,7 @@ export default function Uspassport() {
   const handleVerify = () => {
     setOpen(true);
     setTimeout(() => {
-      setIsVerified(false);
+      setIsVerified(true);
       setOpen(false);
     }, 3000);
   };
@@ -126,12 +126,7 @@ export default function Uspassport() {
           <div className='col col-md-8 col-sm-12'>
             <FormControl disabled fullWidth>
               <InputLabel id='docType'> Verification Request Document </InputLabel>
-              <Select
-                id='docType'
-                value={'US Passport'}
-                label='Verification Request Document'
-                
-              >
+              <Select id='docType' value={'US Passport'} label='Verification Request Document'>
                 <MenuItem value={'US Passport'}> US Passport </MenuItem>
               </Select>
             </FormControl>
@@ -140,8 +135,7 @@ export default function Uspassport() {
         <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              
-              fullWidth 
+              fullWidth
               label='Passport Number'
               inputProps={{ maxLength: 20 }}
               error={!!validationError?.passportNumber}
@@ -208,34 +202,24 @@ export default function Uspassport() {
               </LocalizationProvider>
             </div>
           </div>
-          </div>
-          <div className='d-row'>
+        </div>
+
+        <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
-          <div className='date-picker has-date'>
+            <div className='date-picker has-date'>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label='Issue Date' 
-                  disabled={isVerified===null}
-                  value={ dayjs(new Date())}
-                />
+                <DatePicker label='Verify Date' disabled value={isVerified && dayjs(new Date())} />
               </LocalizationProvider>
-              </div>
-            </div> 
+            </div>
           </div>
-          <div className='d-row'>
+        </div>
+
+        <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
-            {isVerified ? (
-              <div className='date-picker has-date'>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker label='Verify Date' disabled value={dayjs(new Date())} />
-                </LocalizationProvider>
-              </div>
-            ) : (
-              <Button onClick={handleVerify} disabled={enableVerifyButton} variant='outlined'>
-                {' '}
-                VERIFY{' '}
-              </Button>
-            )}
+            <Button onClick={handleVerify} disabled={enableVerifyButton} variant='outlined'>
+              {' '}
+              VERIFY{' '}
+            </Button>
           </div>
         </div>
       </form>

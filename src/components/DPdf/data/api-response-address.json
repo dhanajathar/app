@@ -1,0 +1,22 @@
+{
+    "address": {
+      "city": "WASHINGTON",
+      "state": "DISTRICT OF COLUMBIA",
+      "country": "UNITED STATES",
+      "USPSMessage": "Postal Code Corrected (Address Verified)",
+      "USPSMessageN": "Address Not Verified ",
+      "zipcode": "416201",
+      "addressline": "200 I ST SE",
+      "transactionId": "dd12bed6-e38e-11ed-b5ea-0242ac120002",
+      "userId": "dd12bed6",
+      "addressverify": "Yes",
+      "correctaddress": "200 I ST SE",
+      "dialogpredirectionalcode": "SE",
+      "dialogstreetnumber": "200",
+      "dialogstreetname": "I",
+      "dialogstreetnamesuffix": "ST",
+      "dialogpostdirectionalcode": "SE",
+      "dialogapartmentnumber": "101"
+    }
+  }
+  

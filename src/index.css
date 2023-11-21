@@ -348,7 +348,6 @@ button.MuiButtonBase-root .MuiTouchRipple-root span {
   text-transform: uppercase !important;
 }
 
- 
- 
-
- 
+.MuiInputBase-root fieldset {
+  border: 1px solid var(--black100);
+}

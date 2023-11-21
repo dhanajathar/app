@@ -16,14 +16,18 @@ import {
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
 import React, { useEffect, useState } from 'react';
+import { setPaymentPreview } from '../../../../store/features/transaction/transactionSlice';
 
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 export default function DTransactionNav({ steps = [] }) {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleReason = event => {
     setReason(event.target.value);
@@ -202,6 +206,19 @@ export default function DTransactionNav({ steps = [] }) {
               {backText}
             </Button>
             <span className='transaction-nav-divider'>|</span>
+          </>
+        )}
+        {nextPath == '/transaction/payment-summary?flowId=15' && (
+          <>
+            <Button
+              color='primary'
+              size='medium'
+              className='previewButton'
+              onClick={() => dispatch(setPaymentPreview())}
+              variant='outlined'
+            >
+              CUSTOMER PREVIEW
+            </Button>
           </>
         )}
         <Button

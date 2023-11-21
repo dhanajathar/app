@@ -13,7 +13,6 @@ import DriverLicense from './pages/DriverLicenseDetails';
 import Fees from './pages/Fees';
 import IndividualDetails from './pages/IndividualDetails';
 import { NewIdDetails } from './pages/NewIdDetails';
-import { Outlet } from 'react-router-dom';
 import Passport from './pages/Uspassport';
 import { PaymentSummary } from './pages/PaymentSummary';
 import Print from './pages/Print';

@@ -1,0 +1,1105 @@
+{
+  "searchResults": [
+    {
+      "employeeId": 1009,
+      "loginId": "nmiller@dc.gov",
+      "employeeName": "Noah Miller",
+      "jobTitle": "HEARING SUPPORT MANAGER",
+      "role": "Investigator",
+      "status": "active",
+      "location": "SOUTH CAPITOL, SE"
+    },
+    {
+      "employeeId": 1699,
+      "loginId": "pward@dc.gov",
+      "employeeName": "Patrick Ward",
+      "jobTitle": "COMPLIANCE SPECIALIST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "TREASURY"
+    },
+    {
+      "employeeId": 1688,
+      "loginId": "lphillips@dc.gov",
+      "employeeName": "Larry Phillips",
+      "jobTitle": "ATTORNEY ADVISOR",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DPW"
+    },
+    {
+      "employeeId": 1683,
+      "loginId": "jfisher@dc.gov",
+      "employeeName": "Jessica Fisher",
+      "jobTitle": "LEAD MOTOR VEHICLE INSPECTOR",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "SOUTHWEST SERVICE CENTER"
+    },
+    {
+      "employeeId": 1661,
+      "loginId": "ajames@dc.gov",
+      "employeeName": "Andrew James",
+      "jobTitle": "DMV CONSULTANT",
+      "role": "Examiner",
+      "status": "active",
+      "location": "TREASURY"
+    },
+    {
+      "employeeId": 1705,
+      "loginId": "mjones@dc.gov",
+      "employeeName": "Megan Jones",
+      "jobTitle": "HEARING SUPPORT MANAGER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "DMV WAREHOUSE"
+    },
+    {
+      "employeeId": 1732,
+      "loginId": "rjohnson@dc.gov",
+      "employeeName": "Ryan Johnson",
+      "jobTitle": "SUPERISORY MOTOR VEHICLE INSPECTOR",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "PROCESSING CENTER, SW"
+    },
+    {
+      "employeeId": 1660,
+      "loginId": "mwright@dc.gov",
+      "employeeName": "Michelle Wright",
+      "jobTitle": "DISPUTE RESOLUTION COORDINATOR",
+      "role": "Examiner",
+      "status": "inactive",
+      "location": "BENNING RIDGE SERVICE CENTER"
+    },
+    {
+      "employeeId": 1001,
+      "loginId": "jdoe@dc.gov",
+      "employeeName": "John Doe",
+      "jobTitle": "INSPECTOR",
+      "role": "Examiner",
+      "status": "active",
+      "location": "INSPECTION STATION"
+    },
+    {
+      "employeeId": 1700,
+      "loginId": "mcooper@dc.gov",
+      "employeeName": "Margaret Cooper",
+      "jobTitle": "TREASURY STAFF",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "SOUTH CAPITOL, SE"
+    },
+    {
+      "employeeId": 1665,
+      "loginId": "jward@dc.gov",
+      "employeeName": "Joseph Ward",
+      "jobTitle": "MANAGEMENT ANALYST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "PROXY SITE"
+    },
+    {
+      "employeeId": 1729,
+      "loginId": "pward@dc.gov",
+      "employeeName": "Paula Ward",
+      "jobTitle": "DIRECTOR",
+      "role": "Examiner",
+      "status": "active",
+      "location": "BRENTWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1676,
+      "loginId": "awilson@dc.gov",
+      "employeeName": "Amy Wilson",
+      "jobTitle": "MANAGEMENT LIAISON SPECIALIST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "C STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1631,
+      "loginId": "jwilliams@dc.gov",
+      "employeeName": "Jennifer Williams",
+      "jobTitle": "ADMINISTRATOR",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "AAMVA-NMVTIS CENTRAL SITE"
+    },
+    {
+      "employeeId": 1006,
+      "loginId": "owilson@dc.gov",
+      "employeeName": "Olivia Wilson",
+      "jobTitle": "IRP PROGRAM COORDINATOR",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "K STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1658,
+      "loginId": "dward@dc.gov",
+      "employeeName": "Deborah Ward",
+      "jobTitle": "INVESTIGATOR",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "TREASURY"
+    },
+    {
+      "employeeId": 1703,
+      "loginId": "lphillips@dc.gov",
+      "employeeName": "Laura Phillips",
+      "jobTitle": "STAFF ASSISTANT (EXECUTIVE STAFF)",
+      "role": "Analyst",
+      "status": "active",
+      "location": "COMMERCIAL DRIVER ROAD TEST"
+    },
+    {
+      "employeeId": 1713,
+      "loginId": "jfisher@dc.gov",
+      "employeeName": "James Fisher",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "DEANWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1693,
+      "loginId": "mwhite@dc.gov",
+      "employeeName": "Michelle White",
+      "jobTitle": "COMPLIANCE SPECIALIST",
+      "role": "Clerk",
+      "status": "active",
+      "location": "H STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1708,
+      "loginId": "jhill@dc.gov",
+      "employeeName": "Jonathan Hill",
+      "jobTitle": "INVESTIGATOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "C STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1715,
+      "loginId": "mcooper@dc.gov",
+      "employeeName": "Michael Cooper",
+      "jobTitle": "FINANCE STAFF",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "VIRTUAL WEB/DIGITAL DEVICE"
+    },
+    {
+      "employeeId": 1714,
+      "loginId": "pward@dc.gov",
+      "employeeName": "Paula Ward",
+      "jobTitle": "HEARING EXAMINER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "TICKET SERVICES"
+    },
+    {
+      "employeeId": 1002,
+      "loginId": "ajohnson@dc.gov",
+      "employeeName": "Alice Johnson",
+      "jobTitle": "SUPERISORY LEGAL INSTRUMENT EXAMINER",
+      "role": "Inspector",
+      "status": "inactive",
+      "location": "VIRTUAL WEB/DIGITAL DEVICE"
+    },
+    {
+      "employeeId": 1690,
+      "loginId": "mjones@dc.gov",
+      "employeeName": "Melanie Jones",
+      "jobTitle": "TRAINING SPECIALIST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "DMV WAREHOUSE"
+    },
+    {
+      "employeeId": 1655,
+      "loginId": "dwatson@dc.gov",
+      "employeeName": "David Watson",
+      "jobTitle": "IRP PROGRAM COORDINATOR",
+      "role": "Examiner",
+      "status": "active",
+      "location": "DPW"
+    },
+    {
+      "employeeId": 1728,
+      "loginId": "jfisher@dc.gov",
+      "employeeName": "James Fisher",
+      "jobTitle": "SUPERISORY LEGAL INSTRUMENT EXAMINER",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "INSPECTION STATION, NE"
+    },
+    {
+      "employeeId": 1646,
+      "loginId": "sjohnson@dc.gov",
+      "employeeName": "Samantha Johnson",
+      "jobTitle": "HEARING EXAMINER",
+      "role": "Analyst",
+      "status": "active",
+      "location": "GEORGETOWN SERVICE CENTER"
+    },
+    {
+      "employeeId": 1633,
+      "loginId": "llopez@dc.gov",
+      "employeeName": "Lisa Lopez",
+      "jobTitle": "SUPERISORY MOTOR VEHICLE INSPECTOR",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "COMMERCIAL DRIVER ROAD TEST"
+    },
+    {
+      "employeeId": 1662,
+      "loginId": "lrobinson@dc.gov",
+      "employeeName": "Laura Robinson",
+      "jobTitle": "LEAD MOTOR VEHICLE INSPECTOR",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "COMMERCIAL DRIVER ROAD TEST"
+    },
+    {
+      "employeeId": 1702,
+      "loginId": "rjohnson@dc.gov",
+      "employeeName": "Richard Johnson",
+      "jobTitle": "MANAGEMENT ANALYST",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "COMMERCIAL DRIVER ROAD TEST"
+    },
+    {
+      "employeeId": 1697,
+      "loginId": "tjohnson@dc.gov",
+      "employeeName": "Thomas Johnson",
+      "jobTitle": "FINANCE STAFF",
+      "role": "Analyst",
+      "status": "active",
+      "location": "PROCESSING CENTER, SW"
+    },
+    {
+      "employeeId": 1670,
+      "loginId": "mcooper@dc.gov",
+      "employeeName": "Melissa Cooper",
+      "jobTitle": "HEARING EXAMINER",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "BRENTWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1647,
+      "loginId": "jsmith@dc.gov",
+      "employeeName": "Joshua Smith",
+      "jobTitle": "LEAD MOTOR VEHICLE INSPECTOR",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "NOT IN USE"
+    },
+    {
+      "employeeId": 1672,
+      "loginId": "rjohnson@dc.gov",
+      "employeeName": "Rachel Johnson",
+      "jobTitle": "SUPERISORY LEGAL INSTRUMENT EXAMINER",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "SOUTHWEST SERVICE CENTER"
+    },
+    {
+      "employeeId": 1718,
+      "loginId": "lphillips@dc.gov",
+      "employeeName": "Lisa Phillips",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DMV WAREHOUSE"
+    },
+    {
+      "employeeId": 1669,
+      "loginId": "pward@dc.gov",
+      "employeeName": "Peter Ward",
+      "jobTitle": "MANAGEMENT ANALYST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "GEORGETOWN SERVICE CENTER"
+    },
+    {
+      "employeeId": 1004,
+      "loginId": "edavis@dc.gov",
+      "employeeName": "Emily Davis",
+      "jobTitle": "DRIVER LICENSE EXAMINER",
+      "role": "Administrator",
+      "status": "inactive",
+      "location": "COMMERCIAL DRIVER ROAD TEST"
+    },
+    {
+      "employeeId": 1706,
+      "loginId": "cjohnson@dc.gov",
+      "employeeName": "Christopher Johnson",
+      "jobTitle": "SYSTEM ADMINISTRATOR",
+      "role": "Examiner",
+      "status": "active",
+      "location": "AAMVA-NMVTIS CENTRAL SITE"
+    },
+    {
+      "employeeId": 1007,
+      "loginId": "landerson@dc.gov",
+      "employeeName": "Liam Anderson",
+      "jobTitle": "HEARING SUPPORT MANAGER",
+      "role": "Supervisor",
+      "status": "active",
+      "location": "AAMVA-NMVTIS CENTRAL SITE"
+    },
+    {
+      "employeeId": 1653,
+      "loginId": "jward@dc.gov",
+      "employeeName": "James Ward",
+      "jobTitle": "GOVERNMENT SERVICES",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1694,
+      "loginId": "wcooper@dc.gov",
+      "employeeName": "William Cooper",
+      "jobTitle": "ADMINISTRATOR",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "GEORGETOWN SERVICE CENTER"
+    },
+    {
+      "employeeId": 1634,
+      "loginId": "gmartinez@dc.gov",
+      "employeeName": "George Martinez",
+      "jobTitle": "FINANCE STAFF",
+      "role": "Investigator",
+      "status": "active",
+      "location": "H STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1630,
+      "loginId": "mrogers@dc.gov",
+      "employeeName": "Michael Rogers",
+      "jobTitle": "DIRECTOR",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DMV WAREHOUSE"
+    },
+    {
+      "employeeId": 1707,
+      "loginId": "eroberts@dc.gov",
+      "employeeName": "Elizabeth Roberts",
+      "jobTitle": "TREASURY SUPERVISOR",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "SOUTHWEST SERVICE CENTER"
+    },
+    {
+      "employeeId": 1637,
+      "loginId": "shill@dc.gov",
+      "employeeName": "Sharon Hill",
+      "jobTitle": "COMPLIANCE SPECIALIST",
+      "role": "Examiner",
+      "status": "inactive",
+      "location": "BRENTWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1686,
+      "loginId": "sross@dc.gov",
+      "employeeName": "Sandra Ross",
+      "jobTitle": "SUPPORT SERVICE MANAGER",
+      "role": "Clerk",
+      "status": "active",
+      "location": "TICKET SERVICES"
+    },
+    {
+      "employeeId": 1008,
+      "loginId": "abrown@dc.gov",
+      "employeeName": "Ava Brown",
+      "jobTitle": "LEAD LEGAL INSTRUMENT EXAMINER",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "DEANWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1721,
+      "loginId": "csmith@dc.gov",
+      "employeeName": "Carol Smith",
+      "jobTitle": "DISPUTE RESOLUTION COORDINATOR",
+      "role": "Examiner",
+      "status": "active",
+      "location": "NOT IN USE"
+    },
+    {
+      "employeeId": 1709,
+      "loginId": "lcooper@dc.gov",
+      "employeeName": "Laura Cooper",
+      "jobTitle": "TREASURY STAFF",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "INSPECTION STATION"
+    },
+    {
+      "employeeId": 1735,
+      "loginId": "mjones@dc.gov",
+      "employeeName": "Megan Jones",
+      "jobTitle": "EXTERNAL AGENCY",
+      "role": "Examiner",
+      "status": "active",
+      "location": "AAMVA-NMVTIS CENTRAL SITE"
+    },
+    {
+      "employeeId": 1695,
+      "loginId": "krogers@dc.gov",
+      "employeeName": "Katherine Rogers",
+      "jobTitle": "ADMINISTRATOR",
+      "role": "Examiner",
+      "status": "active",
+      "location": "TICKET SERVICES"
+    },
+    {
+      "employeeId": 1651,
+      "loginId": "mhill@dc.gov",
+      "employeeName": "Michael Hill",
+      "jobTitle": "COMPLIANCE SPECIALIST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "SOUTH CAPITOL, SE"
+    },
+    {
+      "employeeId": 1642,
+      "loginId": "cscott@dc.gov",
+      "employeeName": "Christopher Scott",
+      "jobTitle": "STAFF ASSISTANT (EXECUTIVE STAFF)",
+      "role": "Coordinator",
+      "status": "active",
+      "location": "ONLINE DRIVER COURSE"
+    },
+    {
+      "employeeId": 1657,
+      "loginId": "jedwards@dc.gov",
+      "employeeName": "Jonathan Edwards",
+      "jobTitle": "STAFF ASSISTANT (EXECUTIVE STAFF)",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DESTINY PROJECT SITE"
+    },
+    {
+      "employeeId": 1635,
+      "loginId": "mnelson@dc.gov",
+      "employeeName": "Michelle Nelson",
+      "jobTitle": "INSPECTOR",
+      "role": "Analyst",
+      "status": "inactive",
+      "location": "INSPECTION STATION, NE"
+    },
+    {
+      "employeeId": 1692,
+      "loginId": "jmartinez@dc.gov",
+      "employeeName": "Joseph Martinez",
+      "jobTitle": "DMV IT SPECIALIST",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "DEANWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1150,
+      "loginId": "emartinez@dc.gov",
+      "employeeName": "Eva Martinez",
+      "jobTitle": "DMV CONSULTANT",
+      "role": "Specialist",
+      "status": "active",
+      "location": "ONLINE DRIVER COURSE"
+    },
+    {
+      "employeeId": 1687,
+      "loginId": "rjohnson@dc.gov",
+      "employeeName": "Rebecca Johnson",
+      "jobTitle": "SUPPORT SERVICE SPECIALIST",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1701,
+      "loginId": "sross@dc.gov",
+      "employeeName": "Susan Ross",
+      "jobTitle": "EXTERNAL AGENCY",
+      "role": "Clerk",
+      "status": "active",
+      "location": "AAMVA-NMVTIS CENTRAL SITE"
+    },
+    {
+      "employeeId": 1734,
+      "loginId": "hsmith@dc.gov",
+      "employeeName": "Henry Smith",
+      "jobTitle": "SUPPORT SERVICE SPECIALIST",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "INSPECTION STATION"
+    },
+    {
+      "employeeId": 1627,
+      "loginId": "jbutler@dc.gov",
+      "employeeName": "Jennifer Butler",
+      "jobTitle": "EXTERNAL AGENCY",
+      "role": "Inspector",
+      "status": "inactive",
+      "location": "PROCESSING CENTER, SW"
+    },
+    {
+      "employeeId": 1675,
+      "loginId": "mjones@dc.gov",
+      "employeeName": "Matthew Jones",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "C STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1667,
+      "loginId": "wadams@dc.gov",
+      "employeeName": "William Adams",
+      "jobTitle": "CORRESPONDENCE MANAGER SPECIALIST",
+      "role": "Analyst",
+      "status": "active",
+      "location": "PENN BRANCH SERVICE CENTER"
+    },
+    {
+      "employeeId": 1648,
+      "loginId": "cgreen@dc.gov",
+      "employeeName": "Christina Green",
+      "jobTitle": "HEARING SUPPORT MANAGER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "DMV WAREHOUSE"
+    },
+    {
+      "employeeId": 1711,
+      "loginId": "awilson@dc.gov",
+      "employeeName": "Ashley Wilson",
+      "jobTitle": "SUPPORT SERVICE MANAGER",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "GEORGETOWN SERVICE CENTER"
+    },
+    {
+      "employeeId": 1733,
+      "loginId": "lphillips@dc.gov",
+      "employeeName": "Laura Phillips",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DESTINY PROJECT SITE"
+    },
+    {
+      "employeeId": 1716,
+      "loginId": "sross@dc.gov",
+      "employeeName": "Sara Ross",
+      "jobTitle": "ATTORNEY ADVISOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "SOUTHWEST SERVICE CENTER"
+    },
+    {
+      "employeeId": 1724,
+      "loginId": "lroberts@dc.gov",
+      "employeeName": "Larry Roberts",
+      "jobTitle": "COMPLIANCE SPECIALIST",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "C STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1677,
+      "loginId": "jroberts@dc.gov",
+      "employeeName": "John Roberts",
+      "jobTitle": "LEAD LEGAL INSTRUMENT EXAMINER",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "PROCESSING CENTER, SW"
+    },
+    {
+      "employeeId": 1666,
+      "loginId": "rlee@dc.gov",
+      "employeeName": "Rebecca Lee",
+      "jobTitle": "STAFF ASSISTANT",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1010,
+      "loginId": "sjohnson@dc.gov",
+      "employeeName": "Sophia Johnson",
+      "jobTitle": "DISPUTE RESOLUTION COORDINATOR",
+      "role": "Analyst",
+      "status": "inactive",
+      "location": "PROXY SITE"
+    },
+    {
+      "employeeId": 1691,
+      "loginId": "nrodriguez@dc.gov",
+      "employeeName": "Natalie Rodriguez",
+      "jobTitle": "DRIVER LICENSE EXAMINER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "TICKET SERVICES"
+    },
+    {
+      "employeeId": 1719,
+      "loginId": "hsmith@dc.gov",
+      "employeeName": "Henry Smith",
+      "jobTitle": "SUPPORT SERVICE MANAGER",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "PROCESSING CENTER, SW"
+    },
+    {
+      "employeeId": 1668,
+      "loginId": "kfisher@dc.gov",
+      "employeeName": "Katherine Fisher",
+      "jobTitle": "STAFF ASSISTANT",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "TICKET SERVICES"
+    },
+    {
+      "employeeId": 1730,
+      "loginId": "mcooper@dc.gov",
+      "employeeName": "Michael Cooper",
+      "jobTitle": "LEGAL INSTRUMENT EXAMINER",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "BENNING RIDGE SERVICE CENTER"
+    },
+    {
+      "employeeId": 1654,
+      "loginId": "pmorris@dc.gov",
+      "employeeName": "Patricia Morris",
+      "jobTitle": "SUPERISORY MOTOR VEHICLE INSPECTOR",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1678,
+      "loginId": "cstewart@dc.gov",
+      "employeeName": "Christine Stewart",
+      "jobTitle": "ATTORNEY ADVISOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "TREASURY"
+    },
+    {
+      "employeeId": 1650,
+      "loginId": "ehall@dc.gov",
+      "employeeName": "Emily Hall",
+      "jobTitle": "MANAGEMENT ANALYST",
+      "role": "Clerk",
+      "status": "active",
+      "location": "DMV WAREHOUSE"
+    },
+    {
+      "employeeId": 1684,
+      "loginId": "pward@dc.gov",
+      "employeeName": "Paul Ward",
+      "jobTitle": "GOVERNMENT SERVICES",
+      "role": "Examiner",
+      "status": "active",
+      "location": "DESTINY PROJECT SITE"
+    },
+    {
+      "employeeId": 1674,
+      "loginId": "hsmith@dc.gov",
+      "employeeName": "Heather Smith",
+      "jobTitle": "APEX IT SPECIALIST",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "SOUTH CAPITOL, SE"
+    },
+    {
+      "employeeId": 1720,
+      "loginId": "mjones@dc.gov",
+      "employeeName": "Megan Jones",
+      "jobTitle": "HEARING EXAMINER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "VIRTUAL WEB/DIGITAL DEVICE"
+    },
+    {
+      "employeeId": 1717,
+      "loginId": "rjohnson@dc.gov",
+      "employeeName": "Ryan Johnson",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "BENNING RIDGE SERVICE CENTER"
+    },
+    {
+      "employeeId": 1698,
+      "loginId": "rphillips@dc.gov",
+      "employeeName": "Rebecca Phillips",
+      "jobTitle": "STAFF ASSISTANT (EXECUTIVE STAFF)",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "VIRTUAL WEB/DIGITAL DEVICE"
+    },
+    {
+      "employeeId": 1628,
+      "loginId": "nford@dc.gov",
+      "employeeName": "Nicholas Ford",
+      "jobTitle": "ADMINISTRATOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "TICKET SERVICES"
+    },
+    {
+      "employeeId": 1681,
+      "loginId": "lwalker@dc.gov",
+      "employeeName": "Larry Walker",
+      "jobTitle": "DMV IT SPECIALIST",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "PROCESSING CENTER, SW"
+    },
+    {
+      "employeeId": 1652,
+      "loginId": "kturner@dc.gov",
+      "employeeName": "Karen Turner",
+      "jobTitle": "MANAGEMENT LIAISON SPECIALIST",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "ONLINE DRIVER COURSE"
+    },
+    {
+      "employeeId": 1659,
+      "loginId": "cbell@dc.gov",
+      "employeeName": "Christopher Bell",
+      "jobTitle": "DMV IT SPECIALIST",
+      "role": "Technician",
+      "status": "active",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1725,
+      "loginId": "kward@dc.gov",
+      "employeeName": "Karen Ward",
+      "jobTitle": "SUPERISORY LEGAL INSTRUMENT EXAMINER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "AAMVA-NMVTIS CENTRAL SITE"
+    },
+    {
+      "employeeId": 1723,
+      "loginId": "jwilson@dc.gov",
+      "employeeName": "Jessica Wilson",
+      "jobTitle": "DIRECTOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "TREASURY"
+    },
+    {
+      "employeeId": 1003,
+      "loginId": "msmith@dc.gov",
+      "employeeName": "Michael Smith",
+      "jobTitle": "ADMINISTRATOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "PROXY SITE"
+    },
+    {
+      "employeeId": 1679,
+      "loginId": "rphillips@dc.gov",
+      "employeeName": "Richard Phillips",
+      "jobTitle": "GOVERNMENT SERVICES",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "INSPECTION STATION, NE"
+    },
+    {
+      "employeeId": 1680,
+      "loginId": "krobertson@dc.gov",
+      "employeeName": "Katherine Robertson",
+      "jobTitle": "DMV IT SPECIALIST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "NOT IN USE"
+    },
+    {
+      "employeeId": 1726,
+      "loginId": "awilson@dc.gov",
+      "employeeName": "Arthur Wilson",
+      "jobTitle": "INVESTIGATOR",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1626,
+      "loginId": "psmith@dc.gov",
+      "employeeName": "Pamela Smith",
+      "jobTitle": "SUPPORT SERVICE SPECIALIST",
+      "role": "Examiner",
+      "status": "active",
+      "location": "DESTINY PROJECT SITE"
+    },
+    {
+      "employeeId": 1722,
+      "loginId": "mjohnson@dc.gov",
+      "employeeName": "Mark Johnson",
+      "jobTitle": "MANAGEMENT LIAISON SPECIALIST",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "BENNING RIDGE SERVICE CENTER"
+    },
+    {
+      "employeeId": 1727,
+      "loginId": "rsmith@dc.gov",
+      "employeeName": "Rebecca Smith",
+      "jobTitle": "IRP PROGRAM COORDINATOR",
+      "role": "Analyst",
+      "status": "active",
+      "location": "H STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1005,
+      "loginId": "djohnson@dc.gov",
+      "employeeName": "Daniel Johnson",
+      "jobTitle": "CORRESPONDENCE MANAGER SPECIALIST",
+      "role": "Analyst",
+      "status": "active",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1636,
+      "loginId": "cjones@dc.gov",
+      "employeeName": "Christopher Jones",
+      "jobTitle": "GOVERNMENT SERVICES",
+      "role": "Specialist",
+      "status": "active",
+      "location": "PENN BRANCH SERVICE CENTER"
+    },
+    {
+      "employeeId": 1649,
+      "loginId": "rbrown@dc.gov",
+      "employeeName": "Ronald Brown",
+      "jobTitle": "SUPPORT SERVICE SPECIALIST",
+      "role": "Inspector",
+      "status": "inactive",
+      "location": "NOT IN USE"
+    },
+    {
+      "employeeId": 1685,
+      "loginId": "mcooper@dc.gov",
+      "employeeName": "Michael Cooper",
+      "jobTitle": "SUPERISORY LEGAL INSTRUMENT EXAMINER",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "TREASURY"
+    },
+    {
+      "employeeId": 1629,
+      "loginId": "cthomas@dc.gov",
+      "employeeName": "Catherine Thomas",
+      "jobTitle": "SUPPORT SERVICE SPECIALIST",
+      "role": "Administrator",
+      "status": "inactive",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1639,
+      "loginId": "aevans@dc.gov",
+      "employeeName": "Ashley Evans",
+      "jobTitle": "TREASURY SUPERVISOR",
+      "role": "Clerk",
+      "status": "inactive",
+      "location": "INSPECTION STATION"
+    },
+    {
+      "employeeId": 1682,
+      "loginId": "tsmith@dc.gov",
+      "employeeName": "Tiffany Smith",
+      "jobTitle": "GOVERNMENT SERVICES",
+      "role": "Analyst",
+      "status": "active",
+      "location": "INSPECTION STATION"
+    },
+    {
+      "employeeId": 1710,
+      "loginId": "kward@dc.gov",
+      "employeeName": "Kevin Ward",
+      "jobTitle": "HEARING SUPPORT MANAGER",
+      "role": "Examiner",
+      "status": "active",
+      "location": "INSPECTION STATION, NE"
+    },
+    {
+      "employeeId": 1704,
+      "loginId": "hsmith@dc.gov",
+      "employeeName": "Henry Smith",
+      "jobTitle": "CORRESPONDENCE MANAGER SPECIALIST",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "RHODE ISLAND SERVICE CENTER"
+    },
+    {
+      "employeeId": 1643,
+      "loginId": "mbailey@dc.gov",
+      "employeeName": "Melissa Bailey",
+      "jobTitle": "LEGAL INSTRUMENT EXAMINER",
+      "role": "Supervisor",
+      "status": "inactive",
+      "location": "H STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1638,
+      "loginId": "lhoward@dc.gov",
+      "employeeName": "Linda Howard",
+      "jobTitle": "FINANCE STAFF",
+      "role": "Inspector",
+      "status": "active",
+      "location": "SOUTHWEST SERVICE CENTER"
+    },
+    {
+      "employeeId": 1641,
+      "loginId": "jking@dc.gov",
+      "employeeName": "Jennifer King",
+      "jobTitle": "ATTORNEY ADVISOR",
+      "role": "Analyst",
+      "status": "inactive",
+      "location": "ONLINE DRIVER COURSE"
+    },
+    {
+      "employeeId": 1673,
+      "loginId": "lphillips@dc.gov",
+      "employeeName": "Lisa Phillips",
+      "jobTitle": "HEARING EXAMINER",
+      "role": "Analyst",
+      "status": "active",
+      "location": "PROXY SITE"
+    },
+    {
+      "employeeId": 1656,
+      "loginId": "swalker@dc.gov",
+      "employeeName": "Susan Walker",
+      "jobTitle": "SERVICE CENTER MANAGER",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "DPW"
+    },
+    {
+      "employeeId": 1640,
+      "loginId": "rperez@dc.gov",
+      "employeeName": "Robert Perez",
+      "jobTitle": "LEAD LEGAL INSTRUMENT EXAMINER",
+      "role": "Administrator",
+      "status": "active",
+      "location": "H STREET SERVICE CENTER"
+    },
+    {
+      "employeeId": 1689,
+      "loginId": "hsmith@dc.gov",
+      "employeeName": "Helen Smith",
+      "jobTitle": "TREASURY STAFF",
+      "role": "Specialist",
+      "status": "inactive",
+      "location": "DEANWOOD ROAD TEST/CDL"
+    },
+    {
+      "employeeId": 1671,
+      "loginId": "sross@dc.gov",
+      "employeeName": "Steven Ross",
+      "jobTitle": "DMV IT SPECIALIST",
+      "role": "Clerk",
+      "status": "active",
+      "location": "DRIVING SCHOOL"
+    },
+    {
+      "employeeId": 1731,
+      "loginId": "sross@dc.gov",
+      "employeeName": "Sara Ross",
+      "jobTitle": "LEAD MOTOR VEHICLE INSPECTOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "COMMERCIAL DRIVER ROAD TEST"
+    },
+    {
+      "employeeId": 1696,
+      "loginId": "lharris@dc.gov",
+      "employeeName": "Linda Harris",
+      "jobTitle": "STAFF ASSISTANT (EXECUTIVE STAFF)",
+      "role": "Coordinator",
+      "status": "inactive",
+      "location": "BENNING RIDGE SERVICE CENTER"
+    },
+    {
+      "employeeId": 1663,
+      "loginId": "bcooper@dc.gov",
+      "employeeName": "Bryan Cooper",
+      "jobTitle": "ADMINISTRATOR",
+      "role": "Clerk",
+      "status": "active",
+      "location": "ONLINE DRIVER COURSE"
+    },
+    {
+      "employeeId": 1712,
+      "loginId": "rsmith@dc.gov",
+      "employeeName": "Rebecca Smith",
+      "jobTitle": "COMPLIANCE SPECIALIST",
+      "role": "Analyst",
+      "status": "active",
+      "location": "PENN BRANCH SERVICE CENTER"
+    },
+    {
+      "employeeId": 1632,
+      "loginId": "cwilson@dc.gov",
+      "employeeName": "Christopher Wilson",
+      "jobTitle": "LEAD MOTOR VEHICLE INSPECTOR",
+      "role": "Supervisor",
+      "status": "active",
+      "location": "NOT IN USE"
+    },
+    {
+      "employeeId": 1664,
+      "loginId": "kmurphy@dc.gov",
+      "employeeName": "Karen Murphy",
+      "jobTitle": "SUPERISORY LEGAL INSTRUMENT EXAMINER",
+      "role": "Technician",
+      "status": "inactive",
+      "location": "INSPECTION STATION"
+    }
+  ],
+  "columns": [
+    {
+      "key": "empId",
+      "label": "Emp ID"
+    },
+    {
+      "key": "loginId",
+      "label": "Login ID"
+    },
+    {
+      "key": "employeeName",
+      "label": "Employee Name"
+    },
+    {
+      "key": "location",
+      "label": "Location"
+    },
+    {
+      "key": "jobTitle",
+      "label": "Job Title"
+    },
+    {
+      "key": "role",
+      "label": "Role"
+    },
+    {
+      "key": "status",
+      "label": "Status"
+    }
+  ]
+}

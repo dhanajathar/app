@@ -7,8 +7,8 @@ export default {
       {
           "agencyObjectCode": 3005,
           "description": "New ID Card Fee",
-          "feescomputed": 20,
-          "feestobecollected": 20
+          "feescomputed": '20',
+          "feestobecollected": '20.00'
       }
   ],
   "personalDetails": {

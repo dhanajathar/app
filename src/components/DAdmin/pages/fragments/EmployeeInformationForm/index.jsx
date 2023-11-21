@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Autocomplete, FormControl, InputAdornment, TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import DAlertBox from '../../../../DAlertBox';
-import employeeData from './api-employee-data.json';
+import API_DATA from './api-employee-data.json';
 import * as _ from 'lodash';
 
 const initialFormState = {
@@ -63,21 +63,33 @@ const initialFormState = {
   }
 };
 
-const EmployeeInformation = ({ initialValues, mode }) => {
-  const [formState, setFormState] = useState(initialFormState);
-  const handleTransliterated = (formatOption, value, targertFormControl) => {
-    setValues(values => {
-      return {
-        ...values,
-        [formatOption]: value,
-        [targertFormControl]: value ? values[targertFormControl] : ''
-      };
-    });
-  };
+const EmployeeInformation = ({ employeeData, mode }) => {
+  const [formState, setFormState] = useState({
+    ...initialFormState,
+    values: { ...initialFormState.values, ...employeeData }
+  });
   const [formFieldToCorrect, setFormFieldToCorrect] = useState(null);
+
+  useEffect(() => {
+    if (!!employeeData) {
+      const newFormState = { ...formState };
+      const values = newFormState.values;
+      Object.keys(formState.values).forEach(inputName => {
+        newFormState.touched[inputName] = true;
+        newFormState.errors[inputName] = validateFormInput({
+          target: { name: inputName, value: values[inputName] }
+        });
+      });
+      newFormState.isValid = Object.values(newFormState.errors).every(error => !error);
+      setFormState(newFormState);
+    }
+  }, []);
 
   const validateFormInput = event => {
     const inputName = event.target.name;
+    if (mode === 'edit' && ['beginDate', 'employeeId', 'userType'].includes(inputName)) {
+      return null;
+    }
     const inputValue = event.target.value;
     switch (inputName) {
       case 'lastName':
@@ -137,7 +149,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
         if (!inputValue) {
           return 'Department is required';
         }
-        if (inputValue && !employeeData.dropDowns.department.includes(inputValue)) {
+        if (inputValue && !API_DATA.dropDowns.department.includes(inputValue)) {
           return `Invalid Department`;
         }
         return null;
@@ -146,7 +158,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
         if (!inputValue) {
           return 'Job Title is required';
         }
-        if (inputValue && !employeeData.dropDowns.jobTitle.includes(inputValue)) {
+        if (inputValue && !API_DATA.dropDowns.jobTitle.includes(inputValue)) {
           return `Invalid Job Title`;
         }
         return null;
@@ -155,7 +167,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
         if (!inputValue) {
           return 'Location is required';
         }
-        if (inputValue && !employeeData.dropDowns.location.includes(inputValue)) {
+        if (inputValue && !API_DATA.dropDowns.location.includes(inputValue)) {
           return `Invalid Location`;
         }
         return null;
@@ -192,7 +204,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
         return `Invalid End date`;
         break;
       case 'userType':
-        if (inputValue && !employeeData.dropDowns.userType.includes(inputValue)) {
+        if (inputValue && !API_DATA.dropDowns.userType.includes(inputValue)) {
           return `Invalid User Type`;
         }
         return null;
@@ -215,7 +227,8 @@ const EmployeeInformation = ({ initialValues, mode }) => {
 
       if (['mobilePhone', 'workPhone'].includes(inputName)) {
         const formattedValue = inputValue.replace(/\D/g, '');
-        const formattedNumber = formattedValue.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+        let formattedNumber = formattedValue.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+
         newFormState.values[inputName] = formattedNumber;
         newFormState.errors[inputName] = validateFormInput({
           target: { value: formattedNumber, name: inputName }
@@ -272,7 +285,10 @@ const EmployeeInformation = ({ initialValues, mode }) => {
       let inputValue = event.target.value || null;
 
       if (typeof inputValue === 'string') {
-        const stanitizedInputValue = inputValue.trim().toUpperCase();
+        let stanitizedInputValue = inputValue.trim().toUpperCase();
+        if (inputValue.toLowerCase().includes('mm/dd/yyyy')) {
+          stanitizedInputValue = '';
+        }
         newFormState.values[inputName] = stanitizedInputValue;
         newFormState.errors[inputName] = validateFormInput({
           target: { name: inputName, value: stanitizedInputValue }
@@ -283,7 +299,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
       if (newFormState.errors[inputName]) {
         event.target.focus();
         setFormFieldToCorrect(inputName);
-      } else if (!!formFieldToCorrect) {
+      } else if (formFieldToCorrect) {
         setFormFieldToCorrect(null);
       }
       return newFormState;
@@ -447,7 +463,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
                 value={formState.values.department}
                 size='small'
                 id='department'
-                options={[...employeeData.dropDowns.department]}
+                options={[...API_DATA.dropDowns.department]}
                 renderInput={params => (
                   <TextField
                     onFocus={() => handleFocus({ target: { name: 'department' } })}
@@ -497,7 +513,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
                 value={formState.values.jobTitle}
                 size='small'
                 id='jobTitle'
-                options={[...employeeData.dropDowns.jobTitle]}
+                options={[...API_DATA.dropDowns.jobTitle]}
                 renderInput={params => (
                   <TextField
                     onFocus={() => handleFocus({ target: { name: 'jobTitle' } })}
@@ -547,7 +563,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
                 value={formState.values.location}
                 size='small'
                 id='location'
-                options={[...employeeData.dropDowns.location]}
+                options={[...API_DATA.dropDowns.location]}
                 renderInput={params => (
                   <TextField
                     onFocus={() => handleFocus({ target: { name: 'location' } })}
@@ -602,7 +618,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
             <TextField
               disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'mobilePhone'}
               name='mobilePhone'
-              error={formState.touched.mobilePhone && formState.errors.mobilePhone}
+              error={!!formState.touched.mobilePhone && !!formState.errors.mobilePhone}
               helperText={
                 <DAlertBox
                   errorText={
@@ -630,11 +646,11 @@ const EmployeeInformation = ({ initialValues, mode }) => {
             <TextField
               disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'workPhone'}
               name='workPhone'
-              error={formState.touched.workPhone && !!formState.errors.workPhone}
+              error={!!formState.touched.workPhone && !!formState.errors.workPhone}
               helperText={
                 <DAlertBox
                   errorText={
-                    formState.touched.workPhone && formState.errors.workPhone
+                    formState.touched.workPhone && !!formState.errors.workPhone
                       ? formState.errors.workPhone
                       : ''
                   }
@@ -660,7 +676,10 @@ const EmployeeInformation = ({ initialValues, mode }) => {
             <div className={'date-picker'}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'beginDate'}
+                  disabled={
+                    !!employeeData ||
+                    (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'beginDate')
+                  }
                   fullWidth
                   id='beginDate'
                   slotProps={{
@@ -682,8 +701,8 @@ const EmployeeInformation = ({ initialValues, mode }) => {
                   name='beginDate'
                   size='small'
                   label='Begin Date'
-                  minDate={dayjs(new Date().setHours(0, 0, 0, 0))}
-                  error={formState.touched.beginDate && !!formState.errors.beginDate}
+                  minDate={mode !== 'edit' ? dayjs(new Date().setHours(0, 0, 0, 0)) : null}
+                  error={!!formState.touched.beginDate && !!formState.errors.beginDate}
                   value={formState.values.beginDate ? dayjs(formState.values.beginDate) : null}
                   onChange={e =>
                     handleValueChange({
@@ -701,7 +720,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   disabled={
-                    formState.errors.beginDate ||
+                    !!formState.errors.beginDate ||
                     (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'endDate')
                   }
                   fullWidth
@@ -725,13 +744,13 @@ const EmployeeInformation = ({ initialValues, mode }) => {
                   name='endDate'
                   size='small'
                   label='End Date'
-                  error={formState.touched.endDate && !!formState.errors.endDate}
+                  error={!!formState.touched.endDate && !!formState.errors.endDate}
                   minDate={
                     formState.values.beginDate
                       ? dayjs(formState.values.beginDate).startOf('day')
                       : null
                   }
-                  value={formState.values.endDate ? formState.values.endDate : null}
+                  value={formState.values.endDate ? dayjs(formState.values.endDate) : null}
                   onChange={e =>
                     handleValueChange({
                       target: { value: e.toDate(), name: 'endDate' }
@@ -769,7 +788,7 @@ const EmployeeInformation = ({ initialValues, mode }) => {
                 value={formState.values.userType}
                 size='small'
                 id='userType'
-                options={[...employeeData.dropDowns.userType]}
+                options={[...API_DATA.dropDowns.userType]}
                 renderInput={params => (
                   <TextField
                     disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== ''}

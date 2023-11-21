@@ -103,9 +103,14 @@
   height: 3rem;
 }
 
-.table-value {
+.table-value,
+.table-value-amount {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: bold !important;
+}
+
+.table-value-amount {
+  text-align: right;
 }
 
 .iconfirm {

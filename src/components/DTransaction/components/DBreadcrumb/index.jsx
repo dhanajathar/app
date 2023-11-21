@@ -1,224 +1,39 @@
 import './index.css';
 
-import { Breadcrumbs, Button, Dialog, Divider, IconButton, Slider, Tooltip } from '@mui/material';
+import { Breadcrumbs, Button, Dialog, Divider, IconButton, Tooltip } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import React, { useEffect, useRef, useState } from 'react';
-import { TreeItem, TreeView } from '@mui/lab';
-
-import AddIcon from '@mui/icons-material/Add';
+import { useEffect, useRef, useState } from 'react';
+import { TreeItem, TreeView } from '@mui/x-tree-view';
+import data from './data/api-response.json';
 import CloseIcon from '@mui/icons-material/Close';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import ContactMailOutlinedIcon from './assets/DL_Icon.png';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import NotAvailable from '../../../../assets/img/No-Document.PNG';
 import PropTypes from 'prop-types';
-import RemoveIcon from '@mui/icons-material/Remove';
 import SvgIcon from '@mui/material/SvgIcon';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import defaultimage from './assets/def_image.PNG';
-import passport from './assets/passport.png';
 import { styled } from '@mui/material/styles';
+import DPdf from '../../../DPdf';
+import pdfUrl from '../../../../assets/img/Coding_Standards.pdf';
 
 //Sample functionusage with props
 // const breadcrumbelements = [individual, SelectTransaction];
 // <DBreadcrumb items={breadcrumbelements, transactionInfo}></DBreadcrumb>
 
-//TODO:
 //Document list from show documents button on dropdown
 
 export default function DBreadcrumb({ items, transactionInfo }) {
   const [dropOpen, setDropOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const dynamicNodeData = data.dynamicNodeData;
 
-  //Treeview JSON
-  const dynamicNodeData = [
-    {
-      id: '1c',
-      label: 'NEW ID CARD: (TRAN ID: 2121232)',
-      addIcon: true,
-      styles: '',
-      children: [
-        {
-          id: '2c',
-          label: 'Application',
-          children: [
-            { id: '3a', label: 'Mandatory', className: 'optm', children: [] },
-            {
-              id: '3b',
-              label: 'DL / ID Card Application',
-              className: 'link',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '5b',
-              label: 'Scanned By: John Micheal, Scanned Date:09/03/2023',
-              className: 'no',
-              document: 'Doc1',
-              children: []
-            }
-          ]
-        },
-        {
-          id: '4c',
-          label: 'Proof of Documents',
-
-          children: [
-            { id: '5a', label: 'Mandatory', className: 'optm', children: [] },
-            {
-              id: '5b',
-              label: 'Proof of Identity',
-              className: 'link',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '5b',
-              label: 'Scanned By: John Micheal, Scanned Date: 09/03/2023',
-              className: 'no',
-              document: 'Doc1',
-              children: []
-            },
-            { id: '5a', label: 'Mandatory', className: 'optm', children: [] },
-            {
-              id: '5b',
-              label: 'Proof of Ability to Drive',
-              className: 'link',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '5b',
-              label: 'Scanned By: John Micheal, Scanned Date: 09/03/2023',
-              className: 'no',
-              document: 'Doc1',
-              children: []
-            },
-            { id: '5a', label: 'Mandatory', className: 'optm', children: [] },
-            {
-              id: '5b',
-              label: 'Proof of Current DC Residency (2)',
-              className: 'link',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '5b',
-              label: 'Scanned By: John Micheal, Scanned Date: 09/03/2023',
-              className: 'no',
-              document: 'Doc1',
-              children: []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: '1b',
-      label: 'INTERNET VEHICLE REGISTRATION RENEWAL: (TRAN ID: 2324343)',
-      addIcon: true,
-      children: [
-        {
-          id: '2b',
-          label: 'Application',
-          children: [
-            { id: '3a', label: 'Mandatory', className: 'optm', children: [] },
-            {
-              id: '3b',
-              label: 'Document Name',
-              className: 'link',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '3c',
-              label: 'Scanned by: John Micheal, Scanned Date: 03/07/2023',
-              className: 'no',
-              children: []
-            }
-          ]
-        },
-        {
-          id: '4b',
-          label: 'Proof of Documents',
-          children: [
-            {
-              id: '5b',
-              label: 'No Documents were Scanned',
-              className: 'no',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '3c',
-              label:
-                'Proof of Identity - Not Applicable (Overridden By: John Michael, Override Date: 03/07/2023)',
-              className: 'no',
-              children: []
-            },
-            { id: '5a', label: 'Optional', className: 'optm', children: [] },
-            {
-              id: '5c',
-              label: 'Document Name (2)',
-              className: 'link',
-              document: 'Doc1',
-              children: []
-            },
-            {
-              id: '3c',
-              label: 'Scanned by: John Micheal, Scanned Date: 03/07/2023',
-              className: 'no',
-              children: []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: '1a',
-      label: 'DUPLICATE DRIVER LICENSE: (TRAN ID: 27747500)',
-      addIcon: true,
-      children: [
-        {
-          id: '2a',
-          label: 'Application',
-          children: [
-            {
-              id: '3a',
-              label: 'No Documents were Scanned',
-              className: 'no',
-              children: []
-            },
-            {
-              id: '3b',
-              label:
-                'Comments: Application - Not Applicable (Entered By: John Micheal, Entered Date: 11/07/2022)',
-              className: 'no',
-              children: []
-            }
-          ]
-        },
-        {
-          id: '4a',
-          label: 'Proof of Documents',
-          children: [
-            {
-              id: '5a',
-              label: 'No Documents were Scanned',
-              className: 'no',
-              children: []
-            },
-            {
-              id: '5b',
-              label:
-                'Comments: Proof of Identity - Not Applicable (Entered By: John Micheal, Entered Date: 11/07/2022)',
-              className: 'no',
-              children: []
-            }
-          ]
-        }
-      ]
-    }
-  ];
+  DBreadcrumb.propTypes = {
+    transactionInfo: PropTypes.object.isRequired
+  };
 
   const toggleDrop = () => {
     setDropOpen(!dropOpen);
@@ -238,17 +53,16 @@ export default function DBreadcrumb({ items, transactionInfo }) {
     }
   };
 
-  const updateCurrentBreadcrumb = e => {
-    let field = document.getElementById('breadcrumbCurrent');
-    field.innerHTML = e.detail.label;
-  };
-
   useEffect(() => {
+    const updateCurrentBreadcrumb = e => {
+      let field = document.getElementById('breadcrumbCurrent');
+      field.innerHTML = e.detail.label;
+    };
     DEventService.subscribe(DEvents.PROGRESS, updateCurrentBreadcrumb);
     return () => {
       DEventService.unsubscribe(DEvents.PROGRESS, updateCurrentBreadcrumb);
     };
-  }, [updateCurrentBreadcrumb]);
+  }, []);
 
   if (items.length < 2) {
     return null; // if there one item, It wil not display
@@ -293,7 +107,6 @@ export default function DBreadcrumb({ items, transactionInfo }) {
                   {item.value}
                   {idx === 0 && (
                     <Tooltip arrow title='Clipboard' placement='top'>
-                      {' '}
                       <ContentCopyOutlinedIcon
                         onClick={() => {
                           copyTransactionId();
@@ -335,7 +148,7 @@ export default function DBreadcrumb({ items, transactionInfo }) {
             onClick={() => setIsDialogOpen(false)}
             className='breadcrumb-dialog-close'
           >
-            <span className='breadcrumb-dialog-close-top'>Close</span>{' '}
+            <div className='breadcrumb-dialog-close-top'>Close</div>{' '}
             <Tooltip title='Close' arrow placement='top'>
               <CloseIcon className='breadcrumb-closeicon' />
             </Tooltip>
@@ -400,7 +213,7 @@ function CustomizedTree({ treeData }) {
         id: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         children: PropTypes.array, // You can refine this further based on your object structure
-        document: PropTypes.string
+        type: PropTypes.string
       })
     ).isRequired
   };
@@ -410,7 +223,6 @@ function CustomizedTree({ treeData }) {
   const [isCollapse, setIsCollapse] = useState(false);
   const [width, setWidth] = useState(540); // Initial width
   const [isResizing, setIsResizing] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(1); //Initial scale zoom for image
   const initialWidth = useRef(0);
 
   //Expanded first node & children default
@@ -449,22 +261,6 @@ function CustomizedTree({ treeData }) {
     setIsResizing(false);
   };
 
-  const handleIncrease = () => {
-    if (zoomLevel < 5) {
-      setZoomLevel(zoomLevel + 1); // Increase the value (adjust as needed)
-    }
-  };
-
-  const handleDecrease = () => {
-    if (zoomLevel > 1) {
-      setZoomLevel(zoomLevel - 1); // Decrease the value (adjust as needed)
-    }
-  };
-
-  const handleZoomImg = (event, newValue) => {
-    setZoomLevel(newValue);
-  };
-
   const getAllNodeIds = nodes => {
     return nodes.reduce((ids, node) => {
       return [...ids, node.id, ...(node.children ? getAllNodeIds(node.children) : [])];
@@ -484,22 +280,45 @@ function CustomizedTree({ treeData }) {
       <StyledTreeItem
         key={node.id}
         nodeId={node.id}
-        expanded={expandedNodes.includes(node.id)}
+        expanded={expandedNodes.filter(node => node === node.id)}
         label={
           <div className='breadcrumb-document'>
             {node.addIcon && <img src={ContactMailOutlinedIcon} />}
-            <span
+            <div
               className={`tree-item-label-level-${node.className ? node.className : depth}`}
-              onClick={() => handleDocumentClick(node.document)}
+              onClick={() => handleDocumentClick(node.type)}
             >
               {node.label}
-            </span>
+              {node.type === 'document' && (
+                <IconButton onClick={() => handleDocumentClick(node.type)}>
+                  <VisibilityIcon style={{ width: '1rem' }} />
+                </IconButton>
+              )}
+              {node.type === 'comment' && (
+                <IconButton onClick={() => handleDocumentClick(node.type)}>
+                  <CommentOutlinedIcon style={{ width: '1rem' }} />
+                </IconButton>
+              )}
+              {node.type === 'NA' && (
+                <IconButton onClick={() => handleDocumentClick(node.type)}>
+                  <VisibilityIcon style={{ width: '1rem' }} />
+                </IconButton>
+              )}
+            </div>
           </div>
         }
       >
         {node.children.length > 0 ? renderTreeItems(node.children, depth + 1) : null}
       </StyledTreeItem>
     ));
+  };
+
+  const handlePDFPages = data => {
+    //setNumOfPages(data);
+  };
+
+  const handlePDFPageNum = data => {
+    // setPageNum(data);
   };
 
   return (
@@ -533,36 +352,27 @@ function CustomizedTree({ treeData }) {
         </TreeView>
       </div>
       <div className='breadcrumb-right-pane'>
-        {selectedDocument ? (
-          <div className='breadcrumb-document'>
-            <div
-              style={{
-                transform: `scale(${zoomLevel})`,
-                overflow: 'hidden',
-                transformOrigin: 'top left'
-              }}
-            >
-              <img src={passport} className='breadcrumb-img' />
-            </div>
-            <div className='breadcrumb-slider-container'>
-              <IconButton onClick={handleDecrease}>
-                <RemoveIcon />
-              </IconButton>
-              <Slider
-                orientation='vertical'
-                value={zoomLevel}
-                min={1}
-                max={5}
-                step={zoomLevel} // Adjust the step as needed
-                onChange={handleZoomImg}
-                aria-labelledby='vertical-slider'
-                className='breadcrumb-slider'
-              />
-              <IconButton onClick={handleIncrease}>
-                <AddIcon />
-              </IconButton>
-            </div>
+        {selectedDocument === 'document' ? (
+          <>
+            <DPdf
+              className='breadcrumb-img-default'
+              pdfUrl={pdfUrl}
+              showAddDelete={true}
+              showZoom={true}
+              showPagination={true}
+              showFullScreen={true}
+              showRotate={true}
+              onPdfNumOfPages={handlePDFPages}
+              onPdfPageNum={handlePDFPageNum}
+            ></DPdf>
+          </>
+        ) : selectedDocument === 'comment' ? (
+          <div className='breadcrumb-right-pane-comment-text'>
+            John, Stev wrote on 10/12/2023 12:10:12 `Tran_ID: 2454742, Location: DESTINY PROJECT
+            SITE - Test comments`
           </div>
+        ) : selectedDocument === 'NA' ? (
+          <img src={NotAvailable} className='breadcrumb-img' />
         ) : (
           <img src={defaultimage} className='breadcrumb-img-default' />
         )}

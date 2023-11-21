@@ -387,6 +387,17 @@
 .selecttranc-button-parent {
   padding-left: 6rem;
 }
-.transaction-accordion .MuiCollapse-root {
-  /* // overflow-y: auto; */
+
+.selecttranc-nodename-searchmode {
+  margin-right: 7rem;
+  white-space: normal;
+}
+
+.selecttranc-accordion {
+  background-color: none !important;
+}
+
+.selecttranc-back-btn {
+  display: flex;
+  gap: 10px;
 }

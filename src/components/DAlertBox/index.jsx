@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo} from 'react';
 import './DAlertBox.css';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -6,7 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const DAlertBox = ({ errorText, warningText, onClearWarning }) => {
     const [expanded, setExpanded] = useState(false);
-   // const [clearWarning, setClearWarning] = useState(false);
     const toggleExpansion = () => {
         setExpanded(!expanded);
     };
@@ -16,10 +15,6 @@ const DAlertBox = ({ errorText, warningText, onClearWarning }) => {
         textOverflow: expanded ? 'clip' : 'ellipsis',
         whiteSpace: expanded ? 'normal' : 'nowrap'
     }), [expanded]);
-
-    /*useEffect(() => {
-        setClearWarning(false)
-    }, [warningText])*/
 
     return (<> {errorText ? <span className={'error-box alert-box'} >
         <ErrorOutlineOutlinedIcon className='error-icon' />

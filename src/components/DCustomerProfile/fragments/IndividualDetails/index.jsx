@@ -181,7 +181,6 @@ const IndividualDetailsFragment = ({ citizenType }) => {
             value={formatSSN(personalInformation.socialSecurityNumber)}
             fullWidth
             label='Social Security Number'
-            disabled
             className='input-adornment'
             InputProps={{
               endAdornment: (
@@ -195,13 +194,12 @@ const IndividualDetailsFragment = ({ citizenType }) => {
         <div className='col col-md-4 col-sm-12 pt-0'>
           <div className='d-row'>
             <div className='col col-md-6 col-sm-12'>
-              <FormControl fullWidth>
+              <FormControl disabled fullWidth>
                 <InputLabel id='citizen'>Citizen</InputLabel>
                 <Select
                   labelId='citizen'
                   id='citizen'
-                  defaultValue={citizen}
-                  disabled
+                  defaultValue={citizen} 
                   label='Citizen'
                   onChange={e => setCitizen(e.target.value)}
                 >
@@ -210,13 +208,12 @@ const IndividualDetailsFragment = ({ citizenType }) => {
               </FormControl>
             </div>
             <div className='col col-md-6 col-sm-12'>
-              <FormControl fullWidth>
+              <FormControl disabled fullWidth>
                 <InputLabel id='organDonor'>Organ Donor</InputLabel>
                 <Select
                   labelId='organDonor'
                   id='organDonor'
-                  defaultValue={organDonor}
-                  disabled
+                  defaultValue={organDonor} 
                   label='Organ Donor'
                   onChange={e => setorganDonor(e.target.value)}
                 >
@@ -227,13 +224,13 @@ const IndividualDetailsFragment = ({ citizenType }) => {
           </div>
         </div>
         <div className='col col-md-4 col-sm-12'>
-          <FormControl fullWidth>
+          <FormControl disabled fullWidth>
             <InputLabel id='language'>Language</InputLabel>
             <Select
               labelId='language'
               id='language'
               defaultValue={language}
-              disabled
+              
               label='Language'
               onChange={e => setLanguage(e.target.value)}
             >
@@ -245,13 +242,12 @@ const IndividualDetailsFragment = ({ citizenType }) => {
 
       <div className='d-row'>
         <div className='col col-md-2 col-sm-12'>
-          <FormControl fullWidth>
+          <FormControl disabled fullWidth>
             <InputLabel id='vip'>VIP</InputLabel>
             <Select
               labelId='vip'
               id='vip'
-              defaultValue={vip}
-              disabled
+              defaultValue={vip} 
               label='VIP'
               onChange={e => setVip(e.target.value)}
             >
@@ -260,13 +256,13 @@ const IndividualDetailsFragment = ({ citizenType }) => {
           </FormControl>
         </div>
         <div className='col col-md-2 col-sm-12'>
-          <FormControl fullWidth>
+          <FormControl disabled fullWidth>
             <InputLabel id='military'>Active Military</InputLabel>
             <Select
               labelId='military'
               id='military'
               defaultValue={military}
-              disabled
+              
               label='Active Military'
               onChange={e => setMilitary(e.target.value)}
             >
@@ -294,13 +290,13 @@ const IndividualDetailsFragment = ({ citizenType }) => {
       <div className='d-sub-title'> {PHYSICAL_INFORMATION} </div>
       <div className='d-row'>
         <div className='col col-md-4 col-sm-12'>
-          <FormControl fullWidth>
+          <FormControl fullWidth disabled>
             <InputLabel id='gender'>Gender</InputLabel>
             <Select
               labelId='gender'
               id='gender'
               defaultValue={gender}
-              disabled
+              
               label='Gender'
               onChange={e => setGender(e.target.value)}
             >
@@ -381,13 +377,13 @@ const IndividualDetailsFragment = ({ citizenType }) => {
         <div className='col col-md-4 col-sm-12 pt-0'>
          <div  className='d-row'>
          <div className='col col-md-6 col-sm-12'>
-              <FormControl fullWidth>
+              <FormControl disabled fullWidth>
                 <InputLabel id='hairColor'>Hair Color</InputLabel>
                 <Select
                   labelId='hairColor'
                   id='hairColor'
                   defaultValue={hairColor}
-                  disabled
+                  
                   label='Hair Color'
                   onChange={e => setHairColor(e.target.value)}
                 >
@@ -396,13 +392,13 @@ const IndividualDetailsFragment = ({ citizenType }) => {
               </FormControl>
             </div>
             <div className='col col-md-6 col-sm-12'>
-              <FormControl fullWidth>
+              <FormControl disabled fullWidth>
                 <InputLabel id='eyeColor'>Eye Color</InputLabel>
                 <Select
                   labelId='eyeColor'
                   id='eyeColor'
                   defaultValue={eyeColor}
-                  disabled
+                  
                   label='Eye Color'
                   onChange={e => setEyeColor(e.target.value)}
                 >

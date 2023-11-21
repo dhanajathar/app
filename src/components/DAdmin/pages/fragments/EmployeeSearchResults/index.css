@@ -1,0 +1,206 @@
+.search-results-table * {
+  box-sizing: border-box;
+}
+
+.employee-search-results-container {
+  text-transform: uppercase;
+}
+
+.employee-search-results-container .page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-results-table .MuiTableRow-root:nth-child(even) {
+  background-color: var(--white60);
+}
+
+.search-results-table .MuiTableCell-root {
+  letter-spacing: 0;
+}
+
+.search-results-table td.MuiTableCell-root:first-child {
+  text-align: center !important;
+  width: 6.25rem !important;
+}
+
+.search-results-table td.MuiTableCell-root:last-child {
+  width: 6.25rem !important;
+}
+
+.search-results-table .MuiTableCell-head,
+.search-results-table .MuiTableCell-root {
+  padding: 0.15rem 0.5rem;
+  height: 2.938rem;
+  box-sizing: border-box;
+  font: normal normal normal 17px/23px Open Sans;
+  color: var(--black100);
+}
+
+.search-results-table .MuiTableCell-root.profile-name {
+  text-transform: uppercase;
+  min-width: 9.37rem;
+}
+
+.search-results-table .MuiTableCell-head {
+  font: normal normal bold 14px/18px Open Sans;
+  letter-spacing: 0;
+  padding: 0.5rem;
+  background-color: #f8f9fb;
+  line-height: 1.5rem;
+  color: #4d4d4d;
+}
+
+.search-results-table .MuiSvgIcon-root {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  margin-bottom: -0.25rem;
+}
+
+.search-results-table td.date-feild {
+  width: 11.563rem !important;
+}
+
+.search-results-table .MuiInputBase-input:not(.MuiTablePagination-select) {
+  padding: 0.531rem 0.5rem !important;
+}
+
+.search-results-table .table-btn,
+.search-results-table-footer .table-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: normal normal 600 14px/30px Open Sans;
+  letter-spacing: 0rem;
+  padding: 0;
+  color: #004dc7;
+  cursor: pointer;
+}
+
+.search-results-table .sort-icon svg {
+  width: 1rem;
+  height: 0.75rem;
+}
+
+.serach-results-length {
+  padding-top: 0.313rem;
+}
+
+.create-new-button {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.create-new-button div {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 1.125rem;
+}
+
+.create-button {
+  background-color: var(--primary90);
+  border-radius: 0.188rem;
+}
+
+.search-result-row {
+  border: 0.063rem solid #d1d1d1;
+}
+
+.search-result-row:hover,
+.search-result-row:focus {
+  background-color: var(--primary30) !important;
+}
+
+.employee-search-results-container {
+  border: 0.063rem solid var(--black100);
+}
+
+.title {
+  text-align: left;
+  font: normal normal normal 16px/30px Open Sans;
+  letter-spacing: 0rem;
+  color: var(--black100);
+  opacity: 1;
+  margin: 1rem 0;
+}
+
+.title > span {
+  text-align: left;
+  font: normal normal 600 16px/30px Open Sans;
+}
+
+.search-filter div {
+  width: 17.313rem;
+  height: 2.5rem;
+  background-color: var(--white100);
+  border: 0.063rem solid #c1c1c1;
+  border-radius: 0.313rem;
+}
+
+.search-filter svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--black50);
+}
+
+.table-footer select {
+  height: 2.5rem;
+  background-color: var(--white100);
+  border: 0.063rem solid #c1c1c1;
+  border-radius: 0.313rem;
+}
+
+.table-footer td {
+  border: 0rem;
+}
+
+.navigation-footer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.back-to-search-button {
+  color: var(--unnamed-color-1860b5);
+  text-align: left;
+  font: normal normal 600 14px/30px Open Sans;
+  letter-spacing: 0rem;
+  color: var(--primary80);
+  opacity: 1;
+}
+
+.back-to-search-button .css-y6rp3m-MuiButton-startIcon {
+  height: 1.063rem;
+  display: inherit;
+  margin-right: 0rem;
+  margin-left: -0.125rem;
+}
+
+tbody {
+  text-transform: uppercase;
+}
+
+.css-1fm8oyr-MuiSelect-select-MuiInputBase-input {
+  border: 1px solid #c1c1c1;
+  border-radius: 0.313rem;
+}
+
+.search-result-container {
+  max-height: 64.9vh;
+}
+
+.MuiTableFooter-root {
+  left: 0px;
+  bottom: 0px;
+  z-index: 2px;
+  position: sticky;
+  background: var(--white100);
+}
+
+.MuiTable-root.search-results-table {
+  padding-bottom: 0rem;
+}

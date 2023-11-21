@@ -21,6 +21,7 @@ import img from '../assets/tempImage.png';
 import indData from '../assets/searchResultsInd.json';
 import transData from '../assets/searchResultsTrans.json';
 import vehData from '../assets/searchResultsVeh.json';
+import EmployeeSearchResults from '../../DAdmin/pages/fragments/EmployeeSearchResults';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -192,85 +193,91 @@ export function SearchResults() {
     );
   } else {
     return (
-      <div className='page-container'>
-        <div className='search-title-text'>{data.results.length} Results Found</div>
-        <div className='search-result-card'>
-          <TableContainer className='search-result-container'>
-            <Table
-              stickyHeader
-              className='search-result-table'
-              aria-labelledby='tableTitle'
-              size='small'
-            >
-              <EnhancedTableHead
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-                headCells={headCells}
-              />
-              <TableBody>
-                {visibleRows.map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => handleClick(event, row)}
-                      role='checkbox'
-                      tabIndex={-1}
-                      key={index}
-                      sx={{ cursor: 'pointer' }}
-                      className={
-                        index % 2 == 0
-                          ? 'search-result-row'
-                          : 'search-result-row search-result-table-even'
-                      }
-                    >
-                      <TableCell align={headCells[0].align}>
-                        {index + page * rowsPerPage + 1}
-                      </TableCell>
-                      {Object.entries(row).map((item, idx) => {
-                        return (
-                          <TableCell key={idx} align={headCells[idx + 1].align} padding='none'>
-                            {item[1]}
+      <>
+        {location.state.type === 'employee' ? (
+          <EmployeeSearchResults />
+        ) : (
+          <div className='page-container'>
+            <div className='search-title-text'>{data.results.length} Results Found</div>
+            <div className='search-result-card'>
+              <TableContainer className='search-result-container'>
+                <Table
+                  stickyHeader
+                  className='search-result-table'
+                  aria-labelledby='tableTitle'
+                  size='small'
+                >
+                  <EnhancedTableHead
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    rowCount={rows.length}
+                    headCells={headCells}
+                  />
+                  <TableBody>
+                    {visibleRows.map((row, index) => {
+                      return (
+                        <TableRow
+                          hover
+                          onClick={event => handleClick(event, row)}
+                          role='checkbox'
+                          tabIndex={-1}
+                          key={index}
+                          sx={{ cursor: 'pointer' }}
+                          className={
+                            index % 2 == 0
+                              ? 'search-result-row'
+                              : 'search-result-row search-result-table-even'
+                          }
+                        >
+                          <TableCell align={headCells[0].align}>
+                            {index + page * rowsPerPage + 1}
                           </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
-                  <TableRow
-                    style={{
-                      height: 33 * emptyRows
-                    }}
-                  >
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 20, 30]}
-            component='div'
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </div>
-        <div>
-          <Button
-            className='back-button'
-            color='primary'
-            variant='outlined'
-            onClick={() => navigate('/search')}
-          >
-            Back
-          </Button>
-        </div>
-      </div>
+                          {Object.entries(row).map((item, idx) => {
+                            return (
+                              <TableCell key={idx} align={headCells[idx + 1].align} padding='none'>
+                                {item[1]}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                    {emptyRows > 0 && (
+                      <TableRow
+                        style={{
+                          height: 33 * emptyRows
+                        }}
+                      >
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[10, 20, 30]}
+                component='div'
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </div>
+            <div>
+              <Button
+                className='back-button'
+                color='primary'
+                variant='outlined'
+                onClick={() => navigate('/search')}
+              >
+                Back
+              </Button>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
 }

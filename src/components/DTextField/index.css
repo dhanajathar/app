@@ -22,3 +22,8 @@
 .DTextField-base input {
   padding-right: 1.5rem !important;
 }
+
+.DTextField-base .DTextField-close-icon svg {
+  height: 1rem;
+  width: 1rem;
+}

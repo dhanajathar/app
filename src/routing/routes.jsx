@@ -6,6 +6,7 @@ import {
   loginRoutingPrefix,
   searchRoutingPrefix,
   selectTransactionRoutingPrefix,
+  surrenderTagRoutingPrefix,
   transactionRoutingPrefix
 } from './constants';
 
@@ -17,6 +18,7 @@ const DashboardLazy = lazy(() => import('../components/DDashboard'));
 const CustomerProfileLazy = lazy(() => import('../components/DCustomerProfile'));
 const SelectTransactionLazy = lazy(() => import('../components/DSelectTransaction'));
 const TransactionLazy = lazy(() => import('../components/DTransaction'));
+const SurrenderTagLazy = lazy(() => import('../components/DSurrenderTag'));
 const AdminLazy = lazy(() => import('../components/DAdmin'));
 
 export const routes = [
@@ -77,6 +79,14 @@ export const routes = [
         element: (
           <Suspense fallback='Loading Transaction Orchestrator...'>
             <TransactionLazy />
+          </Suspense>
+        )
+      },
+      {
+        path: `/${surrenderTagRoutingPrefix}/*`,
+        element: (
+          <Suspense fallback='Loading Surrender Tag Orchestrator...'>
+            <SurrenderTagLazy />
           </Suspense>
         )
       },

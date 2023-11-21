@@ -68,6 +68,7 @@
   width: 15px;
   height: 15px;
   cursor: pointer;
+  margin-left: 0.5rem;
 }
 
 .breadcrumb-dropdown-divider {
@@ -109,11 +110,16 @@
 
 .breadcrumb-right-pane {
   flex: 2;
-  background-color: #d9d9d9;
-  text-align: center;
+  text-align: left;
+  display: flex;
   align-items: center;
+  font: normal bold 18px/30px Open Sans;
   min-width: 45%;
   overflow: hidden;
+}
+
+.breadcrumb-right-pane-comment-text {
+  padding: 1rem;
 }
 
 .breadcrumb-treeview-content {
@@ -160,9 +166,13 @@
   width: 2px;
 }
 
-.breadcrumb-img-default,
-.breadcrumb-img {
+.breadcrumb-img-default {
   height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.breadcrumb-img {
   width: 100%;
   object-fit: cover;
 }
@@ -182,6 +192,7 @@
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
+  margin-top: 0 !important;
 }
 
 .breadcrumb-closeicon {
@@ -245,17 +256,37 @@
   height: 2rem;
 }
 
-
 .l-shaped-border ul li li::before {
-  border: none;
+  position: absolute;
+  border-bottom: 2px dashed #707070;
+  content: '';
+  width: 1.25rem;
+  height: 1.15rem;
 }
 
 .l-shaped-border ul li li::after {
-  border: none;
+  position: absolute;
+  content: '';
+  left: -1.1rem;
 }
+
+/* Mandatory to POI */
+.l-shaped-border ul li li li::after {
+  height: 18px;
+}
+
 .l-shaped-border ul li li:last-child::before {
+  position: absolute;
+  content: '';
+  left: -1.1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.l-shaped-border ul li li li:last-child::before {
   border: none;
 }
+
 .l-shaped-border .Mui-selected {
   background-color: inherit !important;
 }
@@ -296,7 +327,7 @@
   text-transform: uppercase;
   opacity: 1;
   white-space: normal;
-  padding-left: 0.125rem;
+  padding-left: 0.5rem;
 }
 
 .tree-item-label-level-1 {
@@ -316,27 +347,28 @@
   opacity: 1;
   text-transform: none;
   white-space: normal;
-  padding-left: 1rem;
+  padding-left: 0.5rem;
 }
 
 .tree-item-label-level-link {
   text-align: left;
-  font: normal normal 600 14px/30px Open Sans;
+  font: normal normal 600 14px/28px Open Sans;
   letter-spacing: 0px;
   color: #1960b5;
   opacity: 1;
   text-transform: none;
   white-space: normal;
   cursor: pointer;
-  padding-left: 1rem;
+  padding-left: 0.5rem;
 }
 
 .tree-item-label-level-optm {
   text-align: left;
-  font: italic normal normal 14px/18px Open Sans;
+  font: italic normal normal 14px/32px Open Sans;
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
   text-transform: none;
   white-space: normal;
+  padding-left: 0.2rem;
 }

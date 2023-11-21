@@ -1,0 +1,46 @@
+{
+    "profileData": [
+      {
+        "supervisor": "Jacinta Ball",
+        "reason": "Document missing",
+        "dateAndTime": "02/12/2022, 2:00 PM"
+      },
+      {
+        "supervisor": "Lachelle Johnson",
+        "reason": "ID missing",
+        "dateAndTime": "07/26/2022, 5:20 PM"
+      },
+      {
+        "supervisor": "Marquis Miles",
+        "reason": "OTHER - Testthe...",
+        "dateAndTime": "11/09/2022, 2:00 PM"
+      }
+    ],
+    "columns": [
+      {
+        "key": "srNo",
+        "label": "Sl No.",
+        "allowedToSort": false,
+        "dataType": "number"
+      },
+      {
+        "key": "supervisor",
+        "label": "Supervisor",
+        "allowedToSort": true,
+        "dataType": "string"
+      },
+      {
+        "key": "reason",
+        "label": "Reason",
+        "allowedToSort": true,
+        "dataType": "string"
+      },
+      {
+        "key": "dateAndTime",
+        "label": "Date and Time",
+        "allowedToSort": true,
+        "dataType": "date"
+      }
+    ]
+  }
+  

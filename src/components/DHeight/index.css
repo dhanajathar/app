@@ -13,3 +13,6 @@
     display: flex;
     align-items: center;
 }
+.remove-border .MuiInputAdornment-root {
+    margin-left: 0;
+}

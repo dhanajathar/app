@@ -27,7 +27,7 @@ export default function DDashboard() {
       <div className='dash-container'>
         <div className='dash-head'>
           <div>
-            <h1 className='headtext'>Good morning! John</h1>
+            <h1 className='headtext'>Good morning, Dave!</h1>
             <div className='sub-head'>
               You’ve <span className={'todo-item'}> 1 pending work </span> at this time.
             </div>

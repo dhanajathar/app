@@ -1,0 +1,76 @@
+.close-icon {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  font-size: 1rem;
+  padding: 0 10px 0 0;
+}
+
+/*Supervisor Override Dialog css*/
+
+.dialog .MuiPaper-root {
+    overflow: visible;
+  }
+  
+  .dialog .MuiDialogTitle-root {
+    font: normal normal bold 20px/16px Open Sans;
+  }
+  
+  .dialog .MuiDialogActions-root {
+    margin-right: 1rem;
+  }
+  
+  .d-dialog-requester-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -3rem;
+  }
+  
+  .d-dialog-requester {
+    background: #404040 0% 0% no-repeat padding-box;
+    border-radius: 0.5rem;
+    width: auto;
+    color: var(--white100);
+    padding: 0 1rem;
+    text-align: center;
+  }
+  
+  .d-dialog-requester-title {
+    font: normal normal normal 12px/17px Open Sans;
+    margin: 0;
+  }
+  
+  .d-dialog-requester-user {
+    font: normal normal bold 14px/19px Open Sans;
+    letter-spacing: 0;
+    color: var(--white100);
+    text-transform: uppercase;
+  }
+  
+  
+  /*Confirmation Dialog*/
+  .d-dialog-font-bold {
+    font: normal normal bold 20px/16px Open Sans;
+  }
+  
+  .d-dialog-data-center {
+    text-align: center;
+  }
+  
+  .d-dialog-btn-center {
+    align-self: center;
+  }
+  
+  
+  /* Supervisor Override Reasons */
+  
+  .d-dialog-profile-list-table .d-dialog-sort-icon svg {
+    width: 1rem;
+    height: 0.75rem;
+  }
+  
+  .dialog .MuiDialogTitle-root.dialog-title {
+    font-size: 1.125rem;
+  }
+  

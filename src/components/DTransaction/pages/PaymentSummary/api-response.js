@@ -55,7 +55,7 @@ export default {
   ],
   "interruptReason": ["Other"],
   "reviewPrintURL" : "",
-  "selectedPaymentMethod": [],
+  "selectedPaymentMethod": ["Cash","Check"],
   "paymentSummary": {
     "changeDue": "",
     "changeReturned": 0.0,

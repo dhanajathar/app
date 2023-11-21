@@ -19,8 +19,8 @@
         "ipath": "NewCommercialDriverLicense"
       },
       {
-        "title": "New Vehicle New Title",
-        "ipath": "NewVehicleNewTitle"
+        "title": "Surrender Tag",
+        "ipath": "SurrenderTag"
       },
       {
         "title": "New Vehicle New Title & Registration",
@@ -37,6 +37,10 @@
       {
         "title": "Duplicate Driver License",
         "ipath": "DuplicateDriverLicense"
+      },
+      {
+        "title": "New Vehicle New Title",
+        "ipath": "NewVehicleNewTitle"
       },
       {
         "title": "Renew Registration",
