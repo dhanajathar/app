@@ -1,16 +1,16 @@
 import './index.css';
 
-import { ArrowForwardIos, Close, Edit } from '@mui/icons-material';
-import { Button, Container, Divider, Grid, Paper, Snackbar, SnackbarContent } from '@mui/material';
+import { Close } from '@mui/icons-material';
+import { Button, Divider, Snackbar, SnackbarContent } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import { useSearchParams } from 'react-router-dom';
 import data from './api-response';
 
 export default function Print() {
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
+  const transSum = data.transactionSummary;
 
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
@@ -18,32 +18,38 @@ export default function Print() {
     });
   }, 100);
 
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isPrinted, setIsPrinted] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(transSum[0].image);
+  const [selectedArrow, setSelectedArrow] = useState(transSum[0].field);
+
+  const handleImageClick = (field, image) => {
+    setSelectedImage(image);
+    setSelectedArrow(field);
+  };
+
   return (
     <React.Fragment>
-      <Grid container>
-        <Grid item xs={5} className='left-panel'>
+      <div className='Dprint-conatiner'>
+        <div className='Dprint-sum-left-panel'>
           <p className='title'>Transaction Summary</p>
+          <Divider style={{ paddingTop: '1.2rem' }} />
+          {transSum.map((item, index) => (
+            <>
+              <div key={`row${index}`} className={`print-row ${selectedArrow === item.field ? 'selected' : ''}`} onClick={() => handleImageClick(item.field, item.image)}>
+                <div className='table-field'>{item.field}</div>
+                <div className='table-value' style={{ textAlign: 'right' }}>
+                  {item.value}
+                </div>
+              </div>
+              {index < transSum.length - 1 && <Divider />}
+            </>
+          ))}
+          <Divider />
+        </div>
 
-          <Divider className='divider' />
-
-          <table width={'100%'}>
-            <tbody>
-              <tr>
-                <td className='table-field'>New ID Card</td>
-                <td className='table-value' align='right'>
-                  Fee Paid
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <Divider className='divider' style={{ marginTop: '13px' }} />
-        </Grid>
-        <Grid item xs={7} className='print-review-panel-right'>
-          <img src={data.reviewPrintURL} height={'281px'} width={'100%'} />
+        <div className='Dprint-panel-right'>
+          {selectedImage && <img className='print-img' src={selectedImage} />}
           <Button
             variant={'outlined'}
             color={'primary'}
@@ -56,8 +62,8 @@ export default function Print() {
           >
             {isPrinted ? 'RE-PRINT' : 'CONFIRM PRINT'}
           </Button>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={open}

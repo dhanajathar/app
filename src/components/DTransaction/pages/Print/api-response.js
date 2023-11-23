@@ -1,64 +1,87 @@
 export default {
-  "user" : {
-    "name": "",
-    "role": "CSR"
+  user: {
+    name: '',
+    role: 'CSR'
   },
-  "feesDetails": [
-      {
-          "agencyObjectCode": 3005,
-          "description": "New ID Card Fee",
-          "feescomputed": 20,
-          "feestobecollected": 20
-      }
+  feesDetails: [
+    {
+      agencyObjectCode: 3005,
+      description: 'New ID Card Fee',
+      feescomputed: 20,
+      feestobecollected: 20
+    }
   ],
-  "personalDetails": {
-      "fullname": "Jonny Doe",
-      "gender": "Male",
-      "dob": "23-Sep-1990",
-      "height": "118cm",
-      "weight": "88kg",
-      "address": "test",
-      "email": "test@test.com",
-      "mobile": "+1 233423423432"
+  personalDetails: {
+    fullname: 'Jonny Doe',
+    gender: 'Male',
+    dob: '23-Sep-1990',
+    height: '118cm',
+    weight: '88kg',
+    address: 'test',
+    email: 'test@test.com',
+    mobile: '+1 233423423432'
   },
-  "paymentMethods" : [
-      { 
-        "id": "cashPay",
-        "name": "Cash" 
-      },
-        { "id": "checkPay",
-        "name": "Check" 
-      },
-      {
-        "id": "moneyOrder",
-        "name": "Money Order"
-      },
-      { 
-        "id": "reverseATM",
-        "name": "Reverse ATM"
-      },{
-        "id": "voucherPay",
-        "name": "Voucher"
-      },
-      { 
-        "id": "creditCard",
-        "name": "Credit Card"
-      }, 
-      {
-        "id": "googlePay",
-        "name": "Google Pay"
-      },
-      { 
-        "id": "applePay",
-        "name": "Apple Pay"
-      }
+  paymentMethods: [
+    {
+      id: 'cashPay',
+      name: 'Cash'
+    },
+    { id: 'checkPay', name: 'Check' },
+    {
+      id: 'moneyOrder',
+      name: 'Money Order'
+    },
+    {
+      id: 'reverseATM',
+      name: 'Reverse ATM'
+    },
+    {
+      id: 'voucherPay',
+      name: 'Voucher'
+    },
+    {
+      id: 'creditCard',
+      name: 'Credit Card'
+    },
+    {
+      id: 'googlePay',
+      name: 'Google Pay'
+    },
+    {
+      id: 'applePay',
+      name: 'Apple Pay'
+    }
   ],
-  "interruptReason": ["Other"],
-  "reviewPrintURL" : "",
-  "selectedPaymentMethod": [],
-  "paymentSummary": {
-    "changeDue": "",
-    "changeReturned": 0.0,
-    "balanceDue":""
+  transactionSummary: [
+    {
+      field: 'New Identification Card',
+      value: 'Fee Paid',
+      image: '/src/components/DTransaction/assets/IdCard.png'
+    },
+    {
+      field: 'New Identification Card',
+      value: 'Fee Paid',
+      image: '/src/components/DTransaction/assets/IdCard.png'
+    },
+    
+    {
+      field: 'Title Certificate',
+      value: 'Fee Paid',
+      image: '/src/components/DTransaction/assets/titleReg.png'
+    },
+    // { field: 'Parking Permit', value: 'Fee Paid', image: 'image_url_for_d2' }
+    {
+      field: 'Registration Ticket',
+      value: 'Fee Not Applicable',
+      image: '/src/components/DTransaction/assets/regTick.png'
+    }
+  ],
+  interruptReason: ['Other'],
+  reviewPrintURL: '',
+  selectedPaymentMethod: [],
+  paymentSummary: {
+    changeDue: '',
+    changeReturned: 0.0,
+    balanceDue: ''
   }
-}
+};

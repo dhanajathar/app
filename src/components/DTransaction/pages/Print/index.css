@@ -36,8 +36,7 @@
   height: calc(100vh - 70px);
   overflow: auto;
   flex-grow: 1;
-  background: transparent linear-gradient(0deg, #153a8b 0%, #0c255f 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent linear-gradient(0deg, #153a8b 0%, #0c255f 100%) 0% 0% no-repeat padding-box;
   box-shadow: 0px 1px 4px #00000065;
   background-size: auto 451px;
 }
@@ -46,27 +45,25 @@
   margin-top: 0.6rem;
 }
 
+.Dprint-conatiner {
+  display: flex;
+  flex-direction: row;
+}
+
 .title {
   color: #13126c;
   font: normal normal bold 18px/20px Open Sans;
   letter-spacing: 0px;
   margin: 0;
+  padding-top: 2rem;
 }
 
-.right-panel {
-  background: #f7f7f7;
-  box-shadow: 1px 3px 6px #0000000d;
-  border: 1px solid #dedede;
-  border-radius: 0px 5px 5px 0px;
-  padding-top: 52px;
-  padding-left: 40px;
-  padding-right: 38px;
-}
 
-.left-panel {
+.Dprint-sum-left-panel {
   padding-top: 1.6rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  width: 50%;
 }
 
 .main-panel {
@@ -76,20 +73,17 @@
   padding-bottom: 1.6rem;
 }
 
-.print-review-panel-right {
-  border: 0.06rem solid #dedede;
+.Dprint-panel-right {
   display: flex;
   background: #e5f4ff;
-  box-shadow: 0.06rem 0.19rem 0.4rem #0000000d;
   align-items: center;
-  padding-top: 3rem;
+  padding-top: 2rem;
   padding-left: 3rem;
   border-radius: 0rem 0.3rem 0.3rem 0rem;
   padding-right: 3rem;
   flex-direction: column;
-  padding-bottom: 3rem;
   justify-content: space-evenly;
-  min-height: 30rem;
+  width: 50%;
 }
 
 .divider {
@@ -103,12 +97,17 @@
   letter-spacing: 0px;
   color: #333333;
   opacity: 1;
+  padding-top: 1.938rem;
+  cursor: pointer;
 }
 
 .table-value {
   font-size: 1rem;
   font-weight: bold;
+  padding-top: 1.938rem;
+  padding-bottom: 1.938rem;
 }
+
 
 .iconfirm {
   background: #0060b5;
@@ -116,6 +115,7 @@
   font-size: 0.9rem;
   font-weight: bold;
 }
+
 .confrim-spinner {
   display: flex;
   justify-content: center;
@@ -222,7 +222,7 @@
 .fees-tobe-collected-text-field {
   text-align: right;
   width: 4rem;
-  padding: 10px!important;
+  padding: 10px !important;
 }
 
 .secondary-button {
@@ -364,4 +364,30 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.print-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.selected::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 11px);
+  right: -32px;
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-top: solid 11px transparent;
+  border-bottom: solid 11px transparent;
+  border-right: solid 11px #e5f4ff;
+}
+
+.print-img {
+  max-width: 100%;
+  max-height: 20rem;
+  object-fit: cover;
 }
