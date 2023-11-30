@@ -51,7 +51,7 @@ const DAddress = forwardRef((props, ref) => {
   const [streetSuffix, setStreetSuffix] = useState(
     data.address.dialogstreetnamesuffix
   );
-  const [streetNum, setStreetNum] = useState(data.address.dialogstreetnumber);
+  const [streetNum, setStreetNum] = useState(data.address.dialogstreetNumber);
   const [streetName, setStreetName] = useState(data.address.dialogstreetname);
   const [isClick, setIsClick] = useState(editCustomer ? false : true);
   const [open, setOpen] = useState(false);
@@ -370,7 +370,7 @@ const DAddress = forwardRef((props, ref) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  id="StreetNumber"
+                  id="streetNumber"
                   label="Street Number"
                   value={streetNum}
                   onChange={(e) => setStreetNum(e.target.value)}

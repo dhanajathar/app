@@ -56,8 +56,12 @@ export default function Address() {
   const [openStreetDialog, setOpenStreetDialog] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState();
   const [showAlert, setShowAlert] = useState();
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [focusedField, setFocusedField] = useState('');
+  const [warningText, setWarningText] = useState();
+  const [selectedStreetName, setSelectedStreetName] = useState('')
   const PRIMARY = 'PRIMARY';
-  const intialData = {
+  const initialData = {
     addressType: 'PRIMARY',
     fromDate: new Date(),
     toDate: null,
@@ -68,16 +72,16 @@ export default function Address() {
       zipCode: '',
       country: '',
       isValidate: null,
-      aditionalAddress: {
+      additionalAddress: {
         preDirectionalCode: '',
-        streetnumber: '',
+        streetNumber: '',
         streetName: '',
         streetNameSuffix: '',
         postDirectionalCode: '',
         apartmentNumber: ''
       },
       overRide: 0,
-      ignorAddressVerification: null
+      ignoreAddressVerification: null
     },
     residencyCertification: {
       isCertification: null,
@@ -90,16 +94,16 @@ export default function Address() {
     },
     isExpand: true
   };
-  const primaryDefultAddress = {
-    ...intialData,
+  const primaryDefaultAddress = {
+    ...initialData,
     addressDetails: {
-      ...intialData.addressDetails,
+      ...initialData.addressDetails,
       state: 'DC',
       city: 'WA',
       country: 'US'
     }
   };
-  const [addresses, setAddresses] = useState([primaryDefultAddress]);
+  const [addresses, setAddresses] = useState([primaryDefaultAddress]);
 
   const handleAddressChange = (index, field, value) => {
     const newAddresses = [...addresses];
@@ -111,16 +115,24 @@ export default function Address() {
     const newAddresses = [...addresses];
     newAddresses[index].addressDetails[field] = value;
     setAddresses(newAddresses);
+    if (field === 'addressLine') {
+      if (value.length > 35) {
+        setIsFormDisabled(true)
+        setWarningText('Address is more than 35 characters')
+      } else {
+        setWarningText('')
+      }
+    }
   };
 
   const handleAdditionalAddressChange = (index, field, value) => {
     const newAddresses = [...addresses];
-    newAddresses[index].addressDetails.aditionalAddress[field] = value;
+    newAddresses[index].addressDetails.additionalAddress[field] = value;
     setAddresses(newAddresses);
   };
 
   const handleValidateAddress = index => {
-    handleValidation(index);
+    handleAllErrors(addresses[index], index);
     if (Object.keys(addresses[index].validationErrors).length === 0) {
       const newAddresses = [...addresses];
       // setting temp is validate flg
@@ -130,6 +142,7 @@ export default function Address() {
         newAddresses[index].addressDetails.isValidate = addresses.length === 1 ? true : false;
       }
       addresses.length > 1 && setOpenStreetDialog(true);
+      setSelectedAddress(index)
       setAddresses(newAddresses);
     }
   };
@@ -139,6 +152,23 @@ export default function Address() {
     newAddresses[index].isExpand = !newAddresses[index].isExpand;
     setAddresses(newAddresses);
   };
+
+  const selectStreetName = () => {
+    setOpenStreetDialog(false);
+    const newAddresses = [...addresses];
+    newAddresses[selectedAddress].addressDetails.isValidate = null;
+    if (addresses[selectedAddress]?.addressDetails.overRide > 0) {
+      //temp street name, it wil replace after street name api integration 
+      newAddresses[selectedAddress].addressDetails.additionalAddress.streetName = 'SOUTH DAKOTA'
+      newAddresses[selectedAddress].addressDetails.additionalAddress.streetNameSuffix = 'AVE'
+      newAddresses[selectedAddress].addressDetails.additionalAddress.postDirectionalCode = 'SE'
+    } else {
+      newAddresses[selectedAddress].addressDetails.addressLine = selectedStreetName
+    }
+
+
+    setAddresses(newAddresses);
+  }
 
   const handleDeleteAddress = index => {
     setSelectedAddress(index);
@@ -156,7 +186,7 @@ export default function Address() {
     setAddresses([
       ...newAddresses,
       {
-        ...intialData,
+        ...initialData,
         addressType: 'TEMPORARY',
         fromDate: fromDate,
         toDate: dayjs(todayDate).add(30, 'day')
@@ -174,15 +204,6 @@ export default function Address() {
     setSelectedAddress(null);
   };
 
-  const getAddressValidate = () => {
-    addresses.forEach(e => {
-      if (!e.addressDetails.isValidate) {
-        return true;
-      }
-    });
-    return false;
-  };
-
   const handleOverRide = () => {
     setOpenOverrideDialog(false);
     const newAddresses = [...addresses];
@@ -192,9 +213,13 @@ export default function Address() {
       isValidate: null,
       overRide: updatedAddress.addressDetails.overRide + 1
     };
-    updatedAddress.addressDetails.overRide > 1 &&
-      updatedAddress.addressDetails.ignorAddressVerification &&
+    if (updatedAddress.addressDetails.overRide > 1 &&
+      updatedAddress.addressDetails.ignoreAddressVerification) {
       setShowAlert(true);
+      updatedAddress.addressDetails.isValidate = true;
+    }
+
+
     newAddresses[selectedAddress] = updatedAddress;
     setAddresses(newAddresses);
   };
@@ -204,7 +229,7 @@ export default function Address() {
     const updatedAddress = { ...newAddresses[selectedAddress] };
     updatedAddress.addressDetails = {
       ...updatedAddress.addressDetails,
-      ignorAddressVerification: true
+      ignoreAddressVerification: true
     };
     newAddresses[selectedAddress] = updatedAddress;
     setAddresses(newAddresses);
@@ -212,90 +237,142 @@ export default function Address() {
     setOpenOverrideDialog(true);
   };
 
-  const handleValidation = index => {
-    const specialCharacterPattern = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]/;
-    setSelectedAddress(index);
+  const handleClearWarning = () => {
+    setWarningText('')
+    setIsFormDisabled(false)
+    setFocusedField('addressLine');
+    setTimeout(() => { setFocusedField() }, 50)
+  }
+
+  const handleError = (name, value, index) => {
+
+    const error = validateFiled(name, value, index);
+    const errors = { ...addresses[index].validationErrors, [name]: error };
+    if (error === '') {
+      delete errors[name];
+    }
     const updatedAddresses = [...addresses];
-    const address = addresses[index];
-    const errors = {};
-    // Validation logic for each field in the address
-
-    if (!address.addressDetails.addressLine) {
-      errors.addressLine = 'Invalid Address Line';
-    }
-
-    addresses.forEach((e, i) => {
-      if (i !== 0 && i !== index) {
-        const errorMsg =
-          'More than one temporary address cannot be valid at one time The dates for the temporary addresses were altered to remove an overlap. Please check the new dates';
-        if (
-          dayjs(address.fromDate).isBefore(e.fromDate) ||
-          new Date(e.fromDate).toDateString() === new Date(address.fromDate).toDateString()
-        ) {
-          errors.fromDate = errorMsg;
-        }
-        if (
-          dayjs(address.toDate).isBefore(e.toDate) ||
-          new Date(e.toDate).toDateString() === new Date(address.toDate).toDateString()
-        ) {
-          errors.toDate = errorMsg;
-        }
-      }
-    });
-
-    if (!address.addressDetails.city || specialCharacterPattern.test(address.addressDetails.city)) {
-      errors.city = 'Invalid City';
-    }
-    if (!address.addressDetails.state) {
-      errors.state = 'Invalid State';
-    }
-    if (!address.addressDetails.country) {
-      errors.country = 'Invalid Country';
-    }
-    if (address.addressDetails.zipCode && address.addressDetails.zipCode.length < 9) {
-      errors.zipCode = 'Invalid ZIP Code';
-    }
-    if (address.addressDetails.overRide > 0) {
-      const addtioanlAddress = address.addressDetails.aditionalAddress;
-      if (
-        !addtioanlAddress.streetnumber ||
-        specialCharacterPattern.test(addtioanlAddress.streetnumber)
-      ) {
-        errors.streetnumber = 'Invalid Street Number';
-      }
-      if (
-        !addtioanlAddress.streetName ||
-        specialCharacterPattern.test(addtioanlAddress.streetName)
-      ) {
-        errors.streetName = 'Invalid Street Name';
-      }
-      if (!addtioanlAddress.streetNameSuffix) {
-        errors.streetNameSuffix = 'Invalid Street Name Suffix';
-      }
-      if (!addtioanlAddress.postDirectionalCode) {
-        errors.postDirectionalCode = 'Invalid Post-Directional Code’';
-      }
-      if (
-        !addtioanlAddress.apartmentNumber ||
-        specialCharacterPattern.test(addtioanlAddress.apartmentNumber)
-      ) {
-        errors.apartmentNumber = 'Invalid Apartment Number';
-      }
-    }
-
     updatedAddresses[index].validationErrors = errors;
     setAddresses(updatedAddresses);
+    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
+    setFocusedField(error !== '' ? name : '');
+  };
+
+
+  const validateFiled = (name, value, index) => {
+    const specialCharacterPattern = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]/;
+    let error = '';
+    const dateErrorMsg =
+      'More than one temporary address cannot be valid at one time The dates for the temporary addresses were altered to remove an overlap. Please check the new dates';
+    switch (name) {
+      case 'fromDate':
+        addresses.forEach((e, i) => {
+          if (i !== 0 && i !== index) {
+            if (
+              dayjs(value).isBefore(e.fromDate) ||
+              new Date(e.fromDate).toDateString() === new Date(value).toDateString()
+            ) {
+              error = dateErrorMsg;
+            }
+          }
+        });
+        break;
+      case 'toDate':
+        addresses.forEach((e, i) => {
+          if (i !== 0 && i !== index) {
+
+            if (
+              dayjs(value).isBefore(e.toDate) ||
+              new Date(e.toDate).toDateString() === new Date(value).toDateString()
+            ) {
+              error = dateErrorMsg;
+            }
+          }
+        });
+        break;
+      case 'addressLine':
+        if (value === '') {
+          error = 'Invalid Address Line';
+        }
+        break;
+      case 'city':
+        if (value === '' || specialCharacterPattern.test(value)) {
+          error = 'Invalid City';
+        }
+        break;
+      case 'state':
+        if (value === '') {
+          error = 'Invalid State';
+        }
+        break;
+      case 'country':
+        if (value === '') {
+          error = 'Invalid Country';
+        }
+        break;
+      case 'zipCode':
+        if (value && value.length < 9) {
+          error = 'Invalid ZIP Code';
+        }
+        break;
+      case 'streetNumber':
+        if (addresses[index].addressDetails.overRide > 0 && (!value || specialCharacterPattern.test(value))) {
+          error = 'Invalid Street Number';
+        }
+        break;
+      case 'streetName':
+        if (addresses[index].addressDetails.overRide > 0 && (!value || specialCharacterPattern.test(value))) {
+          error = 'Invalid Street Name';
+        }
+        break;
+      case 'streetNameSuffix':
+        if (addresses[index].addressDetails.overRide > 0 && value === '') {
+          error = 'Invalid Street Name Suffix';
+        }
+        break;
+      case 'postDirectionalCode':
+        if (addresses[index].addressDetails.overRide > 0 && value === '') {
+          error = 'Invalid Post-Directional Code';
+        }
+        break;
+      case 'apartmentNumber':
+        if (addresses[index].addressDetails.overRide > 0 && value === '') {
+          error = 'Invalid Apartment Number';
+        }
+        break;
+      default:
+    }
+    return error;
+  }
+
+
+  const handleAllErrors = (data, index) => {
+    for (const key in data) {
+      if (typeof data[key] === 'object' && data[key] !== null) {
+        const errorFound = handleAllErrors(data[key], index);
+        if (errorFound) {
+          return true;
+        }
+      } else {
+        const error = validateFiled(key, data[key], index);
+        if (error !== '') {
+          handleError(key, data[key], index);
+          return true;
+        }
+      }
+    }
+
+    return false;
   };
 
   return (
     <div className='d-container'>
       {addresses.map((address, index) => (
-        <>
-          <div key={`address-${index}`}>
+        <React.Fragment key={`address-${index}`}>
+          <div>
             <div
-              className={`address-header ${
-                addresses && addresses.length === 1 && 'primary-address-header'
-              }`}
+              className={`address-header ${addresses && addresses.length === 1 && 'primary-address-header'
+                }`}
             >
               <div className='address-title'>
                 {' '}
@@ -311,15 +388,14 @@ export default function Address() {
                   />
                 </Tooltip>
               )}
-              <div className='accordian-right'>
+              <div className='accordion-right'>
                 {' '}
                 {address.addressDetails.isValidate && (
                   <div className='address-duration'>
-                    {`${dayjs(address.fromDate).format('MM/DD/YYYY')} - To ${
-                      address.addressType === PRIMARY
-                        ? 'TILL Date'
-                        : dayjs(address.toDate).format('MM/DD/YYYY')
-                    }`}
+                    {`${dayjs(address.fromDate).format('MM/DD/YYYY')} - To ${address.addressType === PRIMARY
+                      ? 'TILL Date'
+                      : dayjs(address.toDate).format('MM/DD/YYYY')
+                      }`}
                   </div>
                 )}
                 {addresses && addresses.length !== 1 && (
@@ -337,17 +413,16 @@ export default function Address() {
                 )}
               </div>
             </div>
-            <div className={address.isExpand ? 'address-content' : 'address-content collapsed'}>
+            {address.isExpand && <div className={address.isExpand ? 'address-content' : 'address-content collapsed'}>
               <div className='d-row'>
                 <div className='col col-sm-12 col-md-4'>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth size='small'>
                     <InputLabel id='addressType'>Address Type</InputLabel>
                     <Select
                       labelId='addressType'
                       id='addressType'
                       disabled
                       value={address.addressType}
-                      className='addr-selectfield'
                       label='Address Type'
                     >
                       {index === 0 && <MenuItem value={'PRIMARY'}>PRIMARY</MenuItem>}
@@ -361,10 +436,11 @@ export default function Address() {
                       <DatePicker
                         label='From Date'
                         value={address.fromDate ? dayjs(address.fromDate) : null}
-                        disabled={address.addressType === PRIMARY}
+                        disabled={(address.addressType === 'PRIMARY' || (isFormDisabled && focusedField !== 'fromDate'))}
                         minDate={dayjs(new Date())}
                         slotProps={{
                           textField: {
+                            size: 'small',
                             error: !!address.validationErrors?.fromDate,
                             helperText: <DAlertBox errorText={address.validationErrors?.fromDate} />
                           }
@@ -379,15 +455,18 @@ export default function Address() {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         label='To Date'
-                        disabled={address.addressType === 'PRIMARY'}
+                        disabled={(address.addressType === 'PRIMARY' || (isFormDisabled && focusedField !== 'toDate'))}
                         value={address.toDate && dayjs(address.toDate)}
                         minDate={dayjs(new Date())}
+                        name="toDate"
                         slotProps={{
                           textField: {
+                            size: 'small',
                             error: !!address.validationErrors?.toDate,
                             helperText: <DAlertBox errorText={address.validationErrors?.toDate} />
                           }
                         }}
+                        onBlur={(e) => handleError(e.target.name, e.target.value, index)}
                         onChange={date => handleAddressChange(index, 'toDate', date)}
                       />
                     </LocalizationProvider>
@@ -400,12 +479,17 @@ export default function Address() {
                   <div className='d-row'>
                     {address.addressDetails?.overRide > 0 ? (
                       <AdditionalAddressDetails
-                        key={`address-${index}`}
+                        key={`address-details-${index}`}
+                        focusedField={focusedField}
+                        isFormDisabled={isFormDisabled}
                         validationErrors={address.validationErrors}
-                        additionalAddress={address.addressDetails.aditionalAddress}
+                        additionalAddress={address.addressDetails.additionalAddress}
                         handleAdditionalAddressChange={(field, value) =>
                           handleAdditionalAddressChange(index, field, value)
                         }
+                        handleOnbBlur={(name, value) => {
+                          handleError(name, value, index)
+                        }}
                       />
                     ) : (
                       <div className='col col-sm-12 col-md-8'>
@@ -413,17 +497,19 @@ export default function Address() {
                           fullWidth
                           name='addressLine'
                           label='Address Line'
+                          size='small'
+                          disabled={isFormDisabled && focusedField !== 'addressLine'}
                           error={!!address.validationErrors?.addressLine}
                           helperText={
                             <DAlertBox
                               errorText={address.validationErrors?.addressLine}
-                              warningText={
-                                address.addressDetails.addressLine.length > 35 &&
-                                'Address is more than 35 characters'
-                              }
+                              onClearWarning={handleClearWarning}
+                              warningText={warningText}
                             />
                           }
+                          onBlur={(e) => handleError(e.target.name, e.target.value, index)}
                           value={address.addressDetails.addressLine}
+                          inputRef={focusedField === 'addressLine' ? (input) => input?.focus() : null}
                           inputProps={{ maxLength: 150 }}
                           onChange={e =>
                             handleAddressDetailsChange(index, 'addressLine', e.target.value)
@@ -436,24 +522,29 @@ export default function Address() {
                         fullWidth
                         name='city'
                         label='City'
+                        size='small'
+                        disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'city')}
                         inputProps={{ maxLength: 20 }}
-                        disabled={address.addressType === PRIMARY}
                         value={address.addressDetails.city}
                         helperText={<DAlertBox errorText={address.validationErrors?.city} />}
                         error={!!address.validationErrors?.city}
                         onChange={e => handleAddressDetailsChange(index, 'city', e.target.value)}
+                        inputRef={focusedField === 'city' ? (input) => input?.focus() : null}
+                        onBlur={(e) => handleError(e.target.name, e.target.value, index)}
                       />
                     </div>
                     <div className='col col-sm-12 col-md-4'>
-                      <FormControl fullWidth error={!!address.validationErrors?.state}>
+                      <FormControl fullWidth size='small' disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'state')} error={!!address.validationErrors?.state}>
                         <InputLabel id='state'>State</InputLabel>
                         <Select
                           labelId='state'
                           id='state'
+                          name="state"
                           value={address.addressDetails.state}
-                          disabled={address.addressType === PRIMARY}
                           label='State'
+                          inputRef={focusedField === 'state' ? (input) => input?.focus() : null}
                           onChange={e => handleAddressDetailsChange(index, 'state', e.target.value)}
+                          onBlur={(e) => handleError(e.target.name, e.target.value, index)}
                         >
                           {stateList &&
                             stateList.map(item => {
@@ -477,25 +568,31 @@ export default function Address() {
                       <TextField
                         fullWidth
                         name='zipCode'
+                        size='small'
                         inputProps={{ inputMode: 'numeric', maxLength: 9 }}
                         helperText={<DAlertBox errorText={address.validationErrors?.zipCode} />}
+                        disabled={isFormDisabled && focusedField !== 'zipCode'}
                         error={!!address.validationErrors?.zipCode}
                         label='Zip Code'
+                        inputRef={focusedField === 'zipCode' ? (input) => input?.focus() : null}
+                        onBlur={(e) => handleError(e.target.name, e.target.value, index)}
                         onChange={e => handleAddressDetailsChange(index, 'zipCode', e.target.value)}
                       />
                     </div>
                     <div className='col col-sm-12 col-md-4'>
-                      <FormControl fullWidth error={!!address.validationErrors?.country}>
+                      <FormControl fullWidth size='small' disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'country')} error={!!address.validationErrors?.country}>
                         <InputLabel id='country'>Country</InputLabel>
                         <Select
                           labelId='country'
                           id='country'
-                          disabled={address.addressType === PRIMARY}
+                          name="country"
                           value={address.addressDetails.country}
                           label='Country'
+                          inputRef={focusedField === 'country' ? (input) => input?.focus() : null}
                           onChange={e =>
                             handleAddressDetailsChange(index, 'country', e.target.value)
                           }
+                          onBlur={(e) => handleError(e.target.name, e.target.value, index)}
                         >
                           {countryList &&
                             countryList.map(item => {
@@ -519,8 +616,8 @@ export default function Address() {
                   <div className='address-status-wrapper'>
                     {address.addressDetails.isValidate === null ? (
                       <>
-                        {address.addressDetails.ignorAddressVerification === null && (
-                          <Button variant='outlined' onClick={() => handleValidateAddress(index)}>
+                        {address.addressDetails.ignoreAddressVerification === null && (
+                          <Button variant='outlined' disabled={isFormDisabled} onClick={() => handleValidateAddress(index)}>
                             {' '}
                             Validate Address{' '}
                           </Button>
@@ -562,14 +659,14 @@ export default function Address() {
                   )}
                 </form>
               </fieldset>
-              {address.addressType === PRIMARY && <ResidencyCertification />}
-            </div>
+              {address.addressType === PRIMARY && <ResidencyCertification isFormDisabled={isFormDisabled} />}
+            </div>}
           </div>
           {addresses.length === index + 1 && (
             <div className='add-address-btn'>
               <Button
                 variant='text'
-                disabled={!addresses[0]?.addressDetails.isValidate}
+                disabled={!addresses[index]?.addressDetails.isValidate}
                 onClick={addAnotherAddress}
               >
                 {' '}
@@ -577,7 +674,7 @@ export default function Address() {
               </Button>{' '}
             </div>
           )}
-        </>
+        </React.Fragment>
       ))}
 
       <Dialog
@@ -602,7 +699,6 @@ export default function Address() {
           </Button>
         </DialogActions>
       </Dialog>
-
       <Dialog
         open={openStreetDialog}
         onClose={() => setOpenStreetDialog(false)}
@@ -614,15 +710,14 @@ export default function Address() {
           <div>You did not enter a valid street name. Please choose from the list below. </div>
           <div className='street-list'>
             <ul>
-              {streetNames &&
-                streetNames.map((street, index) => {
-                  return <li key={`street-${index}`}> {street.value} </li>;
-                })}
+              {streetNames?.map((street, index) => (
+                <li className={street.value === selectedStreetName && 'selected'} onClick={() => setSelectedStreetName(street.value)} key={`street-${index}`}> {street?.value} </li>
+              ))}
             </ul>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button variant='outlined' onClick={() => setOpenStreetDialog(false)}>
+          <Button variant='outlined' onClick={selectStreetName}>
             SELECT
           </Button>
           {addresses && addresses[selectedAddress]?.addressDetails.overRide > 0 ? (
@@ -676,7 +771,7 @@ export default function Address() {
                   labelId='ReasonOverride'
                   id='ReasonOverride'
                   label='Reason for Override'
-                ></Select>
+                > <MenuItem> </MenuItem> </Select>
               </FormControl>
             </div>
           </div>

@@ -11,9 +11,9 @@
       "validateAddress": {
         "isValidate": true
       },
-      "aditionalAddress": {
+      "additionalAddress": {
         "preDirectionalCode": null,
-        "streetnumber": null,
+        "streetNumber": null,
         "streetName": "",
         "streetNameSuffix": null,
         "postDirectionalCode": null,
@@ -31,9 +31,18 @@
       }
     },
     "relationShipList": [
-      "Child", "Parent",  "Spouse" , "Domestic", "partner", "Other"],
+      "Child",
+      "Parent",
+      "Spouse",
+      "Domestic",
+      "partner",
+      "Other"
+    ],
     "documentList": [
-      "Deed/Mortgage/Settlement","Lease/Rental Agreement", "Prop Tax Bill/ Assessment", "Sublease W/Org Lease"  
+      "Deed/Mortgage/Settlement",
+      "Lease/Rental Agreement",
+      "Prop Tax Bill/ Assessment",
+      "Sublease W/Org Lease"
     ],
     "streetNames": [
       {
@@ -65,38 +74,38 @@
         "value": "SOUTHERN AVENUE SE"
       }
     ],
-    "preDirectionalList": [
+    "preDirectionalList": [ 
       {
         "code": "E",
-        "value": "E'"
+        "value": "E"
       },
       {
         "code": "N",
-        "value": "N'"
+        "value": "N"
       },
       {
         "code": "NE",
-        "value": "NE'"
+        "value": "NE"
       },
       {
         "code": "NW",
-        "value": "NW'"
+        "value": "NW"
       },
       {
         "code": "S",
-        "value": "S'"
+        "value": "S"
       },
       {
         "code": "SE",
-        "value": "SE'"
+        "value": "SE"
       },
       {
         "code": "SW",
-        "value": "SW'"
+        "value": "SW"
       },
       {
         "code": "W",
-        "value": "W'"
+        "value": "W"
       }
     ],
     "streetNameSuffixList": [
@@ -232,35 +241,35 @@
     "postDirectionalCodeList": [
       {
         "code": "E",
-        "value": "E'"
+        "value": "E"
       },
       {
         "code": "N",
-        "value": "N'"
+        "value": "N"
       },
       {
         "code": "NE",
-        "value": "NE'"
+        "value": "NE"
       },
       {
         "code": "NW",
-        "value": "NW'"
+        "value": "NW"
       },
       {
         "code": "S",
-        "value": "S'"
+        "value": "S"
       },
       {
         "code": "SE",
-        "value": "SE'"
+        "value": "SE"
       },
       {
         "code": "SW",
-        "value": "SW'"
+        "value": "SW"
       },
       {
         "code": "W",
-        "value": "W'"
+        "value": "W"
       }
     ],
     "stateList": [
@@ -531,6 +540,10 @@
     ],
     "countryList": [
       {
+        "code": "US",
+        "value": "United States"
+      },
+      {
         "code": "AFGH",
         "value": "AFGHANISTAN"
       },
@@ -685,10 +698,7 @@
       {
         "code": "BURK",
         "value": "BURKINA FASO"
-      },
-      {
-        "code": "US",
-        "value": "United States"
       }
+     
     ]
   }

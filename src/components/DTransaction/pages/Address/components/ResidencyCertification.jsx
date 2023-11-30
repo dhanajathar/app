@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import data from '../api-address.json';
 import {
   FormControl,
@@ -19,7 +20,7 @@ import {
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-function ResidencyCertification() {
+function ResidencyCertification({ isFormDisabled }) {
   const {
     relationShipList,
     documentList,
@@ -30,10 +31,10 @@ function ResidencyCertification() {
   const [relationShip, setRelationsShip] = useState();
   const [primaryDocument, setPrimaryDocument] = useState();
   const [secondaryDocument, setSecondaryDocument] = useState();
-  const [openSearchDialog, setOpenSearchDialog] = useState();
+  const [openSearchDialog, setOpenSearchDialog] = useState(false);
   const [relationShipError, setRelationShipError] = useState();
-  const [primaryDocumentError, setpPrimaryDocumentError] = useState();
-  const [secondaryDocumentError, setsecondaryDocumentError] = useState();
+  const [primaryDocumentError, setPrimaryDocumentError] = useState();
+  const [secondaryDocumentError, setSecondaryDocumentError] = useState();
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [showAlert, setShowAlert] = useState();
 
@@ -64,12 +65,12 @@ function ResidencyCertification() {
     <>
       <div className='d-row certifications-wrapper'>
         <div className='col col-sm-12 col-md-4'>
-          <FormControl fullWidth>
+          <FormControl disabled={isFormDisabled} fullWidth size='small'>
             <InputLabel id='residencyCertification'>Residency Certification</InputLabel>
             <Select
               labelId='residencyCertification'
               id='residencyCertification'
-              value={residencyCertification}
+              value={residencyCertification} 
               label='Residency Certification'
               onChange={e => setResidencyCertification(e.target.value)}
             >
@@ -93,7 +94,7 @@ function ResidencyCertification() {
       {residencyCertificationStatus && residencyCertification === 'YES' && (
         <div className='address-status certifications-status-wrapper'>
           <div className='certifier-header'>
-            <div className='certifier-headr-text'> Certifier Information </div>
+            <div className='certifier-header-text'> Certifier Information </div>
             <DeleteOutlineIcon
               onClick={() => setOpenDeleteDialog(true)}
               className='delete-address'
@@ -206,7 +207,7 @@ function ResidencyCertification() {
               </div>
             </div>
 
-            <div className='certifier-additonal-details'>
+            <div className='certifier-additional-details'>
               <div className='certifier-title'> Additional Details</div>
               <div className='d-row'>
                 <div className='col col-sm-12 col-md-4'>
@@ -259,8 +260,8 @@ function ResidencyCertification() {
                       label='Primary Document'
                       onBlur={() =>
                         !primaryDocument
-                          ? setpPrimaryDocumentError('Please select a value for Primary Document')
-                          : setpPrimaryDocumentError()
+                          ? setPrimaryDocumentError('Please select a value for Primary Document')
+                          : setPrimaryDocumentError()
                       }
                       onChange={e => setPrimaryDocument(e.target.value)}
                     >
@@ -288,10 +289,10 @@ function ResidencyCertification() {
                       label='Secondary Document'
                       onBlur={() =>
                         !primaryDocument
-                          ? setsecondaryDocumentError(
-                              'Please select a value for Secondary Document'
-                            )
-                          : setsecondaryDocumentError()
+                          ? setSecondaryDocumentError(
+                            'Please select a value for Secondary Document'
+                          )
+                          : setSecondaryDocumentError()
                       }
                       onChange={e => setSecondaryDocument(e.target.value)}
                     >
@@ -356,9 +357,9 @@ function ResidencyCertification() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={showAlert} autoHideDuration={6000} anchorOrigin={{horizontal:'bottom', vertical:'center'}} onClose={() => setShowAlert(false)}>
+      <Snackbar open={showAlert} autoHideDuration={6000} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }} onClose={() => setShowAlert(false)}>
         <Alert onClose={() => setShowAlert(false)} severity="success" sx={{ width: '60%' }}>
-        Certifier information deleted successfully!
+          Certifier information deleted successfully!
         </Alert>
       </Snackbar>
     </>
@@ -366,3 +367,8 @@ function ResidencyCertification() {
 }
 
 export default ResidencyCertification;
+
+
+ResidencyCertification.propTypes = {
+  isFormDisabled: PropTypes.bool,
+};

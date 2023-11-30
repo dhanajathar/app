@@ -112,7 +112,7 @@
   color: #000000;
 }
 
-.accordian-right {
+.accordion-right {
   margin-left: auto;
   display: flex;
 }
@@ -141,7 +141,7 @@
   justify-content: space-between;
 }
 
-.certifier-headr-text {
+.certifier-header-text {
   font: normal normal bold 18px/16px Open Sans;
   color: #000000;
 }
@@ -168,6 +168,9 @@
 .street-list li {
   padding: 1rem;
   cursor: pointer;
+}
+.street-list li.selected {
+  font-weight: bold;
 }
 
 .street-list li:nth-child(odd) {
@@ -227,7 +230,7 @@
   margin-bottom: 0.5rem;
 }
 
-.certifier-additonal-details {
+.certifier-additional-details {
   margin-top: 1.5rem;
 }
 
