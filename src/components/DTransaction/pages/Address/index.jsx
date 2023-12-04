@@ -2,13 +2,13 @@ import './index.css';
 
 import {
   Alert,
+  Autocomplete,
   Button,
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  FormHelperText,
+  FormControl, 
   InputLabel,
   MenuItem,
   Select,
@@ -68,16 +68,16 @@ export default function Address() {
     addressDetails: {
       addressLine: '',
       city: '',
-      state: '',
+      state: null,
       zipCode: '',
-      country: '',
+      country: null,
       isValidate: null,
       additionalAddress: {
-        preDirectionalCode: '',
+        preDirectionalCode: null,
         streetNumber: '',
         streetName: '',
-        streetNameSuffix: '',
-        postDirectionalCode: '',
+        streetNameSuffix: null,
+        postDirectionalCode: null,
         apartmentNumber: ''
       },
       overRide: 0,
@@ -98,9 +98,9 @@ export default function Address() {
     ...initialData,
     addressDetails: {
       ...initialData.addressDetails,
-      state: 'DC',
+      state: 'DISTRICT OF COLUMBIA',
       city: 'WA',
-      country: 'US'
+      country: 'UNITED STATES'
     }
   };
   const [addresses, setAddresses] = useState([primaryDefaultAddress]);
@@ -244,9 +244,8 @@ export default function Address() {
     setTimeout(() => { setFocusedField() }, 50)
   }
 
-  const handleError = (name, value, index) => {
-
-    const error = validateFiled(name, value, index);
+  const handleError = (name, value, index) => { 
+    const error = validateFiled(name, value, index); 
     const errors = { ...addresses[index].validationErrors, [name]: error };
     if (error === '') {
       delete errors[name];
@@ -301,12 +300,12 @@ export default function Address() {
         }
         break;
       case 'state':
-        if (value === '') {
+        if (!value) {
           error = 'Invalid State';
         }
         break;
       case 'country':
-        if (value === '') {
+        if (!value) {
           error = 'Invalid Country';
         }
         break;
@@ -326,12 +325,12 @@ export default function Address() {
         }
         break;
       case 'streetNameSuffix':
-        if (addresses[index].addressDetails.overRide > 0 && value === '') {
+        if (addresses[index].addressDetails.overRide > 0 && !value) {
           error = 'Invalid Street Name Suffix';
         }
         break;
       case 'postDirectionalCode':
-        if (addresses[index].addressDetails.overRide > 0 && value === '') {
+        if (addresses[index].addressDetails.overRide > 0 && !value) {
           error = 'Invalid Post-Directional Code';
         }
         break;
@@ -363,6 +362,14 @@ export default function Address() {
     }
 
     return false;
+  };
+
+  const setFocusOnInput = (e, fieldName) => {
+    if (fieldName === focusedField) {
+      if (e) {
+        e.focus();
+      }
+    }
   };
 
   return (
@@ -416,6 +423,10 @@ export default function Address() {
             {address.isExpand && <div className={address.isExpand ? 'address-content' : 'address-content collapsed'}>
               <div className='d-row'>
                 <div className='col col-sm-12 col-md-4'>
+
+
+
+
                   <FormControl fullWidth size='small'>
                     <InputLabel id='addressType'>Address Type</InputLabel>
                     <Select
@@ -451,6 +462,7 @@ export default function Address() {
                   </div>
                 </div>
                 <div className='col col-sm-12 col-md-4'>
+
                   <div className='date-picker'>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
@@ -474,7 +486,7 @@ export default function Address() {
                 </div>
               </div>
               <fieldset className='address-details'>
-                <legend> Address Details </legend>
+                <legend className='legend'>  Address Details </legend>
                 <form>
                   <div className='d-row'>
                     {address.addressDetails?.overRide > 0 ? (
@@ -534,35 +546,28 @@ export default function Address() {
                       />
                     </div>
                     <div className='col col-sm-12 col-md-4'>
-                      <FormControl fullWidth size='small' disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'state')} error={!!address.validationErrors?.state}>
-                        <InputLabel id='state'>State</InputLabel>
-                        <Select
-                          labelId='state'
-                          id='state'
-                          name="state"
-                          value={address.addressDetails.state}
-                          label='State'
-                          inputRef={focusedField === 'state' ? (input) => input?.focus() : null}
-                          onChange={e => handleAddressDetailsChange(index, 'state', e.target.value)}
-                          onBlur={(e) => handleError(e.target.name, e.target.value, index)}
-                        >
-                          {stateList &&
-                            stateList.map(item => {
-                              return (
-                                <MenuItem key={`state-name${item.code}`} value={item.code}>
-                                  {' '}
-                                  {item.value}{' '}
-                                </MenuItem>
-                              );
-                            })}
-                        </Select>
-                        {address.validationErrors?.state && (
-                          <FormHelperText>
-                            {' '}
-                            <DAlertBox errorText={address.validationErrors?.state} />{' '}
-                          </FormHelperText>
+
+                      <Autocomplete
+                        options={stateList}
+                        fullWidth
+                        size='small'
+                        name='state'
+                        value={address.addressDetails.state}
+                        disableClearable={true}
+                        onChange={(e, v) => handleAddressDetailsChange(index, 'state', v)}
+                        disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'state')}
+                        onBlur={(e) => handleError('state', e.target.value, index)}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            error={!!address.validationErrors?.state}
+                            inputRef={e => setFocusOnInput(e, 'state')}
+                            helperText={<DAlertBox errorText={address.validationErrors?.state} />}
+                            label='State'
+                          />
                         )}
-                      </FormControl>
+                      />
+
                     </div>
                     <div className='col col-sm-12 col-md-4'>
                       <TextField
@@ -580,37 +585,30 @@ export default function Address() {
                       />
                     </div>
                     <div className='col col-sm-12 col-md-4'>
-                      <FormControl fullWidth size='small' disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'country')} error={!!address.validationErrors?.country}>
-                        <InputLabel id='country'>Country</InputLabel>
-                        <Select
-                          labelId='country'
-                          id='country'
-                          name="country"
-                          value={address.addressDetails.country}
-                          label='Country'
-                          inputRef={focusedField === 'country' ? (input) => input?.focus() : null}
-                          onChange={e =>
-                            handleAddressDetailsChange(index, 'country', e.target.value)
-                          }
-                          onBlur={(e) => handleError(e.target.name, e.target.value, index)}
-                        >
-                          {countryList &&
-                            countryList.map(item => {
-                              return (
-                                <MenuItem key={`country-name${item.code}`} value={item.code}>
-                                  {' '}
-                                  {item.value}{' '}
-                                </MenuItem>
-                              );
-                            })}
-                        </Select>
-                        {address.validationErrors?.country && (
-                          <FormHelperText>
-                            {' '}
-                            <DAlertBox errorText={address.validationErrors?.country} />{' '}
-                          </FormHelperText>
+
+                      <Autocomplete
+                        options={countryList}
+                        fullWidth
+                        size='small'
+                        name='country'
+                        value={address.addressDetails.country}
+                        disableClearable={true}
+                        onChange={(e, v) => handleAddressDetailsChange(index, 'country', v)}
+                        disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'country')}
+                        onBlur={(e) => handleError('country', e.target.value, index)}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            inputRef={e => setFocusOnInput(e, 'country')}
+                            error={!!address.validationErrors?.country}
+                            helperText={<DAlertBox errorText={address.validationErrors?.country} />}
+                            label='Country'
+                          />
                         )}
-                      </FormControl>
+                      />
+
+
+
                     </div>
                   </div>
                   <div className='address-status-wrapper'>

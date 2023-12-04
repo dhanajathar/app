@@ -38,6 +38,7 @@ export default function BoardOfElections() {
   const [focusedField, setFocusedField] = useState(null);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
 
+
   const sortedList = list => {
     const sortedList = list.slice().sort((a, b) => a.localeCompare(b));
     const selectIndex = sortedList.findIndex(
@@ -122,6 +123,8 @@ export default function BoardOfElections() {
     if (isChecked) {
       newValues.mailingAddress = primaryAddresses;
     } else {
+      setCopyMailingData(false)
+      newValues.lastAddress = { ...defaultAddress };
       newValues.mailingAddress = { ...defaultAddress };
     }
     setFormData(newValues);
@@ -150,7 +153,7 @@ export default function BoardOfElections() {
       newValues.disableAssistanceReason = '';
       setFormData(newValues);
     }
-  }, [formData.disableAssistanceRequired, formData]);
+  }, [formData.disableAssistanceRequired]);
 
   useEffect(() => {
     if (formData.otherParty !== '') {
@@ -158,7 +161,8 @@ export default function BoardOfElections() {
       newValues.otherParty = '';
       setFormData(newValues);
     }
-  }, [formData.partyAffiliation, formData]);
+  }, [formData.partyAffiliation]);
+
 
   useEffect(() => {
     if (formData.registerToVoteColumbia === 'YES') {
@@ -172,7 +176,8 @@ export default function BoardOfElections() {
       setCopyMailingData(false);
       setCopyData(false);
     }
-  }, [formData.registerToVoteColumbia, defaultAddress, formData, initialData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.registerToVoteColumbia]);
 
   const validateFiled = (name, value) => {
     let error = '';
@@ -418,11 +423,16 @@ export default function BoardOfElections() {
                 }
                 value={formData.otherParty}
                 name='otherParty'
-                inputProps={{ maxLength: 50 }}
-                onChange={e => handleChange('otherParty', e.target.value)}
+                inputProps={{ maxLength: 50, pattern: '^[a-zA-Z0-9]*$' }}
+                onChange={e => {
+                  if (/^[a-zA-Z0-9]*$/.test(e.target.value)) {
+                    handleChange('otherParty', e.target.value)
+                  }
+                }}
                 onBlur={e => handleError('otherParty', e.target.value)}
                 inputRef={e => setFocusOnInput(e, 'otherParty')}
                 error={!!validationError?.otherParty}
+
                 helperText={<DAlertBox errorText={validationError?.otherParty} />}
               />
             </div>
@@ -549,7 +559,7 @@ export default function BoardOfElections() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    className={'invalid-checkbox'}
+
                     size='small'
                     disabled={formData.registerToVoteColumbia !== 'YES' || isFormDisabled}
                     onChange={e => handleUserConditions(e, index)}

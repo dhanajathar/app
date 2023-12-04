@@ -33,7 +33,7 @@
   margin-top: 1.5rem;
 }
 
-.address-details legend {
+.address-details .legend {
   font: normal normal bold 18px/16px Open Sans;
   letter-spacing: 0px;
   color: #000000;

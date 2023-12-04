@@ -14,6 +14,8 @@ const theme = createTheme({
               input: {
                 color: '#000', 
                 '&:disabled': {
+                  background:'#F8F9FA',
+                  borderColor:'#CACFD8',
                   color: '#666',  
                 }, 
               },

@@ -351,3 +351,11 @@ button.MuiButtonBase-root .MuiTouchRipple-root span {
 .MuiInputBase-root fieldset {
   border: 1px solid var(--black100);
 }
+
+.MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
+	padding:0px!important
+}
+
+.MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input {
+	padding:7.6px 14px!important
+}

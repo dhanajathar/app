@@ -74,631 +74,168 @@
         "value": "SOUTHERN AVENUE SE"
       }
     ],
-    "preDirectionalList": [ 
-      {
-        "code": "E",
-        "value": "E"
-      },
-      {
-        "code": "N",
-        "value": "N"
-      },
-      {
-        "code": "NE",
-        "value": "NE"
-      },
-      {
-        "code": "NW",
-        "value": "NW"
-      },
-      {
-        "code": "S",
-        "value": "S"
-      },
-      {
-        "code": "SE",
-        "value": "SE"
-      },
-      {
-        "code": "SW",
-        "value": "SW"
-      },
-      {
-        "code": "W",
-        "value": "W"
-      }
+    "preDirectionalList": [
+      "E",
+      "N",
+      "NE",
+      "NW",
+      "S",
+      "SE",
+      "SW",
+      "W"
     ],
     "streetNameSuffixList": [
-      {
-        "code": "ALY",
-        "value": "ALLEY"
-      },
-      {
-        "code": "AVE",
-        "value": "AVENUE"
-      },
-      {
-        "code": "BLVD",
-        "value": "BOULEVARD"
-      },
-      {
-        "code": "BRG",
-        "value": "BRIDGE"
-      },
-      {
-        "code": "CIR",
-        "value": "CIRCLE"
-      },
-      {
-        "code": "CRES",
-        "value": "CRESCENT"
-      },
-      {
-        "code": "CT",
-        "value": "COURT"
-      },
-      {
-        "code": "CYN",
-        "value": "CANYON"
-      },
-      {
-        "code": "DR",
-        "value": "DRIVE"
-      },
-      {
-        "code": "EXPY",
-        "value": "EXPRESSWAY"
-      },
-      {
-        "code": "FWY",
-        "value": "FREEWAY"
-      },
-      {
-        "code": "GRN",
-        "value": "GREEN"
-      },
-      {
-        "code": "HWY",
-        "value": "HIGHWAY"
-      },
-      {
-        "code": "KYS",
-        "value": "KEYS"
-      },
-      {
-        "code": "LN",
-        "value": "LANE"
-      },
-      {
-        "code": "MEWS",
-        "value": "MEWS"
-      },
-      {
-        "code": "PARK",
-        "value": "PARK"
-      },
-      {
-        "code": "PKWY",
-        "value": "PARKWAY"
-      },
-      {
-        "code": "PL",
-        "value": "PLACE"
-      },
-      {
-        "code": "PLZ",
-        "value": "PLAZA"
-      },
-      {
-        "code": "RAMP",
-        "value": "RAMP"
-      },
-      {
-        "code": "RD",
-        "value": "ROAD"
-      },
-      {
-        "code": "ROW",
-        "value": "ROW"
-      },
-      {
-        "code": "RTE",
-        "value": "ROUTE"
-      },
-      {
-        "code": "SQ",
-        "value": "SQUARE"
-      },
-      {
-        "code": "ST",
-        "value": "STREET"
-      },
-      {
-        "code": "TER",
-        "value": "TERRACE"
-      },
-      {
-        "code": "TR",
-        "value": "TRAIL"
-      },
-      {
-        "code": "VW",
-        "value": "VIEW"
-      },
-      {
-        "code": "WALK",
-        "value": "WALK"
-      },
-      {
-        "code": "WAY",
-        "value": "WAY"
-      },
-      {
-        "code": "XING",
-        "value": "CROSSING"
-      }
+      "ALLEY",
+      "AVENUE",
+      "BOULEVARD",
+      "BRIDGE",
+      "CIRCLE",
+      "CRESCENT",
+      "COURT",
+      "CANYON",
+      "DRIVE",
+      "EXPRESSWAY",
+      "FREEWAY",
+      "GREEN",
+      "HIGHWAY",
+      "KEYS",
+      "LANE",
+      "MEWS",
+      "PARK",
+      "PARKWAY",
+      "PLACE",
+      "PLAZA",
+      "RAMP",
+      "ROAD",
+      "ROW",
+      "ROUTE",
+      "SQUARE",
+      "STREET",
+      "TERRACE",
+      "TRAIL",
+      "VIEW",
+      "WALK",
+      "WAY",
+      "CROSSING"
     ],
     "postDirectionalCodeList": [
-      {
-        "code": "E",
-        "value": "E"
-      },
-      {
-        "code": "N",
-        "value": "N"
-      },
-      {
-        "code": "NE",
-        "value": "NE"
-      },
-      {
-        "code": "NW",
-        "value": "NW"
-      },
-      {
-        "code": "S",
-        "value": "S"
-      },
-      {
-        "code": "SE",
-        "value": "SE"
-      },
-      {
-        "code": "SW",
-        "value": "SW"
-      },
-      {
-        "code": "W",
-        "value": "W"
-      }
+      "S",
+      "E",
+      "N",
+      "NE",
+      "NW",
+      "SE",
+      "SW",
+      "W"
     ],
     "stateList": [
-      {
-        "code": "AK",
-        "value": "ALASKA"
-      },
-      {
-        "code": "AL",
-        "value": "ALABAMA"
-      },
-      {
-        "code": "AR",
-        "value": "ARKANSAS"
-      },
-      {
-        "code": "AS",
-        "value": "AMERICAN SAMOA"
-      },
-      {
-        "code": "AZ",
-        "value": "ARIZONA"
-      },
-      {
-        "code": "CA",
-        "value": "CALIFORNIA"
-      },
-      {
-        "code": "CO",
-        "value": "COLORADO"
-      },
-      {
-        "code": "CT",
-        "value": "CONNECTICUT"
-      },
-      {
-        "code": "DC",
-        "value": "DISTRICT OF COLUMBIA"
-      },
-      {
-        "code": "DE",
-        "value": "DELAWARE"
-      },
-      {
-        "code": "DS",
-        "value": "U.S. DEPARTMENT OF STATE"
-      },
-      {
-        "code": "DT",
-        "value": "U.S. DEPARTMENT OF TRANSPORTATION"
-      },
-      {
-        "code": "D2",
-        "value": "U.S. DEPARTMENT OF JUSTICE"
-      },
-      {
-        "code": "FH",
-        "value": "FMCSA"
-      },
-      {
-        "code": "FL",
-        "value": "FLORIDA"
-      },
-      {
-        "code": "FM",
-        "value": "FEDERAL STATE OF MICRONESIA"
-      },
-      {
-        "code": "GA",
-        "value": "GEORGIA"
-      },
-      {
-        "code": "GS",
-        "value": "GENERAL SERVICE ADMINISTRATION"
-      },
-      {
-        "code": "GU",
-        "value": "GUAM"
-      },
-      {
-        "code": "HI",
-        "value": "HAWAII"
-      },
-      {
-        "code": "IA",
-        "value": "IOWA"
-      },
-      {
-        "code": "ID",
-        "value": "IDAHO"
-      },
-      {
-        "code": "IL",
-        "value": "ILLINOIS"
-      },
-      {
-        "code": "IN",
-        "value": "INDIANA"
-      },
-      {
-        "code": "IR",
-        "value": "INTERNAL REVENUE SERVICE"
-      },
-      {
-        "code": "KS",
-        "value": "KANSAS"
-      },
-      {
-        "code": "KY",
-        "value": "KENTUCKY"
-      },
-      {
-        "code": "LA",
-        "value": "LOUISIANA"
-      },
-      {
-        "code": "MA",
-        "value": "MASSACHUSETTS"
-      },
-      {
-        "code": "MD",
-        "value": "MARYLAND"
-      },
-      {
-        "code": "ME",
-        "value": "MAINE"
-      },
-      {
-        "code": "MH",
-        "value": "MARSHALL ISLANDS"
-      },
-      {
-        "code": "MI",
-        "value": "MICHIGAN"
-      },
-      {
-        "code": "MN",
-        "value": "MINNESOTA"
-      },
-      {
-        "code": "MO",
-        "value": "MISSOURI"
-      },
-      {
-        "code": "MS",
-        "value": "MISSISSIPPI"
-      },
-      {
-        "code": "MT",
-        "value": "MONTANA"
-      },
-      {
-        "code": "NC",
-        "value": "NORTH CAROLINA"
-      },
-      {
-        "code": "ND",
-        "value": "NORTH DAKOTA"
-      },
-      {
-        "code": "NE",
-        "value": "NEBRASKA"
-      },
-      {
-        "code": "NH",
-        "value": "NEW HAMPSHIRE"
-      },
-      {
-        "code": "NI",
-        "value": "NORTHERN MARIANA ISLANDS"
-      },
-      {
-        "code": "NJ",
-        "value": "NEW JERSEY"
-      },
-      {
-        "code": "NM",
-        "value": "NEW MEXICO"
-      },
-      {
-        "code": "NV",
-        "value": "NEVADA"
-      },
-      {
-        "code": "NY",
-        "value": "NEW YORK"
-      },
-      {
-        "code": "OH",
-        "value": "OHIO"
-      },
-      {
-        "code": "OK",
-        "value": "OKLAHOMA"
-      },
-      {
-        "code": "OR",
-        "value": "OREGON"
-      },
-      {
-        "code": "PA",
-        "value": "PENNSYLVANIA"
-      },
-      {
-        "code": "PR",
-        "value": "PUERTO RICO"
-      },
-      {
-        "code": "RI",
-        "value": "RHODE ISLAND"
-      },
-      {
-        "code": "SC",
-        "value": "SOUTH CAROLINA"
-      },
-      {
-        "code": "SD",
-        "value": "SOUTH DAKOTA"
-      },
-      {
-        "code": "TN",
-        "value": "TENNESSEE"
-      },
-      {
-        "code": "TS",
-        "value": "TSA"
-      },
-      {
-        "code": "TX",
-        "value": "TEXAS"
-      },
-      {
-        "code": "UT",
-        "value": "UTAH"
-      },
-      {
-        "code": "VA",
-        "value": "VIRGINIA"
-      },
-      {
-        "code": "VI",
-        "value": "U.S. VIRGIN ISLANDS"
-      },
-      {
-        "code": "VT",
-        "value": "VERMONT"
-      },
-      {
-        "code": "WA",
-        "value": "WASHINGTON"
-      },
-      {
-        "code": "WI",
-        "value": "WISCONSIN"
-      },
-      {
-        "code": "WK",
-        "value": "WAKE ISLAND"
-      },
-      {
-        "code": "WV",
-        "value": "WEST VIRGINIA"
-      },
-      {
-        "code": "WY",
-        "value": "WYOMING"
-      }
+      "ALASKA",
+      "ALABAMA",
+      "ARKANSAS",
+      "AMERICAN SAMOA",
+      "ARIZONA",
+      "CALIFORNIA",
+      "COLORADO",
+      "CONNECTICUT",
+      "DISTRICT OF COLUMBIA",
+      "DELAWARE",
+      "U.S. DEPARTMENT OF STATE",
+      "U.S. DEPARTMENT OF TRANSPORTATION",
+      "U.S. DEPARTMENT OF JUSTICE",
+      "FMCSA",
+      "FLORIDA",
+      "FEDERAL STATE OF MICRONESIA",
+      "GEORGIA",
+      "GENERAL SERVICE ADMINISTRATION",
+      "GUAM",
+      "HAWAII",
+      "IOWA",
+      "IDAHO",
+      "ILLINOIS",
+      "INDIANA",
+      "INTERNAL REVENUE SERVICE",
+      "KANSAS",
+      "KENTUCKY",
+      "LOUISIANA",
+      "MASSACHUSETTS",
+      "MARYLAND",
+      "MAINE",
+      "MARSHALL ISLANDS",
+      "MICHIGAN",
+      "MINNESOTA",
+      "MISSOURI",
+      "MISSISSIPPI",
+      "MONTANA",
+      "NORTH CAROLINA",
+      "NORTH DAKOTA",
+      "NEBRASKA",
+      "NEW HAMPSHIRE",
+      "NORTHERN MARIANA ISLANDS",
+      "NEW JERSEY",
+      "NEW MEXICO",
+      "NEVADA",
+      "NEW YORK",
+      "OHIO",
+      "OKLAHOMA",
+      "OREGON",
+      "PENNSYLVANIA",
+      "PUERTO RICO",
+      "RHODE ISLAND",
+      "SOUTH CAROLINA",
+      "SOUTH DAKOTA",
+      "TENNESSEE",
+      "TSA",
+      "TEXAS",
+      "UTAH",
+      "VIRGINIA",
+      "U.S. VIRGIN ISLANDS",
+      "VERMONT",
+      "WASHINGTON",
+      "WISCONSIN",
+      "WAKE ISLAND",
+      "WEST VIRGINIA",
+      "WYOMING"
     ],
     "countryList": [
-      {
-        "code": "US",
-        "value": "United States"
-      },
-      {
-        "code": "AFGH",
-        "value": "AFGHANISTAN"
-      },
-      {
-        "code": "ALBN",
-        "value": "ALBANIA"
-      },
-      {
-        "code": "ALGR",
-        "value": "ALGERIA"
-      },
-      {
-        "code": "ANDR",
-        "value": "ANDORRA"
-      },
-      {
-        "code": "ANGL",
-        "value": "ANGOLA"
-      },
-      {
-        "code": "ANGU",
-        "value": "ANGUILLA"
-      },
-      {
-        "code": "ANTA",
-        "value": "ANTARCTICA"
-      },
-      {
-        "code": "ANTI",
-        "value": "ANTIGUA AND BARBUDA"
-      },
-      {
-        "code": "ARCT",
-        "value": "ARCTIC OCEAN"
-      },
-      {
-        "code": "ARGN",
-        "value": "ARGENTINA"
-      },
-      {
-        "code": "ARMN",
-        "value": "ARMENIA"
-      },
-      {
-        "code": "ARUB",
-        "value": "ARUBA"
-      },
-      {
-        "code": "ASAM",
-        "value": "AMERICAN SAMOA"
-      },
-      {
-        "code": "ASHM",
-        "value": "ASHMORE AND CARTIER ISLANDS"
-      },
-      {
-        "code": "ASTA",
-        "value": "AUSTRIA"
-      },
-      {
-        "code": "ASTL",
-        "value": "AUSTRALIA"
-      },
-      {
-        "code": "ATLO",
-        "value": "ATLANTIC OCEAN"
-      },
-      {
-        "code": "AZER",
-        "value": "AZERBAIJAN"
-      },
-      {
-        "code": "BAHA",
-        "value": "BAHAMAS, THE"
-      },
-      {
-        "code": "BAHR",
-        "value": "BAHRAIN"
-      },
-      {
-        "code": "BAKR",
-        "value": "BAKER ISLAND"
-      },
-      {
-        "code": "BANG",
-        "value": "BANGLADESH"
-      },
-      {
-        "code": "BARB",
-        "value": "BARBADOS"
-      },
-      {
-        "code": "BASS",
-        "value": "BASSAS DA INDIA"
-      },
-      {
-        "code": "BELA",
-        "value": "BELARUS"
-      },
-      {
-        "code": "BELG",
-        "value": "BELGIUM"
-      },
-      {
-        "code": "BELZ",
-        "value": "BELIZE"
-      },
-      {
-        "code": "BENN",
-        "value": "BENIN"
-      },
-      {
-        "code": "BERM",
-        "value": "BERMUDA"
-      },
-      {
-        "code": "BHUT",
-        "value": "BHUTAN"
-      },
-      {
-        "code": "BOLV",
-        "value": "BOLIVIA"
-      },
-      {
-        "code": "BOSN",
-        "value": "BOSNIA AND HERZEGOVINA"
-      },
-      {
-        "code": "BOTS",
-        "value": "BOTSWANA"
-      },
-      {
-        "code": "BOUV",
-        "value": "BOUVET ISLAND"
-      },
-      {
-        "code": "BRAZ",
-        "value": "BRAZIL"
-      },
-      {
-        "code": "BRUN",
-        "value": "BRUNEI"
-      },
-      {
-        "code": "BRVI",
-        "value": "BRITISH VIRGIN ISLANDS"
-      },
-      {
-        "code": "BULG",
-        "value": "BULGARIA"
-      },
-      {
-        "code": "BURK",
-        "value": "BURKINA FASO"
-      }
-     
+      "AFGHANISTAN",
+      "ALBANIA",
+      "ALGERIA",
+      "ANDORRA",
+      "ANGOLA",
+      "ANGUILLA",
+      "ANTARCTICA",
+      "ANTIGUA AND BARBUDA",
+      "ARCTIC OCEAN",
+      "ARGENTINA",
+      "ARMENIA",
+      "ARUBA",
+      "AMERICAN SAMOA",
+      "ASHMORE AND CARTIER ISLANDS",
+      "AUSTRIA",
+      "AUSTRALIA",
+      "ATLANTIC OCEAN",
+      "AZERBAIJAN",
+      "BAHAMAS, THE",
+      "BAHRAIN",
+      "BAKER ISLAND",
+      "BANGLADESH",
+      "BARBADOS",
+      "BASSAS DA INDIA",
+      "BELARUS",
+      "BELGIUM",
+      "BELIZE",
+      "BENIN",
+      "BERMUDA",
+      "BHUTAN",
+      "BOLIVIA",
+      "BOSNIA AND HERZEGOVINA",
+      "BOTSWANA",
+      "BOUVET ISLAND",
+      "BRAZIL",
+      "BRUNEI",
+      "BRITISH VIRGIN ISLANDS",
+      "BULGARIA",
+      "BURKINA FASO",
+      "UNITED STATES"
     ]
   }

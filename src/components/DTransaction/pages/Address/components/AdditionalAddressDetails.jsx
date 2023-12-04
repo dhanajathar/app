@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -31,39 +32,34 @@ function AdditionalAddressDetails({
   } = additionalAddress;
   const { preDirectionalList, streetNameSuffixList, postDirectionalCodeList } = data;
 
-
+  const setFocusOnInput = (e, fieldName) => {
+    if (fieldName === focusedField) {
+      if (e) {
+        e.focus();
+      }
+    }
+  };
   return (
     <>
       <div className='col col-sm-12 col-md-4'>
-        <FormControl fullWidth size='small'
-          disabled={isFormDisabled && focusedField !== 'preDirectional'}>
-          <InputLabel id='preDirectional'>Pre-Directional Code</InputLabel>
-          <Select
-            labelId='preDirectional'
-            id='preDirectional'
-            name="preDirectional"
-            label='Pre-Directional Code'
-            value={preDirectionalCode}
-            onChange={e => handleAdditionalAddressChange('preDirectionalCode', e.target.value)}
-            onBlur={(e) => handleOnbBlur(e.target.name, e.target.value)}
-          >
-            {preDirectionalList &&
-              preDirectionalList.map(item => {
-                return (
-                  <MenuItem key={`pre-directional${item.code}`} value={item.code}>
-                    {' '}
-                    {item.value}{' '}
-                  </MenuItem>
-                );
-              })}
-          </Select>
-          {validationErrors?.preDirectionalCode && (
-            <FormHelperText>
-              {' '}
-              <DAlertBox errorText={validationErrors?.preDirectionalCode} />
-            </FormHelperText>
+      <Autocomplete
+          options={preDirectionalList}
+          fullWidth
+          size='small'
+          name='preDirectional'
+          value={preDirectionalCode}
+          disableClearable={true}
+          onChange={(e, v) => handleAdditionalAddressChange('preDirectionalCode', v)}
+          disabled={isFormDisabled && focusedField !== 'preDirectional'}
+          onBlur={(e) => handleOnbBlur('preDirectional', e.target.value)}
+          renderInput={params => (
+            <TextField
+              {...params} 
+              inputRef={e => setFocusOnInput(e, 'preDirectional')}
+              label='Pre-Directional Code'
+            />
           )}
-        </FormControl>
+        /> 
       </div>
       <div className='col col-sm-12 col-md-4'>
         <TextField
@@ -98,67 +94,50 @@ function AdditionalAddressDetails({
         />{' '}
       </div>
       <div className='col col-sm-12 col-md-4'>
-        <FormControl fullWidth size='small' disabled={isFormDisabled && focusedField !== 'streetNameSuffix'} error={!!validationErrors?.streetNameSuffix}>
-          <InputLabel id='streetNameSuffix'>Street Name Suffix</InputLabel>
-          <Select
-            labelId='streetNameSuffix'
-            id='streetNameSuffix'
-            name="streetNameSuffix"
-            value={streetNameSuffix}
-            inputRef={focusedField === 'streetNameSuffix' ? (input) => input?.focus() : null}
-            onChange={e => handleAdditionalAddressChange('streetNameSuffix', e.target.value)}
-            label='Street Name Suffix'
-            onBlur={(e) => handleOnbBlur(e.target.name, e.target.value)}
-          >
-            {streetNameSuffixList &&
-              streetNameSuffixList.map(item => {
-                return (
-                  <MenuItem key={`suffix-name${item.code}`} value={item.code}>
-                    {' '}
-                    {item.value}{' '}
-                  </MenuItem>
-                );
-              })}
-          </Select>
-          {validationErrors?.streetNameSuffix && (
-            <FormHelperText>
-              {' '}
-              <DAlertBox errorText={validationErrors?.streetNameSuffix} />{' '}
-            </FormHelperText>
-          )}
-        </FormControl>
+
+      <Autocomplete
+                        options={streetNameSuffixList}
+                        fullWidth
+                        size='small'
+                        name='streetNameSuffix'
+                        value={streetNameSuffix}
+                        disableClearable={true}
+                        onChange={(e, v) => handleAdditionalAddressChange( 'streetNameSuffix', v)}
+                        disabled={isFormDisabled && focusedField !== 'streetNameSuffix'}
+                        onBlur={(e) => handleOnbBlur('streetNameSuffix', e.target.value)}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            error={!!validationErrors?.streetNameSuffix}
+                            inputRef={e => setFocusOnInput(e, 'streetNameSuffix')}
+                            helperText={<DAlertBox errorText={validationErrors?.streetNameSuffix} />}
+                            label='Street Name Suffix'
+                          />
+                        )}
+                      /> 
       </div>
       <div className='col col-sm-12 col-md-4'>
-        <FormControl fullWidth size='small' error={!!validationErrors?.postDirectionalCode}
-          disabled={isFormDisabled && focusedField !== 'postDirectionalCode'}>
-          <InputLabel id='postDirectionalCode'>Post-Directional Code</InputLabel>
-          <Select
-            labelId='postDirectionalCode'
-            id='postDirectionalCode'
-            name="postDirectionalCode"
-            label='Post-Directional Code'
-            inputRef={focusedField === 'postDirectionalCode' ? (input) => input?.focus() : null}
-            value={postDirectionalCode}
-            onChange={e => handleAdditionalAddressChange('postDirectionalCode', e.target.value)}
-            onBlur={(e) => handleOnbBlur(e.target.name, e.target.value)}
-          >
-            {postDirectionalCodeList &&
-              postDirectionalCodeList?.map(item => {
-                return (
-                  <MenuItem key={`directional-code${item.code}`} value={item.code}>
-                    {' '}
-                    {item.value}{' '}
-                  </MenuItem>
-                );
-              })}
-          </Select>
-          {validationErrors?.postDirectionalCode && (
-            <FormHelperText>
-              {' '}
-              <DAlertBox errorText={validationErrors?.postDirectionalCode} />{' '}
-            </FormHelperText>
-          )}
-        </FormControl>
+
+      <Autocomplete
+                        options={postDirectionalCodeList}
+                        fullWidth
+                        size='small'
+                        name='postDirectionalCode'
+                        value={postDirectionalCode}
+                        disableClearable={true}
+                        onChange={(e, v) => handleAdditionalAddressChange( 'postDirectionalCode', v)}
+                        disabled={isFormDisabled && focusedField !== 'postDirectionalCode'}
+                        onBlur={(e) => handleOnbBlur('postDirectionalCode', e.target.value)}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            error={!!validationErrors?.postDirectionalCode}
+                            inputRef={e => setFocusOnInput(e, 'postDirectionalCode')}
+                            helperText={<DAlertBox errorText={validationErrors?.postDirectionalCode} />}
+                            label='Post-Directional Code'
+                          />
+                        )}
+                      />  
       </div>
       <div className='col col-sm-12 col-md-4'>
         <TextField

@@ -200,6 +200,8 @@ const IndividualDetails = () => {
       errorMsg = { ...errorMsg, [k]: error };
       if (error === '') {
         delete errorMsg[k];
+      } else {
+        break;
       }
     }
     if (personalInformationFrom.lastName !== '' && personalInformationFrom.birthDate !== '') {
@@ -411,7 +413,7 @@ const IndividualDetails = () => {
   ]);
 
   return (
-    <div className='d-container'>
+    <div className='d-container'> 
       <form
         onSubmit={e => handleSubmitFrom(e, personalInformationFrom)}
         noValidate

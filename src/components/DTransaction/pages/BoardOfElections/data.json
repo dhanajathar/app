@@ -55,7 +55,7 @@
   },
   "defaultAddress": {
     "city": "",
-    "state": "",
+    "state": null,
     "country": "UNITED STATES",
     "addressLine": "",
     "zipCode": ""
