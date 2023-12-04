@@ -63,13 +63,13 @@ const initialFormState = {
   }
 };
 
-const EmployeeInformation = ({ employeeData, mode }) => {
+const EmployeeInformation = ({ employeeData, mode = 'new' }) => {
   const [formState, setFormState] = useState({
     ...initialFormState,
     values: { ...initialFormState.values, ...employeeData }
   });
   const [formFieldToCorrect, setFormFieldToCorrect] = useState(null);
-
+  const readOnly = mode === 'read-only';
   useEffect(() => {
     if (!!employeeData) {
       const newFormState = { ...formState };
@@ -88,6 +88,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
   const validateFormInput = event => {
     const inputName = event.target.name;
     if (mode === 'edit' && ['beginDate', 'employeeId', 'userType'].includes(inputName)) {
+      return null;
+    }
+    if (mode === 'read-only' && ['beginDate', 'employeeId', 'userType'].includes(inputName)) {
       return null;
     }
     const inputValue = event.target.value;
@@ -308,11 +311,13 @@ const EmployeeInformation = ({ employeeData, mode }) => {
 
   return (
     <React.Fragment>
-      <form noValidate autoComplete='off'>
+      <form noValidate autoComplete='off' className='employee-information-form'>
         <div className='d-row truncation-row'>
           <div className='col col-md-8 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'loginId'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'loginId')
+              }
               name='loginId'
               error={formState.touched.loginId && !!formState.errors.loginId}
               helperText={
@@ -362,7 +367,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
         <div className='d-row truncation-row'>
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'lastName'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'lastName')
+              }
               name='lastName'
               error={formState.touched.lastName && !!formState.errors.lastName}
               helperText={
@@ -387,7 +394,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
 
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'firstName'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'firstName')
+              }
               name='firstName'
               error={formState.touched.firstName && !!formState.errors.firstName}
               helperText={
@@ -412,7 +421,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
 
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'middleName'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'middleName')
+              }
               name='middleName'
               error={formState.touched.middleName && !!formState.errors.middleName}
               helperText={
@@ -440,7 +451,10 @@ const EmployeeInformation = ({ employeeData, mode }) => {
           <div className='col col-md-4 col-sm-12'>
             <FormControl fullWidth size='small'>
               <Autocomplete
-                disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'department'}
+                disabled={
+                  readOnly ||
+                  (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'department')
+                }
                 disableClearable={true}
                 onChange={(event, newValue) => {
                   handleValueChange({
@@ -490,7 +504,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
           <div className='col col-md-4 col-sm-12'>
             <FormControl fullWidth size='small'>
               <Autocomplete
-                disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'jobTitle'}
+                disabled={
+                  readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'jobTitle')
+                }
                 disableClearable={true}
                 onChange={(event, newValue) => {
                   handleValueChange({
@@ -540,7 +556,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
           <div className='col col-md-4 col-sm-12'>
             <FormControl fullWidth size='small'>
               <Autocomplete
-                disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'location'}
+                disabled={
+                  readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'location')
+                }
                 disableClearable={true}
                 onChange={(event, newValue) => {
                   handleValueChange({
@@ -591,7 +609,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
         <div className='d-row truncation-row'>
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'lockerBoxId'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'lockerBoxId')
+              }
               name='lockerBoxId'
               error={formState.touched.lockerBoxId && !!formState.errors.lockerBoxId}
               helperText={
@@ -616,7 +636,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
 
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'mobilePhone'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'mobilePhone')
+              }
               name='mobilePhone'
               error={!!formState.touched.mobilePhone && !!formState.errors.mobilePhone}
               helperText={
@@ -644,7 +666,9 @@ const EmployeeInformation = ({ employeeData, mode }) => {
 
           <div className='col col-md-4 col-sm-12'>
             <TextField
-              disabled={!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'workPhone'}
+              disabled={
+                readOnly || (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'workPhone')
+              }
               name='workPhone'
               error={!!formState.touched.workPhone && !!formState.errors.workPhone}
               helperText={
@@ -677,6 +701,7 @@ const EmployeeInformation = ({ employeeData, mode }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   disabled={
+                    readOnly ||
                     !!employeeData ||
                     (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'beginDate')
                   }
@@ -701,7 +726,7 @@ const EmployeeInformation = ({ employeeData, mode }) => {
                   name='beginDate'
                   size='small'
                   label='Begin Date'
-                  minDate={mode !== 'edit' ? dayjs(new Date().setHours(0, 0, 0, 0)) : null}
+                  minDate={mode === 'new' ? dayjs(new Date().setHours(0, 0, 0, 0)) : null}
                   error={!!formState.touched.beginDate && !!formState.errors.beginDate}
                   value={formState.values.beginDate ? dayjs(formState.values.beginDate) : null}
                   onChange={e =>
@@ -720,6 +745,7 @@ const EmployeeInformation = ({ employeeData, mode }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   disabled={
+                    readOnly ||
                     !!formState.errors.beginDate ||
                     (!_.isEmpty(formFieldToCorrect) && formFieldToCorrect !== 'endDate')
                   }

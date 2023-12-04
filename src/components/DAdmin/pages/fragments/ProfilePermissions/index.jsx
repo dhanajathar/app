@@ -185,7 +185,7 @@ const ProfilePermissions = params => {
 
   return (
     <React.Fragment>
-      <div className='d-container'>
+      <div className='admin-container d-container'>
         <div className='d-row'>
           <div className='col-12 sub_title'>Profile Permissions</div>
         </div>

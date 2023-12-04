@@ -1,0 +1,17 @@
+{
+  "initial_values": {
+    "loginId": "john.doe@dc.gov",
+    "firstName": "John",
+    "beginDate": "11/10/2023",
+    "endDate": "11/09/2024",
+    "lastName": "Doe",
+    "department": "FIELD SERVICES",
+    "jobTitle": "ATTORNEY ADVISOR",
+    "location": "BENNING RIDGE SERVICE CENTER",
+    "mobilePhone": "(987) 654-3210",
+    "workPhone": "(987) 654-3210",
+    "employeeId": "12345678",
+    "userType": "NORMAL",
+    "status": "active"
+  }
+}

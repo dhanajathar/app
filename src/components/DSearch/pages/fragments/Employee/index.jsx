@@ -36,6 +36,9 @@ const Employee = forwardRef((props, ref) => {
   }, []);
 
   useImperativeHandle(ref, () => ({
+    getFormValues() {
+      return formState.values;
+    },
     implementResetForm() {
       resetForm();
     }
@@ -44,9 +47,10 @@ const Employee = forwardRef((props, ref) => {
   const validateInputData = (inputName, inputValue) => {
     switch (inputName) {
       case 'loginId':
-        const isValidemail = /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@dc([\.])gov/g.test(
-          inputValue
-        );
+        const isValidemail =
+          /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@[d|D][c|C]([\.])[g|G][o|O][v|V]/g.test(
+            inputValue
+          );
         if (!isValidemail) {
           return `invalid Email`;
         }
@@ -128,7 +132,7 @@ const Employee = forwardRef((props, ref) => {
       }
       newFormState.controls[inputName].isValid = !newFormState.controls[inputName].error;
       newFormState.values[inputName] = inputValue;
-      if (inputName === 'jobTitle' && inputValue === '--Select--') {
+      if (inputName === 'jobTitle' && inputValue === '--SELECT--') {
         newFormState.values[inputName] = null;
         newFormState.controls[inputName].error = null;
         newFormState.controls[inputName].isValid = true;
@@ -418,7 +422,7 @@ const Employee = forwardRef((props, ref) => {
                 size='small'
                 id='jobTitle'
                 disabled={disabledControls.includes('jobTitle')}
-                options={['--Select--', ...data.jobTitle]}
+                options={['--SELECT--', ...data.jobTitle]}
                 renderInput={params => (
                   <TextField
                     onFocus={() => handleFocus({ target: { name: 'jobTitle' } })}

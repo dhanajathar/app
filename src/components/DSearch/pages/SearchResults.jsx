@@ -127,7 +127,7 @@ export function SearchResults() {
 
   const headCells = data.schema;
   const rows = data.results;
-  const resultLength = data.results.length;
+  const [resultsLength, setResultsLength] = useState(data.results.length);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -172,7 +172,7 @@ export function SearchResults() {
     return <TableCell>{myItem}</TableCell>;
   };
 
-  if (resultLength === 0) {
+  if (resultsLength === 0) {
     return (
       <div className='page-container'>
         <div className='search-result-neg'>
@@ -194,8 +194,11 @@ export function SearchResults() {
   } else {
     return (
       <>
-        {location.state.type === 'employee' ? (
-          <EmployeeSearchResults />
+        {location?.state?.type === 'employee' ? (
+          <EmployeeSearchResults
+            empSearchData={location?.state?.empSearchData}
+            onResults={data => setResultsLength(data && data?.length ? data.length : 0)}
+          />
         ) : (
           <div className='page-container'>
             <div className='search-title-text'>{data.results.length} Results Found</div>

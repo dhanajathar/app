@@ -165,7 +165,9 @@ const ProfilePermissionsList = () => {
                       <TableCell>{profile.startDate}</TableCell>
                       <TableCell>{profile.endDate}</TableCell>
                       <TableCell>
-                        <span className={`profile-status ${profile.status}`}>{profile.status}</span>
+                        <span className={`employee-status ${profile.status}`}>
+                          {profile.status}
+                        </span>
                       </TableCell>
                     </TableRow>
                   ))}

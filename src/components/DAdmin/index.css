@@ -6,7 +6,7 @@
 }
 
 /* tempory CSS block to be removed when adding progress stepper */
-.d-container {
+.admin-container.d-container {
   background-color: var(--white100);
   width: 100%;
   max-height: 95%;
@@ -16,6 +16,7 @@
   overflow-y: auto;
   max-width: calc(100% - 15rem);
   padding-bottom: 1.5rem;
+  margin-top: 1rem;
 }
 
 .sub_title {
@@ -44,4 +45,8 @@
 
 .employee-status.inactive {
   background-color: #9a0404;
+}
+
+.employee-information-form .Mui-disabled .MuiInputAdornment-root {
+  opacity: 0.5 !important;
 }

@@ -11,7 +11,7 @@ const EditEmployee = () => {
           {data.initial_values.status}
         </span>
       </div>
-      <div className='d-container'>
+      <div className='admin-container d-container'>
         <div className='d-row truncation-row'>
           <div className='col-12 sub_title'>Employee Information</div>
         </div>

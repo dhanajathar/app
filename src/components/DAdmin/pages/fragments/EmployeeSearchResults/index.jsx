@@ -1,3 +1,10 @@
+/*
+ * Author: Swathi Kudikala
+ * Created:
+ * Last Modified: 2023-12-01
+ * Description: This file shows the read-only information of employee search results.
+ * Application Release Version:1.0.0
+ */
 import React, { useState, useEffect, useRef } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const EmployeeSearchResults = () => {
+const EmployeeSearchResults = props => {
   const [sortData, setSortData] = useState({
     column: null,
     sorting: null
@@ -36,6 +43,8 @@ const EmployeeSearchResults = () => {
         }, 500);
       }
     }
+
+    applyInitialSearchFilter();
   }, []);
 
   const handleColumnSort = columnKey => {
@@ -81,6 +90,86 @@ const EmployeeSearchResults = () => {
     setPage(0);
   };
 
+  const applyInitialSearchFilter = () => {
+    const empSearchData = props.empSearchData;
+
+    if (!empSearchData) {
+      return;
+    }
+
+    if (empSearchData['location']?.toLowerCase() === 'all locations') {
+      delete empSearchData.location;
+    }
+
+    for (let key of Object.keys(empSearchData)) {
+      if (!empSearchData[key] || empSearchData[key].trim() === '') {
+        delete empSearchData[key];
+      }
+    }
+
+    const employeeSearchKeys = Object.keys(empSearchData);
+    employeeSearchKeys.forEach(key => {
+      if (typeof empSearchData[key] === 'string') {
+        empSearchData[key] = empSearchData[key].toLowerCase();
+      }
+    });
+
+    const mappedSearchResults = searchResults.map(result => {
+      const _result = { ...result };
+      Object.keys(empSearchData).forEach(key => {
+        if (typeof _result[key] === 'string') {
+          _result[key] = _result[key].toLowerCase();
+        }
+      });
+      return _result;
+    });
+
+    let filterKeys = Object.keys(empSearchData);
+
+    if (!filterKeys.length) {
+      return;
+    }
+    const matched = [];
+    if (filterKeys.length === 1) {
+      const filterKey = filterKeys[0];
+      for (let result of mappedSearchResults) {
+        if (!!result[filterKey] && !!empSearchData[filterKey]) {
+          switch (filterKey) {
+            case 'jobTitle':
+            case 'location':
+            case 'loginId':
+              if (result[filterKey] === empSearchData[filterKey]) {
+                matched.push(result);
+              }
+              break;
+            case 'employeeId':
+              if (result[filterKey] == empSearchData[filterKey]) {
+                matched.push(result);
+              }
+              break;
+            default:
+              if (result[filterKey].includes(empSearchData[filterKey])) {
+                matched.push(result);
+              }
+          }
+        }
+      }
+    } else {
+      const _matched = _.filter(mappedSearchResults, empSearchData);
+      if (_matched.length) {
+        matched.push(..._matched);
+      }
+    }
+
+    if (matched.length) {
+      setSearchResults(matched);
+      setFilteredResults(matched);
+      setPage(0);
+    } else {
+      props.onResults(matched);
+    }
+  };
+
   const filterResults = filterKey => {
     if (!filterKey) {
       setFilteredResults(searchResults);
@@ -106,7 +195,7 @@ const EmployeeSearchResults = () => {
         Employee Maintenance / <span>Search Results</span>
       </div>
 
-      <div className='d-container'>
+      <div className='admin-container d-container'>
         <div className='d-row '>
           <div className='col-12 sub_title create-new-button'>
             <div>
@@ -144,7 +233,7 @@ const EmployeeSearchResults = () => {
             >
               <TableHead>
                 <TableRow>
-                  {columns.map((column, index) => {
+                  {columns.map(column => {
                     return (
                       <TableCell key={column.key} onClick={() => handleColumnSort(column.key)}>
                         {column.label}

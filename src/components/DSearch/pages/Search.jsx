@@ -47,6 +47,7 @@ export function Search() {
   };
   const [formData, setFormData] = useState(sessionData || defaultFormData);
   const [typeVal, setTypeVal] = useState(formData.selectedTab);
+  const [employeeSearchFormData, setEmployeeSearchFormData] = useState(null);
 
   const employeeRef = useRef();
 
@@ -101,7 +102,11 @@ export function Search() {
       handleCustomerProfileClick();
       updateSearchData();
     } else {
-      navigate('/search/search-results', { state: { type: typeVal } });
+      const routeState = { type: typeVal };
+      if (typeVal === 'employee') {
+        routeState.empSearchData = employeeRef.current.getFormValues();
+      }
+      navigate('/search/search-results', { state: routeState });
     }
   };
 

@@ -353,9 +353,9 @@ button.MuiButtonBase-root .MuiTouchRipple-root span {
 }
 
 .MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall {
-	padding:0px!important
+	padding:0rem!important
 }
 
 .MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input {
-	padding:7.6px 14px!important
+	padding:0.5rem 0.875rem!important
 }
