@@ -43,6 +43,7 @@ body {
 
   /* red */
   --red100: #d32f2f;
+  --red80: #CD292C;
 }
 a {
   text-decoration: none;

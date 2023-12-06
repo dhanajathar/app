@@ -1,3 +1,11 @@
+/*
+ * Component Name: DTransection Contact Form
+ * Author: Priyanka Pandey
+ * Created: 2023-07-20
+ * Last Modified: 2023-12-01
+ * Description: Contact Details Data entry page for new users.
+ * Application Release Version:1.0.0
+ */
 import './index.css';
 
 import { DEventService, DEvents } from '../../../../services/DEventService';
@@ -31,8 +39,7 @@ export default function Contact() {
   const verifiedEmail = 'jony_doe@gmail.com'
   const handleSubmit = e => {
     e.preventDefault();
-    if (isValidEmail) {
-    }
+    
   };
   const [validationError, setValidationError] = useState();
 
@@ -43,13 +50,13 @@ export default function Contact() {
     email: '',
     altPhone: '',
     emailAlert: null,
-    activated: null
+    activated: 'Pending'
   });
 
 
   const handleChange = (e) => {
     const { name, value } = e?.target ?? {};
-    const newValues = { ...contactFrom };
+    const newValues = { ...contactFrom }; 
     newValues[name] = (name == 'mobile' || name == 'altPhone') ? formatPhoneNumber(value) : value === '--SELECT--' ? null : value;
     setContactFrom(newValues);
   };
@@ -97,7 +104,9 @@ export default function Contact() {
       if (!isValidEmail) {
         setIsFormDisabled(true);
         setFocusedField('email');
+      
       } else {
+         
         setIsFormDisabled(false);
       }
     } else {
@@ -251,6 +260,7 @@ export default function Contact() {
               onChange={handleChange}
               onBlur={e => validateEmail(e.target.value)}
               InputProps={{
+                maxLength: 320,
                 endAdornment: contactFrom.email !== "" && isValidEmail && (
                   <InputAdornment position='end'>
                     {verifiedEmail === contactFrom.email ? (
@@ -285,7 +295,7 @@ export default function Contact() {
                 <TextField
                   {...params}
                   inputRef={eNoticeRef}
-                  label='Enotice Subscriber'
+                  label='Email Subscriber'
                 />
               )}
             />
@@ -328,7 +338,7 @@ export default function Contact() {
                 <TextField
                   {...params}
                   inputRef={activatedRef}
-                  label='Activated'
+                  label='Email Activated'
                 />
               )}
             />

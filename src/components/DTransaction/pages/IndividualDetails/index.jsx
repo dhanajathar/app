@@ -198,9 +198,12 @@ const IndividualDetails = () => {
     for (const [k, v] of Object.entries(form)) {
       const error = validateFiled(k, v);
       errorMsg = { ...errorMsg, [k]: error };
-      if (error === '') {
-        delete errorMsg[k];
+      if (error === '') { 
+        // eslint-disable-next-line no-unused-vars 
+        const { k, ...withoutKey } = errorMsg; 
+        errorMsg = withoutKey  
       } else {
+        handleError(k, v)
         break;
       }
     }

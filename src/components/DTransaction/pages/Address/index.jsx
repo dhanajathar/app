@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl, 
+  FormControl,
   InputLabel,
   MenuItem,
   Select,
@@ -35,6 +35,7 @@ import WarningAmber from '@mui/icons-material/WarningAmber';
 import data from './api-address.json';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'react-router-dom';
+import DNotification from '../../../DNotification';
 
 export default function Address() {
   const [searchParams] = useSearchParams();
@@ -55,7 +56,7 @@ export default function Address() {
   const [openOverrideDialog, setOpenOverrideDialog] = useState(false);
   const [openStreetDialog, setOpenStreetDialog] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState();
-  const [showAlert, setShowAlert] = useState();
+  const [showAlert, setShowAlert] = useState(false);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [focusedField, setFocusedField] = useState('');
   const [warningText, setWarningText] = useState();
@@ -213,6 +214,7 @@ export default function Address() {
       isValidate: null,
       overRide: updatedAddress.addressDetails.overRide + 1
     };
+    debugger;
     if (updatedAddress.addressDetails.overRide > 1 &&
       updatedAddress.addressDetails.ignoreAddressVerification) {
       setShowAlert(true);
@@ -244,8 +246,8 @@ export default function Address() {
     setTimeout(() => { setFocusedField() }, 50)
   }
 
-  const handleError = (name, value, index) => { 
-    const error = validateFiled(name, value, index); 
+  const handleError = (name, value, index) => {
+    const error = validateFiled(name, value, index);
     const errors = { ...addresses[index].validationErrors, [name]: error };
     if (error === '') {
       delete errors[name];
@@ -790,11 +792,7 @@ export default function Address() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={showAlert} autoHideDuration={6000} onClose={() => setShowAlert(false)}>
-        <Alert onClose={() => setShowAlert(false)} severity='success' sx={{ width: '100%' }}>
-          New street address added successfully!
-        </Alert>
-      </Snackbar>
+      <DNotification open={showAlert} autoHideDuration={6000} severity='success' message='New street address added successfully!' onClose={() => setShowAlert(false)} > </DNotification>
     </div>
   );
 }
