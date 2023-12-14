@@ -1,345 +1,316 @@
-  {
-    "addressType": "Primary",
-    "formDate": "2023-08-22",
-    "toDate": "2023-12-31",
-    "addressDetails": {
-      "addressLine": "123 Main Street",
-      "city": "Exampleville",
-      "state": "Astate",
-      "zipCode": "12345",
-      "country": "Countryland",
-      "validateAddress": {
-        "isValidate": true
-      },
-      "additionalAddress": {
-        "preDirectionalCode": null,
-        "streetNumber": null,
-        "streetName": "",
-        "streetNameSuffix": null,
-        "postDirectionalCode": null,
-        "apartmentNumber": ""
-      },
-      "overRide": 0
+{
+  "addressType": "Primary",
+  "formDate": "2023-08-22",
+  "toDate": "2023-12-31",
+  "addressDetails": {
+    "addressLine": "123 Main Street",
+    "city": "Exampleville",
+    "state": "Astate",
+    "zipCode": "12345",
+    "country": "Countryland",
+    "validateAddress": {
+      "isValidate": true
     },
-    "residencyCertification": {
-      "isCertification": "NO",
-      "certifiedInfo": {
-        "certifierFullName": "John Doe",
-        "dateOfBirth": "12/29/1980",
-        "driverLicense": "1234567890",
-        "expirationDate": "04/21/2030"
-      }
+    "additionalAddress": {
+      "preDirectionalCode": null,
+      "streetNumber": null,
+      "streetName": "",
+      "streetNameSuffix": null,
+      "postDirectionalCode": null,
+      "apartmentNumber": ""
     },
-    "relationShipList": [
-      "Child",
-      "Parent",
-      "Spouse",
-      "Domestic",
-      "partner",
-      "Other"
-    ],
-    "documentList": [
-      "Deed/Mortgage/Settlement",
-      "Lease/Rental Agreement",
-      "Prop Tax Bill/ Assessment",
-      "Sublease W/Org Lease"
-    ],
-    "streetNames": [
+    "overRide": 0
+  },
+  "residencyCertification": {
+    "isCertification": "NO",
+    "certifiedInfo": {
+      "certifierFullName": "John Doe",
+      "dateOfBirth": "12/29/1980",
+      "driverLicense": "1234567890",
+      "expirationDate": "04/21/2030"
+    }
+  },
+  "relationShipList": ["Child", "Parent", "Spouse", "Domestic", "partner", "Other"],
+  "documentList": [
+    "Deed/Mortgage/Settlement",
+    "Lease/Rental Agreement",
+    "Prop Tax Bill/ Assessment",
+    "Sublease W/Org Lease"
+  ],
+  "streetNames": [
+    {
+      "id": 1,
+      "value": "SOUTH CAROLINA AVENUE"
+    },
+    {
+      "id": 2,
+      "value": "SOUTH DAKOTA AVENUE NE"
+    },
+    {
+      "id": 3,
+      "value": "SOUTH DAKOTA AVENUE SE"
+    },
+    {
+      "id": 4,
+      "value": "SOUTH STREET NW"
+    },
+    {
+      "id": 5,
+      "value": "SOUTHERN AVENUE"
+    },
+    {
+      "id": 6,
+      "value": "SOUTHERN AVENUE NE"
+    },
+    {
+      "id": 7,
+      "value": "SOUTHERN AVENUE SE"
+    }
+  ],
+  "preDirectionalList": ["E", "N", "NE", "NW", "S", "SE", "SW", "W"],
+  "streetNameSuffixList": [
+    "ALLEY",
+    "AVENUE",
+    "BOULEVARD",
+    "BRIDGE",
+    "CIRCLE",
+    "CRESCENT",
+    "COURT",
+    "CANYON",
+    "DRIVE",
+    "EXPRESSWAY",
+    "FREEWAY",
+    "GREEN",
+    "HIGHWAY",
+    "KEYS",
+    "LANE",
+    "MEWS",
+    "PARK",
+    "PARKWAY",
+    "PLACE",
+    "PLAZA",
+    "RAMP",
+    "ROAD",
+    "ROW",
+    "ROUTE",
+    "SQUARE",
+    "STREET",
+    "TERRACE",
+    "TRAIL",
+    "VIEW",
+    "WALK",
+    "WAY",
+    "CROSSING"
+  ],
+  "postDirectionalCodeList": ["S", "E", "N", "NE", "NW", "SE", "SW", "W"],
+  "stateList": [
+    "ALASKA",
+    "ALABAMA",
+    "ARKANSAS",
+    "AMERICAN SAMOA",
+    "ARIZONA",
+    "CALIFORNIA",
+    "COLORADO",
+    "CONNECTICUT",
+    "DISTRICT OF COLUMBIA",
+    "DELAWARE",
+    "U.S. DEPARTMENT OF STATE",
+    "U.S. DEPARTMENT OF TRANSPORTATION",
+    "U.S. DEPARTMENT OF JUSTICE",
+    "FMCSA",
+    "FLORIDA",
+    "FEDERAL STATE OF MICRONESIA",
+    "GEORGIA",
+    "GENERAL SERVICE ADMINISTRATION",
+    "GUAM",
+    "HAWAII",
+    "IOWA",
+    "IDAHO",
+    "ILLINOIS",
+    "INDIANA",
+    "INTERNAL REVENUE SERVICE",
+    "KANSAS",
+    "KENTUCKY",
+    "LOUISIANA",
+    "MASSACHUSETTS",
+    "MARYLAND",
+    "MAINE",
+    "MARSHALL ISLANDS",
+    "MICHIGAN",
+    "MINNESOTA",
+    "MISSOURI",
+    "MISSISSIPPI",
+    "MONTANA",
+    "NORTH CAROLINA",
+    "NORTH DAKOTA",
+    "NEBRASKA",
+    "NEW HAMPSHIRE",
+    "NORTHERN MARIANA ISLANDS",
+    "NEW JERSEY",
+    "NEW MEXICO",
+    "NEVADA",
+    "NEW YORK",
+    "OHIO",
+    "OKLAHOMA",
+    "OREGON",
+    "PENNSYLVANIA",
+    "PUERTO RICO",
+    "RHODE ISLAND",
+    "SOUTH CAROLINA",
+    "SOUTH DAKOTA",
+    "TENNESSEE",
+    "TSA",
+    "TEXAS",
+    "UTAH",
+    "VIRGINIA",
+    "U.S. VIRGIN ISLANDS",
+    "VERMONT",
+    "WASHINGTON",
+    "WISCONSIN",
+    "WAKE ISLAND",
+    "WEST VIRGINIA",
+    "WYOMING"
+  ],
+  "countryList": [
+    "AFGHANISTAN",
+    "ALBANIA",
+    "ALGERIA",
+    "ANDORRA",
+    "ANGOLA",
+    "ANGUILLA",
+    "ANTARCTICA",
+    "ANTIGUA AND BARBUDA",
+    "ARCTIC OCEAN",
+    "ARGENTINA",
+    "ARMENIA",
+    "ARUBA",
+    "AMERICAN SAMOA",
+    "ASHMORE AND CARTIER ISLANDS",
+    "AUSTRIA",
+    "AUSTRALIA",
+    "ATLANTIC OCEAN",
+    "AZERBAIJAN",
+    "BAHAMAS, THE",
+    "BAHRAIN",
+    "BAKER ISLAND",
+    "BANGLADESH",
+    "BARBADOS",
+    "BASSAS DA INDIA",
+    "BELARUS",
+    "BELGIUM",
+    "BELIZE",
+    "BENIN",
+    "BERMUDA",
+    "BHUTAN",
+    "BOLIVIA",
+    "BOSNIA AND HERZEGOVINA",
+    "BOTSWANA",
+    "BOUVET ISLAND",
+    "BRAZIL",
+    "BRUNEI",
+    "BRITISH VIRGIN ISLANDS",
+    "BULGARIA",
+    "BURKINA FASO",
+    "UNITED STATES"
+  ],
+  "SearchResult": {
+    "schema": [
       {
-        "id": 1,
-        "value": "SOUTH CAROLINA AVENUE"
+        "id": "id",
+        "numeric": true,
+        "label": "Customer ID",
+        "align": "left",
+        "sortable": true
       },
       {
-        "id": 2,
-        "value": "SOUTH DAKOTA AVENUE NE"
+        "id": "DLCard",
+        "numeric": false,
+        "label": "DL Number",
+        "align": "left",
+        "sortable": true
       },
       {
-        "id": 3,
-        "value": "SOUTH DAKOTA AVENUE SE"
+        "id": "SSN",
+        "numeric": false,
+        "label": "SSN",
+        "align": "left",
+        "sortable": true
       },
       {
-        "id": 4,
-        "value": "SOUTH STREET NW"
+        "id": "disabilityPlacardNumber",
+        "numeric": false,
+        "label": "Disability Placard Number",
+        "align": "left",
+        "sortable": true
       },
       {
-        "id": 5,
-        "value": "SOUTHERN AVENUE"
+        "id": "Name",
+        "numeric": false,
+        "label": "Name",
+        "align": "left",
+        "sortable": true
       },
       {
-        "id": 6,
-        "value": "SOUTHERN AVENUE NE"
+        "id": "dateOfBirth",
+        "numeric": false,
+        "label": "DOB",
+        "align": "left",
+        "sortable": true
       },
       {
-        "id": 7,
-        "value": "SOUTHERN AVENUE SE"
+        "id": "emailId",
+        "numeric": false,
+        "label": "Email ID",
+        "align": "left",
+        "sortable": true
       }
     ],
-    "preDirectionalList": [
-      "E",
-      "N",
-      "NE",
-      "NW",
-      "S",
-      "SE",
-      "SW",
-      "W"
-    ],
-    "streetNameSuffixList": [
-      "ALLEY",
-      "AVENUE",
-      "BOULEVARD",
-      "BRIDGE",
-      "CIRCLE",
-      "CRESCENT",
-      "COURT",
-      "CANYON",
-      "DRIVE",
-      "EXPRESSWAY",
-      "FREEWAY",
-      "GREEN",
-      "HIGHWAY",
-      "KEYS",
-      "LANE",
-      "MEWS",
-      "PARK",
-      "PARKWAY",
-      "PLACE",
-      "PLAZA",
-      "RAMP",
-      "ROAD",
-      "ROW",
-      "ROUTE",
-      "SQUARE",
-      "STREET",
-      "TERRACE",
-      "TRAIL",
-      "VIEW",
-      "WALK",
-      "WAY",
-      "CROSSING"
-    ],
-    "postDirectionalCodeList": [
-      "S",
-      "E",
-      "N",
-      "NE",
-      "NW",
-      "SE",
-      "SW",
-      "W"
-    ],
-    "stateList": [
-      "ALASKA",
-      "ALABAMA",
-      "ARKANSAS",
-      "AMERICAN SAMOA",
-      "ARIZONA",
-      "CALIFORNIA",
-      "COLORADO",
-      "CONNECTICUT",
-      "DISTRICT OF COLUMBIA",
-      "DELAWARE",
-      "U.S. DEPARTMENT OF STATE",
-      "U.S. DEPARTMENT OF TRANSPORTATION",
-      "U.S. DEPARTMENT OF JUSTICE",
-      "FMCSA",
-      "FLORIDA",
-      "FEDERAL STATE OF MICRONESIA",
-      "GEORGIA",
-      "GENERAL SERVICE ADMINISTRATION",
-      "GUAM",
-      "HAWAII",
-      "IOWA",
-      "IDAHO",
-      "ILLINOIS",
-      "INDIANA",
-      "INTERNAL REVENUE SERVICE",
-      "KANSAS",
-      "KENTUCKY",
-      "LOUISIANA",
-      "MASSACHUSETTS",
-      "MARYLAND",
-      "MAINE",
-      "MARSHALL ISLANDS",
-      "MICHIGAN",
-      "MINNESOTA",
-      "MISSOURI",
-      "MISSISSIPPI",
-      "MONTANA",
-      "NORTH CAROLINA",
-      "NORTH DAKOTA",
-      "NEBRASKA",
-      "NEW HAMPSHIRE",
-      "NORTHERN MARIANA ISLANDS",
-      "NEW JERSEY",
-      "NEW MEXICO",
-      "NEVADA",
-      "NEW YORK",
-      "OHIO",
-      "OKLAHOMA",
-      "OREGON",
-      "PENNSYLVANIA",
-      "PUERTO RICO",
-      "RHODE ISLAND",
-      "SOUTH CAROLINA",
-      "SOUTH DAKOTA",
-      "TENNESSEE",
-      "TSA",
-      "TEXAS",
-      "UTAH",
-      "VIRGINIA",
-      "U.S. VIRGIN ISLANDS",
-      "VERMONT",
-      "WASHINGTON",
-      "WISCONSIN",
-      "WAKE ISLAND",
-      "WEST VIRGINIA",
-      "WYOMING"
-    ],
-    "countryList": [
-      "AFGHANISTAN",
-      "ALBANIA",
-      "ALGERIA",
-      "ANDORRA",
-      "ANGOLA",
-      "ANGUILLA",
-      "ANTARCTICA",
-      "ANTIGUA AND BARBUDA",
-      "ARCTIC OCEAN",
-      "ARGENTINA",
-      "ARMENIA",
-      "ARUBA",
-      "AMERICAN SAMOA",
-      "ASHMORE AND CARTIER ISLANDS",
-      "AUSTRIA",
-      "AUSTRALIA",
-      "ATLANTIC OCEAN",
-      "AZERBAIJAN",
-      "BAHAMAS, THE",
-      "BAHRAIN",
-      "BAKER ISLAND",
-      "BANGLADESH",
-      "BARBADOS",
-      "BASSAS DA INDIA",
-      "BELARUS",
-      "BELGIUM",
-      "BELIZE",
-      "BENIN",
-      "BERMUDA",
-      "BHUTAN",
-      "BOLIVIA",
-      "BOSNIA AND HERZEGOVINA",
-      "BOTSWANA",
-      "BOUVET ISLAND",
-      "BRAZIL",
-      "BRUNEI",
-      "BRITISH VIRGIN ISLANDS",
-      "BULGARIA",
-      "BURKINA FASO",
-      "UNITED STATES"
-    ],
-    "SearchResult": {
-      "schema": [
-          {
-              "id": "id",
-              "numeric": true,
-              "label": "Customer ID",
-              "align": "left",
-              "sortable": true
-          },
-          {
-              "id": "DLCard",
-              "numeric": false,
-              "label": "DL Number",
-              "align": "left",
-              "sortable": true
-          },
-          {
-              "id": "SSN",
-              "numeric": false,
-              "label": "SSN",
-              "align": "left",
-              "sortable": true
-          },
-          {
-              "id": "disabilityPlacardNumber",
-              "numeric": false,
-              "label": "Disability Placard Number",
-              "align": "left",
-              "sortable": true
-          },
-          {
-              "id": "Name",
-              "numeric": false,
-              "label": "Name",
-              "align": "left",
-              "sortable": true
-          },
-          {
-              "id": "dateOfBirth",
-              "numeric": false,
-              "label": "DOB",
-              "align": "left",
-              "sortable": true
-          },
-          {
-              "id": "emailId",
-              "numeric": false,
-              "label": "Email ID",
-              "align": "left",
-              "sortable": true
-          }
-      ],
-      "results": [
-          {
-              "id": "21997907",
-              "DLCard": "123456",
-              "SSN": "123-45-6789",
-              "disabilityPlacardNumber": "DP987654",
-              "Name": "John Doe",
-              "dateOfBirth": "01/15/1990",
-              "emailId": "JONY_DOE@GMAIL.COM"
-          },
-          {
-              "id": "20115321",
-              "DLCard": "789123",
-              "SSN": "987-65-4321",
-              "disabilityPlacardNumber": "DP123456",
-              "Name": "Jane Smith",
-              "dateOfBirth": "05/22/1985",
-              "emailId": "test1@GMAIL.COM"
-          },
-          {
-              "id": "21997907",
-              "DLCard": "625423",
-              "SSN": "456-78-9012",
-              "disabilityPlacardNumber": "DP789012",
-              "Name": "Robert Johnson",
-              "dateOfBirth": "11/10/1975",
-              "emailId": "test2@GMAIL.COM"
-          },
-          {
-              "id": "10997857",
-              "DLCard": "265244",
-              "SSN": "234-56-7890",
-              "disabilityPlacardNumber": "DP345678",
-              "Name": "Emily Williams",
-              "dateOfBirth": "08/07/1982",
-              "emailId": "test3@GMAIL.COM"
-          },
-          {
-              "id": "21997998",
-              "DLCard": "362512",
-              "SSN": "345-67-8901",
-              "disabilityPlacardNumber": "DP567890",
-              "Name": "Michael Brown",
-              "dateOfBirth": "04/30/1995",
-              "emailId": "test4@GMAIL.COM"
-          }
-      ]
+    "results": [
+      {
+        "id": "21997907",
+        "DLCard": "123456",
+        "SSN": "123-45-6789",
+        "disabilityPlacardNumber": "DP987654",
+        "Name": "John Doe",
+        "dateOfBirth": "01/15/1990",
+        "emailId": "JONY_DOE@GMAIL.COM"
+      },
+      {
+        "id": "20115321",
+        "DLCard": "789123",
+        "SSN": "987-65-4321",
+        "disabilityPlacardNumber": "DP123456",
+        "Name": "Jane Smith",
+        "dateOfBirth": "05/22/1985",
+        "emailId": "test1@GMAIL.COM"
+      },
+      {
+        "id": "21997907",
+        "DLCard": "625423",
+        "SSN": "456-78-9012",
+        "disabilityPlacardNumber": "DP789012",
+        "Name": "Robert Johnson",
+        "dateOfBirth": "11/10/1975",
+        "emailId": "test2@GMAIL.COM"
+      },
+      {
+        "id": "10997857",
+        "DLCard": "265244",
+        "SSN": "234-56-7890",
+        "disabilityPlacardNumber": "DP345678",
+        "Name": "Emily Williams",
+        "dateOfBirth": "08/07/1982",
+        "emailId": "test3@GMAIL.COM"
+      },
+      {
+        "id": "21997998",
+        "DLCard": "362512",
+        "SSN": "345-67-8901",
+        "disabilityPlacardNumber": "DP567890",
+        "Name": "Michael Brown",
+        "dateOfBirth": "04/30/1995",
+        "emailId": "test4@GMAIL.COM"
+      }
+    ]
   }
-  
-  }
-
- 
-  
+}

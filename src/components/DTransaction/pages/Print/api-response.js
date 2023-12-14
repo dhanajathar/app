@@ -59,20 +59,13 @@ export default {
       image: '/src/components/DTransaction/assets/IdCard.png'
     },
     {
-      field: 'New Identification Card',
-      value: 'Fee Paid',
-      image: '/src/components/DTransaction/assets/IdCard.png'
-    },
-    
-    {
-      field: 'Title Certificate',
+      field: 'Void - Title Certificate',
       value: 'Fee Paid',
       image: '/src/components/DTransaction/assets/titleReg.png'
     },
-    // { field: 'Parking Permit', value: 'Fee Paid', image: 'image_url_for_d2' }
     {
       field: 'Registration Ticket',
-      value: 'Fee Not Applicable',
+      value: 'Fee Paid',
       image: '/src/components/DTransaction/assets/regTick.png'
     }
   ],

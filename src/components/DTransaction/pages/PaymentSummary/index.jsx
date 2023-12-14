@@ -142,7 +142,7 @@ export function PaymentSummary() {
                     checked={selectedMethods.indexOf(method.name) > -1}
                   />
                 }
-                label={<span style={{ fontWeight: 'bold' }}>{method.name}</span>}
+                label={<span className='span-label'>{method.name}</span>}
               />
             ))}
           </FormControl>

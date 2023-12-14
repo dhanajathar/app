@@ -110,7 +110,7 @@
           "flowId": 5
         },
         {
-          "label": "Board of Elections",
+          "label": "Board of Elections",  
           "status": "incomplete",
           "path": "/transaction/board-elections?flowId=6",
           "flowId": 6

@@ -36,7 +36,8 @@
   height: calc(100vh - 70px);
   overflow: auto;
   flex-grow: 1;
-  background: transparent linear-gradient(0deg, #153a8b 0%, #0c255f 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(0deg, #153a8b 0%, #0c255f 100%) 0% 0% no-repeat
+    padding-box;
   box-shadow: 0px 1px 4px #00000065;
   background-size: auto 451px;
 }
@@ -45,12 +46,12 @@
   margin-top: 0.6rem;
 }
 
-.Dprint-conatiner {
+.Dprint-container {
   display: flex;
   flex-direction: row;
 }
 
-.title {
+.Dprint-sum-title {
   color: #13126c;
   font: normal normal bold 18px/20px Open Sans;
   letter-spacing: 0px;
@@ -58,12 +59,41 @@
   padding-top: 2rem;
 }
 
+.Dprint-sum-snackbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.right-panel {
+  background: #f7f7f7;
+  box-shadow: 1px 3px 6px #0000000d;
+  border: 1px solid #dedede;
+  border-radius: 0px 5px 5px 0px;
+  padding-top: 52px;
+  padding-left: 40px;
+  padding-right: 38px;
+  height: 26rem;
+}
 
 .Dprint-sum-left-panel {
   padding-top: 1.6rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  width: 50%;
+  width: 32rem;
+  height: 26rem;
+}
+
+.Dprint-sum-left-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Dprint-sum-divider {
+  padding-top: 1.2rem;
 }
 
 .main-panel {
@@ -79,11 +109,24 @@
   align-items: center;
   padding-top: 2rem;
   padding-left: 3rem;
-  border-radius: 0rem 0.3rem 0.3rem 0rem;
   padding-right: 3rem;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 50%;
+  width: 34rem;
+  height: 26rem;
+}
+
+.Dprint-panel-right-1 {
+  content: '';
+  background: #e5f4ff;
+  height: 1rem;
+  width: 1rem;
+  border-top: solid 0px gray;
+  border-right: solid 0px gray;
+  position: absolute;
+  left: 40.35rem;
+  transform: rotate(223deg);
+  margin-top: -1rem;
 }
 
 .divider {
@@ -108,6 +151,13 @@
   padding-bottom: 1.938rem;
 }
 
+.Dprint-right-arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #e5f4ff;
+}
 
 .iconfirm {
   background: #0060b5;
@@ -115,7 +165,6 @@
   font-size: 0.9rem;
   font-weight: bold;
 }
-
 .confrim-spinner {
   display: flex;
   justify-content: center;
@@ -272,13 +321,17 @@
   font-weight: bold;
 }
 
-.snackbar-content {
+.Dprint-snackbar-content {
   color: #595b5c;
   border: 0.06rem solid #a5a5a5;
   font-size: 0.9rem;
   background: #dff0d8;
   box-shadow: none;
   border-radius: 0.3rem;
+}
+
+.Dprint-snackbar-close {
+  margin-left: 6.875rem;
 }
 
 .receipt-paper {
@@ -364,30 +417,4 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
-
-.print-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-}
-
-.selected::after {
-  content: '';
-  position: absolute;
-  top: calc(50% - 11px);
-  right: -32px;
-  margin: 0 auto;
-  width: 0;
-  height: 0;
-  border-top: solid 11px transparent;
-  border-bottom: solid 11px transparent;
-  border-right: solid 11px #e5f4ff;
-}
-
-.print-img {
-  max-width: 100%;
-  max-height: 20rem;
-  object-fit: cover;
 }

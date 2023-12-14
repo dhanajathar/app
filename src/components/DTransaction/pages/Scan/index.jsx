@@ -1,7 +1,17 @@
+/*
+ * Component Name: DTransection Scan Documents
+ * Author: Aditya Karthik Kumar V (CH Nagaraju - Creator By)
+ * Created: 02/01/2023
+ * Last Modified: 12/07/2023
+ * Description:  Documents for users.
+ * Application Release Version:1.0.0
+ */
+
 import './index.css';
 import { useState, useEffect, useRef } from 'react';
 import * as _ from 'lodash';
-
+import DPdf from '../../../DPdf';
+import pdfUrl from './assets/pdf/my-pdf-file.pdf';
 import {
   Button,
   Dialog,
@@ -34,17 +44,15 @@ import {
 } from '@mui/icons-material';
 
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import supData from './api-sup-reasons-list.json';
 import SupOverrideDialog from '../../../DDialog/components/SupOverrideDialog';
 import DeleteConfirmDialog from '../../../DDialog/components/DeleteConfirmDialog';
 import SupReasonsDialog from '../../../DDialog/components/SupReasonsDialog';
-import userData from '../IndividualDetails/api-individual-details.json';
 
-import data from './api-scan-documents-list.json';
-
+import data from './data/api-scan-documents-list.json';
 import { useSearchParams } from 'react-router-dom';
-import DPdf from '../../../DPdf';
-import pdfUrl from './assets/pdf/my-pdf-file.pdf';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPdfDetails } from '../../../../store/features/DPdf/pdfDetailsSlice';
+
 
 const Scan = () => {
   const [searchParams] = useSearchParams();
@@ -72,6 +80,34 @@ const Scan = () => {
   const [pageNum, setPageNum] = useState(1); 
   const [fileSize, setFileSize] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
+  const [isDelete, setIsDelete] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
+  
+  const  pdfDetails  = useSelector(state => state.pdfDetails);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+      setPageNum(pdfRef.current?.getPageNum);   
+      if(pdfRef.current?.getNumPage < numOfPages && !isDelete){
+        setNumOfPages(numOfPages);
+      } else if(pdfRef.current?.getNumPage > numOfPages) {
+        setNumOfPages(numOfPages);
+      } else {
+        setNumOfPages(pdfRef.current?.getNumPage);
+      }
+      setFileSize(pdfRef.current?.getPdfSize);
+      setPdfFile(pdfRef.current?.getPdfFile);
+  }, [pdfRef.current, numOfPages, pageNum, pdfFile, fileSize]);
+
+  useEffect(() => {
+    if(!isLoad){
+      setNumOfPages(pdfDetails?.updatedPdfData?.numPages);
+      setPageNum(pdfDetails?.updatedPdfData?.pageNum);
+      setFileSize(pdfDetails?.updatedPdfData?.fileSize);
+      setPdfFile(pdfDetails?.updatedPdfData?.pdfFile);
+    }
+
+  }, [pdfDetails]);
 
   const getDateAndTime = () => {
     const date = new Date().toLocaleString('en-US', { hour12: true });
@@ -107,31 +143,36 @@ const Scan = () => {
   const onPrevPage = () => {
     if(pdfRef.current){
       pdfRef.current.handlePrevPage();
-      setPageNum(pdfRef.current.getPageNum.pageNum-1);
-      setNumOfPages(pdfRef.current.getNumPage.numPages);
+      setPageNum(pdfRef.current.getPageNum-1);
+      setNumOfPages(pdfRef.current.getNumPage);
     }
   }
 
   const onNextPage = () => {
     if(pdfRef.current){
       pdfRef.current.handleNextPage();
-      setPageNum(pdfRef.current.getPageNum.pageNum+1);
-      setNumOfPages(pdfRef.current.getNumPage.numPages);
+      setPageNum(pdfRef.current.getPageNum+1);
+      setNumOfPages(pdfRef.current.getNumPage);
     }
   }
 
   const onAddPage = () => {
     if(pdfRef.current){
       pdfRef.current.handleAddPage();
+      setNumOfPages(pdfRef.current.getNumPage+1);
+      setIsLoad(true);
+      //setIsDelete(true);
     }
   }
 
   const onDeletePage = () => {
+    setIsDelete(true);
+    setIsLoad(true);
     if(numOfPages === 1){
       setScannedOrComment('delete the current scanned documents');
       setOpenCon(true); 
     } else if (pdfRef.current){
-      setScannedOrComment('delete the current scanned documents');
+      setScannedOrComment('delete the current scanned page');
       setOpenCon(true); 
     }
   }
@@ -160,7 +201,9 @@ const Scan = () => {
     if(numOfPages === 1){
       setOpen(false); 
     } else if(pdfRef.current){
-      pdfRef.current.handleDeletePage();
+      pdfRef.current.handleDeletePage();      
+      setNumOfPages(pdfRef.current.getNumPage-1);
+      setIsDelete(false);
     }
   };
 
@@ -190,10 +233,6 @@ const Scan = () => {
     setRows(verifiedRow);
   };
 
-useEffect(() => {
-  setPageNum(pdfRef.current?.getPageNum?.pageNum);
-  setNumOfPages(pdfRef.current?.getNumPage?.numPages);
-}, [open]);
 
 
   const handleReasonOthers = (e, value) => {
@@ -205,54 +244,6 @@ useEffect(() => {
     DEventService.dispatch(DEvents.ROUTE, {
       detail: { path: 'transaction-orchestrator/fees', payload: 'funk' }
     });
-  };
-  
-  const [sortData, setSortData] = useState({
-    column: null,
-    sorting: null
-  });
-
-  const [columns, setColumns] = useState(supData.columns);
-  const [profileData, setProfileData] = useState([...supData.profileData]);
-
-  const handleColumnSort = columnKey => {
-    const selectedColumn = columns.find(column => column.key === columnKey);
-
-    if (!selectedColumn['allowedToSort']) {
-      return;
-    }
-    let _sortData;
-    if (columnKey == sortData.column) {
-      _sortData = {
-        ...sortData,
-        sorting: sortData.sorting === 'asc' ? 'desc' : !sortData.sorting ? 'asc' : null
-      };
-    } else {
-      _sortData = { column: columnKey, sorting: 'asc' };
-    }
-
-    if (_sortData.column) {
-      switch (_sortData.sorting) {
-        case 'asc':
-          if (selectedColumn['dataType'] === 'date') {
-            setProfileData(profileData => _.orderBy(profileData, [_sortData.column], ['asc']));
-          } else {
-            setProfileData(profileData => _.orderBy(profileData, [_sortData.column]), ['asc']);
-          }
-          break;
-        case 'desc':
-          if (selectedColumn['dataType'] === 'date') {
-            setProfileData(profileData => _.orderBy(profileData, [_sortData.column], ['desc']));
-          } else {
-            setProfileData(profileData => _.orderBy(profileData, [_sortData.column], ['desc']));
-          }
-
-          break;
-        default:
-          setProfileData([...Data.profileData]);
-      }
-    }
-    setSortData({ ..._sortData });
   };
 
   const deleteScannedOrDocument = () => {
@@ -274,22 +265,6 @@ useEffect(() => {
     verifiedRow[openIndex].scanDetails = `${dateTime}`;
     setRows(verifiedRow);
   }  
-
-  const handlePDFPages = (data) => {
-    setNumOfPages(data);
-  }
-
-  const handlePDFPageNum = (data) => {
-    setPageNum(data);
-  }
-
-  const handlePdfSize = (data) => {
-    setFileSize(data);
-  }  
-
-  const handlePdfFile = (file) => {
-    setPdfFile(file);
-  } 
 
   return (
     <>
@@ -418,6 +393,8 @@ useEffect(() => {
                               }
                               setOpenIndex(i);
                               setOpen(true);
+                              setIsDelete(false);
+                              setIsLoad(false); 
                             });
                           }}
                         >
@@ -446,7 +423,7 @@ useEffect(() => {
         </TableContainer>
       </Grid>
 
-      <Dialog sx={{ "& .MuiDialog-paper": { width: "60%", height: "auto"} }} maxWidth="100rem" open={open}>
+      <Dialog PaperProps={{sx: { width: "60%", height: "auto", maxHeight: "50rem"} }} fullScreen maxWidth="lg" open={open}>
         <div className='scan-document-dialog-container'>            
         <p className="scan-dialog-heading">{rows[openIndex]?.documentName}</p> 
           <IconButton
@@ -468,23 +445,13 @@ useEffect(() => {
           </IconButton>              
           <div className='scan-breadcrumb-right-pane'>
             <div className='scan-breadcrumb-document'>
-              <div
-                style={{
-                  transform: `scale(${zoomLevel})`,
-                  overflow: 'hidden',
-                  transformOrigin: 'top left'
-                }}
-              >
+              <div style={{transform: `scale(${zoomLevel})`}} className='scan-pdf-div' >
                 {/* <img src={passport} /> */}
                 <DPdf
                   className='scan-breadcrumb-img'
                   pdfUrl={pdfUrlLink}
                   ref={pdfRef}
                   showAddDelete={false} 
-                  onPdfNumOfPages={handlePDFPages}
-                  onPdfPageNum={handlePDFPageNum} 
-                  onPdfSize = {handlePdfSize} 
-                  onPdfFile = {handlePdfFile}
                   showZoom={false}
                   showPagination={false}
                   showFullScreen={false}
@@ -493,12 +460,12 @@ useEffect(() => {
               </div>
               <div className='scan-breadcrumb-slider-container'>
                 <>
-                  <Tooltip arrow title='ZoomIn' placement='top'>
+                  <Tooltip arrow title='Zoom In' placement='left'>
                     <IconButton onClick={onZoomIncrease} className='scan-zoom-icon-in' aria-label='close' component='span'>
                       <ZoomIn />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip arrow title='ZoomOut' placement='top'>
+                  <Tooltip arrow title='Zoom Out' placement='left'>
                   <IconButton onClick={onZoomDecrease} className='scan-zoom-icon-out' aria-label='close' component='span'>
                     <ZoomOutIcon />
                   </IconButton>
@@ -508,12 +475,12 @@ useEffect(() => {
 
               <div className='scan-breadcrumb-slider-container'>
                 <>
-                  <Tooltip arrow title='Rotate Right' placement='top'>
+                  <Tooltip arrow title='Rotate Right' placement='left'>
                     <IconButton onClick={onRotateRight} className='scan-rotate-right' aria-label='close' component='span'>
                       <RotateRightRoundedIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip arrow title='Rotate Left' placement='top'>
+                  <Tooltip arrow title='Rotate Left' placement='left'>
                   <IconButton onClick={onRotateLeft} className='scan-rotate-left' aria-label='close' component='span'>
                     <RotateLeftRoundedIcon />
                   </IconButton>
@@ -554,6 +521,8 @@ useEffect(() => {
                 onClick={() => {
                   setScannedOrComment('rescan the documents');
                   setOpenCon(true);   
+                  setIsDelete(false);
+                  setIsLoad(false); 
                 }}
               >
                <Loop className="scan-options-btn" /> Re-Scan
@@ -583,6 +552,8 @@ useEffect(() => {
                     verifiedRow[openIndex].scanDetails = (`${numOfPages} Pages` +' '+ `${fileSize}` +' '+ `${dateTime}`); 
                     setRows(verifiedRow);
                     setOpen(false);
+                    setIsDelete(false);
+                    setIsLoad(false);                     
                   }} 
                 >
                   <CheckCircleOutline className="scan-options-btn" /> Verified

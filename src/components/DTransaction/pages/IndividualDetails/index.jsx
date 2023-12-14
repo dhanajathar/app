@@ -2,7 +2,7 @@
  * Component Name: DTransection Individual Details
  * Author: Priyanka Pandey
  * Created: 2023-06-17
- * Last Modified: 2023-11-20
+ * Last Modified: 2023-12-04
  * Description: Individual Details Data entry page for new users.
  * Application Release Version:1.0.0
  */
@@ -198,10 +198,10 @@ const IndividualDetails = () => {
     for (const [k, v] of Object.entries(form)) {
       const error = validateFiled(k, v);
       errorMsg = { ...errorMsg, [k]: error };
-      if (error === '') { 
+      if (error === '') {
         // eslint-disable-next-line no-unused-vars 
         const { k, ...withoutKey } = errorMsg; 
-        errorMsg = withoutKey  
+        errorMsg = withoutKey
       } else {
         handleError(k, v)
         break;

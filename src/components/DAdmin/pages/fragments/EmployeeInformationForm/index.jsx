@@ -8,62 +8,61 @@ import DAlertBox from '../../../../DAlertBox';
 import API_DATA from './api-employee-data.json';
 import * as _ from 'lodash';
 
-const initialFormState = {
-  isValid: true,
-  isDirty: false,
-  submitted: false,
-  isSubmitting: false,
-  values: {
-    lastName: '',
-    middleName: '',
-    firstName: '',
-    loginId: '',
-    employeeId: '',
-    department: null,
-    jobTitle: null,
-    location: null,
-    lockerBoxId: '',
-    mobilePhone: '',
-    workPhone: '',
-    beginDate: dayjs(new Date()),
-    endDate: '',
-    userType: 'NORMAL'
-  },
-  touched: {
-    lastName: false,
-    middleName: false,
-    firstName: false,
-    loginId: false,
-    employeeId: false,
-    department: false,
-    jobTitle: false,
-    location: false,
-    lockerBoxId: false,
-    mobilePhone: false,
-    workPhone: false,
-    beginDate: false,
-    endDate: false,
-    userType: false
-  },
-  errors: {
-    lastName: 'Last Name is required',
-    middleName: null,
-    firstName: 'First Name is required',
-    loginId: 'Login Id is required',
-    employeeId: 'Employee Id is required',
-    department: 'Department is required',
-    jobTitle: 'Job Title is required',
-    location: 'Location is required',
-    lockerBoxId: null,
-    mobilePhone: null,
-    workPhone: null,
-    beginDate: null,
-    endDate: undefined,
-    userType: null
-  }
-};
-
 const EmployeeInformation = ({ employeeData, mode = 'new' }) => {
+  const initialFormState = {
+    isValid: true,
+    isDirty: false,
+    submitted: false,
+    isSubmitting: false,
+    values: {
+      lastName: '',
+      middleName: '',
+      firstName: '',
+      loginId: '',
+      employeeId: '',
+      department: null,
+      jobTitle: null,
+      location: null,
+      lockerBoxId: '',
+      mobilePhone: '',
+      workPhone: '',
+      beginDate: dayjs(new Date()),
+      endDate: '',
+      userType: 'NORMAL'
+    },
+    touched: {
+      lastName: false,
+      middleName: false,
+      firstName: false,
+      loginId: false,
+      employeeId: false,
+      department: false,
+      jobTitle: false,
+      location: false,
+      lockerBoxId: false,
+      mobilePhone: false,
+      workPhone: false,
+      beginDate: false,
+      endDate: false,
+      userType: false
+    },
+    errors: {
+      lastName: 'Last Name is required',
+      middleName: null,
+      firstName: 'First Name is required',
+      loginId: 'Login Id is required',
+      employeeId: 'Employee Id is required',
+      department: 'Department is required',
+      jobTitle: 'Job Title is required',
+      location: 'Location is required',
+      lockerBoxId: null,
+      mobilePhone: null,
+      workPhone: null,
+      beginDate: null,
+      endDate: undefined,
+      userType: null
+    }
+  };
   const [formState, setFormState] = useState({
     ...initialFormState,
     values: { ...initialFormState.values, ...employeeData }

@@ -10,20 +10,17 @@ import {
   Button,
   Checkbox,
   FormHelperText,
-  InputAdornment,
+  InputAdornment
 } from '@mui/material';
 
 function VerifyCertifier({ onSubmit, onCancel }) {
-  const {
-    relationShipList,
-    documentList
-  } = data;
+  const { relationShipList, documentList } = data;
   const [relationShip, setRelationsShip] = useState(null);
   const [primaryDocument, setPrimaryDocument] = useState(null);
   const [secondaryDocument, setSecondaryDocument] = useState(null);
   const [relationShipError, setRelationShipError] = useState();
   const [primaryDocumentError, setPrimaryDocumentError] = useState();
-  const [secondaryDocumentError, setSecondaryDocumentError] = useState()
+  const [secondaryDocumentError, setSecondaryDocumentError] = useState();
   const calculateAge = dob => {
     const today = new Date();
     const birthDate = new Date(dob);
@@ -38,12 +35,17 @@ function VerifyCertifier({ onSubmit, onCancel }) {
 
   return (
     <>
-
       <div className='certifier-wrapper'>
         <div className='certifier-title'> Certifier Information</div>
         <div className='d-row'>
           <div className='col col-sm-12 col-md-8'>
-            <TextField size='small' value={'JONATHAN DOE'} label='Certifier Full Name' disabled fullWidth />
+            <TextField
+              size='small'
+              value={'JONATHAN DOE'}
+              label='Certifier Full Name'
+              disabled
+              fullWidth
+            />
           </div>
           <div className='col col-sm-12 col-md-4'>
             <TextField
@@ -53,7 +55,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
               disabled
               label='Date of Birth'
               defaultValue={'12/29/1980'}
-
               className='input-adornment'
               InputProps={{
                 endAdornment: (
@@ -66,7 +67,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
             >
               {' '}
             </TextField>
-
           </div>
         </div>
         <div className='d-row'>
@@ -91,7 +91,13 @@ function VerifyCertifier({ onSubmit, onCancel }) {
             <TextField size='small' value={'221122'} label='Driver License' disabled fullWidth />
           </div>
           <div className='col col-sm-12 col-md-4'>
-            <TextField size='small' value={'04/21/2030'} label='Expiration Date' disabled fullWidth />
+            <TextField
+              size='small'
+              value={'04/21/2030'}
+              label='Expiration Date'
+              disabled
+              fullWidth
+            />
           </div>
         </div>
 
@@ -162,9 +168,7 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                       );
                     })}
                 </Select>
-                {primaryDocumentError && (
-                  <FormHelperText> {primaryDocumentError} </FormHelperText>
-                )}
+                {primaryDocumentError && <FormHelperText> {primaryDocumentError} </FormHelperText>}
               </FormControl>
             </div>
             <div className='col col-sm-12 col-md-4'>
@@ -177,9 +181,7 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                   label='Secondary Document'
                   onBlur={() =>
                     !primaryDocument
-                      ? setSecondaryDocumentError(
-                        'Please select a value for Secondary Document'
-                      )
+                      ? setSecondaryDocumentError('Please select a value for Secondary Document')
                       : setSecondaryDocumentError()
                   }
                   onChange={e => setSecondaryDocument(e.target.value)}
@@ -201,8 +203,8 @@ function VerifyCertifier({ onSubmit, onCancel }) {
           </div>
           <div className='d-row'>
             <div className='col col-md-12'>
-              <Checkbox /> I acknowledge that the above information is verified as per the
-              Residency Certification application
+              <Checkbox /> I acknowledge that the above information is verified as per the Residency
+              Certification application
             </div>
           </div>
         </div>
@@ -222,7 +224,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
           Confirm certifier
         </Button>
       </div>
-
     </>
   );
 }

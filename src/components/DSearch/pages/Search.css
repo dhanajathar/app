@@ -1,69 +1,69 @@
 .search-card {
-    width: 100%;
-    min-height: 50px;
-    justify-content: left;
-    display: flex;
-    box-shadow: 1px 3px 6px #0000000d;
-    border: 1px solid #dedede;
-    background-color: var(--white100);
-    border-radius: 0.3rem;
-  }
-  .search-menu {
-    width: auto;
-    background-color: #0360b5;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-  
-  .search-menu-item {
-    text-align: right;
-    color: #ffffffb3;
-    font: normal normal normal 18px/24px Open Sans;
-    letter-spacing: 0.18px;
-    padding: 0.5rem;
-    padding-left: 1.8rem;
-    border-right-width: 4px;
-    border-right-style: solid;
-    border-right-color: #0360b5;
-    cursor: pointer;
-  }
-  
-  .search-menu-item:hover,
-  .search-menu-item-active {
-    color: white;
-    border-right-color: white;
-    border-right-style: solid;
-  }
-  .SearchCertifier .disabled-item:hover {
-    border-right-color: #0360b5;
-    color: #ffffffb3;
-  }
-  
+  width: 100%;
+  min-height: 50px;
+  justify-content: left;
+  display: flex;
+  box-shadow: 1px 3px 6px #0000000d;
+  border: 1px solid #dedede;
+  background-color: var(--white100);
+  border-radius: 0.3rem;
+}
+.search-menu {
+  width: auto;
+  background-color: #0360b5;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.search-menu-item {
+  text-align: right;
+  color: #ffffffb3;
+  font: normal normal normal 18px/24px Open Sans;
+  letter-spacing: 0.18px;
+  padding: 0.5rem;
+  padding-left: 1.8rem;
+  border-right-width: 4px;
+  border-right-style: solid;
+  border-right-color: #0360b5;
+  cursor: pointer;
+}
+
+.search-menu-item:hover,
+.search-menu-item-active {
+  color: white;
+  border-right-color: white;
+  border-right-style: solid;
+}
+.SearchCertifier .disabled-item:hover {
+  border-right-color: #0360b5;
+  color: #ffffffb3;
+}
+
 .search-field-box {
-    width: 100%;
-    padding: 1.5rem 1.5rem 2rem;
-  }
-  
-  .search-buttons {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .search-buttons div {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 2rem;
-  }
-  
+  width: 100%;
+  padding: 1.5rem 1.5rem 2rem;
+}
+
+.search-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.search-buttons div {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 2rem;
+}
+
 .tab-content {
-    padding: 1.5rem 0;
-  }
-  .document-radio-group {
-    display: flex;
-    column-gap: 2rem;
-    flex-wrap: wrap;
-  }
+  padding: 1.5rem 0;
+}
+.document-radio-group {
+  display: flex;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+}

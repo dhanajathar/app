@@ -3,12 +3,12 @@
     "lastName": {
       "isTruncated": null,
       "isTransliterated": null,
-      "value": ""
+      "value": "Doe"
     },
     "firstName": {
       "isTruncated": null,
       "isTransliterated": null,
-      "value": ""
+      "value": "John"
     },
     "middleName": {
       "isTruncated": null,

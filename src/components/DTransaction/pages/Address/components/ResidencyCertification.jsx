@@ -51,7 +51,7 @@ function ResidencyCertification({ isFormDisabled }) {
   const handleCertifierDelete = () => {
     setOpenDeleteDialog(false);
     setResidencyCertificationStatus(false);
-    setShowAlert(true)
+    setShowAlert(true);
   };
 
   const handleSubmit = async () => {
@@ -59,10 +59,10 @@ function ResidencyCertification({ isFormDisabled }) {
     setResidencyCertificationStatus(true);
   };
 
-  const handleSearch = (data) => {
+  const handleSearch = data => {
     const options = {
       url: '/src/components/DTransaction/pages/Address/api-address.json',
-      method: 'GET',
+      method: 'GET'
     };
 
     axios(options)
@@ -73,46 +73,81 @@ function ResidencyCertification({ isFormDisabled }) {
           return result.DLCard.includes(searchQuery);
         });
         if (filteredResults.length == 0) {
-          setDialogState('userNotFound')
+          setDialogState('userNotFound');
         } else {
-          setDialogState('result')
+          setDialogState('result');
         }
       })
       .catch(() => {
-        setDialogState('userFound')
+        setDialogState('userFound');
       });
-  }
+  };
 
   const handleRowClick = () => {
-    setDialogState('userFound')
-  }
+    setDialogState('userFound');
+  };
 
   const renderDialogContent = () => {
     switch (dialogState) {
       case 'search':
-        return <Search isSearchCertifier onCancel={() => setOpenSearchDialog(false)} onSearchHistory={() => setDialogState('searchHistory')} onSearch={(data) => handleSearch(data)} />;
+        return (
+          <Search
+            isSearchCertifier
+            onCancel={() => setOpenSearchDialog(false)}
+            onSearchHistory={() => setDialogState('searchHistory')}
+            onSearch={data => handleSearch(data)}
+          />
+        );
       case 'searchHistory':
-        return <SearchHistory isSearchCertifier onBackPage={() => setDialogState('search')} onUserDetails={() => handleRowClick()} />;
+        return (
+          <SearchHistory
+            isSearchCertifier
+            onBackPage={() => setDialogState('search')}
+            onUserDetails={() => handleRowClick()}
+          />
+        );
       case 'result':
-        return <CertifierResult onUserDetails={() => handleRowClick()} onBackPage={() => setDialogState('search')} onCancel={() => setOpenSearchDialog(false)} />;
+        return (
+          <CertifierResult
+            onUserDetails={() => handleRowClick()}
+            onBackPage={() => setDialogState('search')}
+            onCancel={() => setOpenSearchDialog(false)}
+          />
+        );
       case 'userNotFound':
-        return <div className='not-found'>
-          <img src={'/src/components/DSearch/assets/tempImage.png'} alt='no search results graphic' width='150' height='164' />
-          <div className='search-found-title'>No results Found</div>
-          <div className='search-found-subtitle'>
-            Sorry, we couldn't find what you are looking for.
+        return (
+          <div className='not-found'>
+            <img
+              src={'/src/components/DSearch/assets/tempImage.png'}
+              alt='no search results graphic'
+              width='150'
+              height='164'
+            />
+            <div className='search-found-title'>No results Found</div>
+            <div className='search-found-subtitle'>
+              Sorry, we couldn't find what you are looking for.
+            </div>
+            <div onClick={() => setDialogState('search')} className='search-found-link'>
+              Try searching again
+            </div>
+            <Button onClick={() => setOpenSearchDialog(false)} variant='text'>
+              Cancel
+            </Button>
           </div>
-          <div onClick={() => setDialogState('search')} className='search-found-link'>
-            Try searching again
-          </div>
-          <Button onClick={() => setOpenSearchDialog(false)} variant='text'>
-            Cancel
-          </Button>
-        </div>;
+        );
       case 'userFound':
-        return <DCustomerProfile isSearchCertifier onCancel={() => setOpenSearchDialog(false)} onBackPage={() => setDialogState('search')} onSelectUser={() => setDialogState('userSelected')} />
+        return (
+          <DCustomerProfile
+            isSearchCertifier
+            onCancel={() => setOpenSearchDialog(false)}
+            onBackPage={() => setDialogState('search')}
+            onSelectUser={() => setDialogState('userSelected')}
+          />
+        );
       case 'userSelected':
-        return <VerifyCertifier onCancel={() => setOpenSearchDialog(false)} onSubmit={handleSubmit} />
+        return (
+          <VerifyCertifier onCancel={() => setOpenSearchDialog(false)} onSubmit={handleSubmit} />
+        );
       default:
         return null;
     }
@@ -141,7 +176,10 @@ function ResidencyCertification({ isFormDisabled }) {
             <Button
               variant='contained'
               disabled={residencyCertificationStatus}
-              onClick={() => { setOpenSearchDialog(true); setDialogState('search') }}
+              onClick={() => {
+                setOpenSearchDialog(true);
+                setDialogState('search');
+              }}
             >
               SEARCH CERTIFIER{' '}
             </Button>
@@ -218,10 +256,10 @@ function ResidencyCertification({ isFormDisabled }) {
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        {dialogState == 'userSelected' && <DialogTitle id='alert-dialog-title'>  Verify  Certifier </DialogTitle>}
-        <DialogContent>
-          {renderDialogContent()}
-        </DialogContent>
+        {dialogState == 'userSelected' && (
+          <DialogTitle id='alert-dialog-title'> Verify Certifier </DialogTitle>
+        )}
+        <DialogContent>{renderDialogContent()}</DialogContent>
       </Dialog>
       <Dialog
         open={openDeleteDialog}
@@ -245,12 +283,20 @@ function ResidencyCertification({ isFormDisabled }) {
           </Button>
         </DialogActions>
       </Dialog>
-      <DNotification open={showAlert} autoHideDuration={6000} severity='success' message=' Certifier information deleted successfully!' onClose={() => setShowAlert(false)} > </DNotification>
+      <DNotification
+        open={showAlert}
+        autoHideDuration={6000}
+        severity='success'
+        message=' Certifier information deleted successfully!'
+        onClose={() => setShowAlert(false)}
+      >
+        {' '}
+      </DNotification>
     </>
   );
 }
 
 export default ResidencyCertification;
 ResidencyCertification.propTypes = {
-  isFormDisabled: PropTypes.bool,
+  isFormDisabled: PropTypes.bool
 };

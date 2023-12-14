@@ -2,7 +2,7 @@
  * Component Name: DTransection Contact Form
  * Author: Priyanka Pandey
  * Created: 2023-07-20
- * Last Modified: 2023-12-01
+ * Last Modified: 2023-12-06
  * Description: Contact Details Data entry page for new users.
  * Application Release Version:1.0.0
  */
@@ -338,7 +338,7 @@ export default function Contact() {
                 <TextField
                   {...params}
                   inputRef={activatedRef}
-                  label='Email Activated'
+                  label='Email Activation'
                 />
               )}
             />

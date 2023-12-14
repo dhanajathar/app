@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
     components: { 
+         
         MuiInputLabel: {
             styleOverrides: {
               root: {
@@ -10,15 +11,15 @@ const theme = createTheme({
             },
           },
           MuiInputBase: {
-            styleOverrides: {
-              input: {
-                color: '#000', 
-                '&:disabled': {
-                  background:'#F8F9FA',
-                  borderColor:'#CACFD8',
-                  color: '#666',  
-                }, 
-              },
+            styleOverrides: { 
+                input: {
+                  color: '#000', 
+                  '&:disabled': {
+                    background:'#F8F9FA',
+                    borderColor:'#CACFD8',
+                    color: '#666',  
+                  }, 
+                },
             },
           },
       } 

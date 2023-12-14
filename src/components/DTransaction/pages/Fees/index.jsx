@@ -53,6 +53,7 @@ const Fees = ({ isPaymentConfirmed }) => {
   const [open, setOpen] = useState(isPaymentConfirmed);
   const [openDialog, setOpenDialog] = useState(false);
   const [openSup, setOpenSup] = useState(false);
+  const [role, setRole] = useState('');
 
   const handleCancel = () => {
     setOpenDialog(false);
@@ -64,6 +65,10 @@ const Fees = ({ isPaymentConfirmed }) => {
     rows.splice(index, 1);
     setRows(rows);
     setOpenDialog(false);
+  };
+
+  const handleSubmit = () => {
+    setRole('Supervisior');
   };
 
   const handleDelete = () => {
@@ -142,13 +147,15 @@ const Fees = ({ isPaymentConfirmed }) => {
                     }}
                     //endA
                     //type='number'
-                    disabled={row.agencyObjectCode !== 3166 && data.user.role !== 'Supervisior'}
+                    disabled={row.agencyObjectCode !== 3166 && role !== 'Supervisior'}
                     value={row.feestobecollected}
                     onChange={e => {
                       if (!isNaN(e.target.value)) {
                         let num;
-                        e.target.value === '0' ? (num = '1') : (num = e.target.value);
-                        const extendRows = [...rows];
+                        row.agencyObjectCode == 3166 && e.target.value === '0'
+                          ? (num = '1')
+                          : (num = e.target.value);
+                        const extendRows = _.cloneDeep(rows);
                         extendRows[i].feestobecollected = num;
                         setRows(extendRows);
                       }
@@ -166,9 +173,9 @@ const Fees = ({ isPaymentConfirmed }) => {
                         setRows(extendRows);
                       }
                     }}
-                    error={isOrganDonationAdded && rows[i].feestobecollected < 1}
+                    error={isOrganDonationAdded && rows[i].feestobecollected < 0}
                     helperText={
-                      isOrganDonationAdded && rows[i].feestobecollected < 1 ? 'Invalid Amount' : ''
+                      isOrganDonationAdded && rows[i].feestobecollected < 0 ? 'Invalid Amount' : ''
                     }
                   />
                 </TableCell>
@@ -250,7 +257,12 @@ const Fees = ({ isPaymentConfirmed }) => {
         onConfirmClick={handleConfirmDelete}
         close={handleCancel}
       />
-      <SupOverrideDialog open={openSup} close={() => setOpenSup(false)} />
+      <SupOverrideDialog
+        open={openSup}
+        data={'to override the fees'}
+        close={() => setOpenSup(false)}
+        onSubmitClick={handleSubmit}
+      />
     </React.Fragment>
   );
 };

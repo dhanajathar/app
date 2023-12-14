@@ -23,7 +23,12 @@ const SELECT_TRANSACTION = 'Select Transaction';
 const USER_NAME = 'DWAYNE LEMARR TYYLER';
 const CUSTOMER_ID = 'f83c7ae0-218c-4247-8c9c-4c1d8957870e';
 
-export default function DCustomerProfile({ isSearchCertifier = false, onCancel, onBackPage, onSelectUser }) {
+export default function DCustomerProfile({
+  isSearchCertifier = false,
+  onCancel,
+  onBackPage,
+  onSelectUser
+}) {
   const [citizen, setCitizen] = useState(true);
   const citizenType = type => {
     setCitizen(type);
@@ -57,56 +62,74 @@ export default function DCustomerProfile({ isSearchCertifier = false, onCancel, 
   };
 
   const renderProfileContent = () => {
-    return <><div className='user-profile'>
-      <div className='profile-content'>
-        {' '}
-        <ProfileContent />{' '}
-      </div>
-      <div className='tabs-wrapper'>
-        <MuiTabs
-          tabAction={<VersionHistory />}
-          contentClass='tab-content-scroll'
-          selectedTab={isSearchCertifier ? 1 : null}
-          tabs={tabs}
-        />
-      </div>
-    </div>
-    </>
-  }
+    return (
+      <>
+        <div className='user-profile'>
+          <div className='profile-content'>
+            {' '}
+            <ProfileContent />{' '}
+          </div>
+          <div className='tabs-wrapper'>
+            <MuiTabs
+              tabAction={<VersionHistory />}
+              contentClass='tab-content-scroll'
+              selectedTab={isSearchCertifier ? 1 : null}
+              tabs={tabs}
+            />
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
-    <div className={ isSearchCertifier ? 'search-certifier profile-page': 'profile-page'}>
+    <div className={isSearchCertifier ? 'search-certifier profile-page' : 'profile-page'}>
       <div className='page-heading'> {USER_NAME} </div>
       <div className='tab-content'>
         {renderProfileContent()}
         <div className='action-buttons'>
-          <div> {isSearchCertifier && <Button onClick={() => onCancel()} variant='text'  > Cancel </Button>} </div>
+          <div>
+            {' '}
+            {isSearchCertifier && (
+              <Button onClick={() => onCancel()} variant='text'>
+                {' '}
+                Cancel{' '}
+              </Button>
+            )}{' '}
+          </div>
           <div className='right-buttons'>
-            <Button onClick={()=> isSearchCertifier && onBackPage()} variant='outlined'  startIcon={<ArrowBackIosIcon />}>
+            <Button
+              onClick={() => isSearchCertifier && onBackPage()}
+              variant='outlined'
+              startIcon={<ArrowBackIosIcon />}
+            >
               {' '}
               {BACK.toUpperCase()}{' '}
             </Button>
-          <div className='divider'></div>
-            {isSearchCertifier ?  <Button
-          onClick={() => onSelectUser()}
-          variant='contained'
-          color='primary'
-          endIcon={<ArrowForwardIosIcon />}
-        >
-          SELECT & VERIFY CERTIFIER
-        </Button> :
-            <Button 
-              onClick={event => handleSelectClick(event)}
-              variant='contained'
-              color='primary'
-              endIcon={<ArrowForwardIosIcon />}
-            >
-              {' '}
-              {SELECT_TRANSACTION.toUpperCase()}{' '}
-            </Button>}
+            <div className='divider'></div>
+            {isSearchCertifier ? (
+              <Button
+                onClick={() => onSelectUser()}
+                variant='contained'
+                color='primary'
+                endIcon={<ArrowForwardIosIcon />}
+              >
+                SELECT & VERIFY CERTIFIER
+              </Button>
+            ) : (
+              <Button
+                onClick={event => handleSelectClick(event)}
+                variant='contained'
+                color='primary'
+                endIcon={<ArrowForwardIosIcon />}
+              >
+                {' '}
+                {SELECT_TRANSACTION.toUpperCase()}{' '}
+              </Button>
+            )}
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   );
 }

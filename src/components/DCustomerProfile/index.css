@@ -30,8 +30,8 @@
   flex-direction: row;
   height: calc(100% - 4.5rem);
   background: var(--white100);
-  box-shadow: 1px 3px 6px #0000000D;
-  border: 1px solid #DEDEDE;
+  box-shadow: 1px 3px 6px #0000000d;
+  border: 1px solid #dedede;
   border-radius: 5px;
   padding-bottom: 0.5rem;
 }
@@ -102,17 +102,15 @@ input,
 }
 
 .img-wrapper {
-  border: 1px solid #9B9B9B;
+  border: 1px solid #9b9b9b;
   border-radius: 5px;
   margin: 1.5rem 0.5rem 0 0.5rem;
-
 }
 
 .img-wrapper img {
   width: 150px;
   height: 150px;
   object-fit: contain;
-
 }
 
 .signature-img {
@@ -124,7 +122,7 @@ input,
 }
 
 .img-badge {
-  background: #164ABE 0% 0% no-repeat padding-box;
+  background: #164abe 0% 0% no-repeat padding-box;
   border-radius: 0 0 5px 5px;
 
   text-align: center;
@@ -153,7 +151,7 @@ input,
 }
 
 .verified-text {
-  color: #27AE60;
+  color: #27ae60;
 }
 
 .action-buttons {
@@ -180,4 +178,3 @@ input,
 .search-certifier .page-heading {
   margin-left: 0;
 }
- 

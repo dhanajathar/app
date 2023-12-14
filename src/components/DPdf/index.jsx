@@ -1,3 +1,13 @@
+/*
+ * Component Name: DPdf
+ * Author: Allu Rupesh Siva Krishna
+ * Created: 10/02/2023
+ * Modified By: Aditya Karthik Kumar V
+ * Last Modified: 12/07/2023
+ * Description:  Documents for users.
+ * Application Release Version:1.0.0
+ */
+
 import './pdf.css';
 import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import * as pdfjs from 'pdfjs-dist';
@@ -9,16 +19,16 @@ import RotateRightIcon from '@mui/icons-material/RotateRight';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { PDFDocument } from 'pdf-lib';
-import download from "downloadjs";
+import { useDispatch, useSelector } from 'react-redux';
+import { setPdfDetails } from '../../store/features/DPdf/pdfDetailsSlice';
 import pdfUrlNew from "../../assets/img/DMV-file.pdf";
-import newPdfUrl from "../DTransaction/pages/Scan/assets/pdf/DMV_Document.pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js`;
 
 
-const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullScreen, showRotate, onPdfNumOfPages, onPdfPageNum, onPdfSize, onPdfFile }, ref) => {
+const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullScreen, showRotate }, ref) => {
   const [pageNum, setPageNum] = useState(1);
   const [numPages, setNumPages] = useState(null);
-  const [scale, setScale] = useState(0.65);
+  const [scale, setScale] = useState(0.75);
   const [rotation, setRotation] = useState(0);
   const canvasRef = useRef(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -27,6 +37,16 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
   const [isLoad, setIsLoad] = useState(false);
   const [pdfDocument, setPdfDocument] = useState(null);
   const [renderPdfUrl, setRenderPdfUrl] = useState(pdfUrl);
+  const [fileSize, setFileSize] = useState(0);
+  const [pdfFile, setPdfFile] = useState(null);
+  const [valuePdf, setValuePdf] = useState({
+    pageNum: pageNum,
+    numPages: numPages,
+    fileSize: fileSize
+  });
+  
+  const  pdfDetails  = useSelector(state => state.pdfDetails);
+  const dispatch = useDispatch();
 
   useEffect(() => {   
       loadPDF(renderPdfUrl);
@@ -36,6 +56,16 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
       if (!isLoad)
         renderPdf(renderPdfUrl);
   }, [pdfUrl, pageNum, scale, numPages, rotation]);
+
+  useEffect(() => {   
+    setValuePdf({
+      pageNum: pageNum,
+      numPages: numPages,
+      fileSize: fileSize,
+      pdfFile: pdfFile
+    });
+    dispatch(setPdfDetails(valuePdf));
+}, [pageNum, numPages, fileSize, pdfFile]);
 
   const loadPDF = async (newPdf) => {
     try {
@@ -47,9 +77,9 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
       const pdfDoc = await PDFDocument.load(bytes);
       const loadNewPdf = await pdfDoc.save();
       const blob = new Blob([loadNewPdf], { type: 'application/pdf' });
-      onPdfFile(blob);
+      setPdfFile(blob);
       const fileSize = bytesToSize(blob.size);
-      onPdfSize(fileSize);
+      setFileSize(fileSize);
     } catch (error) {
       console.error('Error loading PDF:', error);
     }
@@ -67,8 +97,8 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
             const viewport = page.getViewport({ scale, rotation });
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-            onPdfNumOfPages(numPages);
-            onPdfPageNum(pageNum);
+            setNumPages(numPages);
+            setPageNum(pageNum);
             page.render({ canvasContext: context, viewport: viewport });
           });
         })
@@ -161,9 +191,9 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
       const newPdf = await pdfDoc.save();
       setIsLoad(true);
       const blob = new Blob([newPdf], { type: 'application/pdf' });
-      onPdfFile(blob);
+      setPdfFile(blob);
       const fileSize = bytesToSize(blob.size);      
-      onPdfSize(fileSize);
+      setFileSize(fileSize);
       const url = URL.createObjectURL(blob);
       setRenderPdfUrl(url);
       let pageNumber = null;
@@ -173,23 +203,25 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
        (pageNum === numPages) ? (pageNumber=(pdfInstance.numPages)) : (pageNumber=(pageNum));
         pdfInstance.getPage(pageNumber).then(page =>{
           const canvas = canvasRef.current;
-          const context = canvas.getContext('2d');
+          const context = canvas?.getContext('2d');
           const viewport = page.getViewport({ scale, rotation });
           canvas.height = viewport.height;
           canvas.width = viewport.width;
           if (numPages ===  pageNum) {
-            onPdfNumOfPages(pdfInstance.numPages);
-            onPdfPageNum(pdfInstance.numPages);
             setNumPages(pdfInstance.numPages);
             setPageNum(pdfInstance.numPages);
           } else {
-            onPdfNumOfPages(pdfInstance.numPages);
-            onPdfPageNum(pageNum);
             setNumPages(pdfInstance.numPages);
             setPageNum(pageNum);
           }
           let renderTask = page.render({canvasContext: context, viewport: viewport}); 
-  
+          setFileSize(fileSize);
+          setValuePdf({
+            pageNum: pageNum,
+            numPages: numPages,
+            fileSize: fileSize
+          });
+          dispatch(setPdfDetails(valuePdf));
           renderTask.promise.then(function() {
             pageRendering = false;
             if (pageNumPending !== null) {
@@ -242,9 +274,9 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
     const pdfBytes = await oldPdfDoc.save();
     setIsLoad(true);
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    onPdfFile(blob);
+    setPdfFile(blob);
     const fileSize = bytesToSize(blob.size);
-    onPdfSize(fileSize);
+    setFileSize(fileSize);
     const url = URL.createObjectURL(blob);
     setRenderPdfUrl(url);
     pdfjs.getDocument(url).promise.then(pdfInstance => {
@@ -253,14 +285,19 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
       setPageNum(pageNum);
       pdfInstance.getPage(pageNum).then(page =>{
         const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
+        const context = canvas?.getContext('2d');
         const viewport = page.getViewport({ scale, rotation });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
-        onPdfNumOfPages(pdfInstance.numPages);
-        onPdfPageNum(pageNum);
+        setNumPages(pdfInstance.numPages);
+        setPageNum(pageNum);
         let renderTask = page.render({canvasContext: context, viewport: viewport}); 
-
+        setValuePdf({
+          pageNum: pageNum,
+          numPages: numPages,
+          fileSize: fileSize
+        });
+        dispatch(setPdfDetails(valuePdf));
         renderTask.promise.then(function() {
           pageRendering = false;
           if (pageNumPending !== null) {
@@ -337,8 +374,10 @@ const PdfjsView = ({ pdfUrl, showAddDelete, showZoom, showPagination, showFullSc
     handleDeletePage: () => {
       handleDeletePage()
     },
-    getPageNum: {pageNum},
-    getNumPage: {numPages}
+    getPageNum: pageNum,
+    getNumPage: numPages,
+    getPdfSize: fileSize,
+    getPdfFile: pdfFile
   }));
 
   return (

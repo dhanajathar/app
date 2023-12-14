@@ -1,3 +1,10 @@
+/*
+ * Author: Swathi Kudikala
+ * Created: 2023-12-01
+ * Last Modified: 2023-12-08
+ * Description: This component allows admin to search list of employees.
+ * Application Release Version:1.0.0
+ */
 import React, { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
 import './index.css';
 import {
@@ -15,6 +22,7 @@ import DAlertBox from '../../../../DAlertBox';
 import DTextField from '../../../../DTextField';
 
 const Employee = forwardRef((props, ref) => {
+  const [formBeingReset, setFormBeingReset] = useState(false);
   const initialFormState = {
     isSubmitted: false, // `true` when hit submit
     isSubmitting: false, // `true` when form is being insubmitting state
@@ -109,10 +117,20 @@ const Employee = forwardRef((props, ref) => {
   };
 
   const handleBlur = event => {
+    if (formBeingReset) {
+      return;
+    }
     const inputName = event.target.name;
+    const inputValue = event.target.value;
     setFormState(initialFormState => {
       const newFormState = { ...initialFormState };
       newFormState.controls[inputName].touched = true;
+      newFormState.controls[inputName].error = validateInputData(inputName, inputValue);
+      newFormState.errors[inputName] = newFormState.controls[inputName].error;
+      if (newFormState.controls[inputName].error) {
+        props.shouldDisableSearch(true);
+        event.target.focus();
+      }
       return newFormState;
     });
   };
@@ -163,6 +181,8 @@ const Employee = forwardRef((props, ref) => {
   };
 
   const resetForm = () => {
+    props.shouldDisableSearch(false);
+    setFormBeingReset(true);
     setDisabledControls([]);
     const values = data.initial_values;
     for (let control in values) {
@@ -170,6 +190,7 @@ const Employee = forwardRef((props, ref) => {
         ? { ...initialFormState.controls[control] }
         : { touched: false, isValid: true, value: null, error: null };
       initialFormState.controls[control]['value'] = values[control];
+      initialFormState.controls[control]['touched'] = false;
       initialFormState.controls[control]['error'] = validateInputData(
         control,
         initialFormState.controls[control]['value']
@@ -193,6 +214,7 @@ const Employee = forwardRef((props, ref) => {
   };
 
   const handleFocus = event => {
+    setFormBeingReset(false);
     const inputName = event.target.name;
 
     switch (inputName) {
@@ -237,6 +259,7 @@ const Employee = forwardRef((props, ref) => {
   return (
     <React.Fragment>
       <form noValidate autoComplete='off' ref={formRef}>
+        <span className='resetFormCatcher' id='resetFormCatcher' tabIndex={1}></span>
         <div className='d-row truncation-row'>
           <div className='col-12 serach-title'>
             <p className='page-text'>Search an employee by any combination below.</p>

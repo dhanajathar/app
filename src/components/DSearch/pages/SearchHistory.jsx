@@ -81,7 +81,7 @@ EnhancedTableHead.propTypes = {
   headCells: PropTypes.array.isRequired
 };
 
-export function SearchHistory({isSearchCertifier, onBackPage, onUserDetails}) {
+export function SearchHistory({ isSearchCertifier, onBackPage, onUserDetails }) {
   const navigate = useNavigate();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -121,21 +121,19 @@ export function SearchHistory({isSearchCertifier, onBackPage, onUserDetails}) {
   );
 
   const handleClick = (e, data) => {
-    if(isSearchCertifier){
-      onUserDetails()
-    }else {
-    DEventService.dispatch(DEvents.ROUTE, {
-      detail: { path: `/customer-profile/?${data.customerId}`, body: `${data.customerId}` }
-    });
-  }
+    if (isSearchCertifier) {
+      onUserDetails();
+    } else {
+      DEventService.dispatch(DEvents.ROUTE, {
+        detail: { path: `/customer-profile/?${data.customerId}`, body: `${data.customerId}` }
+      });
+    }
   };
 
   const handleNewCustomerClick = () => {
-  
     DEventService.dispatch(DEvents.ROUTE, {
       detail: { path: `/edit-customer` }
     });
-
   };
 
   const getRowItem = myItem => {
@@ -238,7 +236,7 @@ export function SearchHistory({isSearchCertifier, onBackPage, onUserDetails}) {
             className='back-button'
             color='primary'
             variant='outlined'
-            onClick={() => isSearchCertifier ? onBackPage(): navigate('/search')}
+            onClick={() => (isSearchCertifier ? onBackPage() : navigate('/search'))}
           >
             Back
           </Button>
