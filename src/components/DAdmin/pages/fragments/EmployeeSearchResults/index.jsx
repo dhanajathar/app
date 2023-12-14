@@ -1,7 +1,7 @@
 /*
  * Author: Swathi Kudikala
- * Created:
- * Last Modified: 2023-12-01
+ * Created: 2023-12-01
+ * Last Modified: 2023-12-05
  * Description: This file shows the read-only information of employee search results.
  * Application Release Version:1.0.0
  */
@@ -12,7 +12,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Data from './api-search-results-list.json';
 import './index.css';
 import '../../../index.css';
 import * as _ from 'lodash';
@@ -20,15 +19,47 @@ import { Button, TableFooter, TablePagination, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIos } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
+
+const gridColumns = [
+  {
+    key: 'empId',
+    label: 'Emp ID'
+  },
+  {
+    key: 'loginId',
+    label: 'Login ID'
+  },
+  {
+    key: 'employeeName',
+    label: 'Employee Name'
+  },
+  {
+    key: 'location',
+    label: 'Location'
+  },
+  {
+    key: 'jobTitle',
+    label: 'Job Title'
+  },
+  {
+    key: 'role',
+    label: 'Role'
+  },
+  {
+    key: 'status',
+    label: 'Status'
+  }
+];
 
 const EmployeeSearchResults = props => {
   const [sortData, setSortData] = useState({
     column: null,
     sorting: null
   });
-  const [columns, setColumns] = useState(Data.columns);
-  const [searchResults, setSearchResults] = useState([...Data.searchResults]);
-  const [filteredResults, setFilteredResults] = useState([...Data.searchResults]);
+
+  const [searchResults, setSearchResults] = useState();
+  const [filteredResults, setFilteredResults] = useState();
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
@@ -44,11 +75,28 @@ const EmployeeSearchResults = props => {
       }
     }
 
-    applyInitialSearchFilter();
+    const options = {
+      url: '/src/components/DAdmin/pages/fragments/EmployeeSearchResults/api-search-results-list.json',
+      method: 'GET'
+    };
+
+    axios(options)
+      .then(({ data }) => {
+        if (data) {
+          setSearchResults(data);
+          setFilteredResults(data);
+          if (props?.empSearchData) {
+            applyInitialSearchFilter(data);
+          }
+        }
+      })
+      .catch(error => {
+        console.error({ error });
+      });
   }, []);
 
   const handleColumnSort = columnKey => {
-    const selectedColumn = columns.find(column => column.key === columnKey);
+    const selectedColumn = gridColumns.find(column => column.key === columnKey);
     let _sortData;
     if (columnKey == sortData.column) {
       _sortData = {
@@ -90,12 +138,9 @@ const EmployeeSearchResults = props => {
     setPage(0);
   };
 
-  const applyInitialSearchFilter = () => {
+  // NOTE: Need to cleanup after working API's are ready
+  const applyInitialSearchFilter = initialSearchResults => {
     const empSearchData = props.empSearchData;
-
-    if (!empSearchData) {
-      return;
-    }
 
     if (empSearchData['location']?.toLowerCase() === 'all locations') {
       delete empSearchData.location;
@@ -114,7 +159,7 @@ const EmployeeSearchResults = props => {
       }
     });
 
-    const mappedSearchResults = searchResults.map(result => {
+    const mappedSearchResults = initialSearchResults.map(result => {
       const _result = { ...result };
       Object.keys(empSearchData).forEach(key => {
         if (typeof _result[key] === 'string') {
@@ -166,7 +211,7 @@ const EmployeeSearchResults = props => {
       setFilteredResults(matched);
       setPage(0);
     } else {
-      props.onResults(matched);
+      props.onZeroResults();
     }
   };
 
@@ -188,6 +233,10 @@ const EmployeeSearchResults = props => {
     setFilteredResults(newResults);
     setPage(0);
   };
+
+  if (!searchResults || !searchResults.length) {
+    return <></>;
+  }
 
   return (
     <React.Fragment>
@@ -233,7 +282,7 @@ const EmployeeSearchResults = props => {
             >
               <TableHead>
                 <TableRow>
-                  {columns.map(column => {
+                  {gridColumns.map(column => {
                     return (
                       <TableCell key={column.key} onClick={() => handleColumnSort(column.key)}>
                         {column.label}
@@ -322,7 +371,15 @@ const EmployeeSearchResults = props => {
                   ? filteredResults.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : filteredResults
                 ).map(employee => (
-                  <TableRow className='search-result-row' key={employee.employeeId}>
+                  <TableRow
+                    className='search-result-row'
+                    key={employee.employeeId}
+                    onClick={() => {
+                      navigate('/admin/edit-employee/', {
+                        state: { employeeId: employee.employeeId }
+                      });
+                    }}
+                  >
                     <TableCell>{employee.employeeId}</TableCell>
                     <TableCell>{employee.loginId}</TableCell>
                     <TableCell className='profile-name'>{employee.employeeName}</TableCell>

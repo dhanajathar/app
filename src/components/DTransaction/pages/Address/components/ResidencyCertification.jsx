@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import data from '../api-address.json';
+import axios from 'axios';
 import {
   FormControl,
   InputLabel,
@@ -12,31 +13,28 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Checkbox,
-  FormHelperText,
   DialogContentText,
   Snackbar,
   Alert
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Search } from '../../../../DSearch/pages/Search';
+import VerifyCertifier from './VerifyCertifier';
+import DCustomerProfile from '../../../../DCustomerProfile';
+import { CertifierResult } from './CertifierResult';
+import DNotification from '../../../../DNotification';
+import { SearchHistory } from '../../../../DSearch/pages/SearchHistory';
 
 function ResidencyCertification({ isFormDisabled }) {
   const {
-    relationShipList,
-    documentList,
     residencyCertification: { certifiedInfo, isCertification }
   } = data;
   const [residencyCertification, setResidencyCertification] = useState(isCertification);
   const [residencyCertificationStatus, setResidencyCertificationStatus] = useState();
-  const [relationShip, setRelationsShip] = useState();
-  const [primaryDocument, setPrimaryDocument] = useState();
-  const [secondaryDocument, setSecondaryDocument] = useState();
   const [openSearchDialog, setOpenSearchDialog] = useState(false);
-  const [relationShipError, setRelationShipError] = useState();
-  const [primaryDocumentError, setPrimaryDocumentError] = useState();
-  const [secondaryDocumentError, setSecondaryDocumentError] = useState();
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [showAlert, setShowAlert] = useState();
+  const [dialogState, setDialogState] = useState('search');
+  const [showAlert, setShowAlert] = useState(false);
 
   const calculateAge = dob => {
     const today = new Date();
@@ -61,6 +59,65 @@ function ResidencyCertification({ isFormDisabled }) {
     setResidencyCertificationStatus(true);
   };
 
+  const handleSearch = (data) => {
+    const options = {
+      url: '/src/components/DTransaction/pages/Address/api-address.json',
+      method: 'GET',
+    };
+
+    axios(options)
+      .then(response => {
+        const searchData = response.data?.SearchResult?.results; // Updated path
+        const searchQuery = data.individual.documentNumber.idCard;
+        const filteredResults = searchData.filter(result => {
+          return result.DLCard.includes(searchQuery);
+        });
+        if (filteredResults.length == 0) {
+          setDialogState('userNotFound')
+        } else {
+          setDialogState('result')
+        }
+      })
+      .catch(() => {
+        setDialogState('userFound')
+      });
+  }
+
+  const handleRowClick = () => {
+    setDialogState('userFound')
+  }
+
+  const renderDialogContent = () => {
+    switch (dialogState) {
+      case 'search':
+        return <Search isSearchCertifier onCancel={() => setOpenSearchDialog(false)} onSearchHistory={() => setDialogState('searchHistory')} onSearch={(data) => handleSearch(data)} />;
+      case 'searchHistory':
+        return <SearchHistory isSearchCertifier onBackPage={() => setDialogState('search')} onUserDetails={() => handleRowClick()} />;
+      case 'result':
+        return <CertifierResult onUserDetails={() => handleRowClick()} onBackPage={() => setDialogState('search')} onCancel={() => setOpenSearchDialog(false)} />;
+      case 'userNotFound':
+        return <div className='not-found'>
+          <img src={'/src/components/DSearch/assets/tempImage.png'} alt='no search results graphic' width='150' height='164' />
+          <div className='search-found-title'>No results Found</div>
+          <div className='search-found-subtitle'>
+            Sorry, we couldn't find what you are looking for.
+          </div>
+          <div onClick={() => setDialogState('search')} className='search-found-link'>
+            Try searching again
+          </div>
+          <Button onClick={() => setOpenSearchDialog(false)} variant='text'>
+            Cancel
+          </Button>
+        </div>;
+      case 'userFound':
+        return <DCustomerProfile isSearchCertifier onCancel={() => setOpenSearchDialog(false)} onBackPage={() => setDialogState('search')} onSelectUser={() => setDialogState('userSelected')} />
+      case 'userSelected':
+        return <VerifyCertifier onCancel={() => setOpenSearchDialog(false)} onSubmit={handleSubmit} />
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <div className='d-row certifications-wrapper'>
@@ -70,7 +127,7 @@ function ResidencyCertification({ isFormDisabled }) {
             <Select
               labelId='residencyCertification'
               id='residencyCertification'
-              value={residencyCertification} 
+              value={residencyCertification}
               label='Residency Certification'
               onChange={e => setResidencyCertification(e.target.value)}
             >
@@ -84,7 +141,7 @@ function ResidencyCertification({ isFormDisabled }) {
             <Button
               variant='contained'
               disabled={residencyCertificationStatus}
-              onClick={() => setOpenSearchDialog(true)}
+              onClick={() => { setOpenSearchDialog(true); setDialogState('search') }}
             >
               SEARCH CERTIFIER{' '}
             </Button>
@@ -106,6 +163,7 @@ function ResidencyCertification({ isFormDisabled }) {
                 fullWidth
                 name='certifier'
                 disabled
+                size='small'
                 defaultValue={certifiedInfo.certifierFullName}
                 label='Certifier Full Name'
               />
@@ -116,6 +174,7 @@ function ResidencyCertification({ isFormDisabled }) {
                   fullWidth
                   name='dateOfBirth'
                   disabled
+                  size='small'
                   label='Date of Birth'
                   defaultValue={certifiedInfo.dateOfBirth}
                 >
@@ -133,6 +192,7 @@ function ResidencyCertification({ isFormDisabled }) {
                 fullWidth
                 name='driverLicense'
                 disabled
+                size='small'
                 defaultValue={certifiedInfo.driverLicense}
                 label='Driver License'
               />
@@ -141,6 +201,7 @@ function ResidencyCertification({ isFormDisabled }) {
               <TextField
                 disabled
                 fullWidth
+                size='small'
                 label='Expiration Date'
                 defaultValue={certifiedInfo.expirationDate}
               >
@@ -150,190 +211,17 @@ function ResidencyCertification({ isFormDisabled }) {
           </div>
         </div>
       )}
-
       <Dialog
-        maxWidth={'xl'}
+        className='search-dialog'
         open={openSearchDialog}
         onClose={() => setOpenSearchDialog(false)}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'> Verify Certifier </DialogTitle>
+        {dialogState == 'userSelected' && <DialogTitle id='alert-dialog-title'>  Verify  Certifier </DialogTitle>}
         <DialogContent>
-          <div className='certifier-wrapper'>
-            <div className='certifier-title'> Certifier Information</div>
-            <div className='d-row'>
-              <div className='col col-sm-12 col-md-8'>
-                <TextField value={'JONATHAN DOE'} label='Certifier Full Name' disabled fullWidth />
-              </div>
-              <div className='col col-sm-12 col-md-4'>
-                <div className={'date-picker'}>
-                  <TextField
-                    fullWidth
-                    name='dateOfBirth'
-                    disabled
-                    label='Date of Birth'
-                    defaultValue={'12/29/1980'}
-                  >
-                    {' '}
-                  </TextField>
-                  <div className='date-helper-text'>{calculateAge('12/29/1980')}</div>
-                </div>
-              </div>
-            </div>
-            <div className='d-row'>
-              <div className='col col-sm-12 col-md-4'>
-                <TextField value={'200 I ST SE'} label='Address Line' disabled fullWidth />
-              </div>
-              <div className='col col-sm-12 col-md-2'>
-                <TextField value={'WASHINGTON'} label='City' disabled fullWidth />
-              </div>
-              <div className='col col-sm-12 col-md-2'>
-                <TextField value={'DC'} label='State' disabled fullWidth />
-              </div>
-              <div className='col col-sm-12 col-md-2'>
-                <TextField value={'20003-3317'} label='ZIP Code' disabled fullWidth />
-              </div>
-              <div className='col col-sm-12 col-md-2'>
-                <TextField value={'UNITED STATES'} label='Country' disabled fullWidth />
-              </div>
-            </div>
-            <div className='d-row'>
-              <div className='col col-sm-12 col-md-4'>
-                <TextField value={'221122'} label='Driver License' disabled fullWidth />
-              </div>
-              <div className='col col-sm-12 col-md-4'>
-                <TextField value={'04/21/2030'} label='Expiration Date' disabled fullWidth />
-              </div>
-            </div>
-
-            <div className='certifier-additional-details'>
-              <div className='certifier-title'> Additional Details</div>
-              <div className='d-row'>
-                <div className='col col-sm-12 col-md-4'>
-                  <FormControl fullWidth error={!!relationShipError}>
-                    <InputLabel id='relationship'>Relationship</InputLabel>
-                    <Select
-                      labelId='relationship'
-                      id='relationship'
-                      value={relationShip}
-                      label='Relationship'
-                      onBlur={() =>
-                        !relationShip
-                          ? setRelationShipError('Please select a value for Relationship')
-                          : setRelationShipError()
-                      }
-                      onChange={e => setRelationsShip(e.target.value)}
-                    >
-                      {relationShipList &&
-                        relationShipList.map(item => {
-                          return (
-                            <MenuItem key={item} value={item}>
-                              {item}
-                            </MenuItem>
-                          );
-                        })}
-                    </Select>
-                    {relationShipError ? (
-                      <FormHelperText> {relationShipError} </FormHelperText>
-                    ) : (
-                      <FormHelperText>
-                        Certifier can certify unto 4 'OTHER' applicants in a year.{' '}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                </div>
-                {relationShip === 'Other' && (
-                  <div className='col col-sm-12 col-md-4'>
-                    <TextField fullWidth />
-                  </div>
-                )}
-              </div>
-              <div className='d-row'>
-                <div className='col col-sm-12 col-md-4'>
-                  <FormControl fullWidth error={!!primaryDocumentError}>
-                    <InputLabel id='primaryDocument'>Primary Document</InputLabel>
-                    <Select
-                      labelId='primaryDocument'
-                      id='primaryDocument'
-                      value={primaryDocument}
-                      label='Primary Document'
-                      onBlur={() =>
-                        !primaryDocument
-                          ? setPrimaryDocumentError('Please select a value for Primary Document')
-                          : setPrimaryDocumentError()
-                      }
-                      onChange={e => setPrimaryDocument(e.target.value)}
-                    >
-                      {documentList &&
-                        documentList.map(item => {
-                          return (
-                            <MenuItem key={item} value={item}>
-                              {item}
-                            </MenuItem>
-                          );
-                        })}
-                    </Select>
-                    {primaryDocumentError && (
-                      <FormHelperText> {primaryDocumentError} </FormHelperText>
-                    )}
-                  </FormControl>
-                </div>
-                <div className='col col-sm-12 col-md-4'>
-                  <FormControl fullWidth error={!!secondaryDocumentError}>
-                    <InputLabel id='primaryDocument'>Secondary Document</InputLabel>
-                    <Select
-                      labelId='secondaryDocument'
-                      id='secondaryDocument'
-                      value={secondaryDocument}
-                      label='Secondary Document'
-                      onBlur={() =>
-                        !primaryDocument
-                          ? setSecondaryDocumentError(
-                            'Please select a value for Secondary Document'
-                          )
-                          : setSecondaryDocumentError()
-                      }
-                      onChange={e => setSecondaryDocument(e.target.value)}
-                    >
-                      {documentList &&
-                        documentList.map(item => {
-                          return (
-                            <MenuItem key={item} value={item}>
-                              {item}
-                            </MenuItem>
-                          );
-                        })}
-                    </Select>
-                    {secondaryDocumentError && (
-                      <FormHelperText> {secondaryDocumentError} </FormHelperText>
-                    )}
-                  </FormControl>
-                </div>
-              </div>
-              <div className='d-row'>
-                <div className='col col-md-12'>
-                  <Checkbox /> I acknowledge that the above information is verified as per the
-                  Residency Certification application
-                </div>
-              </div>
-            </div>
-          </div>
+          {renderDialogContent()}
         </DialogContent>
-        <DialogActions className='certifier-actions-button'>
-          <Button variant='text' onClick={() => setOpenSearchDialog(false)}>
-            {' '}
-            cancel{' '}
-          </Button>
-          <Button
-            variant='contained'
-            onClick={handleSubmit}
-            autoFocus
-            disabled={!relationShip || !primaryDocument || !secondaryDocument}
-          >
-            Confirm certifier
-          </Button>
-        </DialogActions>
       </Dialog>
       <Dialog
         open={openDeleteDialog}
@@ -357,18 +245,12 @@ function ResidencyCertification({ isFormDisabled }) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={showAlert} autoHideDuration={6000} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }} onClose={() => setShowAlert(false)}>
-        <Alert onClose={() => setShowAlert(false)} severity="success" sx={{ width: '60%' }}>
-          Certifier information deleted successfully!
-        </Alert>
-      </Snackbar>
+      <DNotification open={showAlert} autoHideDuration={6000} severity='success' message=' Certifier information deleted successfully!' onClose={() => setShowAlert(false)} > </DNotification>
     </>
   );
 }
 
 export default ResidencyCertification;
-
-
 ResidencyCertification.propTypes = {
   isFormDisabled: PropTypes.bool,
 };

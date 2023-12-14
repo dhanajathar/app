@@ -1,7 +1,7 @@
 import { Button, Card } from '@mui/material';
 import { DEventService, DEvents } from '../../../services/DEventService';
-import React, { useEffect, useRef, useState } from 'react';
-
+import React, { useRef, useState } from 'react';
+import './Search.css';
 import BusinessInformation from './fragments/BusinessInformation';
 import BusinessPrincipal from './fragments/BusinessPrincipal';
 import BusinessSalesPerson from './fragments/BusinessSalesPerson';
@@ -18,8 +18,9 @@ import Title from './fragments/Title';
 import TransactionId from './fragments/TransactionId';
 import VIN from './fragments/VIN';
 import { useNavigate } from 'react-router-dom';
+import { Flag } from '@mui/icons-material';
 
-export function Search() {
+export function Search({ isSearchCertifier = false, onCancel, onSearch , onSearchHistory}) {
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(false);
   const tabRef = useRef();
@@ -46,7 +47,7 @@ export function Search() {
     selectedTab: 'transactions'
   };
   const [formData, setFormData] = useState(sessionData || defaultFormData);
-  const [typeVal, setTypeVal] = useState(formData.selectedTab);
+  const [typeVal, setTypeVal] = useState(isSearchCertifier ? 'individual' : formData.selectedTab);
   const [employeeSearchFormData, setEmployeeSearchFormData] = useState(null);
 
   const employeeRef = useRef();
@@ -77,9 +78,9 @@ export function Search() {
 
   const handleCustomerProfileClick = () => {
     updateSearchData();
-    // DEventService.dispatch(DEvents.ROUTE, {
-    //   detail: { path: `/customer-profile` }
-    // });
+    DEventService.dispatch(DEvents.ROUTE, {
+      detail: { path: `/customer-profile` }
+    });
   };
 
   const updateSearchData = () => {
@@ -110,7 +111,10 @@ export function Search() {
     }
   };
 
-  const handleTabClick = e => {
+  const handleTabClick = e => { 
+    if(isSearchCertifier && e.target.id !==1){
+      return false;
+    }
     setIsDisabled(false);
     setTypeVal(e.target.id);
     updateSearchData();
@@ -228,85 +232,88 @@ export function Search() {
     }
   ];
 
-  return (
-    <React.Fragment>
-      <div className='page-container'>
-        <div className='search-title-text'>Destiny Search for</div>
-        <Card className='search-card'>
-          <div className='search-menu'>
-            {searchTypeList.map((item, index) => {
-              return (
-                <div
-                  id={item.id}
-                  className={`search-menu-item ${
-                    typeVal === item.id ? 'search-menu-item-active' : ''
-                  }`}
-                  key={`${index}`}
-                  onClick={handleTabClick}
+  return ( 
+        <div className={isSearchCertifier ? 'SearchCertifier': 'page-container'}>
+          <div className='search-title-text'>Destiny Search for</div>
+          <div className='search-card'>
+            <div className='search-menu'>
+              {searchTypeList.map((item, index) => {
+                return (
+                  <div
+                    id={item.id}
+                    className={`search-menu-item ${typeVal === item.id ? 'search-menu-item-active' : 'disabled-item'
+                      }`}
+                    key={`${index}`}
+                    onClick={handleTabClick}
+                  >
+                    {item.name}
+                  </div>
+                );
+              })}
+            </div>
+            <div className='search-field-box'>
+              {typeVal === 'transactions' && <MuiTabs contentClass='tab-content' tabs={transTabs} />}
+              {typeVal === 'individual' && (
+                <MuiTabs
+                  ref={tabRef}
+                  contentClass='tab-content'
+                  selectedTab={formData.selectedSubTab}
+                  tabs={indTabs}
+                />
+              )}
+              {typeVal === 'business' && <MuiTabs contentClass='tab-content' tabs={busTabs} />}
+              {typeVal === 'vehicle' && <MuiTabs contentClass='tab-content' tabs={vehTabs} />}
+              {typeVal === 'employee' && (
+                <Employee
+                  ref={employeeRef}
+                  shouldDisableSearch={disable => {
+                    setIsDisabled(disable);
+                  }}
+                />
+              )}
+              {typeVal === 'check' && <Check />}
+              {typeVal === 'email' && <Email />}
+            </div>
+          </div>
+          <div className='search-buttons'>
+            <div>
+              {isSearchCertifier &&  <Button
+            variant='text'
+            onClick={() => onCancel()}
+          >
+            Cancel
+          </Button>}
+              {typeVal === 'employee' && (
+                <Button
+                  onClick={() => {
+                    navigate('/dashboard');
+                  }}
+                  variant='outlined'
                 >
-                  {item.name}
-                </div>
-              );
-            })}
-          </div>
-          <div className='search-field-box'>
-            {typeVal === 'transactions' && <MuiTabs contentClass='tab-content' tabs={transTabs} />}
-            {typeVal === 'individual' && (
-              <MuiTabs
-                ref={tabRef}
-                contentClass='tab-content'
-                selectedTab={formData.selectedSubTab}
-                tabs={indTabs}
-              />
-            )}
-            {typeVal === 'business' && <MuiTabs contentClass='tab-content' tabs={busTabs} />}
-            {typeVal === 'vehicle' && <MuiTabs contentClass='tab-content' tabs={vehTabs} />}
-            {typeVal === 'employee' && (
-              <Employee
-                ref={employeeRef}
-                shouldDisableSearch={disable => {
-                  setIsDisabled(disable);
-                }}
-              />
-            )}
-            {typeVal === 'check' && <Check />}
-            {typeVal === 'email' && <Email />}
-          </div>
-        </Card>
-        <div className='search-buttons'>
-          <div>
-            {typeVal === 'employee' && (
-              <Button
-                onClick={() => {
-                  navigate('/dashboard');
-                }}
-                variant='outlined'
-              >
-                Cancel
+                  Cancel
+                </Button>
+              )}
+            </div>
+            <div>
+              <Button variant='contained' color='primary' onClick={handleClearButton}>
+                CLEAR
               </Button>
-            )}
-          </div>
-          <div>
-            <Button variant='contained' color='primary' onClick={handleClearButton}>
-              CLEAR
-            </Button>
-            {typeVal !== 'employee' && (
-              <Button onClick={handleSearchHistory} variant='outlined'>
-                Search History
-              </Button>
-            )}
+              {typeVal !== 'employee' && (
+                <Button onClick={()=>isSearchCertifier ? onSearchHistory(): handleSearchHistory} variant='outlined'>
+                  Search History
+                </Button>
+              )}
 
-            <Button
-              variant='contained'
-              color='primary'
-              disabled={isDisabled}
-              onClick={handleSearchClick}
-            >
-              SEARCH
-            </Button>
+              <Button
+                variant='contained'
+                color='primary'
+                disabled={isDisabled}
+                onClick={()=> isSearchCertifier ? onSearch(formData) : handleSearchClick}
+              >
+                SEARCH
+              </Button>
+            </div>
           </div>
-        </div>
-      </div>
-    </React.Fragment>
+        </div> 
   );
 }

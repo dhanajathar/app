@@ -31,7 +31,7 @@ export default function AddressFragment() {
   return (
     <>
       {data && data.map((address, index) => (
-        <Accordion className='address-accordion' defaultExpanded={index === 0 ? true : false}                  >
+        <Accordion className='address-accordion' key={index} defaultExpanded={index === 0 ? true : false}                  >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -51,7 +51,7 @@ export default function AddressFragment() {
             <>
               <div className='d-row'>
                 <div className='col col-sm-12 col-md-4'>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth size='small'>
                     <InputLabel id='addressType'>Address Type</InputLabel>
                     <Select
                       labelId='addressType'
@@ -69,9 +69,15 @@ export default function AddressFragment() {
                   <div className='date-picker'>
                     <LocalizationProvider dateAdapter={AdapterDayjs}    >
                       <DatePicker
+
                         label='From Date'
                         value={address.fromDate ? dayjs(address.fromDate) : null}
                         disabled
+                        slotProps={{
+                          textField: {
+                            size: 'small'
+                          }
+                        }}
                       />
                     </LocalizationProvider>
                   </div>
@@ -83,6 +89,11 @@ export default function AddressFragment() {
                         label='To Date'
                         value={address.toDate && dayjs(address.toDate)}
                         disabled
+                        slotProps={{
+                          textField: {
+                            size: 'small'
+                          }
+                        }}
                       />
                     </LocalizationProvider>
                   </div>
@@ -92,6 +103,7 @@ export default function AddressFragment() {
                 <div className='col col-sm-12 col-md-4'>
                   <TextField
                     fullWidth
+                    size='small'
                     label='Address Line'
                     disabled
                     value={address.addressDetails.addressLine}
@@ -102,6 +114,7 @@ export default function AddressFragment() {
                 <div className='col col-sm-12 col-md-2'>
                   <TextField
                     fullWidth
+                    size='small'
                     label='City'
                     disabled
                     value={address.addressDetails.city}
@@ -111,6 +124,7 @@ export default function AddressFragment() {
                 <div className='col col-sm-12 col-md-2'>
                   <TextField
                     fullWidth
+                    size='small'
                     label='State'
                     disabled
                     value={address.addressDetails.state}
@@ -120,6 +134,7 @@ export default function AddressFragment() {
                 <div className='col col-sm-12 col-md-2'>
                   <TextField
                     fullWidth
+                    size='small'
                     label='ZIP Code'
                     disabled
                     value={address.addressDetails.zipCode}
@@ -128,6 +143,7 @@ export default function AddressFragment() {
                 <div className='col col-sm-12 col-md-2'>
                   <TextField
                     fullWidth
+                    size='small'
                     label='Country'
                     disabled
                     value={address.addressDetails.country}
@@ -164,7 +180,7 @@ export default function AddressFragment() {
               </div>
               {address?.residencyCertification && <> <div className='d-row'>
                 <div className='col col-sm-12 col-md-4'>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth size='small'>
                     <InputLabel id='certificate'> Residency Certification</InputLabel>
                     <Select
                       labelId='certificate'
@@ -180,63 +196,67 @@ export default function AddressFragment() {
                 </div>
 
               </div>
-              {address.residencyCertification.isCertification==='YES' && <>
-                <div className='d-sub-title'> Certifier Information
-                </div>
-                <div className='d-row'>
-                  <div className='col col-sm-12 col-md-8'>
-                    <TextField
-                      fullWidth
-                      name='certifier'
-                      disabled
-                      defaultValue={address.residencyCertification.certifiedInfo.certifierFullName}
-                      label='Certifier Full Name'
-                    />
+                {address.residencyCertification.isCertification === 'YES' && <>
+                  <div className='d-sub-title'> Certifier Information
                   </div>
-                  <div className='col col-sm-12 col-md-4'>
-                    <div className={'date-picker'}>
+                  <div className='d-row'>
+                    <div className='col col-sm-12 col-md-8'>
                       <TextField
+                        size='small'
                         fullWidth
-                        name='dateOfBirth'
+                        name='certifier'
                         disabled
-                        label='Date of Birth'
-                        defaultValue={address.residencyCertification.certifiedInfo.dateOfBirth}
-                        className='input-adornment'
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position='end'>
-                              {' '}
-                              <div className='input-adornment-text'> {calculateAge(address.residencyCertification.certifiedInfo.dateOfBirth)} </div>{' '}
-                            </InputAdornment>
-                          )
-                        }}
-                      > 
-                      </TextField>
-                      
+                        defaultValue={address.residencyCertification.certifiedInfo.certifierFullName}
+                        label='Certifier Full Name'
+                      />
+                    </div>
+                    <div className='col col-sm-12 col-md-4'>
+                      <div className={'date-picker'}>
+                        <TextField
+                          size='small'
+                          fullWidth
+                          name='dateOfBirth'
+                          disabled
+                          label='Date of Birth'
+                          defaultValue={address.residencyCertification.certifiedInfo.dateOfBirth}
+                          className='input-adornment'
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position='end'>
+                                {' '}
+                                <div className='input-adornment-text'> {calculateAge(address.residencyCertification.certifiedInfo.dateOfBirth)} </div>{' '}
+                              </InputAdornment>
+                            )
+                          }}
+                        >
+                        </TextField>
+
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className='d-row'>
-                  <div className='col col-sm-12 col-md-4'>
-                    <TextField
-                      fullWidth
-                      name='driverLicense'
-                      disabled
-                      defaultValue={address.residencyCertification.certifiedInfo.driverLicense}
-                      label='Driver License'
-                    />
+                  <div className='d-row'>
+                    <div className='col col-sm-12 col-md-4'>
+                      <TextField
+                        size='small'
+                        fullWidth
+                        name='driverLicense'
+                        disabled
+                        defaultValue={address.residencyCertification.certifiedInfo.driverLicense}
+                        label='Driver License'
+                      />
+                    </div>
+                    <div className='col col-sm-12 col-md-4'>
+                      <TextField
+                        size='small'
+                        disabled
+                        fullWidth
+                        label='Expiration Date'
+                        defaultValue={address.residencyCertification.certifiedInfo.expirationDate}
+                      >
+                        {' '}
+                      </TextField>
+                    </div>
                   </div>
-                  <div className='col col-sm-12 col-md-4'>
-                    <TextField
-                      disabled
-                      fullWidth
-                      label='Expiration Date'
-                      defaultValue={address.residencyCertification.certifiedInfo.expirationDate}
-                    >
-                      {' '}
-                    </TextField>
-                  </div>
-                </div>
                 </>}
               </>}
             </>

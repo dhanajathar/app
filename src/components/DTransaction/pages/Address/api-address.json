@@ -237,5 +237,109 @@
       "BULGARIA",
       "BURKINA FASO",
       "UNITED STATES"
-    ]
+    ],
+    "SearchResult": {
+      "schema": [
+          {
+              "id": "id",
+              "numeric": true,
+              "label": "Customer ID",
+              "align": "left",
+              "sortable": true
+          },
+          {
+              "id": "DLCard",
+              "numeric": false,
+              "label": "DL Number",
+              "align": "left",
+              "sortable": true
+          },
+          {
+              "id": "SSN",
+              "numeric": false,
+              "label": "SSN",
+              "align": "left",
+              "sortable": true
+          },
+          {
+              "id": "disabilityPlacardNumber",
+              "numeric": false,
+              "label": "Disability Placard Number",
+              "align": "left",
+              "sortable": true
+          },
+          {
+              "id": "Name",
+              "numeric": false,
+              "label": "Name",
+              "align": "left",
+              "sortable": true
+          },
+          {
+              "id": "dateOfBirth",
+              "numeric": false,
+              "label": "DOB",
+              "align": "left",
+              "sortable": true
+          },
+          {
+              "id": "emailId",
+              "numeric": false,
+              "label": "Email ID",
+              "align": "left",
+              "sortable": true
+          }
+      ],
+      "results": [
+          {
+              "id": "21997907",
+              "DLCard": "123456",
+              "SSN": "123-45-6789",
+              "disabilityPlacardNumber": "DP987654",
+              "Name": "John Doe",
+              "dateOfBirth": "01/15/1990",
+              "emailId": "JONY_DOE@GMAIL.COM"
+          },
+          {
+              "id": "20115321",
+              "DLCard": "789123",
+              "SSN": "987-65-4321",
+              "disabilityPlacardNumber": "DP123456",
+              "Name": "Jane Smith",
+              "dateOfBirth": "05/22/1985",
+              "emailId": "test1@GMAIL.COM"
+          },
+          {
+              "id": "21997907",
+              "DLCard": "625423",
+              "SSN": "456-78-9012",
+              "disabilityPlacardNumber": "DP789012",
+              "Name": "Robert Johnson",
+              "dateOfBirth": "11/10/1975",
+              "emailId": "test2@GMAIL.COM"
+          },
+          {
+              "id": "10997857",
+              "DLCard": "265244",
+              "SSN": "234-56-7890",
+              "disabilityPlacardNumber": "DP345678",
+              "Name": "Emily Williams",
+              "dateOfBirth": "08/07/1982",
+              "emailId": "test3@GMAIL.COM"
+          },
+          {
+              "id": "21997998",
+              "DLCard": "362512",
+              "SSN": "345-67-8901",
+              "disabilityPlacardNumber": "DP567890",
+              "Name": "Michael Brown",
+              "dateOfBirth": "04/30/1995",
+              "emailId": "test4@GMAIL.COM"
+          }
+      ]
   }
+  
+  }
+
+ 
+  

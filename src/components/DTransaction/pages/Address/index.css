@@ -169,6 +169,7 @@
   padding: 1rem;
   cursor: pointer;
 }
+
 .street-list li.selected {
   font-weight: bold;
 }
@@ -235,6 +236,86 @@
 }
 
 .certifier-actions-button {
-  justify-content: space-between !important;
+  justify-content: space-between;
+  display: flex;
+  margin-top: 1rem;
 }
- 
+
+.search-dialog .MuiDialog-paper {
+  min-width: 70vw;
+}
+
+.search-result-card {
+  width: 100%;
+  /* min-height: 100px;
+  max-height: 100%; */
+  width: '100%';
+  overflow: 'hidden';
+  background-color: white;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.14);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.search-title-text {
+  text-align: left;
+  font: normal normal bold 1.5rem/1.875rem Open Sans;
+  letter-spacing: 0rem;
+  color: var(--primary100);
+  margin-bottom: 1.313rem;
+}
+
+.search-result-container {
+  max-height: 72.5vh;
+}
+
+.search-result-table {
+  max-width: 98.5%;
+  margin: 10px;
+}
+
+.search-result-table-head {
+  background-color: #f8f9fb;
+  font-weight: bold;
+}
+
+.search-result-row {
+  cursor: pointer;
+}
+
+.search-result-row:hover {
+  background-color: var(--primary30) !important;
+}
+
+.search-result-table-even {
+  background-color: #f2f2f2;
+}
+
+.not-found {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.search-found-title {
+  text-align: center;
+  color: #000000;
+  font: normal normal bold 24px/30px Open Sans;
+  letter-spacing: 0px;
+  margin: 2rem 0 1rem;
+}
+
+.search-found-subtitle {
+  font: normal normal normal 16px/30px Open Sans;
+  color: #000000de;
+  margin-bottom: 20px;
+}
+
+.search-found-link {
+  font: normal normal normal 16px/30px Open Sans;
+  letter-spacing: 0px;
+  color: #1860b5;
+  margin-bottom: 20px;
+  cursor: pointer;
+}

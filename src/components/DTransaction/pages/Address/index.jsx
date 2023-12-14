@@ -149,9 +149,11 @@ export default function Address() {
   };
 
   const handleExpand = index => {
+    if(!isFormDisabled) {
     const newAddresses = [...addresses];
     newAddresses[index].isExpand = !newAddresses[index].isExpand;
     setAddresses(newAddresses);
+    }
   };
 
   const selectStreetName = () => {
@@ -213,8 +215,7 @@ export default function Address() {
       ...updatedAddress.addressDetails,
       isValidate: null,
       overRide: updatedAddress.addressDetails.overRide + 1
-    };
-    debugger;
+    }; 
     if (updatedAddress.addressDetails.overRide > 1 &&
       updatedAddress.addressDetails.ignoreAddressVerification) {
       setShowAlert(true);

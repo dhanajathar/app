@@ -1,10 +1,11 @@
 .d-stage {
   overflow: initial;
 }
+
 .profile-page {
   display: flex;
   flex-direction: column;
-  height: 80vh; 
+  height: 80vh;
 }
 
 .container {
@@ -13,6 +14,7 @@
   max-width: 800px;
   margin-top: 20px;
 }
+
 .page-heading {
   color: #13126c;
   font-size: 1.5rem;
@@ -21,6 +23,7 @@
   font-weight: bold;
   margin-left: 1.5rem;
 }
+
 .user-profile {
   width: 100%;
   display: flex;
@@ -28,37 +31,43 @@
   height: calc(100% - 4.5rem);
   background: var(--white100);
   box-shadow: 1px 3px 6px #0000000D;
-border: 1px solid #DEDEDE;
-border-radius: 5px;
-padding-bottom: 0.5rem;
+  border: 1px solid #DEDEDE;
+  border-radius: 5px;
+  padding-bottom: 0.5rem;
 }
+
 .profile-content {
   width: 11rem;
   padding: 0 1.5rem;
 }
+
 .profile-date {
   text-align: center;
   margin-top: 1.5rem;
   font-size: 12px;
 }
+
 .profile-date .date-label {
   margin-bottom: 0.5rem;
 }
+
 .profile-date .date-value {
   font-size: 0.785rem;
 }
- 
+
 .tabs-wrapper {
-  width: 100%;
+  width: calc(100% - 15rem);
   padding-right: 1.5rem;
   display: flex;
   height: 100%;
   flex-direction: column;
   background: var(--white100);
 }
+
 .tab-details {
   padding-top: 1.5rem;
 }
+
 .fill-width {
   width: 100%;
   padding-right: 10px;
@@ -70,36 +79,42 @@ padding-bottom: 0.5rem;
 .select-button {
   margin-left: 1rem;
 }
+
 .tab-content {
   display: flex;
   flex-direction: column;
   margin: 1rem 1.5rem;
   height: 100%;
 }
- 
+
 .tab-content-scroll {
   flex: 1 1;
   overflow: auto;
 }
+
 input,
 .MuiSelect-select {
   text-transform: uppercase;
 }
+
 .MuiTabs-root {
-  margin-top:1rem;
+  margin-top: 1rem;
 }
+
 .img-wrapper {
   border: 1px solid #9B9B9B;
   border-radius: 5px;
-  margin: 1.5rem  0.5rem 0 0.5rem;
-  
+  margin: 1.5rem 0.5rem 0 0.5rem;
+
 }
+
 .img-wrapper img {
   width: 150px;
   height: 150px;
   object-fit: contain;
-  
+
 }
+
 .signature-img {
   width: 100px;
   height: 64px;
@@ -107,27 +122,62 @@ input,
   display: flex;
   margin: 0 auto;
 }
+
 .img-badge {
   background: #164ABE 0% 0% no-repeat padding-box;
   border-radius: 0 0 5px 5px;
-  
-text-align: center;
-font: normal normal bold 14px/19px Open Sans;
-color: var(--white100);
-margin-top: -5px;
+
+  text-align: center;
+  font: normal normal bold 14px/19px Open Sans;
+  color: var(--white100);
+  margin-top: -5px;
 }
+
 .version-button {
-  margin: 0.5rem 0 ;
+  margin: 0.5rem 0;
 }
+
 .input-adornment .MuiInputBase-adornedEnd {
   padding-right: 0 !important;
 }
+
 .input-adornment-text {
   background: var(--white70);
   padding: 16.5px 14px;
   border-radius: 0 4px 4px 0;
   border-color: #ededed;
 }
+
+.MuiInputBase-sizeSmall .input-adornment-text {
+  padding: 8px 14px;
+}
+
 .verified-text {
   color: #27AE60;
 }
+
+.action-buttons {
+  justify-content: space-between;
+  display: flex;
+  margin-top: 1rem;
+}
+
+.right-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.right-buttons .divider {
+  height: 1rem;
+  border-left: 1px solid #cccc;
+  margin: 0 1rem;
+}
+.search-certifier .tab-content {
+  margin: 0;
+  padding-bottom: 0;
+  height: 94%;
+}
+.search-certifier .page-heading {
+  margin-left: 0;
+}
+ 

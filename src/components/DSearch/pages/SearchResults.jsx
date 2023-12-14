@@ -184,10 +184,23 @@ export function SearchResults() {
           <div onClick={() => navigate('/search')} className='inline-link'>
             Try searching again
           </div>
-          <Button onClick={() => handleNewCustomerClick()} color='primary' variant='contained'>
-            {' '}
-            CREATE A NEW CUSTOMER RECORD{' '}
-          </Button>
+          {location?.state?.type === 'employee' ? (
+            <Button
+              className='create-button'
+              size='small'
+              variant='contained'
+              onClick={() => {
+                navigate('/admin/new-employee/');
+              }}
+            >
+              Create A New Employee Record
+            </Button>
+          ) : (
+            <Button onClick={() => handleNewCustomerClick()} color='primary' variant='contained'>
+              {' '}
+              CREATE A NEW CUSTOMER RECORD{' '}
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -197,7 +210,7 @@ export function SearchResults() {
         {location?.state?.type === 'employee' ? (
           <EmployeeSearchResults
             empSearchData={location?.state?.empSearchData}
-            onResults={data => setResultsLength(data && data?.length ? data.length : 0)}
+            onZeroResults={() => setResultsLength(0)}
           />
         ) : (
           <div className='page-container'>
