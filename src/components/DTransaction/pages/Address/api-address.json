@@ -22,7 +22,7 @@
     "overRide": 0
   },
   "residencyCertification": {
-    "isCertification": "NO",
+    "isCertification": null,
     "certifiedInfo": {
       "certifierFullName": "John Doe",
       "dateOfBirth": "12/29/1980",

@@ -61,6 +61,7 @@ export default function Address() {
   const [focusedField, setFocusedField] = useState('');
   const [warningText, setWarningText] = useState();
   const [selectedStreetName, setSelectedStreetName] = useState('')
+
   const PRIMARY = 'PRIMARY';
   const initialData = {
     addressType: 'PRIMARY',
@@ -85,12 +86,13 @@ export default function Address() {
       ignoreAddressVerification: null
     },
     residencyCertification: {
-      isCertification: null,
+      isCertification: '',
+      residencyCertificationStatus: false,
       certifiedInfo: {
-        certifierFullName: '',
-        dateOfBirth: '',
-        driverLicense: '',
-        expirationDate: ''
+        certifierFullName: "John Doe",
+        dateOfBirth: "12/29/1980",
+        driverLicense: "1234567890",
+        expirationDate: "04/21/2030"
       }
     },
     isExpand: true
@@ -149,10 +151,10 @@ export default function Address() {
   };
 
   const handleExpand = index => {
-    if(!isFormDisabled) {
-    const newAddresses = [...addresses];
-    newAddresses[index].isExpand = !newAddresses[index].isExpand;
-    setAddresses(newAddresses);
+    if (!isFormDisabled) {
+      const newAddresses = [...addresses];
+      newAddresses[index].isExpand = !newAddresses[index].isExpand;
+      setAddresses(newAddresses);
     }
   };
 
@@ -215,7 +217,7 @@ export default function Address() {
       ...updatedAddress.addressDetails,
       isValidate: null,
       overRide: updatedAddress.addressDetails.overRide + 1
-    }; 
+    };
     if (updatedAddress.addressDetails.overRide > 1 &&
       updatedAddress.addressDetails.ignoreAddressVerification) {
       setShowAlert(true);
@@ -374,6 +376,32 @@ export default function Address() {
       }
     }
   };
+
+  const handleChangeCertification = (value) => {
+    const newAddresses = [...addresses];
+    const updatedAddress = { ...newAddresses[0] };
+    updatedAddress.residencyCertification = {
+      ...updatedAddress.residencyCertification,
+      isCertification: value
+    };
+    newAddresses[0] = updatedAddress;
+    setAddresses(newAddresses);
+
+  }
+
+  const handleCertificationStatus = (value) => {
+    const newAddresses = [...addresses];
+    const updatedAddress = { ...newAddresses[0] };
+    updatedAddress.residencyCertification = {
+      ...updatedAddress.residencyCertification,
+      residencyCertificationStatus: value
+    };
+    newAddresses[0] = updatedAddress;
+    setAddresses(newAddresses);
+
+  }
+
+
 
   return (
     <div className='d-container'>
@@ -660,14 +688,14 @@ export default function Address() {
                   )}
                 </form>
               </fieldset>
-              {address.addressType === PRIMARY && <ResidencyCertification isFormDisabled={isFormDisabled} />}
+              {address.addressType === PRIMARY && <ResidencyCertification onResidencyCertificationStatus={handleCertificationStatus} onResidencyCertification={handleChangeCertification} formData={address} isFormDisabled={isFormDisabled} />}
             </div>}
           </div>
           {addresses.length === index + 1 && (
             <div className='add-address-btn'>
               <Button
                 variant='text'
-                disabled={!addresses[index]?.addressDetails.isValidate}
+                disabled={!addresses[index]?.addressDetails.isValidate || (addresses[index].residencyCertification.isCertification === "YES" && !addresses[index].residencyCertification.residencyCertificationStatus)}
                 onClick={addAnotherAddress}
               >
                 {' '}

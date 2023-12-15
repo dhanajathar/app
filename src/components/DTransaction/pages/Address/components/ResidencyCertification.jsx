@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import data from '../api-address.json';
+import PropTypes from 'prop-types'; 
 import axios from 'axios';
 import {
   FormControl,
@@ -13,9 +12,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  DialogContentText,
-  Snackbar,
-  Alert
+  DialogContentText, 
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Search } from '../../../../DSearch/pages/Search';
@@ -25,12 +22,10 @@ import { CertifierResult } from './CertifierResult';
 import DNotification from '../../../../DNotification';
 import { SearchHistory } from '../../../../DSearch/pages/SearchHistory';
 
-function ResidencyCertification({ isFormDisabled }) {
+function ResidencyCertification({ isFormDisabled, formData, onResidencyCertification, onResidencyCertificationStatus }) {
   const {
-    residencyCertification: { certifiedInfo, isCertification }
-  } = data;
-  const [residencyCertification, setResidencyCertification] = useState(isCertification);
-  const [residencyCertificationStatus, setResidencyCertificationStatus] = useState();
+    residencyCertification: { certifiedInfo, isCertification, residencyCertificationStatus }
+  } = formData; 
   const [openSearchDialog, setOpenSearchDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [dialogState, setDialogState] = useState('search');
@@ -50,13 +45,13 @@ function ResidencyCertification({ isFormDisabled }) {
 
   const handleCertifierDelete = () => {
     setOpenDeleteDialog(false);
-    setResidencyCertificationStatus(false);
+    onResidencyCertificationStatus(false);
     setShowAlert(true);
   };
 
   const handleSubmit = async () => {
     setOpenSearchDialog(false);
-    setResidencyCertificationStatus(true);
+    onResidencyCertificationStatus(true);
   };
 
   const handleSearch = data => {
@@ -162,16 +157,16 @@ function ResidencyCertification({ isFormDisabled }) {
             <Select
               labelId='residencyCertification'
               id='residencyCertification'
-              value={residencyCertification}
+              value={isCertification}
               label='Residency Certification'
-              onChange={e => setResidencyCertification(e.target.value)}
+              onChange={e => onResidencyCertification(e.target.value)}
             >
               <MenuItem value={'YES'}>YES</MenuItem>
               <MenuItem value={'NO'}>NO</MenuItem>
             </Select>
           </FormControl>
         </div>
-        {residencyCertification === 'YES' && (
+        {isCertification === 'YES' && (
           <div className='col col-sm-12 col-md-4'>
             <Button
               variant='contained'
@@ -186,7 +181,7 @@ function ResidencyCertification({ isFormDisabled }) {
           </div>
         )}
       </div>
-      {residencyCertificationStatus && residencyCertification === 'YES' && (
+      {residencyCertificationStatus && isCertification === 'YES' && (
         <div className='address-status certifications-status-wrapper'>
           <div className='certifier-header'>
             <div className='certifier-header-text'> Certifier Information </div>
@@ -298,5 +293,14 @@ function ResidencyCertification({ isFormDisabled }) {
 
 export default ResidencyCertification;
 ResidencyCertification.propTypes = {
-  isFormDisabled: PropTypes.bool
+  isFormDisabled: PropTypes.bool,
+  formData: PropTypes.shape({
+    residencyCertification: PropTypes.shape({
+      certifiedInfo: PropTypes.object,
+      isCertification: PropTypes.string,
+      residencyCertificationStatus: PropTypes.bool
+    })
+  }),
+  onResidencyCertification: PropTypes.func,
+  onResidencyCertificationStatus: PropTypes.func
 };
