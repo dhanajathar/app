@@ -7,36 +7,36 @@
 }
 
 .date-picker .MuiInputBase-adornedEnd {
-  padding-right: 14px !important;
+  padding-right: 0.875rem !important;
 }
 
 .has-date .MuiOutlinedInput-root {
-  border-radius: 4px 0px 0px 4px;
+  border-radius: 0.25rem 0 0 0.25rem;
   border-right: none;
 }
 
 .date-helper-text {
   background: var(--white70);
-  padding: 0px 10px;
-  border-radius: 0 4px 4px 0;
-  border: 1px solid rgba(0, 0, 0, 0.23);
+  padding: 0 0.625rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+  border: 0.0625rem solid rgba(0, 0, 0, 0.23);
   border-left: none;
-  font: normal normal 600 12px/17px Open Sans;
+  font: normal normal 600 0.75rem/1.0625rem Open Sans;
   color: var(--black80);
   display: flex;
   align-items: center;
 }
 
 .address-details {
-  border: 1px solid #c6c6c6;
-  border-radius: 5px;
+  border: 0.0625rem solid #c6c6c6;
+  border-radius: 0.3125rem;
   margin-top: 1.5rem;
 }
 
 .address-details .legend {
-  font: normal normal bold 18px/16px Open Sans;
-  letter-spacing: 0px;
-  color: #000000;
+  font: normal normal bold 1.125rem/1rem Open Sans;
+  letter-spacing: 0;
+  color: var(--black100)
 }
 
 .address-status-wrapper {
@@ -46,25 +46,25 @@
 
 .address-status {
   background: var(--primary30) 0% 0% no-repeat padding-box;
-  border: 2px solid #167abc;
-  border-radius: 4px;
+  border: 0.125rem solid #167abc;
+  border-radius: 0.25rem;
   padding: 1rem;
 }
 
 .address-status input {
-  background: #fff;
+  background: var(--white100)
 }
 
 .valid-address {
   display: flex;
   align-items: center;
-  font: normal normal 600 16px/22px Open Sans;
-  color: #000;
+  font: normal normal 600 1rem/1.375rem Open Sans;
+  color: var(--black100)
 }
 
 .invalid-address {
-  font: normal normal normal 16px/22px Open Sans;
-  letter-spacing: 0px;
+  font: normal normal normal 1rem/1.375rem Open Sans;
+  letter-spacing: 0;
   color: #830909;
   text-transform: uppercase;
   display: flex;
@@ -72,9 +72,9 @@
 }
 
 .address-line {
-  border-right: 1px solid #d0d0d0;
-  padding-right: 2rem;
-  margin-right: 2rem;
+  border-right: 0.0625rem solid #d0d0d0;
+  padding-right: 1.25rem;
+  margin-right: 1.25rem;
 }
 
 .address-status-text {
@@ -86,7 +86,7 @@
 .address-header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #707070;
+  border-bottom: 0.0625rem solid #707070;
   min-height: 4rem;
 }
 
@@ -97,16 +97,16 @@
 .delete-address {
   background: #ebebeb 0% 0% no-repeat padding-box;
   border-radius: 50%;
-  margin-left: 2rem;
-  padding: 0.2rem;
+  margin-left: 1.25rem;
+  padding: 0.125rem;
   cursor: pointer;
   color: #9a0404;
 }
 
 .address-title {
-  font: normal normal bold 18px/16px Open Sans;
-  letter-spacing: 0px;
-  color: #000000;
+  font: normal normal bold 1.125rem/1rem Open Sans;
+  letter-spacing: 0;
+  color: var(--black100)
 }
 
 .accordion-right {
@@ -116,15 +116,15 @@
 
 .address-duration {
   background: var(--primary10) 0% 0% no-repeat padding-box;
-  border: 1px solid #242424;
-  border-radius: 16px;
-  margin-right: 5px;
-  padding: 3px 6px;
+  border: 0.0625rem solid #242424;
+  border-radius: 1rem;
+  margin-right: 0.3125rem;
+  padding: 0.1875rem 0.375rem;
 }
 
 .address-content {
   height: auto;
-  transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: height 0.1875rem cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 .address-content.collapsed {
@@ -139,8 +139,8 @@
 }
 
 .certifier-header-text {
-  font: normal normal bold 18px/16px Open Sans;
-  color: #000000;
+  font: normal normal bold 1.125rem/1rem Open Sans;
+  color: var(--black100)
 }
 
 .certifications-wrapper,
@@ -150,10 +150,10 @@
 }
 
 .street-list {
-  border-top: 1px solid #707070;
-  max-height: 320px;
+  border-top: 0.0625rem solid #707070;
+  max-height: 20rem;
   overflow-y: auto;
-  border-bottom: 1px solid #707070;
+  border-bottom: 0.0625rem solid #707070;
   margin-top: 1rem;
 }
 
@@ -184,46 +184,46 @@
 
 .requester {
   background: #404040 0% 0% no-repeat padding-box;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   width: auto;
-  color: #ffffff;
+  color: var(--white100);
   padding: 0 1rem;
   text-align: center;
 }
 
 .requester-title {
-  font: normal normal normal 12px/17px Open Sans;
+  font: normal normal normal 0.75rem/1.0625rem Open Sans;
 }
 
 .requester-user {
-  font: normal normal bold 14px/19px Open Sans;
-  letter-spacing: 0px;
+  font: normal normal bold 0.875rem/1.1875rem Open Sans;
+  letter-spacing: 0;
   color: #ffffff;
   text-transform: uppercase;
 }
 
 .override-text {
-  font: normal normal 600 14px/23px Open Sans;
+  font: normal normal 600 0.875rem/1.4375rem Open Sans;
   margin-top: 1rem;
   color: #1d4ec7;
   display: flex;
 }
 
 .override-text svg {
-  margin-right: 5px;
+  margin-right: 0.3125rem;
 }
 
 .certifier-wrapper {
-  box-shadow: 1px 3px 6px #0000000d;
-  border: 1px solid #dedede;
-  border-radius: 5px;
-  padding: 1.5rem;
+  box-shadow: 0.0625rem 0.1875rem 0.375rem #0000000d;
+  border: 0.0625rem solid #dedede;
+  border-radius: 0.3125rem;
+  padding: 0.9375rem;
 }
 
 .certifier-title {
-  font: normal normal bold 18px/16px Open Sans;
-  letter-spacing: 0px;
-  color: #000000;
+  font: normal normal bold 1.125rem/1rem Open Sans;
+  letter-spacing: 0;
+  color: var(--black100);
   margin-bottom: 0.5rem;
 }
 
@@ -243,22 +243,19 @@
 
 .search-result-card {
   width: 100%;
-  /* min-height: 100px;
-  max-height: 100%; */
-  width: '100%';
-  overflow: 'hidden';
+  width: 100%;
+  overflow: hidden;
   background-color: white;
-  border-radius: 4px;
-  margin-bottom: 16px;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.14);
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0.125rem 0.0625rem -0.0625rem rgba(0, 0, 0, 0.2), 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.14);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 .search-title-text {
   text-align: left;
   font: normal normal bold 1.5rem/1.875rem Open Sans;
-  letter-spacing: 0rem;
+  letter-spacing: 0;
   color: var(--primary100);
   margin-bottom: 1.313rem;
 }
@@ -269,7 +266,7 @@
 
 .search-result-table {
   max-width: 98.5%;
-  margin: 10px;
+  margin: 0.625rem;
 }
 
 .search-result-table-head {
@@ -296,22 +293,22 @@
 
 .search-found-title {
   text-align: center;
-  color: #000000;
-  font: normal normal bold 24px/30px Open Sans;
-  letter-spacing: 0px;
+  color: var(--black100);
+  font: normal normal bold 1.5rem/1.875rem Open Sans;
+  letter-spacing: 0;
   margin: 2rem 0 1rem;
 }
 
 .search-found-subtitle {
-  font: normal normal normal 16px/30px Open Sans;
+  font: normal normal normal 1rem/1.875rem Open Sans;
   color: #000000de;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .search-found-link {
-  font: normal normal normal 16px/30px Open Sans;
-  letter-spacing: 0px;
+  font: normal normal normal 1rem/1.875rem Open Sans;
+  letter-spacing: 0;
   color: #1860b5;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   cursor: pointer;
 }

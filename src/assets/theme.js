@@ -12,6 +12,10 @@ const theme = createTheme({
           },
           MuiInputBase: {
             styleOverrides: { 
+              root: {
+                '&.Mui-disabled': {
+                  background:'#F8F9FA'
+                }, 
                 input: {
                   color: '#000', 
                   '&:disabled': {
@@ -19,7 +23,9 @@ const theme = createTheme({
                     borderColor:'#CACFD8',
                     color: '#666',  
                   }, 
-                },
+                },  
+              },
+               
             },
           },
       } 
