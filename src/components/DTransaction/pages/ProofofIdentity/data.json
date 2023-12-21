@@ -22,7 +22,7 @@
     "verificationStatus": "",
     "initialVerification": {
         "status": "INSTITUTE ADDITIONAL VERIFICATION",
-        "lastname": "DOE",
+        "lastName": "DOE",
         "firstName": "JONNY",
         "middleName": "",
         "dateOfBirth": "12/29/1984",
@@ -352,7 +352,7 @@
             "label": "V-2"
         }
     ],
-    "docuementType": [
+    "documentType": [
         {
             "value": 1,
             "label": "ASYLEE"

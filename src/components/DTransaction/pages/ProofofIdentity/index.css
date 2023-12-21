@@ -5,6 +5,7 @@
   margin-top: 1rem;
   width: 100%;
 }
+
 .verification-history-accordion .MuiAccordionDetails-root {
   padding: 0;
 }
@@ -12,78 +13,66 @@
 .verification-history-accordion .MuiAccordionSummary-content {
   font: normal normal bold 18px/16px Open Sans;
   letter-spacing: 0px;
-  color: #000000;
-}
-.history-table {
-  table-layout: fixed;
-}
-.history-table .MuiTableRow-head {
-  font: normal normal bold 14px/18px Open Sans;
-  white-space: nowrap;
+  color: var(--black100);
 }
 
-.history-table .MuiTableRow-head:nth-child() {
-  background: #f8f9fa 0% 0% no-repeat padding-box;
-}
-
-.history-table .MuiTableRow-root:nth-child(even) {
-  background: #f8f9fa 0% 0% no-repeat padding-box;
-}
-.status-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.status-text {
-  color: #000000;
-}
 .status-description {
   color: #de4d00;
 }
+
 .status-label {
   margin-bottom: 0.3rem;
 }
+
 .initial-verification {
-  background-color: var(--primary30)!important;
+  background-color: var(--primary30) !important;
   border: 2px solid #167ABC;
   border-radius: 4px !important;
   box-shadow: none !important;
   margin-top: 1rem;
 }
+
 .initial-verification .initial-verification-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
+
 .initial-verification .initial-verification-header svg {
   height: 18px;
 }
+
 .initial-verification .initial-verification-header .warning-status {
   color: var(--orange70);
 }
+
 .initial-verification .initial-verification-header .success-status {
   color: var(--green100);
 }
-.initial-verification .varification-status {
+
+.initial-verification .verification-status {
   display: flex;
   align-items: center;
   font: normal normal normal 16px/22px Open Sans;
 }
-.initial-verification  .MuiAccordionSummary-content {
+
+.initial-verification .MuiAccordionSummary-content {
   font: normal normal bold 18px/16px Open Sans;
   letter-spacing: 0px;
-  color: #000000;
+  color: var(--black100);
 }
-.initial-verification  .MuiFormControl-root {
-background: #fff;
+
+.initial-verification .MuiFormControl-root {
+  background: var(--white100);
 }
+
 .truncated_icons svg {
   width: 20px;
   height: 20px;
   background: #FCE68C 0% 0% no-repeat padding-box;
   border-radius: 50%;
-  fill: #000;
+  fill: var(--black100);
   padding: 5px;
   margin: 0 0.5rem;
 }

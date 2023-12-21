@@ -4,6 +4,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Autocomplete,
   Button,
   Dialog,
   DialogActions,
@@ -39,6 +40,7 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import dayjs from 'dayjs';
 import mockData from './data.json';
+import DAlertBox from '../../../DAlertBox';
 
 export default function ProofOfIdentity() {
   const [searchParams] = useSearchParams();
@@ -58,7 +60,7 @@ export default function ProofOfIdentity() {
   const { citizen } = useParams();
   const {
     verificationHistory,
-    docuementType,
+    documentType,
     initialVerification,
     countryList,
     statusList,
@@ -67,34 +69,32 @@ export default function ProofOfIdentity() {
     firstName,
     middleName
   } = mockData;
+
+  const initialData = {
+    verificationRequestDocument: null,
+    visaType: null,
+    alienNumber: '',
+    receiptNumber: '',
+    documentExpirationDate: mockData.documentExpirationDate,
+    i90Value: '',
+    sevisId: '',
+    dateOfBirth: mockData.dateOfBirth
+  }
+
+  const [formData, setFormData] = useState(initialData);
+  const [focusedField, setFocusedField] = useState(null);
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [validationError, setValidationError] = useState({});
   const [expanded, setExpanded] = React.useState(false);
-  const [verificationRequestDocument, setVerificationRequestDocument] = useState('');
-  const [visaType, setvisaType] = useState('');
-  const [alienNumber, setAlienNumber] = useState();
-  const [receiptNumber, setReceiptNumber] = useState();
-  const [documentExpirationDate, setDocumentExpirationDate] = useState(
-    mockData.documentExpirationDate
-  );
-  const [dateOfBirth, setdateOfBirth] = useState(mockData.dateOfBirth);
-  const [i90Value, setI90Value] = useState();
-  const [sevisId, setSevisId] = useState();
   const [sortedColumn, setSortedColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
-
-  const [passportNumber, setpassportNumber] = useState();
+  const [passportNumber, setPassportNumber] = useState();
   const [issueDate, setIssueDate] = useState();
   const [expirationDate, setExpirationDate] = useState();
   const [verifiedDate, setVerifiedDate] = useState();
   const [isVerified, setIsVerified] = useState(false);
-  const [initialverifiedStatus, setInitialverifiedStatus] = useState(initialVerification.status);
-  const visatypeDisabledList = [4, 6, 7, 9, 10, 41, 42, 43, 44, 45, 46, 47];
-
-  const [alienNumberError, setAlienNumberError] = useState('');
-  const [visaTypeError, setvisaTypeError] = useState('');
-  const [receiptNumberError, setReceiptNumberError] = useState('');
-  const [sevisIdError, setSevisIdError] = useState('');
-  const [i90ValueError, setI90ValueError] = useState('');
-  const [documentExDateError, setDocumentExDateError] = useState('');
+  const [initialVerifiedStatus, setInitialVerifiedStatus] = useState(initialVerification.status);
+  const visaTypeDisabledList = [4, 6, 7, 9, 10, 41, 42, 43, 44, 45, 46, 47];
   const [open, setOpen] = useState(false);
 
   const handleSort = column => {
@@ -105,9 +105,9 @@ export default function ProofOfIdentity() {
       setSortDirection('asc');
     }
   };
-  const handleSecondaryVarificaton = () => {
+  const handleSecondaryVerification = () => {
     setOpen(false);
-    setInitialverifiedStatus(statusList[1]);
+    setInitialVerifiedStatus(statusList[1]);
   };
 
   const tableHeader = [
@@ -171,62 +171,25 @@ export default function ProofOfIdentity() {
     }
   });
 
-  const validateForm = () => {
-    const selectedDocType = verificationRequestDocument?.value;
-    setAlienNumberError('');
-    setvisaTypeError('');
-    if (selectedDocType === docuementType[2].value || selectedDocType === docuementType[6].value) {
-      if (!visaType) {
-        setvisaTypeError('Invalid Visa Type');
-      }
-    }
-    if (
-      selectedDocType === docuementType[0].value ||
-      selectedDocType === docuementType[2].value ||
-      selectedDocType === docuementType[6].value
-    ) {
-      if (!alienNumber && !i90Value) {
-        setAlienNumberError('Invalid A Number');
-      }
-    }
-    if (selectedDocType === docuementType[1].value || selectedDocType === docuementType[7].value) {
-      if (!receiptNumber) {
-        setReceiptNumberError('Invalid Receipt Number');
-      }
-    }
 
-    if (
-      selectedDocType === docuementType[0].value ||
-      selectedDocType === docuementType[4].value ||
-      selectedDocType === docuementType[8].value ||
-      selectedDocType === docuementType[2].value ||
-      selectedDocType === docuementType[6].value ||
-      selectedDocType === docuementType[7].value
-    ) {
-      if (!receiptNumber) {
-        setDocumentExDateError('Invalid Document Expiration Date');
-      }
-    }
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    validateForm();
   };
 
-  const handleChange = panel => (event, isExpanded) => {
+  const handleAccordionChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
   const disabledVisaType = () => {
-    return visatypeDisabledList.includes(visaType);
+    return visaTypeDisabledList.includes(formData.visaType?.value);
   };
 
-  const isdisabledField = values => {
-    if (!verificationRequestDocument?.value) {
+  const isDisabledField = values => {
+    if (!formData.verificationRequestDocument?.value) {
       return true;
     } else {
-      return values.includes(verificationRequestDocument?.value);
+      return values.includes(formData.verificationRequestDocument?.value);
     }
   };
 
@@ -242,53 +205,91 @@ export default function ProofOfIdentity() {
     }
     return `${age} year(s) ${month} months`;
   };
+  const validateFiled = (name, value) => {
+    let error = '';
+    const selectedDocType = formData.verificationRequestDocument?.value;
+    switch (name) {
 
-  const handleNumberValidation = e => {
-    if (e.target.name === 'alienNumber') {
-      if (!/^\d{9}$/.test(e.target.value)) {
-        setAlienNumberError('A Number must be 9 digits');
-      } else {
-        setAlienNumberError('');
-      }
+      case 'verificationRequestDocument':
+        if (!value) {
+          error = 'Invalid Verification Request Document';
+        }
+        break;
+      case 'visaType':
+        if (!value) {
+          error = 'Invalid Visa Type';
+        }
+        break;
+      case 'alienNumber':
+        if (!/^\d{9}$/.test(value)) {
+          error = 'A Number must be 9 digits';
+        }
+        if (
+          selectedDocType === documentType[0].value ||
+          selectedDocType === documentType[4].value ||
+          selectedDocType === documentType[8].value ||
+          selectedDocType === documentType[2].value ||
+          selectedDocType === documentType[6].value ||
+          selectedDocType === documentType[7].value
+        ) {
+          if (!value) {
+            error = 'Invalid Document Expiration Date';
+          }
+        }
+
+        break;
+      case 'documentExpirationDate':
+        if (!dayjs(value, 'MM/DD/YYYY', true).isValid()) {
+          error = 'Invalid Document Expiration Date';
+        }
+        break;
+      case 'sevisId':
+        if (!/^\d{10}$/.test(value)) {
+          error = 'SEVIS ID must be 10 digits';
+        }
+        if (!value) {
+          error = 'Invalid SEVIS ID';
+        }
+        break;
+      case 'i90Value':
+        if (!/^[0-9a-zA-Z]{10}[0-9a-zA-Z]$/.test(value)) {
+          error = 'Invalid I-94 Number. This field should have all digits except on the 10th position. 10th position should be a digit or an alphabet. 11th position should be a digit. Please correct and continue';
+        }
+        break;
+      case 'receiptNumber':
+        if (!/^[A-Za-z]{3}\d{10}$/.test(value)) {
+          error = 'Invalid Receipt Number. First three characters must be alphabets and next 10 must be numbers. Please correct and continue';
+        }
+        if (
+          selectedDocType === documentType[0].value ||
+          selectedDocType === documentType[4].value ||
+          selectedDocType === documentType[8].value ||
+          selectedDocType === documentType[2].value ||
+          selectedDocType === documentType[6].value ||
+          selectedDocType === documentType[7].value
+        ) {
+          if (!value) {
+            error = 'Invalid Document Expiration Date';
+          }
+        }
+        break;
+      default:
     }
-    if (e.target.name === 'savisId') {
-      if (!/^\d{10}$/.test(e.target.value)) {
-        setSevisIdError('SEVIS ID must be 10 digits');
-      } else {
-        setSevisIdError('');
-      }
+    return error;
+  }
+  const handleError = (name, value) => {
+    const error = validateFiled(name, value);
+    const errors = { ...validationError, [name]: error };
+    if (error === '') {
+      delete errors[name];
     }
-    if (e.target.name === 'i90Value') {
-      if (!/^[0-9a-zA-Z]{10}[0-9a-zA-Z]$/.test(e.target.value)) {
-        setI90ValueError(
-          'Invalid I-94 Number. This field should have all digits except on the 10th position. 10th position should be a digit or an alphabet. 11th position should be a digit. Please correct and continue'
-        );
-      } else {
-        setI90ValueError('');
-      }
-    }
-    if (e.target.name === 'receiptNumber') {
-      if (!/^[A-Za-z]{3}\d{10}$/.test(e.target.value)) {
-        setReceiptNumberError(
-          'Invalid Receipt Number. First three characters must be alphabets and next 10 must be numbers. Please correct and continue'
-        );
-      } else {
-        setReceiptNumberError('');
-      }
-    }
+    setFocusedField(error !== '' ? name : '');
+    setValidationError(errors);
+    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
   };
 
-  const clearFileds = () => {
-    setAlienNumber('');
-    setReceiptNumber('');
-    setSevisId('');
-    setI90Value('');
 
-    setAlienNumberError('');
-    setReceiptNumberError('');
-    setSevisIdError('');
-    setDocumentExDateError('');
-  };
+
 
   const truncationIcon = input => {
     return (
@@ -307,6 +308,26 @@ export default function ProofOfIdentity() {
     );
   };
 
+  const handleChange = (name, value) => {
+    const newValues = name === "verificationRequestDocument" || name === "visaType"
+      ? { ...initialData }
+      : { ...formData };
+
+    newValues[name] = value;
+    setFormData(newValues);
+    handleError(name, value);
+  };
+
+  const setFocusOnInput = (e, fieldName) => {
+    if (fieldName === focusedField) {
+      if (e) {
+        e.focus();
+      }
+    }
+  }
+
+
+
   return (
     <div className='d-container'>
       <form onSubmit={handleSubmit}>
@@ -315,10 +336,11 @@ export default function ProofOfIdentity() {
             <div className='d-row'>
               <div className='col col-md-4 col-sm-12'>
                 <TextField
+                  size='small'
                   value={passportNumber}
                   label='Passport Number'
                   fullWidth
-                  onChange={e => setpassportNumber(e.target.value)}
+                  onChange={e => setPassportNumber(e.target.value)}
                 />
               </div>
               <div className='col col-md-4 col-sm-12'>
@@ -381,56 +403,56 @@ export default function ProofOfIdentity() {
             <div className='d-sub-title'> Proof of Identity</div>
             <div className='d-row'>
               <div className='col col-md-8 col-sm-12'>
-                <FormControl fullWidth variant='outlined' className='formControl'>
-                  <InputLabel id='verificationDocument'> Verification Request Document </InputLabel>
-                  <Select
-                    id='verificationDocument'
-                    value={verificationRequestDocument}
-                    label='Verification Request Document'
-                    onChange={e => {
-                      clearFileds();
-                      setVerificationRequestDocument(e.target.value);
-                    }}
-                  >
-                    {docuementType &&
-                      docuementType.map((item, index) => {
-                        return (
-                          <MenuItem key={`type${index}`} value={item}>
-                            {' '}
-                            {item.label}{' '}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
+                <Autocomplete
+                  options={documentType}
+                  fullWidth
+                  size='small'
+                  name='verificationRequestDocument'
+                  value={formData.verificationRequestDocument}
+                  disableClearable={true}
+                  disabled={isFormDisabled && focusedField !== 'verificationRequestDocument'}
+                  onChange={(e, v) => {
+                    handleChange('verificationRequestDocument', v)
+                  }
+                  }
+                  onBlur={e => handleError('verificationRequestDocument', e.target.value)}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      inputRef={(e) => setFocusOnInput(e, 'verificationRequestDocument')}
+                      label='Verification Request Document '
+                      error={!!validationError?.verificationRequestDocument}
+                      helperText={<DAlertBox errorText={validationError?.verificationRequestDocument} />}
+                    />
+                  )}
+                />
+
               </div>
-              {verificationRequestDocument && (
+              {formData.verificationRequestDocument && (
                 <div className='col col-md-4 col-sm-12'>
-                  <FormControl fullWidth variant='outlined' className='formControl'>
-                    <InputLabel id='visaType'> Visa Type </InputLabel>
-                    <Select
-                      id='visaType'
-                      value={visaType}
-                      error={!!visaTypeError}
-                      helperText={visaTypeError}
-                      label='Visa Type'
-                      disabled={isdisabledField([1, 2, 4, 5, 6, 8, 9, 11])}
-                      onChange={e => {
-                        clearFileds();
-                        setvisaType(e.target.value);
-                      }}
-                    >
-                      {visaTypeList &&
-                        visaTypeList.map(v => {
-                          return (
-                            <MenuItem key={v.label} value={v.value}>
-                              {' '}
-                              {v.label}{' '}
-                            </MenuItem>
-                          );
-                        })}
-                    </Select>
-                  </FormControl>
+                  <Autocomplete
+                    options={visaTypeList}
+                    fullWidth
+                    size='small'
+                    value={formData.visaType}
+                    name={'visaType'}
+                    disableClearable={true}
+                    disabled={isDisabledField([1, 2, 4, 5, 6, 8, 9, 11]) || (isFormDisabled && focusedField !== 'visaType')}
+                    onChange={(e, v) => {
+                      handleChange('visaType', v)
+                    }
+                    }
+                    onBlur={e => handleError('visaType', e.target.value)}
+                    renderInput={params => (
+                      <TextField
+                        {...params}
+                        inputRef={(e) => setFocusOnInput(e, 'visaType')}
+                        label='Visa Type'
+                        error={!!validationError.visaType}
+                        helperText={<DAlertBox errorText={validationError?.visaType} />}
+                      />
+                    )}
+                  />
                 </div>
               )}
             </div>
@@ -438,31 +460,33 @@ export default function ProofOfIdentity() {
             <div className='d-row'>
               <div className='col col-md-4 col-sm-12'>
                 <TextField
-                  value={alienNumber}
+                  value={formData.alienNumber}
                   name='alienNumber'
                   label='A Number'
                   inputProps={{ max: 20 }}
-                  disabled={isdisabledField([4, 10, 11]) || disabledVisaType()}
+                  disabled={isDisabledField([4, 10, 11]) || disabledVisaType() || (isFormDisabled && focusedField !== 'alienNumber')}
                   fullWidth
-                  InputLabelProps={{ shrink: alienNumber ? true : false }}
-                  helperText={alienNumberError}
-                  error={!!alienNumberError}
-                  onBlur={handleNumberValidation}
-                  onChange={e => setAlienNumber(e.target.value)}
+                  size="small"
+                  helperText={<DAlertBox errorText={validationError?.alienNumber} />}
+                  error={!!validationError?.alienNumber}
+                  onBlur={e => handleError('alienNumber', e.target.value)}
+                  inputRef={(e) => setFocusOnInput(e, 'alienNumber')}
+                  onChange={e => handleChange(e.target.name, e.target.value)}
                 />
               </div>
               <div className='col col-md-4 col-sm-12'>
                 <TextField
-                  value={receiptNumber}
+                  value={formData.receiptNumber}
                   label='Receipt Number'
                   name='receiptNumber'
-                  disabled={isdisabledField([1, 3, 4, 5, 6, 7, 9, 10, 11]) || disabledVisaType()}
+                  disabled={isDisabledField([1, 3, 4, 5, 6, 7, 9, 10, 11]) || disabledVisaType() || (isFormDisabled && focusedField !== 'receiptNumber')}
                   fullWidth
-                  InputLabelProps={{ shrink: receiptNumber ? true : false }}
-                  onBlur={handleNumberValidation}
-                  helperText={receiptNumberError}
-                  error={!!receiptNumberError}
-                  onChange={e => setReceiptNumber(e.target.value)}
+                  size="small"
+                  inputRef={(e) => setFocusOnInput(e, 'receiptNumber')}
+                  onBlur={e => handleError('receiptNumber', e.target.value)}
+                  helperText={<DAlertBox errorText={validationError?.receiptNumber} />}
+                  error={!!validationError?.receiptNumber}
+                  onChange={e => handleChange(e.target.name, e.target.value)}
                 />
               </div>
               <div className='col col-md-4 col-sm-12'>
@@ -472,12 +496,21 @@ export default function ProofOfIdentity() {
                       minDate={dayjs(new Date())}
                       label='Document Expiration Date '
                       fullWidth
-                      error={!!documentExDateError}
-                      helperText={documentExDateError}
-                      disabled={disabledVisaType()}
-                      value={documentExpirationDate && dayjs(documentExpirationDate)}
+                      disabled={disabledVisaType() || (isFormDisabled && focusedField !== 'documentExpirationDate')}
+                      value={formData.documentExpirationDate && dayjs(formData.documentExpirationDate)}
+                      slotProps={{
+                        textField: {
+                          size: 'small',
+                          fullWidth: true,
+                          error: !!validationError?.documentExpirationDate,
+                          helperText: <DAlertBox errorText={validationError?.documentExpirationDate} />,
+                          inputRef: focusedField === 'documentExpirationDate' ? (input) => input?.focus() : null,
+                          onBlur: e => handleError('documentExpirationDate', e.target.value),
+                        }
+                      }}
                       onChange={documentExpirationDate =>
-                        setDocumentExpirationDate(documentExpirationDate)
+                        handleChange('documentExpirationDate', documentExpirationDate)
+
                       }
                     />
                   </LocalizationProvider>
@@ -488,31 +521,33 @@ export default function ProofOfIdentity() {
             <div className='d-row'>
               <div className='col col-md-4 col-sm-12'>
                 <TextField
-                  value={i90Value}
+                  value={formData.i90Value}
                   label='I-94'
                   name='i90Value'
-                  InputLabelProps={{ shrink: i90Value ? true : false }}
-                  error={!!i90ValueError}
-                  helperText={i90ValueError}
-                  disabled={isdisabledField([2, 5, 6, 8, 9]) || disabledVisaType()}
+                  size="small"
+                  error={!!validationError?.i90Value}
+                  helperText={<DAlertBox errorText={validationError?.i90Value} />}
+                  disabled={isDisabledField([2, 5, 6, 8, 9]) || disabledVisaType() || (isFormDisabled && focusedField !== 'i90Value')}
                   fullWidth
-                  onBlur={handleNumberValidation}
-                  onChange={e => setI90Value(e.target.value)}
+                  inputRef={(e) => setFocusOnInput(e, 'i90Value')}
+                  onBlur={e => handleError('i90Value', e.target.value)}
+                  onChange={e => handleChange(e.target.name, e.target.value)}
                 />
               </div>
               <div className='col col-md-4 col-sm-12'>
                 <TextField
-                  value={sevisId}
+                  value={formData.sevisId}
                   label='SEVIS ID'
                   type='number'
-                  InputLabelProps={{ shrink: sevisId ? true : false }}
-                  name='savisId'
-                  error={!!sevisIdError}
-                  helperText={sevisIdError}
-                  onBlur={handleNumberValidation}
-                  disabled={isdisabledField([2, 5, 6, 8, 9, 10]) || disabledVisaType()}
+                  size="small"
+                  name='sevisId'
+                  error={!!validationError?.sevisId}
+                  helperText={<DAlertBox errorText={validationError?.sevisId} />}
+                  onBlur={e => handleError('sevisId', e.target.value)}
+                  inputRef={(e) => setFocusOnInput(e, 'sevisId')}
+                  disabled={isDisabledField([2, 5, 6, 8, 9, 10]) || disabledVisaType() || (isFormDisabled && focusedField !== 'sevisId')}
                   fullWidth
-                  onChange={e => setSevisId(e.target.value)}
+                  onChange={e => handleChange(e.target.name, e.target.value)}
                 />
               </div>
             </div>
@@ -523,6 +558,7 @@ export default function ProofOfIdentity() {
                   value={lastName.value}
                   name='lName'
                   disabled
+                  size="small"
                   fullWidth
                   label='Last Name'
                   autoComplete='off'
@@ -537,6 +573,7 @@ export default function ProofOfIdentity() {
                   name='firstName'
                   fullWidth
                   disabled
+                  size="small"
                   label='First Name'
                   InputProps={{
                     endAdornment: truncationIcon(firstName)
@@ -549,6 +586,7 @@ export default function ProofOfIdentity() {
                   value={middleName.value}
                   fullWidth
                   disabled
+                  size="small"
                   InputProps={{
                     endAdornment: truncationIcon(middleName)
                   }}
@@ -559,14 +597,14 @@ export default function ProofOfIdentity() {
 
             <div className='d-row'>
               <div className='col col-md-4 col-sm-12'>
-                <TextField value={dateOfBirth} fullWidth disabled label='Date of Birth' />
+                <TextField size="small" value={formData.dateOfBirth} fullWidth disabled label='Date of Birth' />
               </div>
             </div>
 
             <Accordion
               className='initial-verification'
               expanded={expanded === 'verificationPannel'}
-              onChange={handleChange('verificationPannel')}
+              onChange={handleAccordionChange('verificationPannel')}
             >
               <AccordionSummary
                 expandIcon={
@@ -582,13 +620,13 @@ export default function ProofOfIdentity() {
 
                   <div
                     className={
-                      initialverifiedStatus && initialverifiedStatus === statusList[0]
-                        ? 'varification-status warning-status'
-                        : 'varification-status success-status'
+                      initialVerifiedStatus && initialVerifiedStatus === statusList[0]
+                        ? 'verification-status warning-status'
+                        : 'verification-status success-status'
                     }
                   >
-                    {initialverifiedStatus === statusList[0] && <WarningAmberIcon />}{' '}
-                    {initialverifiedStatus}
+                    {initialVerifiedStatus === statusList[0] && <WarningAmberIcon />}{' '}
+                    {initialVerifiedStatus}
                   </div>
                 </div>
               </AccordionSummary>
@@ -597,9 +635,10 @@ export default function ProofOfIdentity() {
                   <div className='d-row'>
                     <div className='col col-sm-12 col-md-4'>
                       <TextField
-                        value={initialVerification.lastname}
+                        value={initialVerification.lastName}
                         label='Last Name'
                         disabled
+                        size="small"
                         fullWidth
                       />
                     </div>
@@ -608,6 +647,7 @@ export default function ProofOfIdentity() {
                         value={initialVerification.firstName}
                         label='First Name'
                         disabled
+                        size="small"
                         fullWidth
                       />
                     </div>
@@ -616,6 +656,7 @@ export default function ProofOfIdentity() {
                         value={initialVerification.middleName}
                         label='Middle Name'
                         disabled
+                        size="small"
                         fullWidth
                       />
                     </div>
@@ -636,6 +677,12 @@ export default function ProofOfIdentity() {
                               initialVerification.dateOfBirth &&
                               dayjs(initialVerification.dateOfBirth)
                             }
+                            slotProps={{
+                              textField: {
+                                size: 'small'
+
+                              }
+                            }}
                           />
                         </LocalizationProvider>
                         {initialVerification.dateOfBirth && (
@@ -646,7 +693,7 @@ export default function ProofOfIdentity() {
                       </div>
                     </div>
                     <div className='col col-sm-12 col-md-4'>
-                      <FormControl fullWidth>
+                      <FormControl size="small" fullWidth>
                         <InputLabel id='country'>Country</InputLabel>
                         <Select
                           labelId='country'
@@ -672,6 +719,7 @@ export default function ProofOfIdentity() {
                         value={initialVerification.caseNumber}
                         label='Case Number'
                         disabled
+                        size="small"
                         fullWidth
                       />
                     </div>
@@ -683,6 +731,7 @@ export default function ProofOfIdentity() {
                         label='Date of Entry'
                         disabled
                         fullWidth
+                        size="small"
                       />
                     </div>
                     <div className='col col-sm-12 col-md-4'>
@@ -690,10 +739,11 @@ export default function ProofOfIdentity() {
                         value={initialVerification.admittedTo}
                         label='Admitted  To'
                         disabled
+                        size="small"
                         fullWidth
                       />
                     </div>
-                    {initialverifiedStatus === statusList[1] && (
+                    {initialVerifiedStatus === statusList[1] && (
                       <div className='col col-sm-12 col-md-4'>
                         <div
                           className={
@@ -718,7 +768,7 @@ export default function ProofOfIdentity() {
                   </div>
                   <div className='d-row'>
                     <div className='col col-sm-12 col-md-4'>
-                      {initialverifiedStatus === statusList[0] && (
+                      {initialVerifiedStatus === statusList[0] && (
                         <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
                           {' '}
                           SECONDARY VERIFICATION{' '}
@@ -734,7 +784,7 @@ export default function ProofOfIdentity() {
                 <Accordion
                   className='verification-history-accordion'
                   expanded={expanded === 'panel1'}
-                  onChange={handleChange('panel1')}
+                  onChange={handleAccordionChange('panel1')}
                 >
                   <AccordionSummary
                     expandIcon={
@@ -822,7 +872,7 @@ export default function ProofOfIdentity() {
               <TextField label='Password' fullWidth />
             </div>
             <div className='col'>
-              <FormControl fullWidth>
+              <FormControl fullWidth size="small">
                 <InputLabel id='ReasonOverride'>Reason for Override </InputLabel>
                 <Select labelId='ReasonOverride' id='ReasonOverride' label='Reason for Override'>
                   <option>To be decided</option>
@@ -841,7 +891,7 @@ export default function ProofOfIdentity() {
           >
             Cancel
           </Button>
-          <Button variant='contained' onClick={handleSecondaryVarificaton}>
+          <Button variant='contained' onClick={handleSecondaryVerification}>
             {' '}
             submit{' '}
           </Button>

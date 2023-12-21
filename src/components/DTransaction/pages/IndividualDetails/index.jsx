@@ -43,6 +43,7 @@ import { prettifyCamelCase } from '../../../../utils/stringUtils';
 import { calculateAge } from '../../../../utils/dateUtils';
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
 import DHeight from '../../../DHeight';
+import * as _ from 'lodash';
 
 const PHYSICAL_INFORMATION = 'Physical Information';
 
@@ -200,7 +201,7 @@ const IndividualDetails = () => {
       errorMsg = { ...errorMsg, [k]: error };
       if (error === '') {
         // eslint-disable-next-line no-unused-vars 
-        const { k, ...withoutKey } = errorMsg; 
+        const { k, ...withoutKey } = errorMsg;
         errorMsg = withoutKey
       } else {
         handleError(k, v)
@@ -292,12 +293,15 @@ const IndividualDetails = () => {
     const errors = { ...validationError, [name]: error };
     if (error === '') {
       delete errors[name];
-    }
-    setValidationError(errors);
-
-    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
-    setFocusedField(error !== '' ? name : '');
-
+    } 
+    if (!_.isEqual(validationError, errors)) {
+      setValidationError(errors);
+    } 
+    setIsFormDisabled(Object.values(errors).some(error => error !== '')); 
+    const newFocusedField = error !== '' ? name : ''; 
+    if (focusedField !== newFocusedField) {
+      setFocusedField(newFocusedField);
+    } 
 
   };
   const handleNumberChange = (e, min, max) => {
@@ -416,7 +420,7 @@ const IndividualDetails = () => {
   ]);
 
   return (
-    <div className='d-container'> 
+    <div className='d-container'>
       <form
         onSubmit={e => handleSubmitFrom(e, personalInformationFrom)}
         noValidate

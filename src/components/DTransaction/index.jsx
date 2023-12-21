@@ -22,7 +22,7 @@ import Vision from './pages/VisionScreening';
 import transactionData from './data/transactionData.json';
 
 const DTransaction = () => {
-  const [currentTransaction, setCurrentTransaction] = useState(0);
+  const [currentTransaction, setCurrentTransaction] = useState(0); 
   useEffect(() => {
     setCurrentTransaction(currentTransaction);
   }, [currentTransaction]);

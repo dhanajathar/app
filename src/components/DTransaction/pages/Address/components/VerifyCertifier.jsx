@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react'; 
 import data from '../api-address.json';
+import DAlertBox from '../../../../DAlertBox';
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
   Button,
   Checkbox,
-  FormHelperText,
-  InputAdornment
+  InputAdornment,
+  Autocomplete
 } from '@mui/material';
 
 function VerifyCertifier({ onSubmit, onCancel }) {
@@ -105,37 +101,30 @@ function VerifyCertifier({ onSubmit, onCancel }) {
           <div className='certifier-title'> Additional Details</div>
           <div className='d-row'>
             <div className='col col-sm-12 col-md-4'>
-              <FormControl size='small' fullWidth error={!!relationShipError}>
-                <InputLabel id='relationship'>Relationship</InputLabel>
-                <Select
-                  labelId='relationship'
-                  id='relationship'
-                  value={relationShip}
-                  label='Relationship'
-                  onBlur={() =>
-                    !relationShip
-                      ? setRelationShipError('Please select a value for Relationship')
-                      : setRelationShipError()
-                  }
-                  onChange={e => setRelationsShip(e.target.value)}
-                >
-                  {relationShipList &&
-                    relationShipList.map(item => {
-                      return (
-                        <MenuItem key={item} value={item}>
-                          {item}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-                {relationShipError ? (
-                  <FormHelperText> {relationShipError} </FormHelperText>
-                ) : (
-                  <FormHelperText>
-                    Certifier can certify unto 4 'OTHER' applicants in a year.{' '}
-                  </FormHelperText>
+
+              <Autocomplete
+                options={relationShipList}
+                fullWidth
+                size='small'
+                name='relationship'
+                value={relationShip}
+                disableClearable={true}
+                onChange={(e, v) => setRelationsShip(v)}
+
+                onBlur={() =>
+                  !relationShip
+                    ? setRelationShipError('Please select a value for Relationship')
+                    : setRelationShipError()
+                }
+                renderInput={params => (
+                  <TextField
+                    {...params}
+                    label='Relationship'
+                    error={!!relationShipError}
+                    helperText={relationShipError ? <DAlertBox errorText={relationShipError} /> : "Certifier can certify unto 4 'OTHER' applicants in a year."}
+                  />
                 )}
-              </FormControl>
+              />
             </div>
             {relationShip === 'Other' && (
               <div className='col col-sm-12 col-md-4'>
@@ -145,60 +134,61 @@ function VerifyCertifier({ onSubmit, onCancel }) {
           </div>
           <div className='d-row'>
             <div className='col col-sm-12 col-md-4'>
-              <FormControl size='small' fullWidth error={!!primaryDocumentError}>
-                <InputLabel id='primaryDocument'>Primary Document</InputLabel>
-                <Select
-                  labelId='primaryDocument'
-                  id='primaryDocument'
-                  value={primaryDocument}
-                  label='Primary Document'
-                  onBlur={() =>
-                    !primaryDocument
-                      ? setPrimaryDocumentError('Please select a value for Primary Document')
-                      : setPrimaryDocumentError()
-                  }
-                  onChange={e => setPrimaryDocument(e.target.value)}
-                >
-                  {documentList &&
-                    documentList.map(item => {
-                      return (
-                        <MenuItem key={item} value={item}>
-                          {item}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-                {primaryDocumentError && <FormHelperText> {primaryDocumentError} </FormHelperText>}
-              </FormControl>
+
+              <Autocomplete
+                options={documentList}
+                fullWidth
+                size='small'
+                name='primaryDocument'
+                value={primaryDocument}
+                disableClearable={true}
+                onChange={(e, v) => setPrimaryDocument(v)}
+
+                onBlur={() =>
+                  !primaryDocument
+                    ? setPrimaryDocumentError('Please select a value for Primary Document')
+                    : setPrimaryDocumentError()
+                }
+                renderInput={params => (
+                  <TextField
+                    {...params}
+                    label='Primary Document'
+                    error={!!primaryDocumentError}
+                    helperText={<DAlertBox errorText={primaryDocumentError} />}
+                  />
+                )}
+              />
+
+
+
             </div>
             <div className='col col-sm-12 col-md-4'>
-              <FormControl size='small' fullWidth error={!!secondaryDocumentError}>
-                <InputLabel id='primaryDocument'>Secondary Document</InputLabel>
-                <Select
-                  labelId='secondaryDocument'
-                  id='secondaryDocument'
-                  value={secondaryDocument}
-                  label='Secondary Document'
-                  onBlur={() =>
-                    !primaryDocument
-                      ? setSecondaryDocumentError('Please select a value for Secondary Document')
-                      : setSecondaryDocumentError()
-                  }
-                  onChange={e => setSecondaryDocument(e.target.value)}
-                >
-                  {documentList &&
-                    documentList.map(item => {
-                      return (
-                        <MenuItem key={item} value={item}>
-                          {item}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-                {secondaryDocumentError && (
-                  <FormHelperText> {secondaryDocumentError} </FormHelperText>
+
+              <Autocomplete
+                options={documentList}
+                fullWidth
+                size='small'
+                name='secondaryDocument'
+                value={secondaryDocument}
+                disableClearable={true}
+                onChange={(e, v) => setSecondaryDocument(v)}
+
+                onBlur={() =>
+                  !primaryDocument
+                    ? setSecondaryDocumentError('Please select a value for Secondary Document')
+                    : setSecondaryDocumentError()
+                }
+                renderInput={params => (
+                  <TextField
+                    {...params}
+                    label='Secondary Document'
+                    error={!!secondaryDocumentError}
+                    helperText={<DAlertBox errorText={secondaryDocumentError} />}
+                  />
                 )}
-              </FormControl>
+              />
+
+
             </div>
           </div>
           <div className='d-row'>

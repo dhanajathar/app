@@ -14,13 +14,13 @@ const theme = createTheme({
             styleOverrides: { 
               root: {
                 '&.Mui-disabled': {
-                  background:'#F8F9FA'
+                  background:'#e9ecef'
                 }, 
                 input: {
                   color: '#000', 
                   '&:disabled': {
-                    background:'#F8F9FA',
-                    borderColor:'#CACFD8',
+                    background:'#e9ecef',
+                    borderColor:'#ced4da',
                     color: '#666',  
                   }, 
                 },  
