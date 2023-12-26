@@ -24,8 +24,7 @@ import {
   Select,
   TextField,
   Autocomplete,
-  IconButton,
-
+  IconButton
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
 import React, { useEffect, useRef, useState } from 'react';
@@ -43,7 +42,6 @@ import { prettifyCamelCase } from '../../../../utils/stringUtils';
 import { calculateAge } from '../../../../utils/dateUtils';
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
 import DHeight from '../../../DHeight';
-import * as _ from 'lodash';
 
 const PHYSICAL_INFORMATION = 'Physical Information';
 
@@ -55,7 +53,7 @@ const IndividualDetails = () => {
   const flowId = searchParams.get('flowId');
   const [showLoader, setShowLoader] = useState(false);
   const [showVerificationStatus, setShowVerificationStatus] = useState();
-  const [calendarOpen, setCalendarOpen] = useState(false)
+  const [calendarOpen, setCalendarOpen] = useState(false);
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
       detail: {
@@ -130,10 +128,11 @@ const IndividualDetails = () => {
     formatSSN(personalInformation.socialSecurityNumber)
   );
 
-
-  const sortedList = (list) => {
+  const sortedList = list => {
     const sortedList = list.slice().sort((a, b) => a.localeCompare(b));
-    const selectIndex = sortedList.findIndex(item => (item === "--SELECT--") || (item === "ENGLISH") || (item === "BLACK"));
+    const selectIndex = sortedList.findIndex(
+      item => item === '--SELECT--' || item === 'ENGLISH' || item === 'BLACK'
+    );
     if (selectIndex !== -1) {
       const selectItem = sortedList[selectIndex];
       sortedList.splice(selectIndex, 1);
@@ -141,7 +140,6 @@ const IndividualDetails = () => {
     }
     return sortedList;
   };
-
 
   const handleSSNChange = e => {
     const value = e.target.value;
@@ -160,11 +158,12 @@ const IndividualDetails = () => {
     setFormattedSSN(ssnValue);
   };
 
-
-
   useEffect(() => {
     if (socialSecurityNumber.length === 11) {
-      if (socialSecurityNumber.replace(/-/g, '') !== '000000000' && socialSecurityNumber.replace(/-/g, '') !== '999999999') {
+      if (
+        socialSecurityNumber.replace(/-/g, '') !== '000000000' &&
+        socialSecurityNumber.replace(/-/g, '') !== '999999999'
+      ) {
         setShowLoader(true);
       }
       setTimeout(() => {
@@ -179,11 +178,23 @@ const IndividualDetails = () => {
     return (
       <FormGroup aria-label='position' row>
         <FormControlLabel
-          control={<Checkbox size='small' tabIndex='-1' disabled={!value || value.length <= 33} checked={value && value.length > 33 ? true : false} />}
+          control={
+            <Checkbox
+              size='small'
+              tabIndex='-1'
+              disabled={!value || value.length <= 33}
+              checked={value && value.length > 33 ? true : false}
+            />
+          }
           label='Truncated'
           labelPlacement='end'
         />
-        <FormControlLabel disabled={isFormDisabled} control={<Checkbox size='small' />} label='Transliterated' labelPlacement='end' />{' '}
+        <FormControlLabel
+          disabled={isFormDisabled}
+          control={<Checkbox size='small' />}
+          label='Transliterated'
+          labelPlacement='end'
+        />{' '}
       </FormGroup>
     );
   };
@@ -200,11 +211,11 @@ const IndividualDetails = () => {
       const error = validateFiled(k, v);
       errorMsg = { ...errorMsg, [k]: error };
       if (error === '') {
-        // eslint-disable-next-line no-unused-vars 
+        // eslint-disable-next-line no-unused-vars
         const { k, ...withoutKey } = errorMsg;
-        errorMsg = withoutKey
+        errorMsg = withoutKey;
       } else {
-        handleError(k, v)
+        handleError(k, v);
         break;
       }
     }
@@ -225,7 +236,7 @@ const IndividualDetails = () => {
   const handleOtherInfoChange = e => {
     const { name, value } = e?.target ?? {};
     const newValues = { ...otherInformationFrom };
-    newValues[name] = value === '--SELECT--' ? "" : value;
+    newValues[name] = value === '--SELECT--' ? '' : value;
     setOtherInformationFrom(newValues);
   };
 
@@ -239,21 +250,23 @@ const IndividualDetails = () => {
     handleError(name, value);
   };
 
-
-
   const handleKeyDown = (e, name) => {
-    const value = e.target.value
+    const value = e.target.value;
     if (e.key.length === 1 && e.key.toLowerCase() !== 'a') {
       let exceedKey = `${name}Exceed`;
       const keyPressed = e.key;
-      let warnings = { ...validationWarnings }
+      let warnings = { ...validationWarnings };
       if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
         if (value && /\d/.test(value)) {
-          warnings[name] = `${prettifyCamelCase(name)} contains numeric, please remove if not intentional`;
+          warnings[name] = `${prettifyCamelCase(
+            name
+          )} contains numeric, please remove if not intentional`;
         }
       }
       if (!isNaN(keyPressed) && keyPressed !== ' ' && !e.ctrlKey) {
-        warnings[name] = `${prettifyCamelCase(name)} contains numeric, please remove if not intentional`;
+        warnings[name] = `${prettifyCamelCase(
+          name
+        )} contains numeric, please remove if not intentional`;
       }
       if (value.length > 33) {
         warnings[exceedKey] = 'Only 33 characters will be saved and printed on the credential';
@@ -269,7 +282,7 @@ const IndividualDetails = () => {
     }
   }
 
-  const getWarning = (name) => {
+  const getWarning = name => {
     const exceedKey = `${name}Exceed`;
     const nameWarning = validationWarnings?.[name];
     const exceedWarning = validationWarnings?.[exceedKey];
@@ -278,31 +291,28 @@ const IndividualDetails = () => {
     } else {
       return nameWarning || exceedWarning;
     }
-  }
+  };
 
   const handleClearWarning = (warningText, name) => {
     const warnings = { ...validationWarnings };
     deleteKeyByValue(warnings, warningText);
     setValidationWarnings(warnings);
     setFocusedField(name);
-    setTimeout(() => { setFocusedField() }, 50)
-  }
+    setTimeout(() => {
+      setFocusedField();
+    }, 50);
+  };
 
   const handleError = (name, value) => {
     const error = validateFiled(name, value);
     const errors = { ...validationError, [name]: error };
     if (error === '') {
       delete errors[name];
-    } 
-    if (!_.isEqual(validationError, errors)) {
-      setValidationError(errors);
-    } 
-    setIsFormDisabled(Object.values(errors).some(error => error !== '')); 
-    const newFocusedField = error !== '' ? name : ''; 
-    if (focusedField !== newFocusedField) {
-      setFocusedField(newFocusedField);
-    } 
+    }
+    setValidationError(errors);
 
+    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
+    setFocusedField(error !== '' ? name : '');
   };
   const handleNumberChange = (e, min, max) => {
     const number = e.target.value;
@@ -310,7 +320,6 @@ const IndividualDetails = () => {
       handleOtherInfoChange(e);
     }
   };
-
 
   const validateFiled = (name, value) => {
     let error = '';
@@ -397,7 +406,7 @@ const IndividualDetails = () => {
     } else {
       setIsFormDisabled(false);
     }
-  }, [validationWarnings])
+  }, [validationWarnings]);
 
   useEffect(() => {
     if (socialSecurityNumber) {
@@ -435,7 +444,11 @@ const IndividualDetails = () => {
               size='small'
               error={!!validationError?.lastName}
               helperText={
-                <DAlertBox errorText={validationError?.lastName} onClearWarning={(warningText) => handleClearWarning(warningText, 'lastName')} warningText={getWarning('lastName')} />
+                <DAlertBox
+                  errorText={validationError?.lastName}
+                  onClearWarning={warningText => handleClearWarning(warningText, 'lastName')}
+                  warningText={getWarning('lastName')}
+                />
               }
               fullWidth
               label='Last Name'
@@ -445,7 +458,7 @@ const IndividualDetails = () => {
               onChange={handleNameChange}
               onBlur={e => handleError(e.target.name, e.target.value)}
               disabled={isFormDisabled && focusedField !== 'lastName'}
-              inputRef={focusedField === 'lastName' ? (input) => input?.focus() : null}
+              inputRef={focusedField === 'lastName' ? input => input?.focus() : null}
             />
             {truncation(personalInformationFrom.lastName)}
           </div>
@@ -455,14 +468,19 @@ const IndividualDetails = () => {
               name='firstName'
               fullWidth
               size='small'
-              helperText={<DAlertBox onClearWarning={(warningText) => handleClearWarning(warningText, 'firstName')} warningText={getWarning('firstName')} />}
+              helperText={
+                <DAlertBox
+                  onClearWarning={warningText => handleClearWarning(warningText, 'firstName')}
+                  warningText={getWarning('firstName')}
+                />
+              }
               label='First Name'
               onKeyUp={e => handleKeyDown(e, 'firstName')}
               inputProps={{ maxLength: 34 }}
               onChange={handleNameChange}
               onBlur={e => handleError(e.target.name, e.target.value)}
               disabled={isFormDisabled}
-              inputRef={focusedField === 'firstName' ? (input) => input?.focus() : null}
+              inputRef={focusedField === 'firstName' ? input => input?.focus() : null}
             />
             {truncation(personalInformationFrom.firstName)}
           </div>
@@ -473,14 +491,18 @@ const IndividualDetails = () => {
               size='small'
               name='middleName'
               disabled={isFormDisabled}
-              helperText={<DAlertBox onClearWarning={(warningText) => handleClearWarning(warningText, 'middleName')} warningText={getWarning('middleName')} />}
+              helperText={
+                <DAlertBox
+                  onClearWarning={warningText => handleClearWarning(warningText, 'middleName')}
+                  warningText={getWarning('middleName')}
+                />
+              }
               label='Middle Name'
-              inputRef={focusedField === 'middleName' ? (input) => input?.input.focus() : null}
+              inputRef={focusedField === 'middleName' ? input => input?.input.focus() : null}
               onKeyUp={e => handleKeyDown(e, 'middleName')}
               inputProps={{ maxLength: 34 }}
               onChange={handleNameChange}
               onBlur={e => handleError(e.target.name, e.target.value)}
-
             />
             {truncation(personalInformationFrom.middleName)}
           </div>
@@ -497,14 +519,10 @@ const IndividualDetails = () => {
               value={personalInformationFrom.suffix}
               onChange={(e, v) => {
                 handlePersonalInfoChange({ target: { name: 'suffix', value: v || null } });
-                v === '--SELECT--' && suffixInputRef.current.blur()
+                v === '--SELECT--' && suffixInputRef.current.blur();
               }}
               renderInput={params => (
-                <TextField
-                  {...params}
-                  label='Suffix'
-                  inputRef={suffixInputRef}
-                />
+                <TextField {...params} label='Suffix' inputRef={suffixInputRef} />
               )}
             />
           </div>
@@ -523,19 +541,27 @@ const IndividualDetails = () => {
                     fullWidth: true,
                     error: !!validationError?.birthDate,
                     helperText: <DAlertBox errorText={validationError?.birthDate} />,
-                    inputRef: focusedField === 'birthDate' ? (input) => input?.focus() : null,
+                    inputRef: focusedField === 'birthDate' ? input => input?.focus() : null,
                     onBlur: e => handleError('birthDate', e.target.value),
                     InputProps: {
                       endAdornment: (
-                        <><InputAdornment position='end'>
-                          <IconButton onClick={() => setCalendarOpen((calendarOpen) => !calendarOpen)}>
-                            <CalendarMonthTwoToneIcon />
-                          </IconButton>
-                        </InputAdornment>
-                          {personalInformationFrom.birthDate && <InputAdornment position='end'>
-                            {' '}
-                            <div className='input-adornment-text'> {calculateAge(personalInformationFrom.birthDate)} </div>{' '}
-                          </InputAdornment>}
+                        <>
+                          <InputAdornment position='end'>
+                            <IconButton
+                              onClick={() => setCalendarOpen(calendarOpen => !calendarOpen)}
+                            >
+                              <CalendarMonthTwoToneIcon />
+                            </IconButton>
+                          </InputAdornment>
+                          {personalInformationFrom.birthDate && (
+                            <InputAdornment position='end'>
+                              {' '}
+                              <div className='input-adornment-text'>
+                                {' '}
+                                {calculateAge(personalInformationFrom.birthDate)}{' '}
+                              </div>{' '}
+                            </InputAdornment>
+                          )}
                         </>
                       )
                     }
@@ -549,7 +575,6 @@ const IndividualDetails = () => {
                 onChange={date => handlePersonalInfoChange(date, 'birthDate')}
               />
             </LocalizationProvider>
-
           </div>
         </div>
         <div className='d-sub-title'> Photo & Signature </div>
@@ -571,8 +596,10 @@ const IndividualDetails = () => {
               helperText={<DAlertBox errorText={validationError?.socialSecurityNumber} />}
               inputProps={{ maxLength: 11 }}
               label='Social Security Number (SSN)'
-              disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'socialSecurityNumber')}
-              inputRef={focusedField === 'socialSecurityNumber' ? (input) => input?.focus() : null}
+              disabled={
+                disabledOtherInfo || (isFormDisabled && focusedField !== 'socialSecurityNumber')
+              }
+              inputRef={focusedField === 'socialSecurityNumber' ? input => input?.focus() : null}
               placeholder='   -  -    '
               onChange={e => {
                 handleSSNChange(e);
@@ -609,18 +636,16 @@ const IndividualDetails = () => {
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('citizen', e.target.value)}
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'citizen')}
-
               renderInput={params => (
                 <TextField
                   {...params}
                   error={!!validationError?.citizen}
                   label='Citizen'
-                  inputRef={focusedField === 'citizen' ? (input) => input?.focus() : null}
+                  inputRef={focusedField === 'citizen' ? input => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.citizen} />}
                 />
               )}
             />
-
           </div>
           <div className='col col-md-2 col-sm-12'>
             <Autocomplete
@@ -638,15 +663,13 @@ const IndividualDetails = () => {
               renderInput={params => (
                 <TextField
                   {...params}
-
                   error={!!validationError?.organDonor}
                   label='Organ Donor'
-                  inputRef={focusedField === 'organDonor' ? (input) => input?.focus() : null}
+                  inputRef={focusedField === 'organDonor' ? input => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.organDonor} />}
                 />
               )}
             />
-
           </div>
           <div className='col col-md-4 col-sm-12'>
             <Autocomplete
@@ -655,9 +678,7 @@ const IndividualDetails = () => {
               size='small'
               name='language'
               disableClearable={true}
-
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'language')}
-
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('language', e.target.value)}
               renderInput={params => (
@@ -665,7 +686,7 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.language}
                   label='Language'
-                  inputRef={focusedField === 'language' ? (input) => input?.focus() : null}
+                  inputRef={focusedField === 'language' ? input => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.language} />}
                 />
               )}
@@ -683,18 +704,10 @@ const IndividualDetails = () => {
               value={otherInformationFrom.vip}
               onChange={(e, v) => {
                 handleOtherInfoChange({ target: { name: 'vip', value: v || null } });
-                vipInputRef.current.blur()
+                vipInputRef.current.blur();
               }}
-
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label='VIP'
-                  inputRef={vipInputRef}
-                />
-              )}
+              renderInput={params => <TextField {...params} label='VIP' inputRef={vipInputRef} />}
             />
-
           </div>
           <div className='col col-md-2 col-sm-12'>
             <Autocomplete
@@ -708,18 +721,12 @@ const IndividualDetails = () => {
                 handleOtherInfoChange({ target: { name: 'activeMilitary', value: v || null } });
                 activeInputRef.current.blur();
               }}
-
               renderInput={params => (
-                <TextField
-                  {...params}
-                  label='Active Military'
-                  inputRef={activeInputRef}
-                />
+                <TextField {...params} label='Active Military' inputRef={activeInputRef} />
               )}
             />
           </div>
           <div className='col col-md-2 col-sm-12'>
-
             <Autocomplete
               options={sortedList(optionList)}
               fullWidth
@@ -727,7 +734,6 @@ const IndividualDetails = () => {
               size='small'
               disableClearable={true}
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'veteran')}
-
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('veteran', e.target.value)}
               renderInput={params => (
@@ -735,7 +741,7 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.veteran}
                   label='Veteran'
-                  inputRef={focusedField === 'veteran' ? (input) => input?.focus() : null}
+                  inputRef={focusedField === 'veteran' ? input => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.veteran} />}
                 />
               )}
@@ -754,7 +760,6 @@ const IndividualDetails = () => {
                   size='small'
                   disableClearable={true}
                   disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'gender')}
-
                   onChange={handleOtherInfoChange}
                   onBlur={e => handleError('gender', e.target.value)}
                   renderInput={params => (
@@ -762,13 +767,11 @@ const IndividualDetails = () => {
                       {...params}
                       error={!!validationError?.gender}
                       label='Gender'
-                      inputRef={focusedField === 'gender' ? (input) => input?.focus() : null}
+                      inputRef={focusedField === 'gender' ? input => input?.focus() : null}
                       helperText={<DAlertBox errorText={validationError?.gender} />}
                     />
                   )}
                 />
-
-
               </div>
               <div className='col col-lg-6 col-xl-4  col-sm-12'>
                 <TextField
@@ -778,7 +781,7 @@ const IndividualDetails = () => {
                   name='weight'
                   size='small'
                   disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'weight')}
-                  inputRef={focusedField === 'weight' ? (input) => input?.focus() : null}
+                  inputRef={focusedField === 'weight' ? input => input?.focus() : null}
                   error={!!validationError?.weight}
                   onBlur={e => handleError('weight', e.target.value)}
                   helperText={<DAlertBox errorText={validationError?.weight} />}
@@ -799,10 +802,17 @@ const IndividualDetails = () => {
                 />
               </div>
             </div>
-
           </div>
           <div className='col col-lg-6 col-xl-2 col-sm-12'>
-            <DHeight validationError={validationError} disabledOtherInfo={disabledOtherInfo} isFormDisabled={isFormDisabled} focusedField={focusedField} values={otherInformationFrom} handleError={(fieldName, value) => handleError(fieldName, value)} handleChange={(e, start, end) => handleNumberChange(e, start, end)} />
+            <DHeight
+              validationError={validationError}
+              disabledOtherInfo={disabledOtherInfo}
+              isFormDisabled={isFormDisabled}
+              focusedField={focusedField}
+              values={otherInformationFrom}
+              handleError={(fieldName, value) => handleError(fieldName, value)}
+              handleChange={(e, start, end) => handleNumberChange(e, start, end)}
+            />
             <FormHelperText className='custom-error' error={true}>
               {' '}
               <DAlertBox errorText={validationError?.heightFeet || validationError?.heightInch} />
@@ -814,10 +824,9 @@ const IndividualDetails = () => {
               fullWidth
               size='small'
               disableClearable={true}
-              getOptionDisabled={(option) => option === 'UNKNOWN'}
+              getOptionDisabled={option => option === 'UNKNOWN'}
               name='hairColor'
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'hairColor')}
-
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('hairColor', e.target.value)}
               renderInput={params => (
@@ -825,12 +834,11 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.hairColor}
                   label='Hair Color'
-                  inputRef={focusedField === 'hairColor' ? (input) => input && input.focus() : null}
+                  inputRef={focusedField === 'hairColor' ? input => input && input.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.hairColor} />}
                 />
               )}
             />
-
           </div>
           <div className='col col-lg-6 col-xl-2 col-sm-12'>
             <Autocomplete
@@ -839,9 +847,8 @@ const IndividualDetails = () => {
               size='small'
               name='eyeColor'
               disableClearable={true}
-              getOptionDisabled={(option) => option === 'UNKNOWN'}
+              getOptionDisabled={option => option === 'UNKNOWN'}
               disabled={disabledOtherInfo || (isFormDisabled && focusedField !== 'eyeColor')}
-
               onChange={handleOtherInfoChange}
               onBlur={e => handleError('eyeColor', e.target.value)}
               renderInput={params => (
@@ -849,12 +856,11 @@ const IndividualDetails = () => {
                   {...params}
                   error={!!validationError?.eyeColor}
                   label='Eye Color'
-                  inputRef={focusedField === 'eyeColor' ? (input) => input?.focus() : null}
+                  inputRef={focusedField === 'eyeColor' ? input => input?.focus() : null}
                   helperText={<DAlertBox errorText={validationError?.eyeColor} />}
                 />
               )}
             />
-
           </div>
         </div>
         <Dialog
@@ -872,11 +878,23 @@ const IndividualDetails = () => {
 
           <DialogTitle> Supervisor Override </DialogTitle>
           <DialogContent>
-            {socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN ?
-              <> {(socialSecurityNumber.replace(/-/g, '') === '000000000' || socialSecurityNumber.replace(/-/g, '') === '999999999') ? <div>
-                SSN Verification Not Required. SSN is all 0s or all 9s.
-              </div>
-                : <div> SSN Verification: Not Verified; {socialSecurityNumber} Supervisor override required </div>} </> : <>  Supervisor Override is necessary to skip document scans. </>}
+            {socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN ? (
+              <>
+                {' '}
+                {socialSecurityNumber.replace(/-/g, '') === '000000000' ||
+                socialSecurityNumber.replace(/-/g, '') === '999999999' ? (
+                  <div>SSN Verification Not Required. SSN is all 0s or all 9s.</div>
+                ) : (
+                  <div>
+                    {' '}
+                    SSN Verification: Not Verified; {socialSecurityNumber} Supervisor override
+                    required{' '}
+                  </div>
+                )}{' '}
+              </>
+            ) : (
+              <> Supervisor Override is necessary to skip document scans. </>
+            )}
 
             <div className='d-row'>
               <div className='col col-md-6'>

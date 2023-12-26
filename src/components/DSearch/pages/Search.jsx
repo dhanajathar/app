@@ -310,7 +310,7 @@ export function Search({ isSearchCertifier = false, onCancel, onSearch, onSearch
             variant='contained'
             color='primary'
             disabled={isDisabled}
-            onClick={() => (isSearchCertifier ? onSearch(formData) : handleSearchClick)}
+            onClick={() => (isSearchCertifier ? onSearch(formData) : handleSearchClick())}
           >
             SEARCH
           </Button>

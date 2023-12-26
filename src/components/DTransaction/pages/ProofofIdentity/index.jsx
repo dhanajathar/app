@@ -1,3 +1,13 @@
+/*
+ * Component Name: Proof of Identity
+ * Author: Priyanka Pandey
+ * Created: 2023-08-01
+ * Last Modified: 2023-12-22
+ * Description: This is the USCIS page, intended exclusively for non-citizens. 
+                This component verifies the user's visa type and the corresponding verification process.
+ * Application Release Version:1.0.0
+ */
+
 import './index.css';
 
 import {
@@ -41,7 +51,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import dayjs from 'dayjs';
 import mockData from './data.json';
 import DAlertBox from '../../../DAlertBox';
-
+import * as _ from 'lodash';
 export default function ProofOfIdentity() {
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
@@ -69,6 +79,10 @@ export default function ProofOfIdentity() {
     firstName,
     middleName
   } = mockData;
+
+  const sortedDocumentType = _.sortBy(documentType, 'label');
+  const sortedVisaTypeList = _.sortBy(visaTypeList, 'label');
+  const sortedCountryList = _.sortBy(countryList, 'label');
 
   const initialData = {
     verificationRequestDocument: null,
@@ -283,8 +297,14 @@ export default function ProofOfIdentity() {
     if (error === '') {
       delete errors[name];
     }
-    setFocusedField(error !== '' ? name : '');
-    setValidationError(errors);
+    const newFocusedField = error !== '' ? name : '';
+    if (focusedField !== newFocusedField) {
+      setFocusedField(newFocusedField);
+    }
+
+    if (!_.isEqual(validationError, errors)) {
+      setValidationError(errors);
+    }
     setIsFormDisabled(Object.values(errors).some(error => error !== ''));
   };
 
@@ -404,7 +424,7 @@ export default function ProofOfIdentity() {
             <div className='d-row'>
               <div className='col col-md-8 col-sm-12'>
                 <Autocomplete
-                  options={documentType}
+                  options={sortedDocumentType}
                   fullWidth
                   size='small'
                   name='verificationRequestDocument'
@@ -431,7 +451,7 @@ export default function ProofOfIdentity() {
               {formData.verificationRequestDocument && (
                 <div className='col col-md-4 col-sm-12'>
                   <Autocomplete
-                    options={visaTypeList}
+                    options={sortedVisaTypeList}
                     fullWidth
                     size='small'
                     value={formData.visaType}
@@ -604,13 +624,14 @@ export default function ProofOfIdentity() {
             <Accordion
               className='initial-verification'
               expanded={expanded === 'verificationPannel'}
-              onChange={handleAccordionChange('verificationPannel')}
+              onChange={!isFormDisabled && handleAccordionChange('verificationPannel')}
             >
               <AccordionSummary
                 expandIcon={
-                  <Tooltip arrow title='Expand' placement='top'>
-                    <ExpandMoreIcon />
-                  </Tooltip>
+                  isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
+                    <Tooltip arrow title='Expand' placement='top'>
+                      <ExpandMoreIcon />
+                    </Tooltip>
                 }
                 aria-controls='panel1bh-content'
                 id='panel1bh-header'
@@ -702,8 +723,8 @@ export default function ProofOfIdentity() {
                           value={initialVerification.country}
                           label='Country'
                         >
-                          {countryList &&
-                            countryList.map(c => {
+                          {sortedCountryList &&
+                            sortedCountryList.map(c => {
                               return (
                                 <MenuItem key={c.label} value={c.value}>
                                   {' '}
@@ -784,13 +805,14 @@ export default function ProofOfIdentity() {
                 <Accordion
                   className='verification-history-accordion'
                   expanded={expanded === 'panel1'}
-                  onChange={handleAccordionChange('panel1')}
+                  onChange={!isFormDisabled && handleAccordionChange('panel1')}
                 >
                   <AccordionSummary
                     expandIcon={
-                      <Tooltip arrow title='Expand' placement='top'>
-                        <ExpandMoreIcon />
-                      </Tooltip>
+                      isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
+                        <Tooltip arrow title='Expand' placement='top'>
+                          <ExpandMoreIcon />
+                        </Tooltip>
                     }
                     aria-controls='panel1bh-content'
                     id='panel1bh-header'
@@ -846,7 +868,7 @@ export default function ProofOfIdentity() {
             </div>
           </>
         )}
-        {/* <Button type='submit'> validate </Button> */}
+
       </form>
       <Dialog
         sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}

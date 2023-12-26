@@ -1,3 +1,11 @@
+/*
+ * Component Name: Theme
+ * Author: Priyanka Pandey
+ * Created: 2023-07-31
+ * Last Modified: 2023-12-15
+ * Description: This file is overriding MUI's native color feature
+ * Application Release Version:1.0.0
+ */
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({

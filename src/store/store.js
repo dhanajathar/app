@@ -8,6 +8,13 @@ export const store = configureStore({
     transaction: transactionReducer,
     pdfDetails: pdfDetailsReducer
   },
-  middleware: (getDefaultMiddleware) =>getDefaultMiddleware({ serializableCheck: false, }),
+  middleware: (getDefaultMiddleware) => { 
+    let middleware = getDefaultMiddleware({ serializableCheck: false, });
+     
+   /* if(process.env.NODE_ENV == "development") {
+      middleware = middleware.concat(logger);
+    }*/
+    return middleware;
+  }
   //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

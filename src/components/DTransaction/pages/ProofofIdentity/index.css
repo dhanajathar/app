@@ -1,6 +1,8 @@
+ 
+
 .verification-history-accordion {
-  border: 2px solid #167abc;
-  border-radius: 4px !important;
+  border: 0.125rem solid #167abc; 
+  border-radius: 0.25rem !important;  
   box-shadow: none !important;
   margin-top: 1rem;
   width: 100%;
@@ -11,13 +13,16 @@
 }
 
 .verification-history-accordion .MuiAccordionSummary-content {
-  font: normal normal bold 18px/16px Open Sans;
-  letter-spacing: 0px;
+  font: normal normal bold 1.125rem/1rem Open Sans;  
+  letter-spacing: 0;
   color: var(--black100);
 }
 
 .status-description {
   color: #de4d00;
+}
+.disabled-icon {
+  opacity: 0.4;
 }
 
 .status-label {
@@ -26,8 +31,8 @@
 
 .initial-verification {
   background-color: var(--primary30) !important;
-  border: 2px solid #167ABC;
-  border-radius: 4px !important;
+  border: 0.125rem solid #167ABC;  
+  border-radius: 0.25rem !important; 
   box-shadow: none !important;
   margin-top: 1rem;
 }
@@ -40,7 +45,7 @@
 }
 
 .initial-verification .initial-verification-header svg {
-  height: 18px;
+  height: 1.125rem;  
 }
 
 .initial-verification .initial-verification-header .warning-status {
@@ -54,12 +59,12 @@
 .initial-verification .verification-status {
   display: flex;
   align-items: center;
-  font: normal normal normal 16px/22px Open Sans;
+  font: normal normal normal 1rem/1.375rem Open Sans; 
 }
 
 .initial-verification .MuiAccordionSummary-content {
-  font: normal normal bold 18px/16px Open Sans;
-  letter-spacing: 0px;
+  font: normal normal bold 1.125rem/1rem Open Sans; 
+  letter-spacing: 0;
   color: var(--black100);
 }
 
@@ -68,11 +73,11 @@
 }
 
 .truncated_icons svg {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem; 
+  height: 1.25rem;  
   background: #FCE68C 0% 0% no-repeat padding-box;
   border-radius: 50%;
   fill: var(--black100);
-  padding: 5px;
-  margin: 0 0.5rem;
+  padding: 0.3125rem;  
+  margin: 0 0.03125rem;  
 }

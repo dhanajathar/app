@@ -1,0 +1,12 @@
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='16'
+                            height='16'
+                            viewBox='0 0 16 20'
+                            fill='none'
+                          >
+                            <path
+                              d='M8 4L4 0L0 4H3L3 19H5L5 4H8ZM8 16L12 20L16 16H13L13 1H11L11 16H8Z'
+                              fill='black'
+                            />
+                          </svg>

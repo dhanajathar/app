@@ -1,3 +1,12 @@
+/*
+ * Component Name: Address
+ * Author: Priyanka Pandey
+ * Created: 2023-07-01
+ * Last Modified: 2023-12-14
+ * Description: Address Details Data entry page for new users.
+ * Application Release Version:1.0.0
+ */
+
 import './index.css';
 
 import {
@@ -60,7 +69,7 @@ export default function Address() {
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [focusedField, setFocusedField] = useState('');
   const [warningText, setWarningText] = useState();
-  const [selectedStreetName, setSelectedStreetName] = useState('')
+  const [selectedStreetName, setSelectedStreetName] = useState('');
 
   const PRIMARY = 'PRIMARY';
   const initialData = {
@@ -89,10 +98,10 @@ export default function Address() {
       isCertification: '',
       residencyCertificationStatus: false,
       certifiedInfo: {
-        certifierFullName: "John Doe",
-        dateOfBirth: "12/29/1980",
-        driverLicense: "1234567890",
-        expirationDate: "04/21/2030"
+        certifierFullName: 'John Doe',
+        dateOfBirth: '12/29/1980',
+        driverLicense: '1234567890',
+        expirationDate: '04/21/2030'
       }
     },
     isExpand: true
@@ -120,10 +129,10 @@ export default function Address() {
     setAddresses(newAddresses);
     if (field === 'addressLine') {
       if (value.length > 35) {
-        setIsFormDisabled(true)
-        setWarningText('Address is more than 35 characters')
+        setIsFormDisabled(true);
+        setWarningText('Address is more than 35 characters');
       } else {
-        setWarningText('')
+        setWarningText('');
       }
     }
   };
@@ -145,7 +154,7 @@ export default function Address() {
         newAddresses[index].addressDetails.isValidate = addresses.length === 1 ? true : false;
       }
       addresses.length > 1 && setOpenStreetDialog(true);
-      setSelectedAddress(index)
+      setSelectedAddress(index);
       setAddresses(newAddresses);
     }
   };
@@ -163,17 +172,16 @@ export default function Address() {
     const newAddresses = [...addresses];
     newAddresses[selectedAddress].addressDetails.isValidate = null;
     if (addresses[selectedAddress]?.addressDetails.overRide > 0) {
-      //temp street name, it wil replace after street name api integration 
-      newAddresses[selectedAddress].addressDetails.additionalAddress.streetName = 'SOUTH DAKOTA'
-      newAddresses[selectedAddress].addressDetails.additionalAddress.streetNameSuffix = 'AVE'
-      newAddresses[selectedAddress].addressDetails.additionalAddress.postDirectionalCode = 'SE'
+      //temp street name, it wil replace after street name api integration
+      newAddresses[selectedAddress].addressDetails.additionalAddress.streetName = 'SOUTH DAKOTA';
+      newAddresses[selectedAddress].addressDetails.additionalAddress.streetNameSuffix = 'AVE';
+      newAddresses[selectedAddress].addressDetails.additionalAddress.postDirectionalCode = 'SE';
     } else {
-      newAddresses[selectedAddress].addressDetails.addressLine = selectedStreetName
+      newAddresses[selectedAddress].addressDetails.addressLine = selectedStreetName;
     }
 
-
     setAddresses(newAddresses);
-  }
+  };
 
   const handleDeleteAddress = index => {
     setSelectedAddress(index);
@@ -218,12 +226,13 @@ export default function Address() {
       isValidate: null,
       overRide: updatedAddress.addressDetails.overRide + 1
     };
-    if (updatedAddress.addressDetails.overRide > 1 &&
-      updatedAddress.addressDetails.ignoreAddressVerification) {
+    if (
+      updatedAddress.addressDetails.overRide > 1 &&
+      updatedAddress.addressDetails.ignoreAddressVerification
+    ) {
       setShowAlert(true);
       updatedAddress.addressDetails.isValidate = true;
     }
-
 
     newAddresses[selectedAddress] = updatedAddress;
     setAddresses(newAddresses);
@@ -243,11 +252,13 @@ export default function Address() {
   };
 
   const handleClearWarning = () => {
-    setWarningText('')
-    setIsFormDisabled(false)
+    setWarningText('');
+    setIsFormDisabled(false);
     setFocusedField('addressLine');
-    setTimeout(() => { setFocusedField() }, 50)
-  }
+    setTimeout(() => {
+      setFocusedField();
+    }, 50);
+  };
 
   const handleError = (name, value, index) => {
     const error = validateFiled(name, value, index);
@@ -261,7 +272,6 @@ export default function Address() {
     setIsFormDisabled(Object.values(errors).some(error => error !== ''));
     setFocusedField(error !== '' ? name : '');
   };
-
 
   const validateFiled = (name, value, index) => {
     const specialCharacterPattern = /[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]/;
@@ -284,7 +294,6 @@ export default function Address() {
       case 'toDate':
         addresses.forEach((e, i) => {
           if (i !== 0 && i !== index) {
-
             if (
               dayjs(value).isBefore(e.toDate) ||
               new Date(e.toDate).toDateString() === new Date(value).toDateString()
@@ -320,12 +329,18 @@ export default function Address() {
         }
         break;
       case 'streetNumber':
-        if (addresses[index].addressDetails.overRide > 0 && (!value || specialCharacterPattern.test(value))) {
+        if (
+          addresses[index].addressDetails.overRide > 0 &&
+          (!value || specialCharacterPattern.test(value))
+        ) {
           error = 'Invalid Street Number';
         }
         break;
       case 'streetName':
-        if (addresses[index].addressDetails.overRide > 0 && (!value || specialCharacterPattern.test(value))) {
+        if (
+          addresses[index].addressDetails.overRide > 0 &&
+          (!value || specialCharacterPattern.test(value))
+        ) {
           error = 'Invalid Street Name';
         }
         break;
@@ -347,8 +362,7 @@ export default function Address() {
       default:
     }
     return error;
-  }
-
+  };
 
   const handleAllErrors = (data, index) => {
     for (const key in data) {
@@ -377,7 +391,7 @@ export default function Address() {
     }
   };
 
-  const handleChangeCertification = (value) => {
+  const handleChangeCertification = value => {
     const newAddresses = [...addresses];
     const updatedAddress = { ...newAddresses[0] };
     updatedAddress.residencyCertification = {
@@ -386,10 +400,9 @@ export default function Address() {
     };
     newAddresses[0] = updatedAddress;
     setAddresses(newAddresses);
+  };
 
-  }
-
-  const handleCertificationStatus = (value) => {
+  const handleCertificationStatus = value => {
     const newAddresses = [...addresses];
     const updatedAddress = { ...newAddresses[0] };
     updatedAddress.residencyCertification = {
@@ -398,10 +411,7 @@ export default function Address() {
     };
     newAddresses[0] = updatedAddress;
     setAddresses(newAddresses);
-
-  }
-
-
+  };
 
   return (
     <div className='d-container'>
@@ -409,8 +419,9 @@ export default function Address() {
         <React.Fragment key={`address-${index}`}>
           <div>
             <div
-              className={`address-header ${addresses && addresses.length === 1 && 'primary-address-header'
-                }`}
+              className={`address-header ${
+                addresses && addresses.length === 1 && 'primary-address-header'
+              }`}
             >
               <div className='address-title'>
                 {' '}
@@ -430,10 +441,11 @@ export default function Address() {
                 {' '}
                 {address.addressDetails.isValidate && (
                   <div className='address-duration'>
-                    {`${dayjs(address.fromDate).format('MM/DD/YYYY')} - To ${address.addressType === PRIMARY
-                      ? 'TILL Date'
-                      : dayjs(address.toDate).format('MM/DD/YYYY')
-                      }`}
+                    {`${dayjs(address.fromDate).format('MM/DD/YYYY')} - To ${
+                      address.addressType === PRIMARY
+                        ? 'TILL Date'
+                        : dayjs(address.toDate).format('MM/DD/YYYY')
+                    }`}
                   </div>
                 )}
                 {addresses && addresses.length !== 1 && (
@@ -451,251 +463,280 @@ export default function Address() {
                 )}
               </div>
             </div>
-            {address.isExpand && <div className={address.isExpand ? 'address-content' : 'address-content collapsed'}>
-              <div className='d-row'>
-                <div className='col col-sm-12 col-md-4'>
-
-
-
-
-                  <FormControl fullWidth size='small'>
-                    <InputLabel id='addressType'>Address Type</InputLabel>
-                    <Select
-                      labelId='addressType'
-                      id='addressType'
-                      disabled
-                      value={address.addressType}
-                      label='Address Type'
-                    >
-                      {index === 0 && <MenuItem value={'PRIMARY'}>PRIMARY</MenuItem>}
-                      {index !== 0 && <MenuItem value={'TEMPORARY'}>TEMPORARY</MenuItem>}
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className='col col-sm-12 col-md-4'>
-                  <div className='date-picker'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        label='From Date'
-                        value={address.fromDate ? dayjs(address.fromDate) : null}
-                        disabled={(address.addressType === 'PRIMARY' || (isFormDisabled && focusedField !== 'fromDate'))}
-                        minDate={dayjs(new Date())}
-                        slotProps={{
-                          textField: {
-                            size: 'small',
-                            error: !!address.validationErrors?.fromDate,
-                            helperText: <DAlertBox errorText={address.validationErrors?.fromDate} />
+            {address.isExpand && (
+              <div className={address.isExpand ? 'address-content' : 'address-content collapsed'}>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-4'>
+                    <FormControl fullWidth size='small'>
+                      <InputLabel id='addressType'>Address Type</InputLabel>
+                      <Select
+                        labelId='addressType'
+                        id='addressType'
+                        disabled
+                        value={address.addressType}
+                        label='Address Type'
+                      >
+                        {index === 0 && <MenuItem value={'PRIMARY'}>PRIMARY</MenuItem>}
+                        {index !== 0 && <MenuItem value={'TEMPORARY'}>TEMPORARY</MenuItem>}
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <div className='date-picker'>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label='From Date'
+                          value={address.fromDate ? dayjs(address.fromDate) : null}
+                          disabled={
+                            address.addressType === 'PRIMARY' ||
+                            (isFormDisabled && focusedField !== 'fromDate')
                           }
-                        }}
-                        onChange={date => handleAddressChange(index, 'fromDate', date)}
-                      />
-                    </LocalizationProvider>
+                          minDate={dayjs(new Date())}
+                          slotProps={{
+                            textField: {
+                              size: 'small',
+                              error: !!address.validationErrors?.fromDate,
+                              helperText: (
+                                <DAlertBox errorText={address.validationErrors?.fromDate} />
+                              )
+                            }
+                          }}
+                          onChange={date => handleAddressChange(index, 'fromDate', date)}
+                        />
+                      </LocalizationProvider>
+                    </div>
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <div className='date-picker'>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label='To Date'
+                          disabled={
+                            address.addressType === 'PRIMARY' ||
+                            (isFormDisabled && focusedField !== 'toDate')
+                          }
+                          value={address.toDate && dayjs(address.toDate)}
+                          minDate={dayjs(new Date())}
+                          name='toDate'
+                          slotProps={{
+                            textField: {
+                              size: 'small',
+                              error: !!address.validationErrors?.toDate,
+                              helperText: <DAlertBox errorText={address.validationErrors?.toDate} />
+                            }
+                          }}
+                          onBlur={e => handleError(e.target.name, e.target.value, index)}
+                          onChange={date => handleAddressChange(index, 'toDate', date)}
+                        />
+                      </LocalizationProvider>
+                    </div>
                   </div>
                 </div>
-                <div className='col col-sm-12 col-md-4'>
-
-                  <div className='date-picker'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        label='To Date'
-                        disabled={(address.addressType === 'PRIMARY' || (isFormDisabled && focusedField !== 'toDate'))}
-                        value={address.toDate && dayjs(address.toDate)}
-                        minDate={dayjs(new Date())}
-                        name="toDate"
-                        slotProps={{
-                          textField: {
-                            size: 'small',
-                            error: !!address.validationErrors?.toDate,
-                            helperText: <DAlertBox errorText={address.validationErrors?.toDate} />
+                <fieldset className='address-details'>
+                  <legend className='legend'> Address Details </legend>
+                  <form>
+                    <div className='d-row'>
+                      {address.addressDetails?.overRide > 0 ? (
+                        <AdditionalAddressDetails
+                          key={`address-details-${index}`}
+                          focusedField={focusedField}
+                          isFormDisabled={isFormDisabled}
+                          validationErrors={address.validationErrors}
+                          additionalAddress={address.addressDetails.additionalAddress}
+                          handleAdditionalAddressChange={(field, value) =>
+                            handleAdditionalAddressChange(index, field, value)
                           }
-                        }}
-                        onBlur={(e) => handleError(e.target.name, e.target.value, index)}
-                        onChange={date => handleAddressChange(index, 'toDate', date)}
-                      />
-                    </LocalizationProvider>
-                  </div>
-                </div>
-              </div>
-              <fieldset className='address-details'>
-                <legend className='legend'>  Address Details </legend>
-                <form>
-                  <div className='d-row'>
-                    {address.addressDetails?.overRide > 0 ? (
-                      <AdditionalAddressDetails
-                        key={`address-details-${index}`}
-                        focusedField={focusedField}
-                        isFormDisabled={isFormDisabled}
-                        validationErrors={address.validationErrors}
-                        additionalAddress={address.addressDetails.additionalAddress}
-                        handleAdditionalAddressChange={(field, value) =>
-                          handleAdditionalAddressChange(index, field, value)
-                        }
-                        handleOnbBlur={(name, value) => {
-                          handleError(name, value, index)
-                        }}
-                      />
-                    ) : (
-                      <div className='col col-sm-12 col-md-8'>
+                          handleOnbBlur={(name, value) => {
+                            handleError(name, value, index);
+                          }}
+                        />
+                      ) : (
+                        <div className='col col-sm-12 col-md-8'>
+                          <TextField
+                            fullWidth
+                            name='addressLine'
+                            label='Address Line'
+                            size='small'
+                            disabled={isFormDisabled && focusedField !== 'addressLine'}
+                            error={!!address.validationErrors?.addressLine}
+                            helperText={
+                              <DAlertBox
+                                errorText={address.validationErrors?.addressLine}
+                                onClearWarning={handleClearWarning}
+                                warningText={warningText}
+                              />
+                            }
+                            onBlur={e => handleError(e.target.name, e.target.value, index)}
+                            value={address.addressDetails.addressLine}
+                            inputRef={
+                              focusedField === 'addressLine' ? input => input?.focus() : null
+                            }
+                            inputProps={{ maxLength: 150 }}
+                            onChange={e =>
+                              handleAddressDetailsChange(index, 'addressLine', e.target.value)
+                            }
+                          />
+                        </div>
+                      )}
+                      <div className='col col-sm-12 col-md-4'>
                         <TextField
                           fullWidth
-                          name='addressLine'
-                          label='Address Line'
+                          name='city'
+                          label='City'
                           size='small'
-                          disabled={isFormDisabled && focusedField !== 'addressLine'}
-                          error={!!address.validationErrors?.addressLine}
-                          helperText={
-                            <DAlertBox
-                              errorText={address.validationErrors?.addressLine}
-                              onClearWarning={handleClearWarning}
-                              warningText={warningText}
-                            />
+                          disabled={
+                            address.addressType === PRIMARY ||
+                            (isFormDisabled && focusedField !== 'city')
                           }
-                          onBlur={(e) => handleError(e.target.name, e.target.value, index)}
-                          value={address.addressDetails.addressLine}
-                          inputRef={focusedField === 'addressLine' ? (input) => input?.focus() : null}
-                          inputProps={{ maxLength: 150 }}
+                          inputProps={{ maxLength: 20 }}
+                          value={address.addressDetails.city}
+                          helperText={<DAlertBox errorText={address.validationErrors?.city} />}
+                          error={!!address.validationErrors?.city}
+                          onChange={e => handleAddressDetailsChange(index, 'city', e.target.value)}
+                          inputRef={focusedField === 'city' ? input => input?.focus() : null}
+                          onBlur={e => handleError(e.target.name, e.target.value, index)}
+                        />
+                      </div>
+                      <div className='col col-sm-12 col-md-4'>
+                        <Autocomplete
+                          options={stateList}
+                          fullWidth
+                          size='small'
+                          name='state'
+                          value={address.addressDetails.state}
+                          disableClearable={true}
+                          onChange={(e, v) => handleAddressDetailsChange(index, 'state', v)}
+                          disabled={
+                            address.addressType === PRIMARY ||
+                            (isFormDisabled && focusedField !== 'state')
+                          }
+                          onBlur={e => handleError('state', e.target.value, index)}
+                          renderInput={params => (
+                            <TextField
+                              {...params}
+                              error={!!address.validationErrors?.state}
+                              inputRef={e => setFocusOnInput(e, 'state')}
+                              helperText={<DAlertBox errorText={address.validationErrors?.state} />}
+                              label='State'
+                            />
+                          )}
+                        />
+                      </div>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          fullWidth
+                          name='zipCode'
+                          size='small'
+                          inputProps={{ inputMode: 'numeric', maxLength: 9 }}
+                          helperText={<DAlertBox errorText={address.validationErrors?.zipCode} />}
+                          disabled={isFormDisabled && focusedField !== 'zipCode'}
+                          error={!!address.validationErrors?.zipCode}
+                          label='Zip Code'
+                          inputRef={focusedField === 'zipCode' ? input => input?.focus() : null}
+                          onBlur={e => handleError(e.target.name, e.target.value, index)}
                           onChange={e =>
-                            handleAddressDetailsChange(index, 'addressLine', e.target.value)
+                            handleAddressDetailsChange(index, 'zipCode', e.target.value)
                           }
                         />
                       </div>
-                    )}
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        fullWidth
-                        name='city'
-                        label='City'
-                        size='small'
-                        disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'city')}
-                        inputProps={{ maxLength: 20 }}
-                        value={address.addressDetails.city}
-                        helperText={<DAlertBox errorText={address.validationErrors?.city} />}
-                        error={!!address.validationErrors?.city}
-                        onChange={e => handleAddressDetailsChange(index, 'city', e.target.value)}
-                        inputRef={focusedField === 'city' ? (input) => input?.focus() : null}
-                        onBlur={(e) => handleError(e.target.name, e.target.value, index)}
-                      />
+                      <div className='col col-sm-12 col-md-4'>
+                        <Autocomplete
+                          options={countryList}
+                          fullWidth
+                          size='small'
+                          name='country'
+                          value={address.addressDetails.country}
+                          disableClearable={true}
+                          onChange={(e, v) => handleAddressDetailsChange(index, 'country', v)}
+                          disabled={
+                            address.addressType === PRIMARY ||
+                            (isFormDisabled && focusedField !== 'country')
+                          }
+                          onBlur={e => handleError('country', e.target.value, index)}
+                          renderInput={params => (
+                            <TextField
+                              {...params}
+                              inputRef={e => setFocusOnInput(e, 'country')}
+                              error={!!address.validationErrors?.country}
+                              helperText={
+                                <DAlertBox errorText={address.validationErrors?.country} />
+                              }
+                              label='Country'
+                            />
+                          )}
+                        />
+                      </div>
                     </div>
-                    <div className='col col-sm-12 col-md-4'>
-
-                      <Autocomplete
-                        options={stateList}
-                        fullWidth
-                        size='small'
-                        name='state'
-                        value={address.addressDetails.state}
-                        disableClearable={true}
-                        onChange={(e, v) => handleAddressDetailsChange(index, 'state', v)}
-                        disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'state')}
-                        onBlur={(e) => handleError('state', e.target.value, index)}
-                        renderInput={params => (
-                          <TextField
-                            {...params}
-                            error={!!address.validationErrors?.state}
-                            inputRef={e => setFocusOnInput(e, 'state')}
-                            helperText={<DAlertBox errorText={address.validationErrors?.state} />}
-                            label='State'
-                          />
-                        )}
-                      />
-
-                    </div>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        fullWidth
-                        name='zipCode'
-                        size='small'
-                        inputProps={{ inputMode: 'numeric', maxLength: 9 }}
-                        helperText={<DAlertBox errorText={address.validationErrors?.zipCode} />}
-                        disabled={isFormDisabled && focusedField !== 'zipCode'}
-                        error={!!address.validationErrors?.zipCode}
-                        label='Zip Code'
-                        inputRef={focusedField === 'zipCode' ? (input) => input?.focus() : null}
-                        onBlur={(e) => handleError(e.target.name, e.target.value, index)}
-                        onChange={e => handleAddressDetailsChange(index, 'zipCode', e.target.value)}
-                      />
-                    </div>
-                    <div className='col col-sm-12 col-md-4'>
-
-                      <Autocomplete
-                        options={countryList}
-                        fullWidth
-                        size='small'
-                        name='country'
-                        value={address.addressDetails.country}
-                        disableClearable={true}
-                        onChange={(e, v) => handleAddressDetailsChange(index, 'country', v)}
-                        disabled={address.addressType === PRIMARY || (isFormDisabled && focusedField !== 'country')}
-                        onBlur={(e) => handleError('country', e.target.value, index)}
-                        renderInput={params => (
-                          <TextField
-                            {...params}
-                            inputRef={e => setFocusOnInput(e, 'country')}
-                            error={!!address.validationErrors?.country}
-                            helperText={<DAlertBox errorText={address.validationErrors?.country} />}
-                            label='Country'
-                          />
-                        )}
-                      />
-
-
-
-                    </div>
-                  </div>
-                  <div className='address-status-wrapper'>
-                    {address.addressDetails.isValidate === null ? (
-                      <>
-                        {address.addressDetails.ignoreAddressVerification === null && (
-                          <Button variant='outlined' disabled={isFormDisabled} onClick={() => handleValidateAddress(index)}>
-                            {' '}
-                            Validate Address{' '}
-                          </Button>
-                        )}
-                      </>
-                    ) : (
-                      <div className='address-status'>
-                        {address.addressDetails.isValidate ? (
-                          <div className='valid-address'>
-                            <div className='address-line'>
+                    <div className='address-status-wrapper'>
+                      {address.addressDetails.isValidate === null ? (
+                        <>
+                          {address.addressDetails.ignoreAddressVerification === null && (
+                            <Button
+                              variant='outlined'
+                              disabled={isFormDisabled}
+                              onClick={() => handleValidateAddress(index)}
+                            >
                               {' '}
-                              200 I ST SE
-                              <br />
-                              WASHINGTON DC 20003-3317
+                              Validate Address{' '}
+                            </Button>
+                          )}
+                        </>
+                      ) : (
+                        <div className='address-status'>
+                          {address.addressDetails.isValidate ? (
+                            <div className='valid-address'>
+                              <div className='address-line'>
+                                {' '}
+                                200 I ST SE
+                                <br />
+                                WASHINGTON DC 20003-3317
+                              </div>
+                              <div>Parking Zone: 2</div>
+                              <div className='address-status-text'>
+                                <CheckIcon /> USPS Validated Address
+                              </div>
                             </div>
-                            <div>Parking Zone: 2</div>
-                            <div className='address-status-text'>
-                              <CheckIcon /> USPS Validated Address
+                          ) : (
+                            <div className='invalid-address'>
+                              <WarningAmber />{' '}
+                              <span>
+                                {' '}
+                                STREET NAME WAS NOT FOUND IN THE POSTAL DIRECTORY. PLEASE VERIFY AND
+                                RE-SUBMIT.
+                              </span>
                             </div>
-                          </div>
-                        ) : (
-                          <div className='invalid-address'>
-                            <WarningAmber />{' '}
-                            <span>
-                              {' '}
-                              STREET NAME WAS NOT FOUND IN THE POSTAL DIRECTORY. PLEASE VERIFY AND
-                              RE-SUBMIT.
-                            </span>
-                          </div>
-                        )}
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {address.addressDetails.overRide > 0 && (
+                      <div className='override-text'>
+                        <AddCommentOutlinedIcon /> Override ({address.addressDetails.overRide}){' '}
                       </div>
                     )}
-                  </div>
-
-                  {address.addressDetails.overRide > 0 && (
-                    <div className='override-text'>
-                      <AddCommentOutlinedIcon /> Override ({address.addressDetails.overRide}){' '}
-                    </div>
-                  )}
-                </form>
-              </fieldset>
-              {address.addressType === PRIMARY && <ResidencyCertification onResidencyCertificationStatus={handleCertificationStatus} onResidencyCertification={handleChangeCertification} formData={address} isFormDisabled={isFormDisabled} />}
-            </div>}
+                  </form>
+                </fieldset>
+                {address.addressType === PRIMARY && (
+                  <ResidencyCertification
+                    onResidencyCertificationStatus={handleCertificationStatus}
+                    onResidencyCertification={handleChangeCertification}
+                    formData={address}
+                    isFormDisabled={isFormDisabled}
+                  />
+                )}
+              </div>
+            )}
           </div>
           {addresses.length === index + 1 && (
             <div className='add-address-btn'>
               <Button
                 variant='text'
-                disabled={!addresses[index]?.addressDetails.isValidate || (addresses[index].residencyCertification.isCertification === "YES" && !addresses[index].residencyCertification.residencyCertificationStatus)}
+                disabled={
+                  !addresses[index]?.addressDetails.isValidate ||
+                  (addresses[index].residencyCertification.isCertification === 'YES' &&
+                    !addresses[index].residencyCertification.residencyCertificationStatus)
+                }
                 onClick={addAnotherAddress}
               >
                 {' '}
@@ -740,7 +781,14 @@ export default function Address() {
           <div className='street-list'>
             <ul>
               {streetNames?.map((street, index) => (
-                <li className={street.value === selectedStreetName && 'selected'} onClick={() => setSelectedStreetName(street.value)} key={`street-${index}`}> {street?.value} </li>
+                <li
+                  className={street.value === selectedStreetName && 'selected'}
+                  onClick={() => setSelectedStreetName(street.value)}
+                  key={`street-${index}`}
+                >
+                  {' '}
+                  {street?.value}{' '}
+                </li>
               ))}
             </ul>
           </div>
@@ -796,11 +844,10 @@ export default function Address() {
             <div className='col col-md-12 col-sm-12'>
               <FormControl fullWidth>
                 <InputLabel id='ReasonOverride'>Reason for Override </InputLabel>
-                <Select
-                  labelId='ReasonOverride'
-                  id='ReasonOverride'
-                  label='Reason for Override'
-                > <MenuItem> </MenuItem> </Select>
+                <Select labelId='ReasonOverride' id='ReasonOverride' label='Reason for Override'>
+                  {' '}
+                  <MenuItem> </MenuItem>{' '}
+                </Select>
               </FormControl>
             </div>
           </div>
@@ -821,7 +868,15 @@ export default function Address() {
           </Button>
         </DialogActions>
       </Dialog>
-      <DNotification open={showAlert} autoHideDuration={6000} severity='success' message='New street address added successfully!' onClose={() => setShowAlert(false)} > </DNotification>
+      <DNotification
+        open={showAlert}
+        autoHideDuration={6000}
+        severity='success'
+        message='New street address added successfully!'
+        onClose={() => setShowAlert(false)}
+      >
+        {' '}
+      </DNotification>
     </div>
   );
 }

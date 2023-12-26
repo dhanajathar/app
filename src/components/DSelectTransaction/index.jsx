@@ -48,20 +48,21 @@ export default function DSelectTransaction() {
 
   const cards = data.cards;
   const tree = data.tree;
+  const title = 'Surrender Tag';
 
   //To handle Next button functionality
   const handleNext = () => {
     // Added code for Surrender tag - Aditya Karthik Kumar
-    let redirectPath = "";
+    let redirectPath = '';
     let isValue = selectedCards.filter(option => {
-       if(option.title === "Surrender Tag"){
-          redirectPath = `/surrender-tag`;
-       } else {
-          redirectPath = `/transaction`;
-       }
+      if (option.title === title) {
+        redirectPath = `/transaction/surrender-tag`;
+      } else {
+        redirectPath = `/transaction`;
+      }
     });
     DEventService.dispatch(DEvents.ROUTE, {
-      detail: { path: redirectPath }      
+      detail: { path: redirectPath }
     });
   };
 

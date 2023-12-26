@@ -14,7 +14,6 @@
 
 .scan-button {
   background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
   border-radius: 3px;
   opacity: 1;
@@ -22,7 +21,7 @@
 }
 
 .scan-button:hover {
-  background: #F5F5F5 0% 0% no-repeat padding-box;
+  background: #f5f5f5 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
   border-radius: 3px;
   opacity: 1;
@@ -30,29 +29,26 @@
 
 .scan-button:focus-visible {
   border: 1px solid var(--unnamed-color-000000);
-  border: 1px solid #000000;
   border-radius: 5px;
   opacity: 1;
 }
 
 .scan-override-button {
   background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: 1px solid #BC000E;
+  border: 1px solid #bc000e;
   border-radius: 3px;
   opacity: 1;
 }
 
 .scan-override-button:hover {
-  background: #FFF8F8 0% 0% no-repeat padding-box;
-  border: 1px solid #BC000E;
+  background: #fff8f8 0% 0% no-repeat padding-box;
+  border: 1px solid #bc000e;
   border-radius: 3px;
   opacity: 1;
 }
 
 .scan-override-button:focus-visible {
   border: 1px solid var(--unnamed-color-000000);
-  border: 1px solid #000000;
   border-radius: 5px;
   opacity: 1;
 }
@@ -81,7 +77,6 @@
   padding: 0 2.5rem 1.5rem;
   background: #f4f4f4 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
-  /* border: 1px solid #707070; */
   position: relative;
   overflow: hidden;
 }
@@ -97,10 +92,9 @@
   padding-right: 5px;
 }
 
-
 .scanned-img {
   border: 1px solid #707070;
-  background: white;
+  background: var(--unnamed-color-ffffff);
 }
 
 .scan-close-icon {
@@ -110,7 +104,6 @@
   font-size: 1rem;
   padding: 0 10px 0 0;
 }
-
 
 .scan-close-icon-pdf {
   padding: 8px 0 4px;
@@ -141,7 +134,7 @@
 }
 
 .scanned-document-details {
-  font: normal normal normal 12px/23px Open Sans;
+  font: normal normal normal 0.75rem/1.5rem Open Sans;
   letter-spacing: 0px;
   color: #2c2c2c;
   margin-left: 0.5rem;
@@ -153,17 +146,16 @@
 }
 
 .scan-comment-icon {
-  color: var(--orange70);  
-  
+  color: var(--orange70);
 }
 
 .scan-view-icon {
-  color: var(--black100);  
+  color: var(--black100);
   bottom: 0.063rem;
 }
 
 .scan-pagging-icon {
-  color: var(--white100); 
+  color: var(--white100);
   width: 1.3rem;
   height: 1.6rem;
   background: #727272 0% 0% no-repeat padding-box;
@@ -179,7 +171,7 @@
 }
 
 .scan-dialog-heading {
-  text-transform:uppercase;
+  text-transform: uppercase;
   margin-bottom: 0.5rem;
   left: 0;
   top: 0;
@@ -200,7 +192,6 @@
 .scan-progress-bar {
   width: 18rem;
 }
-
 
 /* Scanning Dialog Box*/
 .scan-breadcrumb-right-pane {
@@ -236,4 +227,12 @@
   transform-origin: top left;
   width: 25rem;
   height: 40rem;
+}
+
+.scan-dialog {
+  & .MuiDialog-paper {
+    width: 60%;
+    height: auto;
+    max-height: 50rem;
+  }
 }

@@ -27,6 +27,7 @@ import data from './data.json';
 import dayjs from 'dayjs';
 import front from '../../assets/Front.jpg';
 import { useSearchParams } from 'react-router-dom';
+import CommentSection from '../../../DDialog/components/CommentSectionDialog';
 
 const DriverLicenseDetails = () => {
   const [searchParams] = useSearchParams();
@@ -42,7 +43,7 @@ const DriverLicenseDetails = () => {
       }
     });
   }, 100);
-  // const currentDate = dayjs().endOf('day');
+  // const currentDate = dayjs().endOf('day')
   const newRestriction = {
     code: '',
     restriction: '',
@@ -85,6 +86,7 @@ const DriverLicenseDetails = () => {
   const [openRes, setOpenRes] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
   const [openViewCard, setOpenViewCard] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const handleViewCardOpen = () => {
     setOpenViewCard(true);
@@ -755,89 +757,14 @@ const DriverLicenseDetails = () => {
             Comment
           </Button>
         </div>
-        <Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth>
-          <DialogContent>
-            <CommentsSection />
-          </DialogContent>
-        </Dialog>
+        <CommentSection
+          open={open}
+          onClose={handleClose}
+          getCommentsDetails={setComments}
+        ></CommentSection>
       </div>
     </div>
   );
 };
 
 export default DriverLicenseDetails;
-
-//Function for dialog comment section
-const CommentsSection = () => {
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
-
-  const handleCommentChange = event => {
-    setNewComment(event.target.value);
-  };
-
-  const handleAddComment = () => {
-    if (newComment.trim() !== '') {
-      const newCommentObject = {
-        name: 'John Doe',
-        text: newComment,
-        time: new Date().toLocaleString()
-      };
-      setComments([newCommentObject, ...comments]); // Add the new comment to the beginning of the array
-      setNewComment('');
-    }
-  };
-
-  // Sort comments based on the time property in descending order (latest first)
-  const sortedComments = comments.slice().sort((a, b) => new Date(b.time) - new Date(a.time));
-
-  return (
-    <div>
-      {/* Comment Input Field */}
-      <TextField
-        label='Comment'
-        placeholder='Add a comment'
-        variant='outlined'
-        value={newComment}
-        onChange={handleCommentChange}
-        fullWidth
-        multiline
-        rows={3}
-      />
-      <div
-        style={{
-          display: 'inline-block',
-          float: 'right',
-          marginTop: '1rem'
-        }}
-      >
-        <Button variant='contained' color='primary' onClick={handleAddComment}>
-          Add Comment
-        </Button>
-      </div>
-      <div className='comment-item-parent'>
-        {/* Render Comments */}
-        {sortedComments.map((comment, index) => (
-          <div className='comment-item' key={index}>
-            <img
-              alt='User Avatar'
-              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6vjzwZaBf6bKmbl7I00WbZ9RPOlriawksgQ&usqp=CAU'
-              style={{
-                width: '40px',
-                height: '40px',
-                marginRight: '8px',
-                borderRadius: '50%',
-                marginBottom: '10%'
-              }}
-            />
-            <div className='comment-details'>
-              <div>{comment.name}</div>
-              <div>{comment.text}</div>
-              <div>{comment.time}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};

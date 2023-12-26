@@ -1,0 +1,98 @@
+[
+  {
+    "siNo": "01",
+    "location_name": "BRENTWOOD ROAD TEST/CDL",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 1221",
+    "customer_service_phone": "(202) 762 1233",
+    "status": "active"
+  },
+  {
+    "siNo": "02",
+    "location_name": "C STREET SERVICE CENTER",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 1121",
+    "customer_service_phone": "(202) 762 1111",
+    "status": "active"
+  },
+  {
+    "siNo": "03",
+    "location_name": "COMMERCIAL DRIVER ROAD TEST",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 1342",
+    "customer_service_phone": "(202) 762 1243",
+    "status": "inactive"
+  },
+  {
+    "siNo": "04",
+    "location_name": "DESTINY PROJECT SITE",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 1457",
+    "customer_service_phone": "(202) 762 1134",
+    "status": "active"
+  },
+  {
+    "siNo": "05",
+    "location_name": "DMV WAREHOUSE",
+    "location_type": "WAREHOUSE",
+    "main_phone": "(202) 762 1786",
+    "customer_service_phone": "(202) 762 1764",
+    "status": "active"
+  },
+  {
+    "siNo": "06",
+    "location_name": "DPW",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 6746",
+    "customer_service_phone": "(202) 762 1367",
+    "status": "active"
+  },
+  {
+    "siNo": "07",
+    "location_name": "DRIVING SCHOOL",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 5666",
+    "customer_service_phone": "(202) 762 1688",
+    "status": "active"
+  },
+  {
+    "siNo": "08",
+    "location_name": "GEORGETOWN SERVICE CENTER",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 4345",
+    "customer_service_phone": "(202) 762 1566",
+    "status": "active"
+  },
+  {
+    "siNo": "09",
+    "location_name": "BENNING RIDGE SERVICE CENTER",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 4346",
+    "customer_service_phone": "(202) 762 1567",
+    "status": "active"
+  },
+  {
+    "siNo": "10",
+    "location_name": "K STREET SERVICE CENTER",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 4347",
+    "customer_service_phone": "(202) 762 1568",
+    "status": "active"
+  },
+  {
+    "siNo": "11",
+    "location_name": "DEANWOOD ROAD TEST/CDL",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 4348",
+    "customer_service_phone": "(202) 762 1569",
+    "status": "active"
+  },
+  {
+    "siNo": "12",
+    "location_name": "INSPECTION STATION, NE",
+    "location_type": "BRANCH",
+    "main_phone": "(202) 762 4349",
+    "customer_service_phone": "(202) 762 1570",
+    "status": "active"
+  }
+]

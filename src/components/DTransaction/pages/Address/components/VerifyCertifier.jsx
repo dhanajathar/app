@@ -1,10 +1,25 @@
-import React, { useState } from 'react'; 
+/*
+ * Component Name: Address
+ * Author: Priyanka Pandey
+ * Created: 2023-07-15
+ * Last Modified: 2023-12-19
+ * Description: This page is obtaining user consent for certifier information, for their (primary) address.
+ * Application Release Version:1.0.0
+ */
+
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import data from '../api-address.json';
 import DAlertBox from '../../../../DAlertBox';
 import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Button,
   Checkbox,
+  FormHelperText,
   InputAdornment,
   Autocomplete
 } from '@mui/material';
@@ -101,7 +116,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
           <div className='certifier-title'> Additional Details</div>
           <div className='d-row'>
             <div className='col col-sm-12 col-md-4'>
-
               <Autocomplete
                 options={relationShipList}
                 fullWidth
@@ -110,7 +124,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                 value={relationShip}
                 disableClearable={true}
                 onChange={(e, v) => setRelationsShip(v)}
-
                 onBlur={() =>
                   !relationShip
                     ? setRelationShipError('Please select a value for Relationship')
@@ -121,7 +134,13 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                     {...params}
                     label='Relationship'
                     error={!!relationShipError}
-                    helperText={relationShipError ? <DAlertBox errorText={relationShipError} /> : "Certifier can certify unto 4 'OTHER' applicants in a year."}
+                    helperText={
+                      relationShipError ? (
+                        <DAlertBox errorText={relationShipError} />
+                      ) : (
+                        "Certifier can certify unto 4 'OTHER' applicants in a year."
+                      )
+                    }
                   />
                 )}
               />
@@ -134,7 +153,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
           </div>
           <div className='d-row'>
             <div className='col col-sm-12 col-md-4'>
-
               <Autocomplete
                 options={documentList}
                 fullWidth
@@ -143,7 +161,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                 value={primaryDocument}
                 disableClearable={true}
                 onChange={(e, v) => setPrimaryDocument(v)}
-
                 onBlur={() =>
                   !primaryDocument
                     ? setPrimaryDocumentError('Please select a value for Primary Document')
@@ -158,12 +175,8 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                   />
                 )}
               />
-
-
-
             </div>
             <div className='col col-sm-12 col-md-4'>
-
               <Autocomplete
                 options={documentList}
                 fullWidth
@@ -172,7 +185,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                 value={secondaryDocument}
                 disableClearable={true}
                 onChange={(e, v) => setSecondaryDocument(v)}
-
                 onBlur={() =>
                   !primaryDocument
                     ? setSecondaryDocumentError('Please select a value for Secondary Document')
@@ -187,8 +199,6 @@ function VerifyCertifier({ onSubmit, onCancel }) {
                   />
                 )}
               />
-
-
             </div>
           </div>
           <div className='d-row'>

@@ -6,8 +6,9 @@ import {
   loginRoutingPrefix,
   searchRoutingPrefix,
   selectTransactionRoutingPrefix,
-  surrenderTagRoutingPrefix,
-  transactionRoutingPrefix
+  //surrenderTagRoutingPrefix,
+  transactionRoutingPrefix,
+  loacationRoutingPrefix
 } from './constants';
 
 import { DLayout } from '../components/DLayout';
@@ -18,8 +19,8 @@ const DashboardLazy = lazy(() => import('../components/DDashboard'));
 const CustomerProfileLazy = lazy(() => import('../components/DCustomerProfile'));
 const SelectTransactionLazy = lazy(() => import('../components/DSelectTransaction'));
 const TransactionLazy = lazy(() => import('../components/DTransaction'));
-const SurrenderTagLazy = lazy(() => import('../components/DSurrenderTag'));
 const AdminLazy = lazy(() => import('../components/DAdmin'));
+const LocationLazy = lazy(() => import('../components/DLocation'));
 
 export const routes = [
   {
@@ -83,18 +84,18 @@ export const routes = [
         )
       },
       {
-        path: `/${surrenderTagRoutingPrefix}/*`,
-        element: (
-          <Suspense fallback='Loading Surrender Tag Orchestrator...'>
-            <SurrenderTagLazy />
-          </Suspense>
-        )
-      },
-      {
         path: `/${adminRoutingPrefix}/*`,
         element: (
           <Suspense fallback='Loading Administration Pages...'>
             <AdminLazy />
+          </Suspense>
+        )
+      },
+      {
+        path: `/${loacationRoutingPrefix}/*`,
+        element: (
+          <Suspense fallback='Loading Location Maintenance Pages...'>
+            <LocationLazy />
           </Suspense>
         )
       },
