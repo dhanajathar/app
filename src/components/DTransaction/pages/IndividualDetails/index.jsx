@@ -24,10 +24,11 @@ import {
   Select,
   TextField,
   Autocomplete,
+  MenuItem,
   IconButton
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -42,6 +43,7 @@ import { prettifyCamelCase } from '../../../../utils/stringUtils';
 import { calculateAge } from '../../../../utils/dateUtils';
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
 import DHeight from '../../../DHeight';
+import * as _ from 'lodash';
 
 const PHYSICAL_INFORMATION = 'Physical Information';
 
@@ -54,6 +56,7 @@ const IndividualDetails = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [showVerificationStatus, setShowVerificationStatus] = useState();
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
   setTimeout(() => {
     DEventService.dispatch(DEvents.PROGRESS, {
       detail: {
@@ -141,9 +144,17 @@ const IndividualDetails = () => {
     return sortedList;
   };
 
-  const handleSSNChange = e => {
+  const handleSSNChange = useCallback((e) => {
     const value = e.target.value;
     const ssn = value.replace(/[^\d]/g, '');
+    const isSameDigitSSN =
+      ssn.length > 1 &&
+      new Set(ssn.split('')).size === 1 &&
+      !/^(0+|9+)$/.test(ssn);
+
+    if (isSameDigitSSN) {
+      return;
+    }
     let ssnValue;
     const ssnLength = ssn.length;
     if (ssnLength < 4) {
@@ -156,7 +167,7 @@ const IndividualDetails = () => {
     setShowVerificationStatus(false);
     setSocialSecurityNumber(ssnValue);
     setFormattedSSN(ssnValue);
-  };
+  }, []);
 
   useEffect(() => {
     if (socialSecurityNumber.length === 11) {
@@ -166,11 +177,12 @@ const IndividualDetails = () => {
       ) {
         setShowLoader(true);
       }
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setShowLoader(false);
         socialSecurityNumber.replace(/-/g, '') !== VerifiedSSN && setOpen(true);
         setShowVerificationStatus(true);
       }, 3000);
+      return () => clearTimeout(timeoutId);
     }
   }, [socialSecurityNumber]);
 
@@ -190,7 +202,7 @@ const IndividualDetails = () => {
           labelPlacement='end'
         />
         <FormControlLabel
-          disabled={isFormDisabled}
+          disabled={isFormDisabled || !value}
           control={<Checkbox size='small' />}
           label='Transliterated'
           labelPlacement='end'
@@ -282,16 +294,18 @@ const IndividualDetails = () => {
     }
   }
 
-  const getWarning = name => {
-    const exceedKey = `${name}Exceed`;
-    const nameWarning = validationWarnings?.[name];
-    const exceedWarning = validationWarnings?.[exceedKey];
-    if (personalInformationFrom[name] && personalInformationFrom[name].length > 33) {
-      return exceedWarning || nameWarning;
-    } else {
-      return nameWarning || exceedWarning;
-    }
-  };
+  const getWarning = React.useMemo(() => {
+    return name => {
+      const exceedKey = `${name}Exceed`;
+      const nameWarning = validationWarnings?.[name];
+      const exceedWarning = validationWarnings?.[exceedKey];
+      if (personalInformationFrom[name] && personalInformationFrom[name].length > 33) {
+        return exceedWarning || nameWarning;
+      } else {
+        return nameWarning || exceedWarning;
+      }
+    };
+  }, [personalInformationFrom, validationWarnings]);
 
   const handleClearWarning = (warningText, name) => {
     const warnings = { ...validationWarnings };
@@ -305,15 +319,22 @@ const IndividualDetails = () => {
 
   const handleError = (name, value) => {
     const error = validateFiled(name, value);
-    const errors = { ...validationError, [name]: error };
+    let errors = { ...validationError, [name]: error };
     if (error === '') {
-      delete errors[name];
+      // eslint-disable-next-line no-unused-vars
+      const { name, ...withoutKey } = errors;
+      errors = withoutKey;
     }
-    setValidationError(errors);
-
+    if (!_.isEqual(validationError, errors)) {
+      setValidationError(errors);
+    }
+    const newFocusedField = error !== '' ? name : '';
+    if (focusedField !== newFocusedField) {
+      setFocusedField(newFocusedField);
+    }
     setIsFormDisabled(Object.values(errors).some(error => error !== ''));
-    setFocusedField(error !== '' ? name : '');
   };
+
   const handleNumberChange = (e, min, max) => {
     const number = e.target.value;
     if (e.target.value === '' || (Number(number) >= min && Number(number) <= max)) {
@@ -323,6 +344,7 @@ const IndividualDetails = () => {
 
   const validateFiled = (name, value) => {
     let error = '';
+    const minDate = dayjs().subtract(150, 'year');
     switch (name) {
       case 'lastName':
         if (value === '') {
@@ -330,8 +352,8 @@ const IndividualDetails = () => {
         }
         break;
       case 'birthDate':
-        if (!dayjs(value, 'MM/DD/YYYY', true).isValid()) {
-          error = 'Invalid DOB';
+        if (!dayjs(value, 'MM/DD/YYYY', true).isValid() || dayjs(value).isBefore(minDate) || dayjs(value).isAfter(new Date())) {
+          error = 'Invalid Date of Birth';
         }
         break;
       case 'socialSecurityNumber':
@@ -414,12 +436,6 @@ const IndividualDetails = () => {
       setShowVerificationStatus();
       setSocialSecurityNumber('');
     }
-    if (validationError?.socialSecurityNumber) {
-      const errors = { ...validationError };
-      setValidationError({ ...validationError });
-      delete errors['socialSecurityNumber'];
-      setValidationError(errors);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     personalInformationFrom.firstName,
@@ -498,7 +514,7 @@ const IndividualDetails = () => {
                 />
               }
               label='Middle Name'
-              inputRef={focusedField === 'middleName' ? input => input?.input.focus() : null}
+              inputRef={focusedField === 'middleName' ? input => input?.focus() : null}
               onKeyUp={e => handleKeyDown(e, 'middleName')}
               inputProps={{ maxLength: 34 }}
               onChange={handleNameChange}
@@ -511,7 +527,7 @@ const IndividualDetails = () => {
         <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
             <Autocomplete
-              options={sortedList(suffixList)}
+              options={suffixList}
               fullWidth
               size='small'
               name='suffix'
@@ -533,7 +549,6 @@ const IndividualDetails = () => {
                 fullWidth
                 disabled={isFormDisabled && focusedField !== 'birthDate'}
                 open={calendarOpen}
-                onOpen={() => setOpen(true)}
                 onClose={() => setCalendarOpen(false)}
                 slotProps={{
                   textField: {
@@ -882,7 +897,7 @@ const IndividualDetails = () => {
               <>
                 {' '}
                 {socialSecurityNumber.replace(/-/g, '') === '000000000' ||
-                socialSecurityNumber.replace(/-/g, '') === '999999999' ? (
+                  socialSecurityNumber.replace(/-/g, '') === '999999999' ? (
                   <div>SSN Verification Not Required. SSN is all 0s or all 9s.</div>
                 ) : (
                   <div>
@@ -910,7 +925,12 @@ const IndividualDetails = () => {
                     labelId='ReasonOverride'
                     id='ReasonOverride'
                     label='Reason for Override'
-                  ></Select>
+                    value={selectedValue}
+                    onChange={(event) => setSelectedValue(event.target.value)}
+                  >
+                    <MenuItem value='option1'>Option 1</MenuItem>
+                    <MenuItem value='option2'>Option 2</MenuItem>
+                  </Select>
                 </FormControl>
               </div>
             </div>

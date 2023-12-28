@@ -13,5 +13,5 @@ const DLoaderDialog = ({ showLoader, loadingText }) => {
     </Dialog>
   );
 };
-
-export default DLoaderDialog;
+ 
+export default React.memo(DLoaderDialog);
