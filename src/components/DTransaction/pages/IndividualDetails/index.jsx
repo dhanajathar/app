@@ -148,7 +148,7 @@ const IndividualDetails = () => {
     const value = e.target.value;
     const ssn = value.replace(/[^\d]/g, '');
     const isSameDigitSSN =
-      ssn.length > 1 &&
+      ssn.length > 8 &&
       new Set(ssn.split('')).size === 1 &&
       !/^(0+|9+)$/.test(ssn);
 
@@ -167,6 +167,11 @@ const IndividualDetails = () => {
     setShowVerificationStatus(false);
     setSocialSecurityNumber(ssnValue);
     setFormattedSSN(ssnValue);
+    if (ssnLength < 9) {
+      // eslint-disable-next-line no-unused-vars
+      const { socialSecurityNumber, ...withoutSSN } = validationError;
+      setValidationError(withoutSSN)
+    }
   }, []);
 
   useEffect(() => {
@@ -568,7 +573,7 @@ const IndividualDetails = () => {
                               <CalendarMonthTwoToneIcon />
                             </IconButton>
                           </InputAdornment>
-                          {personalInformationFrom.birthDate && (
+                          {personalInformationFrom.birthDate && !validationError?.birthDate && (
                             <InputAdornment position='end'>
                               {' '}
                               <div className='input-adornment-text'>
@@ -583,7 +588,6 @@ const IndividualDetails = () => {
                   }
                 }}
                 maxDate={dayjs(new Date())}
-                minDate={dayjs('1901-01-01')}
                 value={
                   personalInformationFrom.birthDate && dayjs(personalInformationFrom.birthDate)
                 }
@@ -791,7 +795,7 @@ const IndividualDetails = () => {
               <div className='col col-lg-6 col-xl-4  col-sm-12'>
                 <TextField
                   value={otherInformationFrom.weight}
-                  label='Weight (Lbs)'
+                  label='Weight'
                   fullWidth
                   name='weight'
                   size='small'
