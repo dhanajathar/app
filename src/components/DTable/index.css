@@ -1,0 +1,20 @@
+.d-table th,
+.d-table td {
+  padding: 0.25rem 1rem;
+  height: 2.938rem !important;
+  box-sizing: border-box;
+}
+
+.d-table .MuiTableRow-root:nth-child(even) {
+  background-color: var(--white60);
+}
+
+.d-table .sorting-icon {
+  margin-left: 0.35rem;
+  width: 0.75rem;
+}
+
+.d-table .MuiTableBody-root tr:hover {
+  background-color: var(--primary30) !important;
+  cursor: pointer;
+}

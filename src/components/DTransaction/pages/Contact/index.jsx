@@ -205,7 +205,7 @@ export default function Contact() {
               fullWidth
               size='small'
               name='mobilePhoneRegistration'
-              disabled={isFormDisabled}
+              disabled={isFormDisabled || !isValidPhoneNumber(contactFrom.mobile)}
               value={contactFrom.mobilePhoneRegistration}
               onChange={(e, v) => {
                 handleChange({ target: { name: 'mobilePhoneRegistration', value: v || null } });
@@ -295,7 +295,7 @@ export default function Contact() {
                 <TextField
                   {...params}
                   inputRef={eNoticeRef}
-                  label='Email Subscriber'
+                  label='Email Notice'
                 />
               )}
             />

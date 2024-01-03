@@ -2,7 +2,7 @@
  * Component Name: DTransection Individual Details
  * Author: Priyanka Pandey
  * Created: 2023-06-17
- * Last Modified: 2023-12-04
+ * Last Modified: 2023-12-28
  * Description: Individual Details Data entry page for new users.
  * Application Release Version:1.0.0
  */

@@ -1,3 +1,11 @@
+/*
+ * Component Name: Residency Certification
+ * Author: Priyanka Pandey
+ * Created: 2023-09-01
+ * Last Modified: 2024-01-02
+ * Description: This component holds the user's certification details for their primary address. It is a child of the address component.
+ * Application Release Version:1.0.0
+ */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';

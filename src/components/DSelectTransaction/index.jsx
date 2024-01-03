@@ -1,3 +1,11 @@
+/*
+ * Author: Rupesh Allu
+ * Created: 06/01/2023
+ * Last Modified: 2023-12-29
+ * Description: This select transaction which shows all avaiable transaction based on profile
+ * Application Release Version:1.0.0
+ */
+
 import './index.css';
 import {
   Accordion,
@@ -31,6 +39,7 @@ import {
 } from '@mui/icons-material';
 import { DEventService, DEvents } from '../../services/DEventService';
 import React, { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import data from './data/api-response.json';
 import newIdPNG from './assets/NewIDCard.png';
@@ -39,7 +48,7 @@ export default function DSelectTransaction() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [isAcknowledge, setIsAcknowledge] = useState(false);
   const [isConfirmation, setIsConfirmation] = useState(false);
-  const [isExpand, setIsExpand] = useState(true);
+  const [isExpand, setIsExpand] = useState(false);
   const [searchableItems, setSearchableItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchMode, setSearchMode] = useState(false);
@@ -63,6 +72,20 @@ export default function DSelectTransaction() {
     });
     DEventService.dispatch(DEvents.ROUTE, {
       detail: { path: redirectPath }
+    });
+  };
+
+  //To handle Back button functionality
+  const handleBack = () => {
+    DEventService.dispatch(DEvents.ROUTE, {
+      detail: { path: `/customer-profile` }
+    });
+  };
+
+  //To handle Cancel button functionality
+  const handleCancel = () => {
+    DEventService.dispatch(DEvents.ROUTE, {
+      detail: { path: `/dashboard` }
     });
   };
 
@@ -128,8 +151,8 @@ export default function DSelectTransaction() {
       } else {
         setFinalCards(cards);
       }
-    }, 1000);
-  }, [selectedCards]);
+    }, 100);
+  }, [selectedCards, cards, finalCards]);
 
   // Function to handle card selection
   const handleCardSelection = card => {
@@ -268,12 +291,7 @@ export default function DSelectTransaction() {
       <Container maxWidth='xl'>
         <Grid container spacing={1} className='selecttranc-contback'>
           <Grid item>
-            <Button
-              variant='text'
-              color='primary'
-              size='large'
-              // onClick={() => navigate('/')}
-            >
+            <Button variant='text' color='primary' size='large' onClick={handleCancel}>
               CANCEL
             </Button>
           </Grid>
@@ -283,7 +301,7 @@ export default function DSelectTransaction() {
               color='primary'
               size='large'
               startIcon={<ArrowBackIos />}
-              //onClick={() => navigate("/")}
+              onClick={handleBack}
             >
               BACK
             </Button>
@@ -327,11 +345,11 @@ export default function DSelectTransaction() {
       <Dialog keepMounted open={isAcknowledge} onClose={handleAcknowledgeClose}>
         <DialogTitle className='selecttranc-dialogack'>Acknowledge</DialogTitle>
         <DialogContent>
-          Please remember to verify the questions under the medical Fitness Section of the driver's
-          license application. If the customer has answered 'yes' to any of the questions, please
-          interrupt this transaction and provide the customer with Medical/Eye Report. A 45 day
-          temporary license may be issued to customer reflecting the medical checked on the
-          application
+          Please remember to verify the questions under the medical Fitness Section of the
+          driver&apos;s license application. If the customer has answered &apos;yes&apos; to any of
+          the questions, please interrupt this transaction and provide the customer with Medical/Eye
+          Report. A 45 day temporary license may be issued to customer reflecting the medical
+          checked on the application
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center' }}>
           <Button variant='contained' onClick={handleAcknowledgeClose}>
@@ -345,6 +363,14 @@ export default function DSelectTransaction() {
 
 const Counter = props => {
   const { updateCounter, counter = 0, option } = props;
+
+  Counter.propTypes = {
+    updateCounter: PropTypes.any.isRequired,
+    counter: PropTypes.any,
+    option: PropTypes.any.isRequired
+  };
+
+  Counter;
   const limit = 10;
 
   const handleIncrement = () => {
@@ -380,6 +406,16 @@ const Counter = props => {
 //Tree view function start - FlattenTree
 export const FlattenTree = props => {
   const { tree, level = 0, check = false, selectedCards } = props;
+
+  FlattenTree.propTypes = {
+    tree: PropTypes.any.isRequired,
+    level: PropTypes.any,
+    check: PropTypes.any,
+    selectedCards: PropTypes.any.isRequired,
+    searchMode: PropTypes.any,
+    onSelectCard: PropTypes.any.isRequired,
+    onCountUpdate: PropTypes.any.isRequired
+  };
   const [children, setChildren] = useState([]);
   const [visited, setVisited] = useState('');
 
@@ -399,11 +435,9 @@ export const FlattenTree = props => {
   }
 
   const handleCheckboxChange = event => {
-    const { value, checked } = event.target;
+    const { value } = event.target;
     props.onSelectCard({ title: value, ipath: value.replaceAll(' ', '') });
   };
-
-  const childrenMore = check && tree.length > 10;
 
   return (
     <>

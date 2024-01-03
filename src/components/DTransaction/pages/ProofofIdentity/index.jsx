@@ -2,7 +2,7 @@
  * Component Name: Proof of Identity
  * Author: Priyanka Pandey
  * Created: 2023-08-01
- * Last Modified: 2023-12-22
+ * Last Modified: 2024-01-02
  * Description: This is the USCIS page, intended exclusively for non-citizens. 
                 This component verifies the user's visa type and the corresponding verification process.
  * Application Release Version:1.0.0
@@ -818,8 +818,8 @@ export default function ProofOfIdentity() {
                       <div className='col col-sm-12 col-md-4'>
                         {initialVerifiedStatus === statusList[1] && (
                           <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
-                            {' '}
-                            SECONDARY VERIFICATION{' '}
+                            {''}
+                            SECONDARY VERIFICATION{''}
                           </Button>
                         )}
                       </div>
@@ -828,7 +828,7 @@ export default function ProofOfIdentity() {
                 </AccordionDetails>
               </Accordion> :
               <Button variant='outlined' className='initial-button' color='primary' onClick={() => setShowVerification(true)}>
-                INITIAL VERIFICATION{' '}
+                INITIAL VERIFICATION{''}
               </Button>
             }
             <div className='d-row'>
