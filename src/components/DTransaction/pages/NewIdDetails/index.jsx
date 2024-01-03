@@ -1,11 +1,7 @@
 import './index.css';
 
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
+  Button, 
   FormControl,
   InputLabel,
   MenuItem,
@@ -23,6 +19,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import data from './data.json';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'react-router-dom';
+import DeleteConfirmDialog from '../../../DDialog/components/DeleteConfirmDialog';
 
 export function NewIdDetails() {
   const [searchParams] = useSearchParams();
@@ -44,24 +41,14 @@ export function NewIdDetails() {
     idCardDetails,
     restrictionsLists,
     states,
-    countryList,
     statusList,
     categoryTypeList,
-    cardTypeList
+    cardTypeList,
+    previousCardRestrictions
   } = data;
-  const [cardNumber, setCardNumber] = useState(idCardDetails.cardNumber);
-  const [cardType, setCardType] = useState(idCardDetails.cardType);
-  const [status, setStatus] = useState(idCardDetails.status);
-  const [categoryType, setCategoryType] = useState(idCardDetails.categoryType);
-  const [duplicateCount, setDuplicateCount] = useState(idCardDetails.duplicateCount);
-  const [originalIssueDate, setOriginalIssueDate] = useState(idCardDetails.originalIssueDate);
-  const [issueDate, setIssueDate] = useState(idCardDetails.issueDate);
-  const [expirationDate, setExpirationDate] = useState(idCardDetails.expirationDate);
-  const [cardMailDate, setCardMailDate] = useState(idCardDetails.cardMailDate);
-  const [country, setCountry] = useState(idCardDetails.country);
-  const [state, setState] = useState(idCardDetails.state);
-  const [iDCardNumber, setiDCardNumber] = useState(idCardDetails.iDCardNumber);
-  const [idStatus, setIdStatus] = useState(idCardDetails.idStatus);
+
+  const { cardNumber, cardType, status, categoryType, duplicateCount, originalIssueDate, issueDate, expirationDate, cardMailDate } = idCardDetails
+
   const [restrictionsRows, setRestrictionsRows] = useState([newRestriction]);
   const [restrictionsCodeList, setRestrictionsCodeList] = useState(restrictionsLists);
   const [open, setOpen] = useState(false);
@@ -116,14 +103,11 @@ export function NewIdDetails() {
     setRestrictionsCodeList(list);
   };
 
-  const handleAddRestroctopms = () => {
+  const handleAddRestrictions = () => {
     setRestrictionsRows([...restrictionsRows, newRestriction]);
   };
 
-  const handleScanClick = e => {
-    e.preventDefault();
-    DEventService.dispatch(DEvents.ROUTE, { detail: { path: '/scan-document', payload: 'funk' } });
-  };
+
 
   return (
     <div className='d-container'>
@@ -134,20 +118,20 @@ export function NewIdDetails() {
             <TextField
               value={cardNumber}
               fullWidth
+              size="small"
               label='Card Number'
-              onChange={e => setCardNumber(e.target.value)}
+              disabled
             />
           </div>
-
           <div className='col col-sm-12 col-md-4'>
-            <FormControl fullWidth>
+            <FormControl fullWidth disabled>
               <InputLabel id='cardType'>Card Type</InputLabel>
               <Select
                 labelId='cardType'
                 id='cardType'
                 value={cardType}
                 label='Card Type'
-                onChange={e => setCardType(e.target.value)}
+                size="small"
               >
                 {cardTypeList &&
                   cardTypeList.map((cardType, index) => {
@@ -161,28 +145,39 @@ export function NewIdDetails() {
               </Select>
             </FormControl>
           </div>
-
           <div className='col col-sm-12 col-md-4'>
-            <TextField
-              value={status}
-              fullWidth
-              disabled
-              label='Status'
-              onChange={e => setStatus(e.target.value)}
-            />
+            <FormControl fullWidth disabled>
+              <InputLabel id='status'>Status </InputLabel>
+              <Select
+                labelId='status'
+                id='status'
+                value={status}
+                label='Status'
+                size="small"
+              >
+                {statusList &&
+                  statusList.map((item, index) => {
+                    return (
+                      <MenuItem key={index} value={item}>
+                        {' '}
+                        {item}{' '}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+            </FormControl>
           </div>
         </div>
-
         <div className='d-row'>
           <div className='col col-sm-12 col-md-4'>
-            <FormControl fullWidth>
+            <FormControl fullWidth disabled>
               <InputLabel id='cardType'>Category Type</InputLabel>
               <Select
                 labelId='categoryType'
                 id='categoryType'
                 value={categoryType}
+                size="small"
                 label='Category Type'
-                onChange={e => setCategoryType(e.target.value)}
               >
                 {categoryTypeList &&
                   categoryTypeList.map((categoryType, index) => {
@@ -203,7 +198,7 @@ export function NewIdDetails() {
               fullWidth
               disabled
               label='Duplicate Count'
-              onChange={e => setDuplicateCount(e.target.value)}
+              size="small"
             />
           </div>
         </div>
@@ -215,7 +210,11 @@ export function NewIdDetails() {
                   disabled
                   label='Original Issue Date'
                   value={dayjs(new Date())}
-                  onChange={originalIssueDate => setOriginalIssueDate(originalIssueDate)}
+                  slotProps={{
+                    textField: {
+                      size: 'small'
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </div>
@@ -227,8 +226,11 @@ export function NewIdDetails() {
                   label='Issue Date'
                   disabled
                   value={dayjs(new Date())}
-                  minDate={dayjs(originalIssueDate)}
-                  onChange={issueDate => setIssueDate(issueDate)}
+                  slotProps={{
+                    textField: {
+                      size: 'small'
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </div>
@@ -241,7 +243,11 @@ export function NewIdDetails() {
                   label='Expiration Date'
                   disabled
                   value={dayjs(expirationDate)}
-                  onChange={expirdate => setExpirationDate(expirdate)}
+                  slotProps={{
+                    textField: {
+                      size: 'small'
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </div>
@@ -254,100 +260,23 @@ export function NewIdDetails() {
                   disabled
                   value={cardMailDate ? dayjs(cardMailDate) : null}
                   minDate={dayjs(issueDate)}
-                  onChange={cardMailDate => setCardMailDate(cardMailDate)}
+                  slotProps={{
+                    textField: {
+                      size: 'small'
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </div>
           </div>
         </div>
-        <div className='d-sub-title'> Previous Identification Card Details </div>
-        <div className='d-row'>
-          <div className='col col-sm-12 col-md-4 pt-0'>
-            <div className='d-row'>
-              <div className='col col-sm-12 col-md-6'>
-                <FormControl fullWidth>
-                  <InputLabel id='cardType'>Country</InputLabel>
-                  <Select
-                    labelId='country'
-                    id='country'
-                    value={country}
-                    label='Country'
-                    onChange={e => setCountry(e.target.value)}
-                  >
-                    {countryList &&
-                      countryList.map((c, index) => {
-                        return (
-                          <MenuItem key={index} value={c.value}>
-                            {' '}
-                            {c.label}{' '}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='col col-sm-12 col-md-6'>
-                <FormControl fullWidth>
-                  <InputLabel id='state'>State</InputLabel>
-                  <Select
-                    labelId='state'
-                    id='state'
-                    value={state}
-                    label='State'
-                    onChange={e => setState(e.target.value)}
-                  >
-                    {states &&
-                      states.map((state, index) => {
-                        return (
-                          <MenuItem key={index} value={state.value}>
-                            {' '}
-                            {state.label}{' '}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-          </div>
-          <div className='col col-sm-12 col-md-4'>
-            <TextField
-              value={iDCardNumber}
-              fullWidth
-              label='ID Card Number'
-              onChange={e => setiDCardNumber(e.target.value)}
-            />
-          </div>
-          <div className='col col-sm-12 col-md-4'>
-            <FormControl fullWidth>
-              <InputLabel id='idStatus'>Status</InputLabel>
-              <Select
-                labelId='idStatus'
-                id='idStatus'
-                value={idStatus}
-                label='Status'
-                onChange={e => setIdStatus(e.target.value)}
-              >
-                {statusList &&
-                  statusList.map((status, index) => {
-                    return (
-                      <MenuItem key={index} value={status}>
-                        {' '}
-                        {status}{' '}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-        <div className='divider'> </div>
+
         <div className='d-sub-title'> Identification Card Restrictions </div>
         {restrictionsRows &&
           restrictionsRows.map((row, rowIndex) => (
             <div className={rowIndex === 0 ? 'mt-1 d-row' : 'd-row'} key={rowIndex}>
               <div className='col col-sm-12- col-md-2'>
-                <FormControl fullWidth>
+                <FormControl fullWidth size="small">
                   <InputLabel id='status'>Code</InputLabel>
                   <Select
                     MenuProps={{
@@ -390,6 +319,7 @@ export function NewIdDetails() {
                   value={row.restriction}
                   fullWidth
                   disabled
+                  size="small"
                   label='Restriction'
                   onChange={event => handleInputChange(rowIndex, 'restriction', event.target.value)}
                 />
@@ -402,6 +332,11 @@ export function NewIdDetails() {
                         <DatePicker
                           label='Issue Date'
                           disabled
+                          slotProps={{
+                            textField: {
+                              size: 'small'
+                            }
+                          }}
                           value={row.issueDate && dayjs(row.issueDate)}
                           onChange={issueDate =>
                             handleInputChange(rowIndex, 'issueDate', issueDate)
@@ -417,6 +352,11 @@ export function NewIdDetails() {
                           label='Removal Date'
                           disabled
                           value={row.removalDate && dayjs(row.removalDate)}
+                          slotProps={{
+                            textField: {
+                              size: 'small'
+                            }
+                          }}
                           onChange={removalDate =>
                             handleInputChange(rowIndex, 'removalDate', removalDate)
                           }
@@ -437,31 +377,121 @@ export function NewIdDetails() {
           ))}
 
         {restrictionsLists.length > restrictionsRows.length && (
-          <Button className='add-btn' onClick={handleAddRestroctopms}>
+          <Button className='add-btn' onClick={handleAddRestrictions}>
             {' '}
             + Add Another Restriction{' '}
           </Button>
         )}
-      </form>
+        <div className='d-sub-title'> Previous Identification Card Details </div>
 
-      <Dialog
-        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-        maxWidth='xs'
-        className='confirmation-dialog'
+        {previousCardRestrictions &&
+          previousCardRestrictions.map((row, rowIndex) => (
+            <div className='d-row' key={`previous-id-card${rowIndex}`} >
+              <div className='col col-sm-12 col-md-4 pt-0'>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-6'>
+                    <FormControl fullWidth size="small">
+                      <InputLabel id='state'>State</InputLabel>
+                      <Select
+                        labelId='state'
+                        id='state'
+                        value={row.state}
+                        label='State'
+                      >
+                        {states &&
+                          states.map((state, index) => {
+                            return (
+                              <MenuItem key={index} value={state.value}>
+                                {' '}
+                                {state.label}{' '}
+                              </MenuItem>
+                            );
+                          })}
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className='col col-sm-12 col-md-6'>
+                    <TextField
+                      value={row.cardNumber}
+                      fullWidth
+                      size="small"
+                      label='Card Number'
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className='col col-sm-12 col-md-4'>
+                <FormControl fullWidth disabled>
+                  <InputLabel id='cardType'>Category Type</InputLabel>
+                  <Select
+                    labelId='categoryType'
+                    id='categoryType'
+                    value={row.categoryType}
+                    size="small"
+                    label='Category Type'
+                  >
+                    {categoryTypeList &&
+                      categoryTypeList.map((categoryType, index) => {
+                        return (
+                          <MenuItem key={index} value={categoryType}>
+                            {' '}
+                            {categoryType}{' '}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className='col col-sm-12 col-md-4 pt-0'>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-6'>
+                    <div className={row.issueDate ? 'date-picker has-date' : 'date-picker'}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label='Issue Date'
+                          disabled
+                          value={dayjs(new Date())}
+                          slotProps={{
+                            textField: {
+                              size: 'small'
+                            }
+                          }}
+                        />
+                      </LocalizationProvider>
+                    </div>
+                  </div>
+
+                  <div className='col col-sm-12 col-md-6'>
+                    <div className={row.expirationDate ? 'date-picker has-date' : 'date-picker'}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label='Expiration Date'
+                          disabled
+                          value={dayjs(row.expirationDate)}
+                          slotProps={{
+                            textField: {
+                              size: 'small'
+                            }
+                          }}
+                        />
+                      </LocalizationProvider>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+
+      </form>
+      <DeleteConfirmDialog
         open={open}
-      >
-        <DialogTitle> Confirm Deletion </DialogTitle>
-        <DialogContent>Are you sure you want to delete ID Card restriction?</DialogContent>
-        <DialogActions>
-          <Button variant='outlined' autoFocus onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button variant='contained' onClick={handleConfirmDelete}>
-            {' '}
-            CONFIRM{' '}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        close={handleCancel}
+        data={' Are you sure you want to delete ID Card restriction?'}
+        onCloseButtonClick={handleCancel}
+        onConfirmClick={handleConfirmDelete}
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
   FormControl,
@@ -11,8 +11,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  DialogContentText, 
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Search } from '../../../../DSearch/pages/Search';
@@ -21,11 +19,12 @@ import DCustomerProfile from '../../../../DCustomerProfile';
 import { CertifierResult } from './CertifierResult';
 import DNotification from '../../../../DNotification';
 import { SearchHistory } from '../../../../DSearch/pages/SearchHistory';
+import DeleteConfirmDialog from '../../../../DDialog/components/DeleteConfirmDialog';
 
 function ResidencyCertification({ isFormDisabled, formData, onResidencyCertification, onResidencyCertificationStatus }) {
   const {
     residencyCertification: { certifiedInfo, isCertification, residencyCertificationStatus }
-  } = formData; 
+  } = formData;
   const [openSearchDialog, setOpenSearchDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [dialogState, setDialogState] = useState('search');
@@ -256,28 +255,20 @@ function ResidencyCertification({ isFormDisabled, formData, onResidencyCertifica
         )}
         <DialogContent>{renderDialogContent()}</DialogContent>
       </Dialog>
-      <Dialog
+
+      <DeleteConfirmDialog
         open={openDeleteDialog}
-        onClose={() => setOpenDeleteDialog(false)}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
-      >
-        <DialogTitle id='alert-dialog-title'>Confirm Deletion</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            Are you sure you want to delete certifier information?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant='outlined' onClick={() => setOpenDeleteDialog(false)}>
-            {' '}
-            cancel{' '}
-          </Button>
-          <Button variant='contained' onClick={handleCertifierDelete} autoFocus>
-            confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
+        close={() => setOpenDeleteDialog(false)}
+        data={' Are you sure you want to delete certifier information?'}
+        onCloseButtonClick={() => setOpenDeleteDialog(false)}
+        onConfirmClick={handleCertifierDelete}
+      />
+
+
+
+
+
+
       <DNotification
         open={showAlert}
         autoHideDuration={6000}

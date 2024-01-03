@@ -8,11 +8,8 @@
         "originalIssueDate": "04/22/2022",
         "issueDate": "04/22/2022",
         "expirationDate": "08/18/2030",
-        "cardMailDate": "",
-        "country": "",
-        "state": "",
-        "iDCardNumber": "",
-        "idStatus": ""
+        "cardMailDate": "", 
+        "renewalNoticeDate": "" 
     },
     "restrictionsLists": [
         {
@@ -24,13 +21,22 @@
             "restriction": "HEARING IMPAIRED"
         },
         {
-            "code": "O",
+            "code": "Q",
             "restriction": "INTELLECTUAL DISABILITY"
         },
         {
             "code": "R",
             "restriction": "VISUALLY IMPAIRED"
         }
+    ],
+    "previousCardRestrictions":[
+        {
+            "state":"",
+            "cardNumber":"4323434",
+            "categoryType":"REAL ID",
+            "issueDate":"04/22/2022",
+            "expirationDate":"08/18/2030"
+        } 
     ],
     "states": [
         {
@@ -237,7 +243,7 @@
     "countryList" : [
         {"value": "USA", "label":"USA" }
     ],
-    "statusList" : ["CANCELLED", "DECEASED", "EXPIRED", "SURRENDERED", "VALID" ],
-    "categoryTypeList": ["REAL ID"],
-    "cardTypeList": ["OVER 21 YEARS"]
+    "statusList" : ["PENDING", "VALID", "EXPIRED", "CANCELED" ],
+    "categoryTypeList": ["REAL ID", "LIMITED PURPOSE"],
+    "cardTypeList": ["OVER 21 YEARS", "UNDER 21 YEARS "]
 }
