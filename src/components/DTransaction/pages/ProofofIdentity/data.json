@@ -1,5 +1,5 @@
 {
-    "verificationRequestDocument": "", 
+    "verificationRequestDocument": "",
     "alienNumber": "",
     "receiptNumber": "",
     "documentExpirationDate": null,
@@ -21,7 +21,7 @@
     "dateOfBirth": "12/29/1984",
     "verificationStatus": "",
     "initialVerification": {
-        "status": "INSTITUTE ADDITIONAL VERIFICATION",
+        "status": "NOT VERIFIED",
         "lastName": "DOE",
         "firstName": "JONNY",
         "middleName": "",
@@ -81,7 +81,8 @@
         },
         {
             "value": 4,
-            "label": "B-1"
+            "label": "B-1",
+            "isInactive": true
         },
         {
             "value": 5,
@@ -89,11 +90,13 @@
         },
         {
             "value": 6,
-            "label": "B-2"
+            "label": "B-2",
+            "isInactive": true
         },
         {
             "value": 7,
-            "label": "C-1"
+            "label": "C-1",
+            "isInactive": true
         },
         {
             "value": 8,
@@ -101,11 +104,13 @@
         },
         {
             "value": 9,
-            "label": "C-2"
+            "label": "C-2",
+            "isInactive": true
         },
         {
             "value": 10,
-            "label": "C-3"
+            "label": "C-3",
+            "isInactive": true
         },
         {
             "value": 11,
@@ -405,6 +410,7 @@
         }
     ],
     "statusList": [
+        "NOT VERIFIED",
         "INSTITUTE ADDITIONAL VERIFICATION",
         "SECONDARY VERIFICATION SUCCESSFULLY REQUESTED"
     ]

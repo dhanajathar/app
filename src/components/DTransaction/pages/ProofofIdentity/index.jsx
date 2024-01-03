@@ -38,7 +38,7 @@ import {
   Tooltip
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -52,6 +52,7 @@ import dayjs from 'dayjs';
 import mockData from './data.json';
 import DAlertBox from '../../../DAlertBox';
 import * as _ from 'lodash';
+import DCircleLoader from '../../../DCircleLoader';
 export default function ProofOfIdentity() {
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
@@ -82,6 +83,7 @@ export default function ProofOfIdentity() {
 
   const sortedDocumentType = _.sortBy(documentType, 'label');
   const sortedVisaTypeList = _.sortBy(visaTypeList, 'label');
+  const filteredVisaTypeList = sortedVisaTypeList.filter(item => !item.isInactive);
   const sortedCountryList = _.sortBy(countryList, 'label');
 
   const initialData = {
@@ -94,7 +96,7 @@ export default function ProofOfIdentity() {
     sevisId: '',
     dateOfBirth: mockData.dateOfBirth
   }
-
+  const [showVerification, setShowVerification] = useState(false);
   const [formData, setFormData] = useState(initialData);
   const [focusedField, setFocusedField] = useState(null);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
@@ -111,6 +113,15 @@ export default function ProofOfIdentity() {
   const visaTypeDisabledList = [4, 6, 7, 9, 10, 41, 42, 43, 44, 45, 46, 47];
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const changeStateAfter3Seconds = () => {
+      setInitialVerifiedStatus(statusList[1]);
+      setExpanded('verificationPannel')
+    };
+    const timeoutId = setTimeout(changeStateAfter3Seconds, 3000);
+    return () => clearTimeout(timeoutId);
+  });
+
   const handleSort = column => {
     if (sortedColumn === column) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -121,7 +132,7 @@ export default function ProofOfIdentity() {
   };
   const handleSecondaryVerification = () => {
     setOpen(false);
-    setInitialVerifiedStatus(statusList[1]);
+    setInitialVerifiedStatus(statusList[2]);
   };
 
   const tableHeader = [
@@ -330,7 +341,7 @@ export default function ProofOfIdentity() {
 
   const handleChange = (name, value) => {
     const newValues = name === "verificationRequestDocument" || name === "visaType"
-      ? { ...initialData }
+      ? { ...initialData, verificationRequestDocument: formData.verificationRequestDocument }
       : { ...formData };
 
     newValues[name] = value;
@@ -451,7 +462,7 @@ export default function ProofOfIdentity() {
               {formData.verificationRequestDocument && (
                 <div className='col col-md-4 col-sm-12'>
                   <Autocomplete
-                    options={sortedVisaTypeList}
+                    options={filteredVisaTypeList}
                     fullWidth
                     size='small'
                     value={formData.visaType}
@@ -565,7 +576,7 @@ export default function ProofOfIdentity() {
                   helperText={<DAlertBox errorText={validationError?.sevisId} />}
                   onBlur={e => handleError('sevisId', e.target.value)}
                   inputRef={(e) => setFocusOnInput(e, 'sevisId')}
-                  disabled={isDisabledField([2, 5, 6, 8, 9, 10]) || disabledVisaType() || (isFormDisabled && focusedField !== 'sevisId')}
+                  disabled={isDisabledField([5, 6, 8, 9]) || disabledVisaType() || (isFormDisabled && focusedField !== 'sevisId')}
                   fullWidth
                   onChange={e => handleChange(e.target.name, e.target.value)}
                 />
@@ -620,186 +631,206 @@ export default function ProofOfIdentity() {
                 <TextField size="small" value={formData.dateOfBirth} fullWidth disabled label='Date of Birth' />
               </div>
             </div>
-
-            <Accordion
-              className='initial-verification'
-              expanded={expanded === 'verificationPannel'}
-              onChange={!isFormDisabled && handleAccordionChange('verificationPannel')}
-            >
-              <AccordionSummary
-                expandIcon={
-                  isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
-                    <Tooltip arrow title='Expand' placement='top'>
-                      <ExpandMoreIcon />
-                    </Tooltip>
-                }
-                aria-controls='panel1bh-content'
-                id='panel1bh-header'
+            {showVerification ?
+              <Accordion
+                className='initial-verification'
+                expanded={expanded === 'verificationPannel'}
+                onChange={!isFormDisabled && handleAccordionChange('verificationPannel')}
               >
-                <div className='initial-verification-header'>
-                  <div> Initial Verification Result</div>
 
-                  <div
-                    className={
-                      initialVerifiedStatus && initialVerifiedStatus === statusList[0]
-                        ? 'verification-status warning-status'
-                        : 'verification-status success-status'
+                {initialVerifiedStatus && initialVerifiedStatus === statusList[0] ?
+                  <div className='initial-status'>
+                    <div className='initial-status-title'>
+                      <div> Initial Verification Result</div>
+                      <div className='wrapper-loader'> <DCircleLoader /> <div> Initial Verification in progress</div>  </div>
+                    </div>
+
+                    <div> {initialVerifiedStatus} </div>
+                  </div>
+                  :
+                  <AccordionSummary
+                    expandIcon={
+                      isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
+                        <Tooltip arrow title='Expand' placement='top'>
+                          <ExpandMoreIcon />
+                        </Tooltip>
                     }
+                    aria-controls='panel1bh-content'
+                    id='panel1bh-header'
                   >
-                    {initialVerifiedStatus === statusList[0] && <WarningAmberIcon />}{' '}
-                    {initialVerifiedStatus}
-                  </div>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div>
-                  <div className='d-row'>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        value={initialVerification.lastName}
-                        label='Last Name'
-                        disabled
-                        size="small"
-                        fullWidth
-                      />
-                    </div>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        value={initialVerification.firstName}
-                        label='First Name'
-                        disabled
-                        size="small"
-                        fullWidth
-                      />
-                    </div>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        value={initialVerification.middleName}
-                        label='Middle Name'
-                        disabled
-                        size="small"
-                        fullWidth
-                      />
-                    </div>
-                  </div>
-                  <div className='d-row'>
-                    <div className='col col-sm-12 col-md-4'>
+                    <div className='initial-verification-header'>
+                      <div> Initial Verification Result</div>
                       <div
                         className={
-                          initialVerification.dateOfBirth ? 'date-picker has-date' : 'date-picker'
+                          initialVerifiedStatus && initialVerifiedStatus === statusList[1]
+                            ? 'verification-status warning-status'
+                            : 'verification-status success-status'
                         }
                       >
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <DatePicker
-                            label='Date of Birth'
-                            fullWidth
-                            disabled
-                            value={
-                              initialVerification.dateOfBirth &&
-                              dayjs(initialVerification.dateOfBirth)
-                            }
-                            slotProps={{
-                              textField: {
-                                size: 'small'
-
-                              }
-                            }}
-                          />
-                        </LocalizationProvider>
-                        {initialVerification.dateOfBirth && (
-                          <div className='date-helper-text'>
-                            {calculateAge(initialVerification.dateOfBirth)}
-                          </div>
-                        )}
+                        {initialVerifiedStatus === statusList[1] && <WarningAmberIcon />}{' '}
+                        {initialVerifiedStatus}
                       </div>
                     </div>
-                    <div className='col col-sm-12 col-md-4'>
-                      <FormControl size="small" fullWidth>
-                        <InputLabel id='country'>Country</InputLabel>
-                        <Select
-                          labelId='country'
-                          id='country'
+                  </AccordionSummary>}
+                <AccordionDetails>
+                  <div>
+                    <div className='d-row'>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          value={initialVerification.lastName}
+                          label='Last Name'
                           disabled
-                          value={initialVerification.country}
-                          label='Country'
-                        >
-                          {sortedCountryList &&
-                            sortedCountryList.map(c => {
-                              return (
-                                <MenuItem key={c.label} value={c.value}>
-                                  {' '}
-                                  {c.label}{' '}
-                                </MenuItem>
-                              );
-                            })}
-                        </Select>
-                      </FormControl>
+                          size="small"
+                          fullWidth
+                        />
+                      </div>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          value={initialVerification.firstName}
+                          label='First Name'
+                          disabled
+                          size="small"
+                          fullWidth
+                        />
+                      </div>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          value={initialVerification.middleName}
+                          label='Middle Name'
+                          disabled
+                          size="small"
+                          fullWidth
+                        />
+                      </div>
                     </div>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        value={initialVerification.caseNumber}
-                        label='Case Number'
-                        disabled
-                        size="small"
-                        fullWidth
-                      />
-                    </div>
-                  </div>
-                  <div className='d-row'>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        value={initialVerification.dateOfEntry}
-                        label='Date of Entry'
-                        disabled
-                        fullWidth
-                        size="small"
-                      />
-                    </div>
-                    <div className='col col-sm-12 col-md-4'>
-                      <TextField
-                        value={initialVerification.admittedTo}
-                        label='Admitted  To'
-                        disabled
-                        size="small"
-                        fullWidth
-                      />
-                    </div>
-                    {initialVerifiedStatus === statusList[1] && (
+                    <div className='d-row'>
                       <div className='col col-sm-12 col-md-4'>
                         <div
                           className={
-                            initialVerification.expirationDate
-                              ? 'date-picker has-date'
-                              : 'date-picker'
+                            initialVerification.dateOfBirth ? 'date-picker has-date' : 'date-picker'
                           }
                         >
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
-                              label='Expiration Date'
+                              label='Date of Birth'
                               fullWidth
+                              disabled
                               value={
-                                initialVerification.expirationDate &&
-                                dayjs(initialVerification.expirationDate)
+                                initialVerification.dateOfBirth &&
+                                dayjs(initialVerification.dateOfBirth)
                               }
+                              slotProps={{
+                                textField: {
+                                  size: 'small'
+
+                                }
+                              }}
                             />
                           </LocalizationProvider>
+                          {initialVerification.dateOfBirth && (
+                            <div className='date-helper-text'>
+                              {calculateAge(initialVerification.dateOfBirth)}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    )}
-                  </div>
-                  <div className='d-row'>
-                    <div className='col col-sm-12 col-md-4'>
-                      {initialVerifiedStatus === statusList[0] && (
-                        <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
-                          {' '}
-                          SECONDARY VERIFICATION{' '}
-                        </Button>
+                      <div className='col col-sm-12 col-md-4'>
+                        <FormControl size="small" fullWidth>
+                          <InputLabel id='country'>Country</InputLabel>
+                          <Select
+                            labelId='country'
+                            id='country'
+                            disabled
+                            value={initialVerification.country}
+                            label='Country'
+                          >
+                            {sortedCountryList &&
+                              sortedCountryList.map(c => {
+                                return (
+                                  <MenuItem key={c.label} value={c.value}>
+                                    {' '}
+                                    {c.label}{' '}
+                                  </MenuItem>
+                                );
+                              })}
+                          </Select>
+                        </FormControl>
+                      </div>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          value={initialVerification.caseNumber}
+                          label='Case Number'
+                          disabled
+                          size="small"
+                          fullWidth
+                        />
+                      </div>
+                    </div>
+                    <div className='d-row'>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          value={initialVerification.dateOfEntry}
+                          label='Date of Entry'
+                          disabled
+                          fullWidth
+                          size="small"
+                        />
+                      </div>
+                      <div className='col col-sm-12 col-md-4'>
+                        <TextField
+                          value={initialVerification.admittedTo}
+                          label='Admitted  To'
+                          disabled
+                          size="small"
+                          fullWidth
+                        />
+                      </div>
+                      {initialVerifiedStatus === statusList[1] && (
+                        <div className='col col-sm-12 col-md-4'>
+                          <div
+                            className={
+                              initialVerification.expirationDate
+                                ? 'date-picker has-date'
+                                : 'date-picker'
+                            }
+                          >
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DatePicker
+                                label='Expiration Date'
+                                fullWidth
+                                slotProps={{
+                                  textField: {
+                                    size: 'small'
+
+                                  }
+                                }}
+                                value={
+                                  initialVerification.expirationDate &&
+                                  dayjs(initialVerification.expirationDate)
+                                }
+                              />
+                            </LocalizationProvider>
+                          </div>
+                        </div>
                       )}
                     </div>
+                    <div className='d-row'>
+                      <div className='col col-sm-12 col-md-4'>
+                        {initialVerifiedStatus === statusList[1] && (
+                          <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
+                            {' '}
+                            SECONDARY VERIFICATION{' '}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
+                </AccordionDetails>
+              </Accordion> :
+              <Button variant='outlined' className='initial-button' color='primary' onClick={() => setShowVerification(true)}>
+                INITIAL VERIFICATION{' '}
+              </Button>
+            }
             <div className='d-row'>
               <div className='col col-sm-12'>
                 <Accordion
