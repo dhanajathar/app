@@ -81,7 +81,7 @@
    margin: 0 0.03125rem;
  }
 
- .initial-button {
+ .initial-verification-section {
    margin-top: 1.5rem;
  }
 
@@ -103,4 +103,7 @@
    font: normal normal normal 16px/22px Open Sans;
    color: var(--orange70);
    gap: 1rem
+ }
+ .history-table .MuiTableContainer-root{
+  max-height: 150px;
  }

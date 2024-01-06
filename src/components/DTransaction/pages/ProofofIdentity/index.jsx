@@ -23,23 +23,14 @@ import {
   FormControl,
   InputAdornment,
   InputLabel,
-  Link,
   MenuItem,
-  Paper,
   Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel,
   TextField,
   Tooltip
 } from '@mui/material';
 import { DEventService, DEvents } from '../../../../services/DEventService';
-import React, { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CropIcon from '@mui/icons-material/Crop';
@@ -53,6 +44,8 @@ import mockData from './data.json';
 import DAlertBox from '../../../DAlertBox';
 import * as _ from 'lodash';
 import DCircleLoader from '../../../DCircleLoader';
+import { calculateAge } from '../../../../utils/dateUtils';
+import DTable from '../../../DTable';
 export default function ProofOfIdentity() {
   const [searchParams] = useSearchParams();
   const flowId = searchParams.get('flowId');
@@ -68,7 +61,8 @@ export default function ProofOfIdentity() {
     });
   }, 100);
 
-  const { citizen } = useParams();
+  const formRef = useRef();
+
   const {
     verificationHistory,
     documentType,
@@ -101,35 +95,20 @@ export default function ProofOfIdentity() {
   const [focusedField, setFocusedField] = useState(null);
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [validationError, setValidationError] = useState({});
-  const [expanded, setExpanded] = React.useState(false);
-  const [sortedColumn, setSortedColumn] = useState(null);
-  const [sortDirection, setSortDirection] = useState('asc');
-  const [passportNumber, setPassportNumber] = useState();
-  const [issueDate, setIssueDate] = useState();
-  const [expirationDate, setExpirationDate] = useState();
-  const [verifiedDate, setVerifiedDate] = useState();
-  const [isVerified, setIsVerified] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [initialVerifiedStatus, setInitialVerifiedStatus] = useState(initialVerification.status);
   const visaTypeDisabledList = [4, 6, 7, 9, 10, 41, 42, 43, 44, 45, 46, 47];
   const [open, setOpen] = useState(false);
+  const [initialButtonDisabled, setInitialButtonDisabled] = useState(false);
 
-  useEffect(() => {
-    const changeStateAfter3Seconds = () => {
+
+  const handleInitialVerification = () => {
+    setShowVerification(true)
+    setTimeout(() => {
       setInitialVerifiedStatus(statusList[1]);
       setExpanded('verificationPannel')
-    };
-    const timeoutId = setTimeout(changeStateAfter3Seconds, 3000);
-    return () => clearTimeout(timeoutId);
-  });
-
-  const handleSort = column => {
-    if (sortedColumn === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortedColumn(column);
-      setSortDirection('asc');
-    }
-  };
+    }, 3000)
+  }
   const handleSecondaryVerification = () => {
     setOpen(false);
     setInitialVerifiedStatus(statusList[2]);
@@ -137,66 +116,46 @@ export default function ProofOfIdentity() {
 
   const tableHeader = [
     {
-      key: 'srNo',
+      id: 'srNo',
       label: 'Sl No.',
-      width: 30
     },
     {
-      key: 'documentType',
+      id: 'documentType',
       label: 'Document Type',
-      width: 250
     },
     {
-      key: 'alien',
+      id: 'alien',
       label: 'Alien # / I94 #',
-      width: 100
     },
     {
-      key: 'receipt',
+      id: 'receipt',
       label: 'Receipt # / Visa #',
-      width: 110
     },
     {
-      key: 'uSCISDate',
+      id: 'uSCISDate',
       label: 'USCIS Date',
-      width: 100
     },
     {
-      key: 'destinyDate',
+      id: 'destinyDate',
       label: 'Destiny Date',
-      width: 100
     },
     {
-      key: 'verificationStatus',
+      id: 'verificationStatus',
       label: 'Verification Status',
-      width: 100
     },
     {
-      key: 'processedDate',
+      id: 'processedDate',
       label: 'Processed Date',
-      width: 100
     },
     {
-      key: 'caseNumber',
+      id: 'caseNumber',
       label: 'Case Number',
-      width: 150
     },
     {
-      key: 'caseCloseDate',
+      id: 'caseCloseDate',
       label: 'Case Close Date',
-      width: 100
     }
   ];
-
-  const sortedData = verificationHistory.sort((a, b) => {
-    if (sortDirection === 'asc') {
-      return a[sortedColumn] - b[sortedColumn];
-    } else {
-      return b[sortedColumn] - a[sortedColumn];
-    }
-  });
-
-
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -218,21 +177,17 @@ export default function ProofOfIdentity() {
     }
   };
 
-  // mm/dd/yyyy
-  const calculateAge = dob => {
-    const today = new Date();
-    const birthDate = new Date(dob);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    let month = today.getMonth() - birthDate.getMonth();
-    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-      month = 12 + month;
-      age--;
-    }
-    return `${age} year(s) ${month} months`;
-  };
+
   const validateFiled = (name, value) => {
     let error = '';
     const selectedDocType = formData.verificationRequestDocument?.value;
+    const invalidDocTypes = [
+      documentType[1].value,
+      documentType[2].value,
+      documentType[3].value,
+      documentType[9].value,
+      documentType[10].value
+    ];
     switch (name) {
 
       case 'verificationRequestDocument':
@@ -264,7 +219,8 @@ export default function ProofOfIdentity() {
 
         break;
       case 'documentExpirationDate':
-        if (!dayjs(value, 'MM/DD/YYYY', true).isValid()) {
+        if ((!value && invalidDocTypes.includes(selectedDocType)) ||
+          (value && (!dayjs(value, 'MM/DD/YYYY', true).isValid() || dayjs(value).isBefore(new Date())))) {
           error = 'Invalid Document Expiration Date';
         }
         break;
@@ -319,6 +275,20 @@ export default function ProofOfIdentity() {
     setIsFormDisabled(Object.values(errors).some(error => error !== ''));
   };
 
+  useEffect(() => {
+    if (formRef.current) {
+      const formElements = formRef.current.elements;
+      let isDisabled = false;
+      for (let i = 0; i < formElements.length; i++) {
+        const element = formElements[i];
+        if (element.tagName === 'INPUT' && !element.disabled && (element.value === '' || !_.isEmpty(validationError))) {
+          isDisabled = true;
+          break;
+        }
+      }
+      setInitialButtonDisabled(isDisabled);
+    }
+  }, [formRef, validationError, formData]);
 
 
 
@@ -357,550 +327,439 @@ export default function ProofOfIdentity() {
     }
   }
 
-
-
   return (
     <div className='d-container'>
-      <form onSubmit={handleSubmit}>
-        {citizen === 'yes' ? (
-          <>
-            <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
+      <form onSubmit={handleSubmit} ref={formRef}>
+        <div className='d-sub-title'> Proof of Identity</div>
+        <div className='d-row'>
+          <div className='col col-md-8 col-sm-12'>
+            <Autocomplete
+              options={sortedDocumentType}
+              fullWidth
+              size='small'
+              name='verificationRequestDocument'
+              value={formData.verificationRequestDocument}
+              disableClearable={true}
+              disabled={isFormDisabled && focusedField !== 'verificationRequestDocument'}
+              onChange={(e, v) => {
+                handleChange('verificationRequestDocument', v)
+              }
+              }
+              onBlur={e => handleError('verificationRequestDocument', e.target.value)}
+              renderInput={params => (
                 <TextField
-                  size='small'
-                  value={passportNumber}
-                  label='Passport Number'
-                  fullWidth
-                  onChange={e => setPassportNumber(e.target.value)}
+                  {...params}
+                  inputRef={(e) => setFocusOnInput(e, 'verificationRequestDocument')}
+                  label='Verification Request Document '
+                  error={!!validationError?.verificationRequestDocument}
+                  helperText={<DAlertBox errorText={validationError?.verificationRequestDocument} />}
                 />
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <div className='date-picker'>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label='Issue  Date '
-                      fullWidth
-                      value={issueDate && dayjs(issueDate)}
-                      onChange={issueDate => setIssueDate(issueDate)}
-                    />
-                  </LocalizationProvider>
-                </div>
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <div className='date-picker'>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label='Expiration Date '
-                      fullWidth
-                      value={expirationDate && dayjs(expirationDate)}
-                      onChange={expirationDate => setExpirationDate(expirationDate)}
-                    />
-                  </LocalizationProvider>
-                </div>
-              </div>
-            </div>
-            <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
-                <div className='status-label'> Status </div>
-                <div className='status-wrapper'>
-                  <span className='status-text'> {isVerified ? 'VERIFIED' : 'NOT VERIFIED'} </span>
-
-                  {!isVerified && (
-                    <span className='status-description'>
-                      {' '}
-                      <Link href='#' onClick={() => setIsVerified(!isVerified)}>
-                        Verify
-                      </Link>{' '}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <div className='date-picker'>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      label='Verify Date '
-                      fullWidth
-                      value={verifiedDate && dayjs(verifiedDate)}
-                      onChange={verifiedDate => setVerifiedDate(verifiedDate)}
-                    />
-                  </LocalizationProvider>
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className='d-sub-title'> Proof of Identity</div>
-            <div className='d-row'>
-              <div className='col col-md-8 col-sm-12'>
-                <Autocomplete
-                  options={sortedDocumentType}
-                  fullWidth
-                  size='small'
-                  name='verificationRequestDocument'
-                  value={formData.verificationRequestDocument}
-                  disableClearable={true}
-                  disabled={isFormDisabled && focusedField !== 'verificationRequestDocument'}
-                  onChange={(e, v) => {
-                    handleChange('verificationRequestDocument', v)
-                  }
-                  }
-                  onBlur={e => handleError('verificationRequestDocument', e.target.value)}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      inputRef={(e) => setFocusOnInput(e, 'verificationRequestDocument')}
-                      label='Verification Request Document '
-                      error={!!validationError?.verificationRequestDocument}
-                      helperText={<DAlertBox errorText={validationError?.verificationRequestDocument} />}
-                    />
-                  )}
-                />
-
-              </div>
-              {formData.verificationRequestDocument && (
-                <div className='col col-md-4 col-sm-12'>
-                  <Autocomplete
-                    options={filteredVisaTypeList}
-                    fullWidth
-                    size='small'
-                    value={formData.visaType}
-                    name={'visaType'}
-                    disableClearable={true}
-                    disabled={isDisabledField([1, 2, 4, 5, 6, 8, 9, 11]) || (isFormDisabled && focusedField !== 'visaType')}
-                    onChange={(e, v) => {
-                      handleChange('visaType', v)
-                    }
-                    }
-                    onBlur={e => handleError('visaType', e.target.value)}
-                    renderInput={params => (
-                      <TextField
-                        {...params}
-                        inputRef={(e) => setFocusOnInput(e, 'visaType')}
-                        label='Visa Type'
-                        error={!!validationError.visaType}
-                        helperText={<DAlertBox errorText={validationError?.visaType} />}
-                      />
-                    )}
-                  />
-                </div>
               )}
+            />
+          </div>
+          {formData.verificationRequestDocument && (
+            <div className='col col-md-4 col-sm-12'>
+              <Autocomplete
+                options={filteredVisaTypeList}
+                fullWidth
+                size='small'
+                value={formData.visaType}
+                name={'visaType'}
+                disableClearable={true}
+                disabled={isDisabledField([1, 2, 4, 5, 6, 8, 9, 11]) || (isFormDisabled && focusedField !== 'visaType')}
+                onChange={(e, v) => {
+                  handleChange('visaType', v)
+                }
+                }
+                onBlur={e => handleError('visaType', e.target.value)}
+                renderInput={params => (
+                  <TextField
+                    {...params}
+                    inputRef={(e) => setFocusOnInput(e, 'visaType')}
+                    label='Visa Type'
+                    error={!!validationError.visaType}
+                    helperText={<DAlertBox errorText={validationError?.visaType} />}
+                  />
+                )}
+              />
             </div>
-
-            <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={formData.alienNumber}
-                  name='alienNumber'
-                  label='A Number'
-                  inputProps={{ max: 20 }}
-                  disabled={isDisabledField([4, 10, 11]) || disabledVisaType() || (isFormDisabled && focusedField !== 'alienNumber')}
+          )}
+        </div>
+        <div className='d-row'>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={formData.alienNumber}
+              name='alienNumber'
+              label='A Number'
+              inputProps={{ max: 20 }}
+              disabled={isDisabledField([4, 10, 11]) || disabledVisaType() || (isFormDisabled && focusedField !== 'alienNumber')}
+              fullWidth
+              size="small"
+              helperText={<DAlertBox errorText={validationError?.alienNumber} />}
+              error={!!validationError?.alienNumber}
+              onBlur={e => handleError('alienNumber', e.target.value)}
+              inputRef={(e) => setFocusOnInput(e, 'alienNumber')}
+              onChange={e => handleChange(e.target.name, e.target.value)}
+            />
+          </div>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={formData.receiptNumber}
+              label='Receipt Number'
+              name='receiptNumber'
+              disabled={isDisabledField([1, 3, 4, 5, 6, 7, 9, 10, 11]) || disabledVisaType() || (isFormDisabled && focusedField !== 'receiptNumber')}
+              fullWidth
+              size="small"
+              inputRef={(e) => setFocusOnInput(e, 'receiptNumber')}
+              onBlur={e => handleError('receiptNumber', e.target.value)}
+              helperText={<DAlertBox errorText={validationError?.receiptNumber} />}
+              error={!!validationError?.receiptNumber}
+              onChange={e => handleChange(e.target.name, e.target.value)}
+            />
+          </div>
+          <div className='col col-md-4 col-sm-12'>
+            <div className='date-picker'>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  minDate={dayjs(new Date())}
+                  label='Document Expiration Date '
                   fullWidth
-                  size="small"
-                  helperText={<DAlertBox errorText={validationError?.alienNumber} />}
-                  error={!!validationError?.alienNumber}
-                  onBlur={e => handleError('alienNumber', e.target.value)}
-                  inputRef={(e) => setFocusOnInput(e, 'alienNumber')}
-                  onChange={e => handleChange(e.target.name, e.target.value)}
-                />
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={formData.receiptNumber}
-                  label='Receipt Number'
-                  name='receiptNumber'
-                  disabled={isDisabledField([1, 3, 4, 5, 6, 7, 9, 10, 11]) || disabledVisaType() || (isFormDisabled && focusedField !== 'receiptNumber')}
-                  fullWidth
-                  size="small"
-                  inputRef={(e) => setFocusOnInput(e, 'receiptNumber')}
-                  onBlur={e => handleError('receiptNumber', e.target.value)}
-                  helperText={<DAlertBox errorText={validationError?.receiptNumber} />}
-                  error={!!validationError?.receiptNumber}
-                  onChange={e => handleChange(e.target.name, e.target.value)}
-                />
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <div className='date-picker'>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      minDate={dayjs(new Date())}
-                      label='Document Expiration Date '
-                      fullWidth
-                      disabled={disabledVisaType() || (isFormDisabled && focusedField !== 'documentExpirationDate')}
-                      value={formData.documentExpirationDate && dayjs(formData.documentExpirationDate)}
-                      slotProps={{
-                        textField: {
-                          size: 'small',
-                          fullWidth: true,
-                          error: !!validationError?.documentExpirationDate,
-                          helperText: <DAlertBox errorText={validationError?.documentExpirationDate} />,
-                          inputRef: focusedField === 'documentExpirationDate' ? (input) => input?.focus() : null,
-                          onBlur: e => handleError('documentExpirationDate', e.target.value),
-                        }
-                      }}
-                      onChange={documentExpirationDate =>
-                        handleChange('documentExpirationDate', documentExpirationDate)
-
-                      }
-                    />
-                  </LocalizationProvider>
-                </div>
-              </div>
-            </div>
-
-            <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={formData.i90Value}
-                  label='I-94'
-                  name='i90Value'
-                  size="small"
-                  error={!!validationError?.i90Value}
-                  helperText={<DAlertBox errorText={validationError?.i90Value} />}
-                  disabled={isDisabledField([2, 5, 6, 8, 9]) || disabledVisaType() || (isFormDisabled && focusedField !== 'i90Value')}
-                  fullWidth
-                  inputRef={(e) => setFocusOnInput(e, 'i90Value')}
-                  onBlur={e => handleError('i90Value', e.target.value)}
-                  onChange={e => handleChange(e.target.name, e.target.value)}
-                />
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={formData.sevisId}
-                  label='SEVIS ID'
-                  type='number'
-                  size="small"
-                  name='sevisId'
-                  error={!!validationError?.sevisId}
-                  helperText={<DAlertBox errorText={validationError?.sevisId} />}
-                  onBlur={e => handleError('sevisId', e.target.value)}
-                  inputRef={(e) => setFocusOnInput(e, 'sevisId')}
-                  disabled={isDisabledField([5, 6, 8, 9]) || disabledVisaType() || (isFormDisabled && focusedField !== 'sevisId')}
-                  fullWidth
-                  onChange={e => handleChange(e.target.name, e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={lastName.value}
-                  name='lName'
-                  disabled
-                  size="small"
-                  fullWidth
-                  label='Last Name'
-                  autoComplete='off'
-                  InputProps={{
-                    endAdornment: truncationIcon(lastName)
-                  }}
-                />
-              </div>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={firstName.value}
-                  name='firstName'
-                  fullWidth
-                  disabled
-                  size="small"
-                  label='First Name'
-                  InputProps={{
-                    endAdornment: truncationIcon(firstName)
-                  }}
-                />
-              </div>
-
-              <div className='col col-md-4 col-sm-12'>
-                <TextField
-                  value={middleName.value}
-                  fullWidth
-                  disabled
-                  size="small"
-                  InputProps={{
-                    endAdornment: truncationIcon(middleName)
-                  }}
-                  label='Middle Name'
-                />
-              </div>
-            </div>
-
-            <div className='d-row'>
-              <div className='col col-md-4 col-sm-12'>
-                <TextField size="small" value={formData.dateOfBirth} fullWidth disabled label='Date of Birth' />
-              </div>
-            </div>
-            {showVerification ?
-              <Accordion
-                className='initial-verification'
-                expanded={expanded === 'verificationPannel'}
-                onChange={!isFormDisabled && handleAccordionChange('verificationPannel')}
-              >
-
-                {initialVerifiedStatus && initialVerifiedStatus === statusList[0] ?
-                  <div className='initial-status'>
-                    <div className='initial-status-title'>
-                      <div> Initial Verification Result</div>
-                      <div className='wrapper-loader'> <DCircleLoader /> <div> Initial Verification in progress</div>  </div>
-                    </div>
-
-                    <div> {initialVerifiedStatus} </div>
-                  </div>
-                  :
-                  <AccordionSummary
-                    expandIcon={
-                      isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
-                        <Tooltip arrow title='Expand' placement='top'>
-                          <ExpandMoreIcon />
-                        </Tooltip>
+                  disabled={disabledVisaType() || (isFormDisabled && focusedField !== 'documentExpirationDate')}
+                  value={formData.documentExpirationDate && dayjs(formData.documentExpirationDate)}
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      fullWidth: true,
+                      error: !!validationError?.documentExpirationDate,
+                      helperText: <DAlertBox errorText={validationError?.documentExpirationDate} />,
+                      inputRef: focusedField === 'documentExpirationDate' ? (input) => input?.focus() : null,
+                      onBlur: e => handleError('documentExpirationDate', e.target.value),
                     }
-                    aria-controls='panel1bh-content'
-                    id='panel1bh-header'
+                  }}
+                  onChange={documentExpirationDate =>
+                    handleChange('documentExpirationDate', documentExpirationDate)
+
+                  }
+                />
+              </LocalizationProvider>
+            </div>
+          </div>
+        </div>
+        <div className='d-row'>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={formData.i90Value}
+              label='I-94'
+              name='i90Value'
+              size="small"
+              error={!!validationError?.i90Value}
+              helperText={<DAlertBox errorText={validationError?.i90Value} />}
+              disabled={isDisabledField([2, 5, 6, 8, 9]) || disabledVisaType() || (isFormDisabled && focusedField !== 'i90Value')}
+              fullWidth
+              inputRef={(e) => setFocusOnInput(e, 'i90Value')}
+              onBlur={e => handleError('i90Value', e.target.value)}
+              onChange={e => handleChange(e.target.name, e.target.value)}
+            />
+          </div>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={formData.sevisId}
+              label='SEVIS ID'
+              type='number'
+              size="small"
+              name='sevisId'
+              error={!!validationError?.sevisId}
+              helperText={<DAlertBox errorText={validationError?.sevisId} />}
+              onBlur={e => handleError('sevisId', e.target.value)}
+              inputRef={(e) => setFocusOnInput(e, 'sevisId')}
+              disabled={isDisabledField([5, 6, 8, 9]) || disabledVisaType() || (isFormDisabled && focusedField !== 'sevisId')}
+              fullWidth
+              onChange={e => handleChange(e.target.name, e.target.value)}
+            />
+          </div>
+        </div>
+        <div className='d-row'>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={lastName.value}
+              name='lName'
+              disabled
+              size="small"
+              fullWidth
+              label='Last Name'
+              autoComplete='off'
+              InputProps={{
+                endAdornment: truncationIcon(lastName)
+              }}
+            />
+          </div>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={firstName.value}
+              name='firstName'
+              fullWidth
+              disabled
+              size="small"
+              label='First Name'
+              InputProps={{
+                endAdornment: truncationIcon(firstName)
+              }}
+            />
+          </div>
+
+          <div className='col col-md-4 col-sm-12'>
+            <TextField
+              value={middleName.value}
+              fullWidth
+              disabled
+              size="small"
+              InputProps={{
+                endAdornment: truncationIcon(middleName)
+              }}
+              label='Middle Name'
+            />
+          </div>
+        </div>
+        <div className='d-row'>
+          <div className='col col-md-4 col-sm-12'>
+            <TextField size="small" value={formData.dateOfBirth} fullWidth disabled label='Date of Birth' />
+          </div>
+        </div>
+      </form>
+      <div className='initial-verification-section'>
+        {showVerification ?
+          <Accordion
+            className='initial-verification'
+            expanded={expanded === 'verificationPannel'}
+            onChange={!isFormDisabled && handleAccordionChange('verificationPannel')}
+          >
+
+            {initialVerifiedStatus && initialVerifiedStatus === statusList[0] ?
+              <div className='initial-status'>
+                <div className='initial-status-title'>
+                  <div> Initial Verification Result</div>
+                  <div className='wrapper-loader'> <DCircleLoader /> <div> Initial Verification in progress</div>  </div>
+                </div>
+
+                <div> {initialVerifiedStatus} </div>
+              </div>
+              :
+              <AccordionSummary
+                expandIcon={
+                  isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
+                    <Tooltip arrow title='Expand' placement='top'>
+                      <ExpandMoreIcon />
+                    </Tooltip>
+                }
+                aria-controls='panel1bh-content'
+                id='panel1bh-header'
+              >
+                <div className='initial-verification-header'>
+                  <div> Initial Verification Result</div>
+                  <div
+                    className={
+                      initialVerifiedStatus && initialVerifiedStatus === statusList[1]
+                        ? 'verification-status warning-status'
+                        : 'verification-status success-status'
+                    }
                   >
-                    <div className='initial-verification-header'>
-                      <div> Initial Verification Result</div>
-                      <div
-                        className={
-                          initialVerifiedStatus && initialVerifiedStatus === statusList[1]
-                            ? 'verification-status warning-status'
-                            : 'verification-status success-status'
-                        }
-                      >
-                        {initialVerifiedStatus === statusList[1] && <WarningAmberIcon />}{' '}
-                        {initialVerifiedStatus}
-                      </div>
-                    </div>
-                  </AccordionSummary>}
-                <AccordionDetails>
-                  <div>
-                    <div className='d-row'>
-                      <div className='col col-sm-12 col-md-4'>
-                        <TextField
-                          value={initialVerification.lastName}
-                          label='Last Name'
-                          disabled
-                          size="small"
+                    {initialVerifiedStatus === statusList[1] && <WarningAmberIcon />}{' '}
+                    {initialVerifiedStatus}
+                  </div>
+                </div>
+              </AccordionSummary>}
+            <AccordionDetails>
+              <div>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-4'>
+                    <TextField
+                      value={initialVerification.lastName}
+                      label='Last Name'
+                      disabled
+                      size="small"
+                      fullWidth
+                    />
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <TextField
+                      value={initialVerification.firstName}
+                      label='First Name'
+                      disabled
+                      size="small"
+                      fullWidth
+                    />
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <TextField
+                      value={initialVerification.middleName}
+                      label='Middle Name'
+                      disabled
+                      size="small"
+                      fullWidth
+                    />
+                  </div>
+                </div>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-4'>
+                    <div
+                      className={
+                        initialVerification.dateOfBirth ? 'date-picker has-date' : 'date-picker'
+                      }
+                    >
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label='Date of Birth'
                           fullWidth
-                        />
-                      </div>
-                      <div className='col col-sm-12 col-md-4'>
-                        <TextField
-                          value={initialVerification.firstName}
-                          label='First Name'
                           disabled
-                          size="small"
-                          fullWidth
-                        />
-                      </div>
-                      <div className='col col-sm-12 col-md-4'>
-                        <TextField
-                          value={initialVerification.middleName}
-                          label='Middle Name'
-                          disabled
-                          size="small"
-                          fullWidth
-                        />
-                      </div>
-                    </div>
-                    <div className='d-row'>
-                      <div className='col col-sm-12 col-md-4'>
-                        <div
-                          className={
-                            initialVerification.dateOfBirth ? 'date-picker has-date' : 'date-picker'
+                          value={
+                            initialVerification.dateOfBirth &&
+                            dayjs(initialVerification.dateOfBirth)
                           }
-                        >
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                              label='Date of Birth'
-                              fullWidth
-                              disabled
-                              value={
-                                initialVerification.dateOfBirth &&
-                                dayjs(initialVerification.dateOfBirth)
-                              }
-                              slotProps={{
-                                textField: {
-                                  size: 'small'
+                          slotProps={{
+                            textField: {
+                              size: 'small'
 
-                                }
-                              }}
-                            />
-                          </LocalizationProvider>
-                          {initialVerification.dateOfBirth && (
-                            <div className='date-helper-text'>
-                              {calculateAge(initialVerification.dateOfBirth)}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className='col col-sm-12 col-md-4'>
-                        <FormControl size="small" fullWidth>
-                          <InputLabel id='country'>Country</InputLabel>
-                          <Select
-                            labelId='country'
-                            id='country'
-                            disabled
-                            value={initialVerification.country}
-                            label='Country'
-                          >
-                            {sortedCountryList &&
-                              sortedCountryList.map(c => {
-                                return (
-                                  <MenuItem key={c.label} value={c.value}>
-                                    {' '}
-                                    {c.label}{' '}
-                                  </MenuItem>
-                                );
-                              })}
-                          </Select>
-                        </FormControl>
-                      </div>
-                      <div className='col col-sm-12 col-md-4'>
-                        <TextField
-                          value={initialVerification.caseNumber}
-                          label='Case Number'
-                          disabled
-                          size="small"
-                          fullWidth
-                        />
-                      </div>
-                    </div>
-                    <div className='d-row'>
-                      <div className='col col-sm-12 col-md-4'>
-                        <TextField
-                          value={initialVerification.dateOfEntry}
-                          label='Date of Entry'
-                          disabled
-                          fullWidth
-                          size="small"
-                        />
-                      </div>
-                      <div className='col col-sm-12 col-md-4'>
-                        <TextField
-                          value={initialVerification.admittedTo}
-                          label='Admitted  To'
-                          disabled
-                          size="small"
-                          fullWidth
-                        />
-                      </div>
-                      {initialVerifiedStatus === statusList[1] && (
-                        <div className='col col-sm-12 col-md-4'>
-                          <div
-                            className={
-                              initialVerification.expirationDate
-                                ? 'date-picker has-date'
-                                : 'date-picker'
                             }
-                          >
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                              <DatePicker
-                                label='Expiration Date'
-                                fullWidth
-                                slotProps={{
-                                  textField: {
-                                    size: 'small'
-
-                                  }
-                                }}
-                                value={
-                                  initialVerification.expirationDate &&
-                                  dayjs(initialVerification.expirationDate)
-                                }
-                              />
-                            </LocalizationProvider>
-                          </div>
+                          }}
+                        />
+                      </LocalizationProvider>
+                      {initialVerification.dateOfBirth && (
+                        <div className='date-helper-text'>
+                          {calculateAge(initialVerification.dateOfBirth)}
                         </div>
                       )}
                     </div>
-                    <div className='d-row'>
-                      <div className='col col-sm-12 col-md-4'>
-                        {initialVerifiedStatus === statusList[1] && (
-                          <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
-                            {''}
-                            SECONDARY VERIFICATION{''}
-                          </Button>
-                        )}
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <FormControl size="small" fullWidth>
+                      <InputLabel id='country'>Country</InputLabel>
+                      <Select
+                        labelId='country'
+                        id='country'
+                        disabled
+                        value={initialVerification.country}
+                        label='Country'
+                      >
+                        {sortedCountryList &&
+                          sortedCountryList.map(c => {
+                            return (
+                              <MenuItem key={c.label} value={c.value}>
+                                {' '}
+                                {c.label}{' '}
+                              </MenuItem>
+                            );
+                          })}
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <TextField
+                      value={initialVerification.caseNumber}
+                      label='Case Number'
+                      disabled
+                      size="small"
+                      fullWidth
+                    />
+                  </div>
+                </div>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-4'>
+                    <TextField
+                      value={initialVerification.dateOfEntry}
+                      label='Date of Entry'
+                      disabled
+                      fullWidth
+                      size="small"
+                    />
+                  </div>
+                  <div className='col col-sm-12 col-md-4'>
+                    <TextField
+                      value={initialVerification.admittedTo}
+                      label='Admitted  To'
+                      disabled
+                      size="small"
+                      fullWidth
+                    />
+                  </div>
+                  {initialVerifiedStatus === statusList[1] && (
+                    <div className='col col-sm-12 col-md-4'>
+                      <div
+                        className={
+                          initialVerification.expirationDate
+                            ? 'date-picker has-date'
+                            : 'date-picker'
+                        }
+                      >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label='Expiration Date'
+                            fullWidth
+                            slotProps={{
+                              textField: {
+                                size: 'small'
+
+                              }
+                            }}
+                            value={
+                              initialVerification.expirationDate &&
+                              dayjs(initialVerification.expirationDate)
+                            }
+                          />
+                        </LocalizationProvider>
                       </div>
                     </div>
+                  )}
+                </div>
+                <div className='d-row'>
+                  <div className='col col-sm-12 col-md-4'>
+                    {initialVerifiedStatus === statusList[1] && (
+                      <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
+                        {''}
+                        SECONDARY VERIFICATION{''}
+                      </Button>
+                    )}
                   </div>
-                </AccordionDetails>
-              </Accordion> :
-              <Button variant='outlined' className='initial-button' color='primary' onClick={() => setShowVerification(true)}>
-                INITIAL VERIFICATION{''}
-              </Button>
-            }
-            <div className='d-row'>
-              <div className='col col-sm-12'>
-                <Accordion
-                  className='verification-history-accordion'
-                  expanded={expanded === 'panel1'}
-                  onChange={!isFormDisabled && handleAccordionChange('panel1')}
-                >
-                  <AccordionSummary
-                    expandIcon={
-                      isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
-                        <Tooltip arrow title='Expand' placement='top'>
-                          <ExpandMoreIcon />
-                        </Tooltip>
-                    }
-                    aria-controls='panel1bh-content'
-                    id='panel1bh-header'
-                  >
-                    {' '}
-                    Verification History
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <TableContainer sx={{ maxHeight: 200 }} component={Paper}>
-                      <Table stickyHeader className='history-table'>
-                        <TableHead>
-                          <TableRow>
-                            {tableHeader.map((item, idx) => {
-                              return (
-                                <TableCell key={idx} style={{ width: `${item?.width}px` }}>
-                                  <TableSortLabel
-                                    active={sortedColumn === item.key}
-                                    direction={sortDirection}
-                                    onClick={() => handleSort(item.key)}
-                                  >
-                                    {item.label}
-                                  </TableSortLabel>
-                                </TableCell>
-                              );
-                            })}
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {sortedData &&
-                            sortedData.map((row, index) => (
-                              <TableRow
-                                key={`row${index}`}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                              >
-                                <TableCell>{row.srNo}</TableCell>
-                                <TableCell>{row.documentType}</TableCell>
-                                <TableCell>{row.alien}</TableCell>
-                                <TableCell>{row.receipt}</TableCell>
-                                <TableCell>{row.uSCISDate}</TableCell>
-                                <TableCell>{row.destinyDate}</TableCell>
-                                <TableCell>{row.verificationStatus}</TableCell>
-                                <TableCell>{row.processedDate}</TableCell>
-                                <TableCell>{row.caseNumber}</TableCell>
-                                <TableCell>{row.caseCloseDate}</TableCell>
-                              </TableRow>
-                            ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </AccordionDetails>
-                </Accordion>
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </AccordionDetails>
+          </Accordion> :
+          <Button variant='outlined' disabled={initialButtonDisabled} color='primary' onClick={handleInitialVerification}>
+            INITIAL VERIFICATION{''}
+          </Button>
+        }</div>
+      <div className='d-row'>
+        <div className='col col-sm-12'>
+          <Accordion
+            className='verification-history-accordion'
+            expanded={expanded === 'panel1'}
+            onChange={!isFormDisabled && handleAccordionChange('panel1')}
+          >
+            <AccordionSummary
+              expandIcon={
+                isFormDisabled ? <ExpandMoreIcon className='disabled-icon' /> :
+                  <Tooltip arrow title='Expand' placement='top'>
+                    <ExpandMoreIcon />
+                  </Tooltip>
+              }
+              aria-controls='panel1bh-content'
+              id='panel1bh-header'
+            >
+              {' '}
+              Verification History
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className='history-table'>
+                <DTable
+                  columns={tableHeader}
+                  data={verificationHistory.map((item, index) => ({ ...item, srNo: index + 1 }))}
 
-      </form>
+                /></div>
+
+            </AccordionDetails>
+          </Accordion>
+        </div>
+      </div>
+
       <Dialog
         sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
         maxWidth='xs'
@@ -945,8 +804,7 @@ export default function ProofOfIdentity() {
             Cancel
           </Button>
           <Button variant='contained' onClick={handleSecondaryVerification}>
-            {' '}
-            submit{' '}
+            submit
           </Button>
         </DialogActions>
       </Dialog>
