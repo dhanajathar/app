@@ -1,8 +1,9 @@
 import './index.css';
 
 import {
-  Button, 
+  Button,
   FormControl,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
@@ -20,6 +21,7 @@ import data from './data.json';
 import dayjs from 'dayjs';
 import { useSearchParams } from 'react-router-dom';
 import DeleteConfirmDialog from '../../../DDialog/components/DeleteConfirmDialog';
+import { isBelowAge } from '../../../../utils/dateUtils';
 
 export function NewIdDetails() {
   const [searchParams] = useSearchParams();
@@ -44,16 +46,15 @@ export function NewIdDetails() {
     statusList,
     categoryTypeList,
     cardTypeList,
-    previousCardRestrictions
+    previousCards
   } = data;
-
-  const { cardNumber, cardType, status, categoryType, duplicateCount, originalIssueDate, issueDate, expirationDate, cardMailDate } = idCardDetails
-
-  const [restrictionsRows, setRestrictionsRows] = useState([newRestriction]);
+  const { status, birthDate, categoryType, duplicateCount, renewalNoticeDate, issueDate, cardMailDate } = idCardDetails
+  const cardType = isBelowAge(birthDate, 21) ? cardTypeList[1] : cardTypeList[0]
+  const [restrictionsRows, setRestrictionsRows] = useState([]);
   const [restrictionsCodeList, setRestrictionsCodeList] = useState(restrictionsLists);
   const [open, setOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-
+  const [previousCardsData, setPreviousCardsData] = useState(previousCards);
   const handleInputChange = (rowIndex, inputName, value) => {
     const rows = [...restrictionsRows];
     rows[rowIndex][inputName] = value;
@@ -107,7 +108,29 @@ export function NewIdDetails() {
     setRestrictionsRows([...restrictionsRows, newRestriction]);
   };
 
+  const handleStateChange = (e, rowIndex) => {
+    const { value } = e.target;
+    const rows = [...previousCardsData];
+    rows[rowIndex].state = { value };
+    setPreviousCardsData(rows);
+  }
 
+  const calculateExpiryDate = (issueDate, birthDate) => {
+    issueDate = dayjs(issueDate);
+    birthDate = dayjs(birthDate);
+    let expiryDate = '';
+    if (
+      issueDate.month() > birthDate.month() ||
+      (issueDate.month() === birthDate.month() && issueDate.date() > birthDate.date())
+    ) {
+      expiryDate = issueDate.add(8, 'year');
+    } else {
+      expiryDate = issueDate.add(7, 'year');
+    }
+    expiryDate = expiryDate.set('date', birthDate.date()).set('month', birthDate.month());
+
+    return expiryDate;
+  };
 
   return (
     <div className='d-container'>
@@ -116,7 +139,7 @@ export function NewIdDetails() {
         <div className='d-row'>
           <div className='col col-sm-12 col-md-4'>
             <TextField
-              value={cardNumber}
+              value={''}
               fullWidth
               size="small"
               label='Card Number'
@@ -134,9 +157,9 @@ export function NewIdDetails() {
                 size="small"
               >
                 {cardTypeList &&
-                  cardTypeList.map((cardType, index) => {
+                  cardTypeList.map((cardType) => {
                     return (
-                      <MenuItem key={index} value={cardType}>
+                      <MenuItem key={cardType} value={cardType}>
                         {' '}
                         {cardType}{' '}
                       </MenuItem>
@@ -156,9 +179,9 @@ export function NewIdDetails() {
                 size="small"
               >
                 {statusList &&
-                  statusList.map((item, index) => {
+                  statusList.map((item) => {
                     return (
-                      <MenuItem key={index} value={item}>
+                      <MenuItem key={item} value={item}>
                         {' '}
                         {item}{' '}
                       </MenuItem>
@@ -171,7 +194,7 @@ export function NewIdDetails() {
         <div className='d-row'>
           <div className='col col-sm-12 col-md-4'>
             <FormControl fullWidth disabled>
-              <InputLabel id='cardType'>Category Type</InputLabel>
+              <InputLabel id='categoryType'>Category Type</InputLabel>
               <Select
                 labelId='categoryType'
                 id='categoryType'
@@ -180,9 +203,9 @@ export function NewIdDetails() {
                 label='Category Type'
               >
                 {categoryTypeList &&
-                  categoryTypeList.map((categoryType, index) => {
+                  categoryTypeList.map((categoryType) => {
                     return (
-                      <MenuItem key={index} value={categoryType}>
+                      <MenuItem key={categoryType} value={categoryType}>
                         {' '}
                         {categoryType}{' '}
                       </MenuItem>
@@ -194,7 +217,7 @@ export function NewIdDetails() {
 
           <div className='col col-sm-12 col-md-4'>
             <TextField
-              value={duplicateCount}
+              value={duplicateCount ? duplicateCount : 0}
               fullWidth
               disabled
               label='Duplicate Count'
@@ -204,7 +227,7 @@ export function NewIdDetails() {
         </div>
         <div className='d-row'>
           <div className='col col-sm-12 col-md-2'>
-            <div className={originalIssueDate ? 'date-picker has-date' : 'date-picker'}>
+            <div className={'date-picker'}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   disabled
@@ -212,7 +235,11 @@ export function NewIdDetails() {
                   value={dayjs(new Date())}
                   slotProps={{
                     textField: {
-                      size: 'small'
+                      size: 'small',
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (<></>)
+                      }
                     }
                   }}
                 />
@@ -220,7 +247,7 @@ export function NewIdDetails() {
             </div>
           </div>
           <div className='col col-sm-12 col-md-2'>
-            <div className={issueDate ? 'date-picker has-date' : 'date-picker'}>
+            <div className={'date-picker'}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label='Issue Date'
@@ -228,7 +255,11 @@ export function NewIdDetails() {
                   value={dayjs(new Date())}
                   slotProps={{
                     textField: {
-                      size: 'small'
+                      size: 'small',
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (<></>)
+                      }
                     }
                   }}
                 />
@@ -237,15 +268,20 @@ export function NewIdDetails() {
           </div>
 
           <div className='col col-sm-12 col-md-2'>
-            <div className={expirationDate ? 'date-picker has-date' : 'date-picker'}>
+            <div className={'date-picker'}>
+
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label='Expiration Date'
                   disabled
-                  value={dayjs(expirationDate)}
+                  value={calculateExpiryDate(new Date(), birthDate)}
                   slotProps={{
                     textField: {
-                      size: 'small'
+                      size: 'small',
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (<></>)
+                      }
                     }
                   }}
                 />
@@ -253,7 +289,7 @@ export function NewIdDetails() {
             </div>
           </div>
           <div className='col col-sm-12 col-md-2'>
-            <div className={cardMailDate ? 'date-picker has-date' : 'date-picker'}>
+            <div className={'date-picker'}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label='Card Mail Date'
@@ -262,7 +298,32 @@ export function NewIdDetails() {
                   minDate={dayjs(issueDate)}
                   slotProps={{
                     textField: {
-                      size: 'small'
+                      size: 'small',
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (<></>)
+                      }
+                    }
+                  }}
+                />
+              </LocalizationProvider>
+            </div>
+          </div>
+
+          <div className='col col-sm-12 col-md-4'>
+            <div className={'date-picker'}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label='Renewal Notice Sent Date'
+                  disabled
+                  value={renewalNoticeDate ? dayjs(renewalNoticeDate) : null}
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      fullWidth: true,
+                      InputProps: {
+                        endAdornment: (<></>)
+                      }
                     }
                   }}
                 />
@@ -274,7 +335,7 @@ export function NewIdDetails() {
         <div className='d-sub-title'> Identification Card Restrictions </div>
         {restrictionsRows &&
           restrictionsRows.map((row, rowIndex) => (
-            <div className={rowIndex === 0 ? 'mt-1 d-row' : 'd-row'} key={rowIndex}>
+            <div className={'d-row'} key={row.code}>
               <div className='col col-sm-12- col-md-2'>
                 <FormControl fullWidth size="small">
                   <InputLabel id='status'>Code</InputLabel>
@@ -314,7 +375,7 @@ export function NewIdDetails() {
                   </Select>
                 </FormControl>
               </div>
-              <div className='col  col-ms-12 col-md-5'>
+              <div className='col  col-ms-12 col-md-6'>
                 <TextField
                   value={row.restriction}
                   fullWidth
@@ -324,53 +385,60 @@ export function NewIdDetails() {
                   onChange={event => handleInputChange(rowIndex, 'restriction', event.target.value)}
                 />
               </div>
-              <div className='col col-sm-12 col-md-5 pt-0'>
+              <div className='col col-sm-12 col-md-4 pt-0'>
                 <div className='d-row'>
                   <div className='col col-sm-12 col-md-6'>
-                    <div className={row.issueDate ? 'date-picker has-date' : 'date-picker'}>
+                    <div className={'date-picker'}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                           label='Issue Date'
                           disabled
                           slotProps={{
                             textField: {
-                              size: 'small'
-                            }
+                              size: 'small',
+                              fullWidth: true,
+                              InputProps: {
+                                endAdornment: (<></>)
+                              }
+                            },
                           }}
                           value={row.issueDate && dayjs(row.issueDate)}
-                          onChange={issueDate =>
-                            handleInputChange(rowIndex, 'issueDate', issueDate)
-                          }
                         />
                       </LocalizationProvider>{' '}
                     </div>
                   </div>
-                  <div className='col col-sm-12 col-md-5'>
-                    <div className={row.removalDate ? 'date-picker has-date' : 'date-picker'}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label='Removal Date'
-                          disabled
-                          value={row.removalDate && dayjs(row.removalDate)}
-                          slotProps={{
-                            textField: {
-                              size: 'small'
-                            }
-                          }}
-                          onChange={removalDate =>
-                            handleInputChange(rowIndex, 'removalDate', removalDate)
-                          }
-                        />
-                      </LocalizationProvider>
+                  <div className='col col-sm-12 col-md-6'>
+                    <div className='action-wrapper '>
+
+
+                      <div className={'date-picker'}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label='Removal Date'
+                            disabled
+                            value={row.removalDate && dayjs(row.removalDate)}
+                            slotProps={{
+                              textField: {
+                                size: 'small',
+                                fullWidth: true,
+                                InputProps: {
+                                  endAdornment: (<></>)
+                                }
+                              }
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </div>
+                      <div className='delete-btn'>
+                        <Tooltip arrow className='d-tooltip' title='delete' placement='top'>
+                          <div>
+                            <DeleteOutlineOutlinedIcon onClick={() => handleDelete(row)} />{' '}
+                          </div>
+                        </Tooltip>
+                      </div>
                     </div>
                   </div>
-                  <div className='action-wrapper col col-md-1'>
-                    <div className='delete-btn'>
-                      <Tooltip arrow className='d-tooltip' title='delete' placement='top'>
-                        <DeleteOutlineOutlinedIcon onClick={() => handleDelete(row)} />{' '}
-                      </Tooltip>
-                    </div>
-                  </div>
+
                 </div>
               </div>
             </div>
@@ -378,108 +446,126 @@ export function NewIdDetails() {
 
         {restrictionsLists.length > restrictionsRows.length && (
           <Button className='add-btn' onClick={handleAddRestrictions}>
-            {' '}
-            + Add Another Restriction{' '}
+            + Add Another Restriction
           </Button>
         )}
         <div className='d-sub-title'> Previous Identification Card Details </div>
 
-        {previousCardRestrictions &&
-          previousCardRestrictions.map((row, rowIndex) => (
-            <div className='d-row' key={`previous-id-card${rowIndex}`} >
-              <div className='col col-sm-12 col-md-4 pt-0'>
-                <div className='d-row'>
-                  <div className='col col-sm-12 col-md-6'>
-                    <FormControl fullWidth size="small">
-                      <InputLabel id='state'>State</InputLabel>
-                      <Select
-                        labelId='state'
-                        id='state'
-                        value={row.state}
-                        label='State'
-                      >
-                        {states &&
-                          states.map((state, index) => {
-                            return (
-                              <MenuItem key={index} value={state.value}>
-                                {' '}
-                                {state.label}{' '}
-                              </MenuItem>
-                            );
-                          })}
-                      </Select>
-                    </FormControl>
+        {previousCardsData &&
+          previousCardsData.map((row, rowIndex) => (
+            <div key={rowIndex}>
+              <div className='d-row' key={rowIndex} >
+                <div className='col col-sm-12 col-md-4 pt-0'>
+                  <div className='d-row'>
+                    <div className='col col-sm-12 col-md-4'>
+                      <FormControl fullWidth size="small" disabled>
+                        <InputLabel id='state'>State</InputLabel>
+                        <Select
+                          labelId='state'
+                          id='state'
+                          value={row.state.value}
+                          label='State'
+                          onChange={(e) => handleStateChange(e, rowIndex)}
+                        >
+                          {states &&
+                            states.map((state) => {
+                              return (
+                                <MenuItem key={state.value} value={state.value}>
+                                  {' '}
+                                  {state.value}{' '}
+                                </MenuItem>
+                              );
+                            })}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className='col col-sm-12 col-md-8'>
+                      <TextField
+                        value={row.cardNumber}
+                        fullWidth
+                        size="small"
+                        label='Card Number'
+                        disabled
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position='end'>
+                              <div className='input-adornment-text'>  {isBelowAge(row.birthDate, 21) ? '>' : '<'} 21 Yrs  </div>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className='col col-sm-12 col-md-6'>
-                    <TextField
-                      value={row.cardNumber}
-                      fullWidth
+                </div>
+                <div className='col col-sm-12 col-md-4'>
+                  <FormControl fullWidth disabled>
+                    <InputLabel id='categoryType'>Category Type</InputLabel>
+                    <Select
+                      labelId='categoryType'
+                      id='categoryType'
+                      value={row.categoryType}
                       size="small"
-                      label='Card Number'
-                      disabled
-                    />
-                  </div>
+                      label='Category Type'
+                    >
+                      {categoryTypeList &&
+                        categoryTypeList.map((categoryType) => {
+                          return (
+                            <MenuItem key={`row${categoryType}`} value={categoryType}>
+                              {' '}
+                              {categoryType}{' '}
+                            </MenuItem>
+                          );
+                        })}
+                    </Select>
+                  </FormControl>
                 </div>
-              </div>
-              <div className='col col-sm-12 col-md-4'>
-                <FormControl fullWidth disabled>
-                  <InputLabel id='cardType'>Category Type</InputLabel>
-                  <Select
-                    labelId='categoryType'
-                    id='categoryType'
-                    value={row.categoryType}
-                    size="small"
-                    label='Category Type'
-                  >
-                    {categoryTypeList &&
-                      categoryTypeList.map((categoryType, index) => {
-                        return (
-                          <MenuItem key={index} value={categoryType}>
-                            {' '}
-                            {categoryType}{' '}
-                          </MenuItem>
-                        );
-                      })}
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='col col-sm-12 col-md-4 pt-0'>
-                <div className='d-row'>
-                  <div className='col col-sm-12 col-md-6'>
-                    <div className={row.issueDate ? 'date-picker has-date' : 'date-picker'}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label='Issue Date'
-                          disabled
-                          value={dayjs(new Date())}
-                          slotProps={{
-                            textField: {
-                              size: 'small'
-                            }
-                          }}
-                        />
-                      </LocalizationProvider>
+                <div className='col col-sm-12 col-md-4 pt-0'>
+                  <div className='d-row'>
+                    <div className='col col-sm-12 col-md-6'>
+                      <div className={'date-picker'}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label='Issue Date'
+                            disabled
+                            value={dayjs(row.issueDate)}
+                            slotProps={{
+                              textField: {
+                                size: 'small',
+                                fullWidth: true,
+                                InputProps: {
+                                  endAdornment: (<></>)
+                                }
+                              }
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className='col col-sm-12 col-md-6'>
-                    <div className={row.expirationDate ? 'date-picker has-date' : 'date-picker'}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label='Expiration Date'
-                          disabled
-                          value={dayjs(row.expirationDate)}
-                          slotProps={{
-                            textField: {
-                              size: 'small'
-                            }
-                          }}
-                        />
-                      </LocalizationProvider>
+                    <div className='col col-sm-12 col-md-6'>
+                      <div className={'date-picker'}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label='Expiration Date'
+                            disabled
+                            value={dayjs(row.expirationDate)}
+                            slotProps={{
+                              textField: {
+                                size: 'small',
+                                fullWidth: true,
+                                InputProps: {
+                                  endAdornment: (<></>)
+                                }
+                              }
+                            }}
+                          />
+                        </LocalizationProvider>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              {row.state.value === 'DC' && <Button>  View Card </Button>}
             </div>
           ))}
 

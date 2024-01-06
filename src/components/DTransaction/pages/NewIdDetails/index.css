@@ -15,6 +15,9 @@
   display: flex;
   align-items: center;
 }
+.action-wrapper .date-picker {
+  flex:1;
+}
 
 .delete-btn {
   display: flex;
@@ -26,6 +29,7 @@
   height: 32px;
   justify-content: center;
   cursor: pointer;
+  margin-left: 1rem;
 }
 
 .page-action {
@@ -36,7 +40,7 @@
 
 .add-btn {
   text-transform: capitalize !important;
-  margin-top: 1rem !important;
+   
 }
 .divider {
   border: 1px solid #ccc;

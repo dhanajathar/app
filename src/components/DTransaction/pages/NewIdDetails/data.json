@@ -1,15 +1,17 @@
 {
     "idCardDetails": {
         "cardNumber": 4323434,
-        "cardType": "OVER 21 YEARS",
         "status": "PENDING",
         "categoryType": "REAL ID",
         "duplicateCount": 0,
+        "birthDate": "06/03/1988",
         "originalIssueDate": "04/22/2022",
         "issueDate": "04/22/2022",
         "expirationDate": "08/18/2030",
-        "cardMailDate": "", 
-        "renewalNoticeDate": "" 
+        "cardMailDate": "",
+        "renewalNoticeDate": "",
+        "verificationDate": "04/22/2022",
+        "Citizen": "YES"
     },
     "restrictionsLists": [
         {
@@ -29,14 +31,29 @@
             "restriction": "VISUALLY IMPAIRED"
         }
     ],
-    "previousCardRestrictions":[
+    "previousCards": [
         {
-            "state":"",
-            "cardNumber":"4323434",
-            "categoryType":"REAL ID",
-            "issueDate":"04/22/2022",
-            "expirationDate":"08/18/2030"
-        } 
+            "state": {
+                "value": "CA",
+                "label": "California"
+            },
+            "cardNumber": "12345244",
+            "birthDate": "03/06/1988",
+            "categoryType": "REAL ID",
+            "issueDate": "04/22/2022",
+            "expirationDate": "08/18/2030"
+        },
+        {
+            "state": {
+                "value": "DC",
+                "label": ""
+            },
+            "cardNumber": "4323434",
+            "birthDate": "30/05/2018",
+            "categoryType": "REAL ID",
+            "issueDate": "04/22/2022",
+            "expirationDate": "08/18/2030"
+        }
     ],
     "states": [
         {
@@ -70,6 +87,10 @@
         {
             "value": "DE",
             "label": "Delaware"
+        },
+        {
+            "value": "DC",
+            "label": "District of Columbia"
         },
         {
             "value": "FL",
@@ -240,10 +261,24 @@
             "label": "Wyoming"
         }
     ],
-    "countryList" : [
-        {"value": "USA", "label":"USA" }
+    "countryList": [
+        {
+            "value": "USA",
+            "label": "USA"
+        }
     ],
-    "statusList" : ["PENDING", "VALID", "EXPIRED", "CANCELED" ],
-    "categoryTypeList": ["REAL ID", "LIMITED PURPOSE"],
-    "cardTypeList": ["OVER 21 YEARS", "UNDER 21 YEARS "]
+    "statusList": [
+        "PENDING",
+        "VALID",
+        "EXPIRED",
+        "CANCELED"
+    ],
+    "categoryTypeList": [
+        "REAL ID",
+        "LIMITED PURPOSE"
+    ],
+    "cardTypeList": [
+        "OVER 21 YEARS",
+        "UNDER 21 YEARS "
+    ]
 }
