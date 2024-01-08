@@ -450,7 +450,7 @@ const IndividualDetails = () => {
   ]);
 
   return (
-    <div className='d-container'>
+    <div className='d-container'> 
       <form
         onSubmit={e => handleSubmitFrom(e, personalInformationFrom)}
         noValidate
