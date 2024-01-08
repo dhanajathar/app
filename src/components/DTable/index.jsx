@@ -1,7 +1,7 @@
 /*
  * Author: Swathi Kudikala
  * Created: 2023-12-29
- * Last Modified: 2024-01-02
+ * Last Modified: 2024-01-03
  * Description: Reusable table component.
  * Application Release Version:1.0.0
  */
@@ -19,6 +19,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import './index.css';
+import { nanoid } from 'nanoid';
 
 import SORT from '../../assets/svg/sort.svg';
 import SORT_ASC from '../../assets/svg/sort-asc.svg';
@@ -60,7 +61,6 @@ const DTable = ({
   const [order, setOrder] = useState(defaultSortOrder);
   const [page, setPage] = useState(defaultPage);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
-
   useEffect(() => {
     setSortedData(data);
     setPage(0);
@@ -168,7 +168,7 @@ const DTable = ({
               ? sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : sortedData
             ).map((row, index) => (
-              <TableRow key={index} onClick={() => onBodyRowClick(row)}>
+              <TableRow key={nanoid(12)} onClick={() => onBodyRowClick(row)}>
                 {columns.map(column => {
                   return (
                     <TableCell
@@ -233,8 +233,10 @@ DTable.propTypes = {
   defaultSortColumn: PropTypes.string,
   defaultSortOrder: PropTypes.oneOf(['asc', 'desc', null]),
   rowsPerPageOptions: PropTypes.arrayOf(
-    PropTypes.number,
-    PropTypes.shape({ label: PropTypes.string, value: PropTypes.number })
+    PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({ label: PropTypes.string, value: PropTypes.number })
+    ])
   ),
   defaultPage: PropTypes.number,
   onSortChange: PropTypes.func,

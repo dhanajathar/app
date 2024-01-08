@@ -1,3 +1,11 @@
+/*
+ * Component Name: DTransection New ID
+ * Author: Priyanka Pandey
+ * Created: 2024-01-04
+ * Last Modified: 
+ * Description: This page is to view the auto-populated New ID card details for verification od NEW ID card issuance.
+ * Application Release Version:1.0.0
+ */
 import './index.css';
 
 import {
@@ -446,7 +454,7 @@ export function NewIdDetails() {
 
         {restrictionsLists.length > restrictionsRows.length && (
           <Button className='add-btn' onClick={handleAddRestrictions}>
-            + Add Another Restriction
+          {restrictionsRows.length > 0 ?  '+ Add Another Restriction': '+ Add ID Card Restriction'} 
           </Button>
         )}
         <div className='d-sub-title'> Previous Identification Card Details </div>

@@ -4,7 +4,7 @@
         "status": "PENDING",
         "categoryType": "REAL ID",
         "duplicateCount": 0,
-        "birthDate": "06/03/1988",
+        "birthDate": "01/09/1988",
         "originalIssueDate": "04/22/2022",
         "issueDate": "04/22/2022",
         "expirationDate": "08/18/2030",
@@ -40,8 +40,8 @@
             "cardNumber": "12345244",
             "birthDate": "03/06/1988",
             "categoryType": "REAL ID",
-            "issueDate": "04/22/2022",
-            "expirationDate": "08/18/2030"
+            "issueDate": "04/22/2012",
+            "expirationDate": "08/18/2020"
         },
         {
             "state": {

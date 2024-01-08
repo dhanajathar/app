@@ -18,6 +18,7 @@ import DAlertBox from '../../../DAlertBox';
 import DLoaderDialog from '../../../DLoaderDialog';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import * as _ from 'lodash';
 import dayjs from 'dayjs';
 
 export default function Uspassport() {
@@ -33,7 +34,9 @@ export default function Uspassport() {
   const [isVerified, setIsVerified] = useState(null);
   const [enableVerifyButton, setEnableVerifyButton] = useState(true);
   const [open, setOpen] = useState(false);
-  const [passprotForm, setPassportForm] = useState({
+  const [focusedField, setFocusedField] = useState('');
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [passportForm, setPassportForm] = useState({
     passportNumber: '',
     issueDate: '',
     expirationDate: ''
@@ -49,7 +52,7 @@ export default function Uspassport() {
   const handleSubmit = e => {
     e.preventDefault();
     let errorMsg = { ...validationError };
-    for (const [k, v] of Object.entries(passprotForm)) {
+    for (const [k, v] of Object.entries(passportForm)) {
       const error = validateFiled(k, v);
       errorMsg = { ...errorMsg, [k]: error };
       if (error === '') {
@@ -61,7 +64,7 @@ export default function Uspassport() {
   };
 
   const handleChange = (name, value) => {
-    const newValues = { ...passprotForm };
+    const newValues = { ...passportForm };
     newValues[name] = value;
     setPassportForm(newValues);
     handleError(name, value);
@@ -75,24 +78,33 @@ export default function Uspassport() {
     }, 3000);
   };
 
-  const handleError = (name, value) => {
+  const handleError = (name, value) => { 
     const error = validateFiled(name, value);
-    const errors = { ...validationError, [name]: error };
+    let errors = { ...validationError, [name]: error };
     if (error === '') {
-      delete errors[name];
+      // eslint-disable-next-line no-unused-vars
+      const { name, ...withoutKey } = errors;
+      errors = withoutKey;
     }
-    setValidationError(errors);
+    if (!_.isEqual(validationError, errors)) {
+      setValidationError(errors);
+    }
+    const newFocusedField = error !== '' ? name : '';
+    if (focusedField !== newFocusedField) {
+      setFocusedField(newFocusedField);
+    }
+    setIsFormDisabled(Object.values(errors).some(error => error !== ''));
   };
 
   useEffect(() => {
     if (
-      passprotForm.passportNumber !== '' &&
-      passprotForm.issueDate !== '' &&
-      passprotForm.expirationDate !== ''
+      passportForm.passportNumber !== '' &&
+      passportForm.issueDate !== '' &&
+      passportForm.expirationDate !== ''
     ) {
       setEnableVerifyButton(false);
     }
-  }, [passprotForm]);
+  }, [passportForm]);
 
   const validateFiled = (name, value) => {
     let error = '';
@@ -103,12 +115,12 @@ export default function Uspassport() {
         }
         break;
       case 'issueDate':
-        if (!dayjs(value, 'DD-MM-YYYY', true).isValid()) {
+        if (!dayjs(value, 'DD-MM-YYYY', true).isValid() && dayjs(value).isAfter(new Date())) {
           error = 'Invalid Issue Date';
         }
         break;
       case 'expirationDate':
-        if (!dayjs(value, 'DD-MM-YYYY', true).isValid()) {
+        if (!dayjs(value, 'DD-MM-YYYY', true).isValid() && dayjs(value).isBefore(new Date())) {
           error = 'Invalid Expiration Date';
         }
         break;
@@ -118,13 +130,12 @@ export default function Uspassport() {
   };
 
   return (
-    <div className='d-container'>
+    <div className='d-container'>  
       <form onSubmit={handleSubmit}>
         <div className='d-sub-title'> Proof of Identity </div>
-
         <div className='d-row'>
           <div className='col col-md-8 col-sm-12'>
-            <FormControl disabled fullWidth>
+            <FormControl disabled fullWidth size="small">
               <InputLabel id='docType'> Verification Request Document </InputLabel>
               <Select id='docType' value={'US Passport'} label='Verification Request Document'>
                 <MenuItem value={'US Passport'}> US Passport </MenuItem>
@@ -137,11 +148,15 @@ export default function Uspassport() {
             <TextField
               fullWidth
               label='Passport Number'
+              size="small"
+              name="passportNumber"
+              disabled={isFormDisabled && focusedField !== 'passportNumber'}
               inputProps={{ maxLength: 20 }}
               error={!!validationError?.passportNumber}
-              value={passprotForm.passportNumber}
+              value={passportForm.passportNumber}
               helperText={<DAlertBox errorText={validationError?.passportNumber} />}
               onChange={e => handlePassportNumberChange('passportNumber', e.target.value)}
+              inputRef={focusedField === 'passportNumber' ? input => input?.focus() : null}
               onBlur={e => {
                 handleError('passportNumber', e.target.value);
               }}
@@ -163,19 +178,26 @@ export default function Uspassport() {
             />
           </div>
           <div className='col col-md-4 col-sm-12'>
-            <div className='date-picker has-date'>
+            <div className='date-picker'>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label='Issue Date'
                   fullWidth
-                  value={passprotForm.issueDate && dayjs(passprotForm.issueDate)}
-                  maxDate={passprotForm.issueDate ? passprotForm.expirationDate : dayjs(new Date())}
+                  size="small" 
+                  disabled={isFormDisabled && focusedField !== 'issueDate'}
+                  value={passportForm.issueDate && dayjs(passportForm.issueDate)}
+                  maxDate={passportForm.issueDate ? passportForm.expirationDate : dayjs(new Date())}
                   onChange={date => handleChange('issueDate', date)}
                   slotProps={{
                     textField: {
+                      size: 'small',
+                      inputRef:focusedField === 'issueDate' ? input => input?.focus() : null,
                       error: !!validationError?.issueDate,
                       helperText: <DAlertBox errorText={validationError?.issueDate} />,
-                      onBlur: e => handleError('issueDate', e.target.value)
+                      onBlur: e => handleError('issueDate', e.target.value),
+                      InputProps: {
+                        endAdornment: (isFormDisabled && focusedField !== 'issueDate' && <></>)
+                      }
                     }
                   }}
                 />
@@ -183,17 +205,21 @@ export default function Uspassport() {
             </div>
           </div>
           <div className='col col-md-4 col-sm-12'>
-            <div className='date-picker has-date'>
+            <div className='date-picker'>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   fullWidth
-                  minDate={passprotForm.issueDate ? passprotForm.issueDate : dayjs(new Date())}
+                  minDate={passportForm.issueDate ? passportForm.issueDate : dayjs(new Date())}
                   label='Expiration Date'
-                  value={passprotForm.expirationDate && dayjs(passprotForm.expirationDate)}
+                  size="small"
+                  disabled={isFormDisabled && focusedField !== 'expirationDate'}
+                  value={passportForm.expirationDate && dayjs(passportForm.expirationDate)}
                   onChange={date => handleChange('expirationDate', date)}
                   slotProps={{
                     textField: {
+                      size: 'small',
                       error: !!validationError?.expirationDate,
+                      inputRef:focusedField === 'expirationDate' ? input => input?.focus() : null,
                       helperText: <DAlertBox errorText={validationError?.expirationDate} />,
                       onBlur: e => handleError('expirationDate', e.target.value)
                     }
@@ -203,23 +229,24 @@ export default function Uspassport() {
             </div>
           </div>
         </div>
-
         <div className='d-row'>
           <div className='col col-md-4 col-sm-12'>
-            <div className='date-picker has-date'>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker label='Verify Date' disabled value={isVerified && dayjs(new Date())} />
-              </LocalizationProvider>
-            </div>
-          </div>
-        </div>
-
-        <div className='d-row'>
-          <div className='col col-md-4 col-sm-12'>
-            <Button onClick={handleVerify} disabled={enableVerifyButton} variant='outlined'>
-              {' '}
-              VERIFY{' '}
-            </Button>
+            {!isVerified ?
+              <Button onClick={handleVerify} disabled={enableVerifyButton} variant='outlined'>
+                {' '}
+                VERIFY{' '}
+              </Button> : <div className='date-picker'>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker label='Verify Date' disabled value={isVerified && dayjs(new Date())
+                  }
+                    slotProps={{
+                      textField: {
+                        size: 'small',
+                      }
+                    }}
+                  />
+                </LocalizationProvider>
+              </div>}
           </div>
         </div>
       </form>

@@ -51,9 +51,9 @@ export function LoginPage() {
           setEmailError('');
           setCheckEmail(false);
           return;
-        } else if (!/^[a-z0-9._%+-]+@dc\.gov$/i.test(value)) {
-          setEmailError('Invalid Email');
-          setCheckEmail(true);
+//         } else if (!/^[a-z0-9._%+-]+@dc\.gov$/i.test(value)) {
+//           setEmailError('Invalid Email');
+//           setCheckEmail(true);
         } else {
           setEmailError('');
           setCheckEmail(false);
@@ -84,7 +84,14 @@ export function LoginPage() {
   };
 
   const handleSubmit = async () => {
+    console.log(
+      'end point before try',
+      process.env.VITE_REACT_APP_ACCESS_TOKEN_URL,
+      process.env.VITE_REACT_APP_CLIENT_ID
+    );
     try {
+      console.log('end point process', process.env.VITE_REACT_APP_ACCESS_TOKEN_URL);
+      console.log('end point meta', import.meta.env.VITE_REACT_APP_ACCESS_TOKEN_URL);
       // Step 1: Request access token from the first API
       const endPoint = import.meta.env.VITE_REACT_APP_ACCESS_TOKEN_URL;
       const accessTokenBody = {
